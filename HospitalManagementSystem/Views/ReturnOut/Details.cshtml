@@ -1,0 +1,137 @@
+﻿@model Hospital.Models.StockReturnOutModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+<h2>Return Out</h2>
+
+
+<div class="contentWrapper">
+    <div class="boxHeadingPanel"><h2>Return Out</h2></div>
+<table class="table table-hover tablesorter">
+    <thead>
+    <tr>
+        
+       
+        <th>
+            Purchase Order No.
+        </th>
+        <th>
+            Item
+        </th>
+        <th>
+            Return Out Quantity
+        </th>
+        <th>
+            Return Out Date
+        </th>
+        <th>
+            Supplier
+        </th>
+        @*<th>
+           Remarks
+        </th>*@
+       
+        
+        <th>Actions</th>
+    </tr>
+        </thead><tbody>
+@foreach (var item in Model.ReturnOutList) {
+    <tr>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.PurchaseOrderNo)
+        </td>
+        <td>
+            @Hospital.Utility.GetItemNameFromStockItemEntry(item.ItemId)
+        </td>
+        <td>
+           <span style="float:left;"> @((int)item.ReturnOutQty)</span>
+            <span style="display:none" class="txtspan">
+                / @Html.TextBoxFor(modelItem => item.ReturnOutQty, new { @class="txtinput",@style="width:100px;"})
+                <span class="remove" style="cursor:pointer">
+                    <img src="~/Images/images.jpg" /></span>
+            </span>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReturnOutDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SupplierId)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Remarks)
+        </td>*@
+       
+        <td>
+             <span class="editspan" style="cursor:pointer">
+                Edit
+            </span><span style="display:none;cursor:pointer" class="savespan" id="@item.ReturnOutId">
+            Save
+           </span>|
+
+            @Html.ActionLink("Delete", "Delete", new { id=item.ReturnOutId })
+        </td>
+    </tr>
+}
+</tbody>
+</table>
+    <div class="boxFooter">
+                   
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+
+               </div>
+    <div id="linkNewBack">
+    @Html.ActionLink("Back to List", "Index")
+</div>
+    </div>
+
+<script>
+    $(".editspan").click(function () {
+
+        $(this).closest('tr').find('.txtspan').show();
+        $(this).closest('tr').find('.txtinput').keyup(function () {
+
+            $(this).closest('tr').find('.editspan').hide();
+            $(this).closest('tr').find('.savespan').show();
+        })
+        $(this).closest('tr').find('.remove').click(function () {
+            $(this).closest('tr').find('.editspan').show();
+            $(this).closest('tr').find('.savespan').hide();
+            $(this).closest('tr').find('.txtspan').hide();
+        })
+        $(this).closest('tr').find('.savespan').click(function () {
+            var v = $(this).closest('tr').find('.txtinput').val();
+            //alert(v);
+            var id = this.id;
+            $.ajax({
+                url: "/ReturnOut/Edit",
+                type: "Get",
+                dataType: "json",
+                data: { id: id, newValue: v },
+                success: function (data) {
+                    alert(data);
+                    window.location.reload();
+
+                }
+            })
+        })
+    })
+</script>

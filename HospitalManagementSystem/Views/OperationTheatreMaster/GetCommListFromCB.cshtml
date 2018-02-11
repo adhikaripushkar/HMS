@@ -1,0 +1,48 @@
+﻿@model HospitalManagementSystem.Models.OperationTheatreMasterModel
+
+@{
+    ViewBag.Title = "GetCommListFromCB";
+    Layout = "~/Views/Shared/_OperationTheatreLayout.cshtml";
+}
+
+<div class="contentWrapper">
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Details</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+                            <th>Bill Number</th>
+                            <th>Patient Id</th>
+                            <th>Patient Name</th>
+                            <th>Date</th>
+                            <th>Total Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model.GetCBCommissionViewModelOTList)
+                    {
+                        <tr>
+                            <td>@item.BillNo</td>
+                            <td>@item.PatientId</td>
+                            <td>@HospitalManagementSystem.Utility.GetPatientNameWithIdFromEmergency(item.PatientId)</td>
+                            <td>@item.CreatedDate.ToShortDateString()</td>
+                            <td>@item.TotalAmount</td>
+                            <td>@Html.ActionLink("Add Commission", "ViewOtCommissionDetails", new { id = item.BillNo })</td>
+                        </tr>
+                        
+                    }
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

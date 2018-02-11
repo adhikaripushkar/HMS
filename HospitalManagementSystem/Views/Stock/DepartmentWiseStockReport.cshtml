@@ -1,0 +1,106 @@
+﻿@model IEnumerable<Hospital.DepartmentWiseStock>
+@{
+    ViewBag.Title = "DepartmentWiseStockReport";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+    int i = 1;
+    Hospital.EHMSEntities ent = new Hospital.EHMSEntities();
+    IEnumerable<SelectListItem> list = new SelectList(ent.SetupStockItemEntry.ToList(), "StockItemEntryId", "StockItemName");
+}
+<script type="text/javascript">
+    function prints(divName) {
+
+        //Get the HTML of div
+        var divElements = document.getElementById(divName).innerHTML;
+        //Get the HTML of whole page
+        var oldPage = document.body.innerHTML;
+
+        //Reset the page's HTML with div's HTML only
+        document.body.innerHTML = "<html><head><title></title></head><body>" + divElements + "</body>";
+
+        //Print Page
+        window.print();
+
+        //Restore orignal HTML
+        document.body.innerHTML = oldPage;
+
+        //disable postback on print button
+        return false;
+
+    }
+</script>
+<h2>Department wise Stock Report</h2>
+<div class="contentWrapper">
+    @using (Html.BeginForm())
+    {
+        <table>
+            <tr>
+                <td>Department:@Html.DropDownList("dept", Hospital.Utility.GetDepartmentList(), "All")
+                </td>
+
+
+                <td>Item:@Html.DropDownList("item", list, "All")
+                </td>
+                <td>
+                    <input type="submit" value="Search" />
+                </td>
+            </tr>
+        </table>
+    }
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: 100%; grid-row-align: center;">
+       @MyHelpers.DesingForLogo()
+
+        <br />
+        <span style="margin-left: 85%">Date:@DateTime.Today.ToShortDateString()</span>
+        @{
+            var groupList = (from ls in Model
+                             group ls by new { ls.ItemId, ls.CreatedBy }
+                                 into g
+                                 select new { g.Key.ItemId, g.Key.CreatedBy }).ToList();
+        }
+        @foreach (var items in groupList)
+        {
+            <p style="font-weight: bold">
+                Item: @Hospital.Utility.GetItemNameFromStockItemEntry(items.ItemId)
+            </p>
+            <p>
+                Total Quantity in Stock:@items.CreatedBy
+            </p>
+            <table class="table">
+                <tr>
+                    <th>S.No.
+                    </th>
+                    <th>Department
+                    </th>
+                    <th>Quantity
+                    </th>
+                </tr>
+                @foreach (var item in (from mo in Model where (mo.ItemId == items.ItemId) select new { mo }).ToList())
+                {
+                    <tr>
+                        <td>
+                            @i
+                        </td>
+                        <td>
+                            @Hospital.Utility.GetDepartmentName(item.mo.DepartmentID)
+                        </td>
+                        <td>
+                            @((int)item.mo.Quantity)
+                        </td>
+                    </tr>
+                    i++;
+                }
+                <tr>
+                    <td colspan="2" style="text-align: right">Total
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+            <br />
+            <br />
+        }
+    </div>
+     <p id="linkNewBack">
+        <input type="button" value="Print" onclick="prints('printdiv')" />
+        <span> @Html.ActionLink("Back", "ReportMenu")</span>
+    </p>
+</div>

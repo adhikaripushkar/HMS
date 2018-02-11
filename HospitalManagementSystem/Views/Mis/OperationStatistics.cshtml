@@ -1,0 +1,94 @@
+﻿@{
+    DateTime df = Convert.ToDateTime(ViewBag.dafr);
+    DateTime dt = Convert.ToDateTime(ViewBag.dato);
+}
+<div id="printdiv" style="border-style: solid; border-color: #999; width: auto; grid-row-align: center; overflow-x: scroll">
+    <h4 style="text-align: center;">Madhyapur HospitalManagementSystem</h4>
+    <h4 style="text-align: center">Daily Operation Report</h4>
+    <table class="table  tablesorter">
+
+        <tr>
+            <th rowspan="2">Date
+            </th>
+            @foreach (var item in ViewBag.deps)
+            {
+            
+                <th colspan="2" style="text-align: center">
+                    @item.DeptName
+                </th>
+                       
+            
+            }
+        </tr>
+        <tr>
+
+            @foreach (var item in ViewBag.deps)
+            {
+           
+                <th style="text-align: center">Major</th>
+                <th style="text-align: center">Minor</th>
+            
+            }
+        </tr>
+        @for (DateTime dts = df; dts <= dt.AddDays(1); dts = dts.AddDays(1))
+        {
+            <tr>
+                <td>
+                    @if (dts <= dt)
+                    {
+                        @dts.ToShortDateString()
+                    }
+                    else if (dts == dt.AddDays(1))
+                    {
+                        <span>Total</span>
+                    }
+
+                </td>
+                @foreach (var item in ViewBag.deps)
+                {
+
+
+
+                    if (dts <= dt)
+                    {
+
+
+                        int i = HospitalManagementSystem.Utility.OperationCount("Major", item.DeptID, dts);
+                         
+
+                    <td style="text-align: center">
+                        @if (i != 0)
+                        { 
+                   
+                            @i
+                       
+                        }
+                    </td>
+                        int i2 = HospitalManagementSystem.Utility.OperationCount("Minor", item.DeptID, dts);
+                    <td style="text-align: center">
+                        @if (i2 != 0)
+                        { 
+                    
+                            @i2
+                        
+                        }
+                    </td>     
+                    }
+                    else if (dts == dt.AddDays(1))
+                    {
+                    <td style="text-align: center">
+                        @HospitalManagementSystem.Utility.TotalOperationCount("Major", item.DeptID, df, dt)
+                    </td>
+                    <td style="text-align: center">
+                        @HospitalManagementSystem.Utility.TotalOperationCount("Minor", item.DeptID, df, dt)
+                    </td>
+                    }
+
+
+                }
+            </tr>
+       
+        }
+
+    </table>
+</div>

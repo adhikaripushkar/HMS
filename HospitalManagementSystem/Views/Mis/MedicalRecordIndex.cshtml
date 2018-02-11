@@ -1,0 +1,40 @@
+﻿@model HospitalManagementSystem.Models.MisModel
+
+@{
+    ViewBag.Title = "MedicalRecordIndex";
+    Layout = "~/Views/Shared/_MRecordLayout.cshtml";
+}
+
+<link href="~/Fontaw/css/font-awesome.min.css" rel="stylesheet" />
+<div class="contentWrapper">
+    <div style="font-size: 13px; font-weight: bold;">Medical Record Discharge Details</div>
+    @if (Model.MRRecordViewModelList.Count() > 0)
+    {
+        <table class="table table-bordered" style="width: 90%">
+            <thead>
+                <tr>
+                    <th class="active">IPNumber</th>
+                    <th class="success">OPDNumber</th>
+                    <th class="warning">Patient Name</th>
+                    <th class="danger">Age</th>
+                    <th class="info">Address</th>
+                    <th class="info">Discharge Date</th>
+                    <th class="info">Action</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model.MRRecordViewModelList)
+            {
+                <tr>
+                    <td>@item.IPId</td>
+                    <td>@item.OpdId</td>
+                    <td>@HospitalManagementSystem.Utility.GetPatientNameWithIdFromEmergency(item.OpdId)</td>
+                    <td>@HospitalManagementSystem.Utility.GetCurrentPatientAgeFromId(item.OpdId)</td>
+                    <td>@HospitalManagementSystem.Utility.GetOpdAddress(item.OpdId)</td>
+                    <td>@item.DischargeDate.ToShortDateString()</td>
+                    <td>View</td>
+                </tr>
+            }
+        </table>
+    }
+
+</div>

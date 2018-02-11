@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Role Add To User";
+    Layout = "~/Views/Shared/_SecurityModelLayout.cshtml";
+    
+}
+
+<h2 style="text-align: center;">Role Add To User</h2>
+
+<div class="contentWrapper">
+
+    <div class="spacerBody">
+        <p id="linkNewBack">
+            @Html.ActionLink("Create New Role", "RoleCreate") 
+        </p>
+
+
+        @using (Html.BeginForm("RoleAddToUser", "Security"))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <div class="bs-docs-example form-inline">
+                <div class="row-fluid singleline">
+                    <div class="message-success">@ViewBag.ResultMessage</div>
+
+                    <label>
+                        <div>
+                            Username
+                        </div>
+
+
+                        <div>
+                            @Html.DropDownList("UserName", Hospital.Utility.GetRegisterEmploeeOnly())
+                        </div>
+                    </label>
+
+                    <label>
+                        <div>
+                            Role Name
+                        </div>
+                        <div>
+                            @Html.DropDownList("RoleName", ViewBag.Roles as SelectList)
+                        </div>
+                    </label>
+                    <input type="submit" value="Save" />
+                </div>
+            </div>
+    
+        
+        }
+
+
+
+        <div class="hr"></div>
+        @using (Html.BeginForm("GetRoles", "Security"))
+        {
+            @Html.AntiForgeryToken()
+            <p>
+                Username :  @Html.DropDownList("UserName", Hospital.Utility.GetRegisterEmploeeOnly())
+                <input type="submit" value="Get Roles for this User" style="width: 200px;" />
+            </p>
+        }
+
+        @if (ViewBag.RolesForThisUser != null)
+        {
+            <text>
+            <h3>Roles for this user </h3>
+            <ol>
+                @foreach (string s in ViewBag.RolesForThisUser)
+                {
+                    <li id="linkNewBack">@s</li>   
+                }
+            </ol>
+            </text>
+        }
+    </div>
+
+</div>

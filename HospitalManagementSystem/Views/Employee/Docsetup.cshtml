@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Master Setup";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+
+<style>
+    .dashboard-action {
+        /* border: 1px solid #CCCCCC;
+    border-radius: 2px;
+    height: 110px;
+    margin-bottom: 20px;
+    padding: 10px 10px 11px;
+    position: relative;
+    text-align: center;*/
+        transition: all 0.4s ease-in-out 0s;
+    }
+</style>
+
+
+
+
+
+
+
+<div class="contentWrapper mainWrapper">
+
+    <div class="row-fluid">
+
+        <div class="container accessBox">
+
+            <ul class="dashboard-actions clearfix wrap clear">
+
+
+                <li>
+                    <a href='~/DoctorTypeSetup/Index' data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/doctype.jpg" alt="" class="">
+                            <h5>Doctor Type Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/DoctorSetup/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/doctormaster.jpg" alt="" class="">
+                            <h5>Doctor Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href='~/DoctorFeeSetup/Index' data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/doctorfee.jpg" alt="" class="">
+                            <h5>Doctor Fee Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/DoctorTime/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/doctortime.jpg" alt="" class="">
+                            <h5>Doctor Time Setup</h5>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

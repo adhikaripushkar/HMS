@@ -1,0 +1,126 @@
+﻿@model HospitalManagementSystem.Models.ConsulationModel
+<script src="~/Scripts/jquery.ui.core.js"></script>
+<script src="~/Scripts/jquery.ui.widget.js"></script>
+<script src="~/Scripts/jquery.ui.datepicker.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.ui.timepicker.js"></script>
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery.ui.timepicker.css" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+<script src="~/Scripts/json.cycle.js"></script>
+
+<script>
+
+    $(document).ready(function (e) {
+
+
+        $(".TimeOutId").val("");
+
+    });
+
+
+</script>
+
+<script>
+
+
+    var j = $.noConflict();
+    j(function () {
+
+        j(".TimeOutId").timepicker();
+
+    });
+</script>
+@using (Html.BeginForm("Create", "Consulation", FormMethod.Post, new { @id = "ConsulationCreateId", @class = "bs-docs-example form-inline" }))
+{
+     @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend></legend>
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.Id)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.Id)
+            @Html.ValidationMessageFor(model => model.Id)
+        </div>
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.EmergencyMasterId)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.EmergencyMasterId)
+            @Html.ValidationMessageFor(model => model.EmergencyMasterId)
+        </div>
+      
+     <div class="row-fluid singleline">
+         <label>
+              <div class="editor-label">
+            @Html.LabelFor(model => model.ConsulationId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.ConsulationId, HospitalManagementSystem.Utility.GetConsulation(),new { id="ConsulationId"})
+            @Html.ValidationMessageFor(model => model.ConsulationId)
+        </div>
+         </label>
+          <label>
+              <div class="editor-label">
+            @Html.LabelFor(model => model.ConsulationText)
+        </div>
+        <div class="editor-multiline-field">
+            @Html.TextBoxFor(model => model.ConsulationText,  new { cols = "55", rows = "20" })
+            @Html.ValidationMessageFor(model => model.ConsulationText)
+        </div>
+         </label>
+         </div>
+    <div class="row-fluid singleline">
+         <label>
+              <div class="editor-label">
+            @Html.LabelFor(model => model.ProgressNotes)
+        </div>
+        <div class="editor-multiline-field">
+            @Html.TextBoxFor(model => model.ProgressNotes,  new { cols = "55", rows = "20" })
+            @Html.ValidationMessageFor(model => model.ProgressNotes)
+        </div>
+             </label>
+             </div>
+     <div class="row-fluid singleline">
+         <label>
+              <div class="editor-label">
+            @Html.LabelFor(model => model.Time)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Time,new { @class = "TimeOutId" })
+            @Html.ValidationMessageFor(model => model.Time)
+        </div>
+             </label>
+             </div>
+     <p>
+            <input type="submit" value="Create" id="btnid" />
+        </p>
+    </fieldset>
+    
+}
+<script>
+
+    $("#btnid").on("click", function (e) {
+        e.preventDefault();
+
+
+        var form = $('#ConsulationCreateId');
+
+        var url = form.attr("action");
+
+        var formData = form.serialize();
+        $.post(url, formData, function (data) {
+
+            $('#ConsulationlistId').empty();
+
+            $('#ConsulationlistId').html(data);
+            $('#ConsulationCreateId').remove();
+
+        });
+    });
+
+
+    </script>

@@ -1,0 +1,65 @@
+﻿@model Hospital.Models.StockSubCategoryModel
+
+@using Hospital;
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_StockSetupLayout.cshtml";
+}
+
+
+<h2 style="text-align:center;"> Stock Sub Category Setup </h2>
+
+<div class="contentWrapper">
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="bs-docs-example form-inline">
+    <fieldset>
+        <legend>Edit</legend>
+        @Html.HiddenFor(model => model.StockSubCategoryID)
+        <div class="row-fluid singleline">
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.StockCategoryID)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StockCategoryID)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.StockCategoryID, Utility.GetStockCategoryList())
+            
+        </div>
+                </label>
+
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.StockSubCategoryName)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StockSubCategoryName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.StockSubCategoryName)
+            
+        </div>
+                </label>
+
+           
+            </div>
+        <br />
+        <p>
+            <input type="submit" value="Edit" />
+        </p>
+    </fieldset>
+        </div>
+}
+
+<div id="linkNewBack">
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+    </div>

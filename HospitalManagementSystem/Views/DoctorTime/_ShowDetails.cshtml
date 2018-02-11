@@ -1,0 +1,36 @@
+﻿@model HospitalManagementSystem.Models.DoctorTimeModel
+
+
+   
+  @if (ViewBag.data != null)
+  {
+     <table>
+         <tbody>
+             <tr>
+                 <th>
+                     Doctor Name
+                 </th>
+                 <th>DayofWeek</th>
+                 <th>StartTime</th>
+                 <th>EndTime</th>
+                 
+
+
+             </tr>
+
+         </tbody>
+         @foreach (var item in ViewBag.data)
+         {
+             <tr>
+                 <td>@item.DoctorID</td>
+                 <td>@item.DoctorDays</td>
+                 @*<td>@item.StartTime</td>
+                 <td>@item.EndTime</td>*@
+             </tr>
+         }
+
+
+     </table>
+  }
+
+

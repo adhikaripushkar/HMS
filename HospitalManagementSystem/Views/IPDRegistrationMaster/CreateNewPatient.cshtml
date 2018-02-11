@@ -1,0 +1,163 @@
+﻿@model HospitalManagementSystemManagementSystem.Models.OpdModel
+@{
+    ViewBag.Title = "IPD";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+<script>
+
+    var j = $.noConflict();
+    j(function () {
+
+        j("#RegistrationDate").datepicker();
+    });
+</script>
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("CreateNewPatient", "IpdRegistrationMaster", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+      
+    
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Create New Patient</legend>
+
+
+            <div class="row-fluid singleline">
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.FirstName)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FirstName)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.FirstName)
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.MiddleName)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MiddleName)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.MiddleName)
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.LastName)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.LastName)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.LastName)
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.Sex)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Sex)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.Sex, HospitalManagementSystemManagementSystem.Utility.GetGenderList())
+                    </div>
+
+                </label>
+
+            </div>
+            <div class="row-fluid singleline">
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.RegistrationDate)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.RegistrationDate)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.RegistrationDate, new { @id = "RegistrationDate" })
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.CountryID)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.CountryID)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.CountryID, HospitalManagementSystemManagementSystem.Utility.GetCountryNameList())
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.BloodGroup)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.BloodGroup)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.BloodGroup, HospitalManagementSystemManagementSystem.Utility.GetBloodGroupList())
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.AgeYear)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.AgeYear)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.AgeYear)
+                    </div>
+
+                </label>
+
+            </div>
+
+            <div class="row-fluid singleline">
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.Address)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Address)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Address)
+                    </div>
+
+                </label>
+            </div>
+
+            <p>
+                <input type="submit" value="Create" />
+
+            </p>
+
+        </fieldset>
+    }
+
+
+
+
+
+
+
+
+    <div id="linkNewBack">
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</div>

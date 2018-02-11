@@ -1,0 +1,111 @@
+﻿@model Hospital.Models.SetUpIpdWardModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 style="text-align: center;">Wards Setup</h2>
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("Create", "SetUpIpdWard", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+    
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Create</legend>
+
+            <div class="row-fluid singleline">
+
+                @*<div class="editor-label">
+            @Html.LabelFor(model => model.IpdWardId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IpdWardId)
+            @Html.ValidationMessageFor(model => model.IpdWardId)
+        </div>*@
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.WardName)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.WardName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.WardName, new { @required = "required" })
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.MaleOrFemale)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MaleOrFemale)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.MaleOrFemale, Hospital.Utility.GetWardTypeList())
+
+                    </div>
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.BlockId)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.BlockId)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.BlockId, Hospital.Utility.GetBlockList())
+
+                    </div>
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.FloorId)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FloorId)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.FloorId, Hospital.Utility.GetFloorList())
+
+                    </div>
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.Status)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Status)
+                    </div>
+                    <div class="editor-field">
+                        &nbsp&nbsp;@Html.CheckBoxFor(model => model.Status)
+
+
+                    </div>
+
+                </label>
+
+            </div>
+            <p>
+                <input type="submit" value="Create" />
+            </p>
+        </fieldset>
+    }
+
+
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+    </div>
+
+
+
+
+</div>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

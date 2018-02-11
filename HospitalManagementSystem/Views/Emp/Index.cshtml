@@ -1,0 +1,44 @@
+﻿@model HospitalManagementSystem.Models.Employee
+
+@{
+    ViewBag.Title = "Index";
+
+
+    Layout = "~/Views/Shared/_LayOutManageForEmp.cshtml";
+    }
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.address)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.lstOfEmp) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.address)
+        </td>*@
+        <td>
+           @*@Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |*@
+
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })|
+            @Html.ActionLink("More", "More", new {id=item.id})
+        </td>
+    </tr>
+}
+
+</table>

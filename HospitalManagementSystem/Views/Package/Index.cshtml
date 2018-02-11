@@ -1,0 +1,79 @@
+﻿@model HospitalManagementSystem.Models.PackageModel
+
+@{
+    ViewBag.Title = "Pathology Package";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<div class="contentWrapper">
+
+    <div style="font-size:14px; margin-bottom:10px;">
+        @Html.ActionLink("Create New Package", "Create") |
+    <span>
+        @Html.ActionLink("Package Patient List", "PackagePatientList")
+    </span>
+    </div>
+    <div>
+        @TempData["message"]
+    </div>
+    <div class="boxHeadingPanel">
+        <h2>Package Setup</h2>
+    </div>
+    <table class="table table-hover tablesorter">
+        <thead>
+            <tr>
+
+                <th>Package Name
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.PackageModelList)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PackageName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Edit/Details", "Edit", new { id = item.PackageId }) |
+            
+            @Html.ActionLink("Delete", "Delete", new { id = item.PackageId }, new { onclick = "return confirm('Are you sure to delete this record?');" }) |
+            @Html.ActionLink("Assign Patient", "AssignPatient", new { id = item.PackageId })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="boxFooter">
+
+        <div id="pager" style="">
+            <form>
+                <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                <select class="pagesize valid" style="width: 70px; height: 30px;">
+                    <option selected="selected" value="10">10</option>
+                    <option value="5">5</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                </select>
+            </form>
+        </div>
+
+    </div>
+
+</div>

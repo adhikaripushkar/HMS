@@ -1,0 +1,223 @@
+﻿@model HospitalManagementSystem.Models.JVMasterModel
+
+<style>
+    table#tblnoborder,
+    table#tblnoborder td {
+        border: none !important;
+    }
+
+    .font {
+        font-weight: bold;
+    }
+
+    .small-table td {
+        border: none;
+    }
+
+
+
+    .holder img {
+        max-height: 48px;
+        max-width: 55px;
+        object-fit: cover;
+    }
+
+
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+    }
+</style>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        text-align: center;
+        font-size: 13px;
+    }
+</style>
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+</script>
+
+<div class="contentWrapper">
+
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto; padding: 5px;">
+
+
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != null && @HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalManagementSystemLogo/@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() == "")
+        { 
+            
+            <br />
+        
+        }
+        <div style="font: bold; font-size: 18px; text-align: center; height: 115px;">
+            @if (@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != null && @HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != "")
+            {
+                <span>@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName()</span>
+            }
+            <br />
+            @HospitalManagementSystem.Utility.GetHospitalManagementSystemName()<br />
+            <div style="height: 80px;">
+                <span style="font-size: 15px; text-align: center">@HospitalManagementSystem.Utility.HospitalManagementSystemAddress()</span><br />
+                <span style="font-size: 14px; text-align: center">Website:-@HospitalManagementSystem.Utility.HospitalManagementSystemUrl()</span><br />
+                <span style="font-size: 14px; text-align: center">Ph:-@HospitalManagementSystem.Utility.HospitalManagementSystemPhone()</span>
+
+            </div>
+
+        </div>
+        <h2 style="text-align: center;">HandOver Detail</h2>
+        <table border="0" style="width: 500px; margin-top: 20px;" align="center">
+            <tr>
+                <td>From Date :&nbsp;@Model.objHandoverDetailReportModelView.HandoverDateFrom.ToShortDateString() (@HospitalManagementSystem.Utility.getNepaliDate(@Model.objHandoverDetailReportModelView.HandoverDateFrom.ToShortDateString()))
+                </td>
+                <td>To Date :&nbsp;@Model.objHandoverDetailReportModelView.HandoverDateTo.ToShortDateString() (@HospitalManagementSystem.Utility.getNepaliDate(@Model.objHandoverDetailReportModelView.HandoverDateTo.ToShortDateString()))
+                </td>
+            </tr>
+        </table>
+
+        <br />
+
+        <table class="table">
+            <tr>
+
+                <th>
+                    <h4 style="text-align: center;">HandOver Date</h4>
+                </th>
+                <th>
+                    <h4 style="text-align: center;">Status</h4>
+                </th>
+
+                <th>
+                    <h4 style="text-align: center;">Handover From</h4>
+                </th>
+                <th>
+                    <h4 style="text-align: center;">Handover To</h4>
+                </th>
+                <th>
+                    <h4 style="text-align: center;">Bank Deposit</h4>
+                </th>
+                <th>
+                    <h4 style="text-align: center;">Expenses</h4>
+                </th>
+                
+                <th>
+                    <h4 style="text-align: center;">Handover Amount</h4>
+                </th>
+                <th>
+                    <h4 style="text-align: center;">Remarks</h4>
+                </th>
+
+
+            </tr>
+            @{decimal Total = 0;
+              decimal BankTotal = 0;
+              decimal ExpenseTotal = 0;}
+            @foreach (var item in Model.objHandoverDetailReportModelViewList)
+            {                
+                <tr>
+                    <td>@item.HandOverDate.ToShortDateString()</td>
+                    <td>@item.HandOverStatus</td>
+                    <td>@item.HandOverFrom</td>
+                    <td>@item.HandOverTo</td>
+                    <td>@item.TotalBankDeposit</td>
+                    <td>@item.TotalExpenses</td>
+                    
+                    <td>
+                        <h4 style="text-align: right;">@item.HandOverAmount</h4>
+                    </td>
+                    <td>@item.Remarks</td>
+
+
+                </tr>
+                Total += item.HandOverAmount;
+                BankTotal += item.TotalBankDeposit;
+                ExpenseTotal += item.TotalExpenses;
+            }
+            <tr style="font-weight:bold;">
+                <td colspan="4" style="font-weight:bold; text-align:center;">Total :</td>
+                <td>@BankTotal</td>
+                <td>@ExpenseTotal</td>
+                
+                <td>
+                    <h4 style="text-align: right;"><b>@Total</b></h4>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <div style="float: right;">
+        <input type="button" id="btnPrintDeposite" style="width: 50px; float: right;" value="Print" />
+    </div>
+
+</div>
+
+
+<script>
+
+    var hh = $.noConflict();
+    hh('#btnPrintDeposite').click(function (e) {
+
+        e.preventDefault();
+        var msg = 'Do You Want To Print?';
+        var div = hh("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            resizable: false,
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0', 'alert("hi");');
+
+                        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+
+    });
+
+</script>
+

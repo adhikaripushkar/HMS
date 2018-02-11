@@ -1,0 +1,146 @@
+﻿@model HospitalManagementSystem.Models.BillingCounterModel
+
+@{
+    ViewBag.Title = "AdvancedSearch";
+    Layout = "~/Views/Shared/_BillingCounterLayout.cshtml";
+}
+
+<h2 style="text-align: center;"><i class="fa fa-search"></i>&nbsp;&nbsp;Search</h2>
+<style>
+    .ui-autocomplete {
+        max-height: 200px;
+        overflow-y: auto;
+        /* prevent horizontal scrollbar */
+        overflow-x: hidden;
+    }
+    /* IE 6 doesn't support max-height
+* we use height instead, but this forces the menu to always be this tall
+*/
+    * html .ui-autocomplete {
+        height: 200px;
+    }
+</style>
+
+<div class="contentWrapper">
+
+
+
+    @using (Html.BeginForm("AdvancedSearch", "BillingCounter", FormMethod.Post, new { @id = "myform" }))
+    {
+        <span style="display: none; color: red;" id="error">Please Select Options First</span><br />
+ 
+        <select name="selectOptions" class="srchoptn">
+
+            <option value="0">Search Option</option>
+            <option value="1">Patient Id</option>
+            <option value="2">Patient Name</option>
+            <option value="3">Blood Group</option>
+            <option value="4">Membership Id</option>
+            <option value="5">Membership Name</option>
+
+        </select>
+     
+        <span id="txtid"></span> @Html.TextBox("value", null, new { @id = "value", @placeholder = "Value Here" })
+
+        <span id="ddrpid"></span> @Html.DropDownList("bloodid", HospitalManagementSystem.Utility.BloodGroupList(), "Blood Group", new { @style = "display:none;" })
+ 
+        <input type="submit" value="show" class="btnsub" />
+    }
+
+    <div id="showResult">
+    </div>
+
+
+    <br />
+
+
+    <script type="text/javascript">
+
+
+        var nonn = $.noConflict();
+        nonn(".srchoptn").on("change", function (e) {
+
+            e.preventDefault();
+            var v = this.value;
+
+            if (this.value == 2) {
+                nonn(document).ready(function () {
+
+                    nonn("#value").autocomplete({
+                        source: function (request, response) {
+                            nonn.ajax({
+                                url: "/AjaxRequest/SearchPatienName",
+                                type: "POST",
+                                dataType: "json",
+                                data: { s: request.term },
+                                success: function (data) {
+                                    response(nonn.map(data, function (item) {
+                                        //alert(item);
+                                        return { label: item, value: item };
+                                    }))
+                                }
+                            })
+                        },
+                        messages: {
+                            noResults: "", results: ""
+                        }
+                    });
+                })
+            }
+
+
+            if (this.value == 3) {
+
+
+                nonn('#bloodid').show();
+                nonn('#value').hide();
+
+
+            }
+
+            else {
+
+                nonn('#bloodid').hide();
+                nonn('#value').val("");
+                nonn('#value').show();
+
+            }
+
+
+        });
+
+
+        nonn('.btnsub').on('click', function (e) {
+            e.preventDefault();
+
+            // alert("hi");
+
+            var optVal = nonn('.srchoptn').val();
+            // alert(optVal);
+            if (optVal == 0) {
+                // alert("hi");
+                nonn(".srchoptn").focus();
+                nonn('#showResult').empty();
+                // $("#error").show();
+
+            }
+            else {
+
+                // $("#error").hide();
+                var form = nonn('#myform');
+                var url = form.attr("action");
+                var formData = form.serialize();
+                nonn.post(url, formData, function (data) {
+                    // alert("suy");
+                    nonn('#showResult').empty();
+                    nonn('#showResult').html(data);
+
+                });
+            }
+
+
+
+
+        });
+
+    </script>

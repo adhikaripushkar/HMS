@@ -1,0 +1,144 @@
+﻿@model HospitalManagementSystem.Models.OtListModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MisLayOutLayout.cshtml";
+    int i = 1;
+}
+
+
+<script>
+    var j = $.noConflict();
+    j(document).ready(function (e) {
+
+        $('#FromDate').val("");
+        $('#ToDate').val("");
+
+        $("#FromDate").attr("value", "@DateTime.Now.ToShortDateString()");
+        $("#ToDate").attr("value", "@DateTime.Now.ToShortDateString()");
+
+
+        j("#FromDate").datepicker();
+        j("#ToDate").datepicker();
+
+    });
+
+
+</script>
+
+<div class="general-box clearfix">
+    OT List
+    </div>
+<div class="general-box clearfix">
+    <div style="font-weight: bold;">
+        @using (Html.BeginForm("OtList", "Mis", FormMethod.Get))
+        {
+            <p>
+                <span style="font-size: 14px; font-weight: bold;">From Date:&nbsp;&nbsp;</span>@Html.TextBox("FromDate")
+                <span style="font-size: 14px; font-weight: bold;">To Date:&nbsp;&nbsp;</span>@Html.TextBox("ToDate")
+                <input type="submit" value="Search" />
+            </p>
+        }
+    </div>
+
+
+</div>
+
+
+
+<div class="contentWrapper">
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: 100%; grid-row-align: center; padding: 5px">
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != null && @HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalManagementSystemLogo/@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        <div style="font: bold; font-size: 18px; text-align: center;">
+            @if (@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != null && @HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != "")
+            {
+                <span>@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName()</span>
+            }
+            <br />
+            @HospitalManagementSystem.Utility.GetHospitalManagementSystemName()<br />
+            <div style="height: 80px;">
+                <span style="font-size: 15px; text-align: center">@HospitalManagementSystem.Utility.HospitalManagementSystemAddress()</span><br />
+                <span style="font-size: 14px; text-align: center">Website:-@HospitalManagementSystem.Utility.HospitalManagementSystemUrl()</span><br />
+                <span style="font-size: 14px; text-align: center">Ph:-@HospitalManagementSystem.Utility.HospitalManagementSystemPhone()</span><br />
+                <br />
+                <span style="font-size: 14px; text-align: center">OT LIST</span>
+            </div>
+            <br />
+            <br />
+
+        </div>
+
+        <table class="table">
+            <tr>
+                <th>S.No.
+                </th>
+                <th>Name of Patient
+                </th>
+                <th>Age/Sex
+                </th>
+                <th>Ward/Bed No.
+                </th>
+                <th>Diagnosis
+                </th>
+                <th>Type of Surgery
+                </th>
+                <th>Anesthesia
+                </th>
+                <th>Consultant
+                </th>
+                <th>Assistant
+                </th>
+                <th>Remarks
+                </th>
+            </tr>
+            @foreach (var item in Model.otlist)
+            {
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @item.PatientName
+                    </td>
+                    <td>
+                        @item.Age / @item.Sex
+                    </td>
+                    <td>
+                        @HospitalManagementSystem.Utility.GetOperationRoomName(item.Ward)
+                    </td>
+                    <td>Diagnosis
+                    </td>
+                    <td>
+                        @item.TypeOfSurgery
+                    </td>
+                    <td>Anesthesia
+                    </td>
+                    <td>Consultant
+                    </td>
+                    <td>
+                        @for (int j = 0; j < item.OtDetails.Count; j++)
+                        {
+                            <span>@HospitalManagementSystem.Utility.GetDoctorName(item.OtDetails[j].PersonAllocatedID)</span>
+                            if (j < item.OtDetails.Count - 1)
+                            {
+                            <span>,</span>
+                            }
+
+                        }
+                    </td>
+                    <td>Remarks
+                    </td>
+                </tr>
+                        i++;
+            }
+        </table>
+        <br />
+    </div>
+</div>
+

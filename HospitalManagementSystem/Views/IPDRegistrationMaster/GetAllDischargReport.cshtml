@@ -1,0 +1,72 @@
+﻿
+@model HospitalManagementSystem.Models.IpdSearchResults
+
+
+
+  <div class="general-box clearfix"></div>
+
+        <div class="general-box clearfix"></div>
+
+            
+       <div class="boxWrapper"></div>
+    <div class="boxHeadingPanel"><h1>Results</h1></div>
+
+
+@if(Model.IpdSearchResultList!=null)
+{
+    <table class="table table-hover tablesorter">
+
+    <thead>
+        <tr>
+        <th>Ipd ResistrationId.</th>
+        <th>Name</th>
+        <th>Ward Number</th>
+        <th>Room Number</th>
+        <th>Bed Number</th>
+        <th>Action</th>
+
+       
+        </tr>
+
+    </thead>
+   
+   <tbody>
+
+     @foreach (var item in Model.IpdSearchResultList)
+     {
+         
+       
+         @Html.HiddenFor(modelItem=>item.IpdRegistrationNumber)
+         <tr>
+         <td>@item.IpdRegistrationNumber</td>
+         <td>@item.FullName</td>
+         <td>@item.WardNo</td>
+         <td>@item.RoomNo</td>
+         <td>@item.BedNo</td>
+
+   <td>
+
+      @* @Html.ActionLink("Print","Discharge","IpdRegistrationMaster",new {id=item.OpdEmrNumber})*@
+        @Html.ActionLink(linkText:"Print",actionName:"Discharge",controllerName:"IpdRegistrationMaster",routeValues:new{id=item.IpdRegistrationNumber},htmlAttributes:null)
+   </td>  
+         </tr>
+     }
+
+   </tbody>
+    
+</table>   
+    
+
+
+}
+
+    
+      
+else
+{
+    <div>
+
+
+    </div>
+}
+  

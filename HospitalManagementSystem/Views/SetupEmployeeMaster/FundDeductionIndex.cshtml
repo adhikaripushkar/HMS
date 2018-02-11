@@ -1,0 +1,113 @@
+﻿@model Hospital.Models.SetupEmployeeMasterModel
+
+@{
+    ViewBag.Title = "FundDeductionIndex";
+    Layout = "~/Views/Shared/_PayRollLayout.cshtml";
+}
+
+<div class="contentWrapper">
+    <p>
+        @Html.ActionLink("Create New", "FundDeductionSetup", null, new { @id = "linkNewBack" })
+    </p>
+    <div>
+        @using (Html.BeginForm("FundDeductionIndex", "SetupEmployeeMaster", FormMethod.Get))
+        {
+            <p>
+                @Html.TextBox("searchString")
+                <input type="submit" value="Search" />
+            </p>
+        }
+    </div>
+    <div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Employee Details</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+                                @Html.HiddenFor(model => model.EmployeeMasterId)
+                            <th>
+                                @Html.DisplayNameFor(model => model.EmployeeFullName)
+                            </th>
+                            <th>
+                                @Html.DisplayName("Year")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Month")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Fund(Amount)")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Fund(%)")
+                            </th>
+                            @Html.HiddenFor(model => model.CreatedDate)
+                            @Html.HiddenFor(model => model.CreatedBy)
+                            @Html.HiddenFor(model => model.Status)
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.SetupEmployeeMasterModelList)
+                        {
+                            <tr>
+                                @Html.HiddenFor(modelItem => item.EmployeeMasterId)
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EmployeeFullName)
+                                </td>                               
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.YearName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MonthName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FundAmount)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FundPercentage)
+                                </td>
+                                    @Html.HiddenFor(modelItem => item.CreatedDate)
+                                    @Html.HiddenFor(modelItem => item.CreatedBy)
+                                    @Html.HiddenFor(modelItem => item.Status)
+                                <td>
+                                    @Html.ActionLink("Edit", "FundDeductionEdit", new { id = item.id }) |
+                                    @Html.ActionLink("Delete", "DeleteFundDeductionSetup", new { id = item.id }, new { onclick = "return confirm('Do you want to delete?');" })                                   
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="boxFooter">
+
+        <div id="pager" style="">
+            <form>
+                <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                <select class="pagesize valid" style="width: 70px; height: 30px;">
+                    <option selected="selected" value="10">10</option>
+                    <option value="5">5</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                </select>
+            </form>
+        </div>
+
+    </div>
+
+   
+
+</div>
+
+

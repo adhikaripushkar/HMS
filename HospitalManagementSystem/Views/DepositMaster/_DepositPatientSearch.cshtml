@@ -1,0 +1,82 @@
+﻿@model HospitalManagementSystem.Models.PatientPartialDetails
+
+
+
+
+<div class="general-box clearfix">
+
+    <div class="general-box clearfix">
+
+        <div class="boxWrapper">
+            <div class="boxHeadingPanel">
+                <h1>Search Result</h1>
+            </div>
+            <table class="table table-hover tablesorter">
+                <thead>
+                    <tr>
+                        <th style="">
+                            @*@Html.DisplayNameFor(model => model.OpdID)*@
+                            <span>Patient Name</span>
+                        </th>
+                        <th>
+
+                            <span>Sex</span>
+                        </th>
+                        <th>
+
+                            <span>Age</span>
+                        </th>
+                        @*  <th>
+            @Html.DisplayNameFor(model => model.PatientFullName)
+        </th>*@
+
+
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+
+
+
+                    @foreach (var item in Model.PatientPartialDetailsList)
+                    {
+    
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PatientFullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Sex)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Age)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Deposit", "Create", new { id = item.PatientId, deptId=item.DepartmentID})
+                            </td>
+                        </tr>
+                        
+                    }
+
+
+
+                </tbody>
+
+            </table>
+
+
+
+
+
+        </div>
+
+
+
+        @*---------------*@
+
+    </div>
+</div>
+
+

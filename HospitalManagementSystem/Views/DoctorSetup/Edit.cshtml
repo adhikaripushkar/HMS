@@ -1,0 +1,295 @@
+﻿@model HospitalManagementSystem.Models.DoctorSetupModel
+
+@{
+    
+    ViewBag.Title = "Doctor Setup Edit";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+        j("#DobId").datepicker();
+        j("#JoiningDateId").datepicker();
+
+    });
+
+</script>
+<style>
+    #mngsize {
+        width: 208px;
+        height: 28px;
+    }
+    #DoctorDeptSelected {
+        //font-weight:bold;
+    }
+</style>
+
+<h2 style="text-align: center;">Doctor Setup</h2>
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("Edit", "DoctorSetup", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+  
+
+        <fieldset>
+
+            <legend>Edit</legend>
+
+            @Html.HiddenFor(model => model.DoctorID)
+
+            <div class="row-fluid singleline">
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.Title)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Title)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Title, new { @Value = "Dr" })
+                    </div>
+
+                </label>
+
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.FirstName)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FirstName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.FirstName)
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.MiddleName)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MiddleName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.MiddleName)
+
+                    </div>
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.LastName)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.LastName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.LastName)
+
+                    </div>
+                </label>
+
+
+            </div>
+
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.Sex)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Sex)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.Sex, Hospital.Utility.GetGenderList(), new { id = "mngsize" })
+
+                    </div>
+                </label>
+
+
+
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.DOB)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.DOB)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.DOB, @Model.DOB.Value.ToShortDateString(), new { @id = "DobId" })
+
+                    </div>
+                </label>
+
+
+
+                <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.JoiningDate)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.JoiningDate)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.JoiningDate, @Model.JoiningDate.Value.ToShortDateString(), new { @id = "JoiningDateId" })
+
+                    </div>
+                </label>
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.DoctorType)</div>
+                    <div>
+
+                        @Html.LabelFor(model=>model.DoctorType)
+
+                    </div>
+                    <div>
+
+                        @Html.DropDownListFor(model=>model.DoctorType,Hospital.Utility.GetDoctorType(),"Select")
+                    </div>
+
+                </label>
+
+
+
+
+
+            </div>
+
+
+
+            <div class="row-fluid singleline">
+                
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.Email)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Email)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Email)
+
+                    </div>
+
+                </label>
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.MobileNumber)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MobileNumber)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.MobileNumber)
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PhoneNumber)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.PhoneNumber)
+                        @Html.ValidationMessageFor(model => model.PhoneNumber)
+                    </div>
+                </label>
+
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Address)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Address)
+                        @Html.ValidationMessageFor(model => model.Address)
+                    </div>
+
+                </label>
+
+                @*<label>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Status)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Status)
+                        &nbsp&nbsp; @Html.ValidationMessageFor(model => model.Status)
+                    </div>
+
+
+                </label>*@
+                <div></div>
+                <label>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Remarks)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Remarks)
+                        @Html.ValidationMessageFor(model => model.Remarks)
+                    </div>
+                </label>
+                <br />
+                
+
+                
+                
+
+
+
+            </div>
+
+
+
+        </fieldset>
+   
+
+                
+        <fieldset>
+            <legend style="font-size: large; color: #1C5183;">Select Department</legend>
+            <div style="border: solid 1px black; height: 360px;">
+
+
+
+                @for (int i = 0; i < Model.checkBoxlistModel.Count; i++)
+                {
+                    <div style="float: left; margin-left: 18px; margin-right: 18px; margin-top: 15px;">
+
+
+
+                        <div style="width: 130px; height: 35px; font-size:14px;">
+                            @Html.CheckBoxFor(m => Model.checkBoxlistModel[i].isSelected, new { @id="DoctorDeptSelected"})
+                            @Html.DisplayFor(m => Model.checkBoxlistModel[i].DeptName)
+                        </div>
+
+
+                    </div>
+            
+             
+                 
+                    @Html.HiddenFor(m => Model.checkBoxlistModel[i].DeptID)
+                    @Html.HiddenFor(m => Model.checkBoxlistModel[i].DeptName)
+   
+                }
+                <hr />
+
+            </div>
+        </fieldset>
+
+        
+        <br />
+
+        <p>
+            <input type="submit" value="Edit" />
+        </p>
+    
+    }
+
+
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+    </div>
+
+</div>

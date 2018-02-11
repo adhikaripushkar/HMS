@@ -1,0 +1,242 @@
+﻿@model HospitalManagementSystem.Models.JVMasterModel
+
+<style>
+    table#tblnoborder,
+    table#tblnoborder td {
+        border: none !important;
+    }
+
+    .font {
+        font-weight: bold;
+    }
+
+    .small-table td {
+        border: none;
+    }
+
+    .holder img {
+        max-height: 48px;
+        max-width: 55px;
+        object-fit: cover;
+    }
+
+
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+    }
+</style>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        text-align: center;
+        font-size: 13px;
+    }
+</style>
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+</script>
+
+<div class="contentWrapper">
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto; padding: 5px;">
+
+
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != null && @HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalManagementSystemLogo/@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() == "")
+        { 
+          <br />        
+        }
+        <div style="font: bold; font-size: 18px; text-align: center; height: 115px;">
+            @if (@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != null && @HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != "")
+            {
+                <span>@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName()</span>
+            }
+            <br />
+            @HospitalManagementSystem.Utility.GetHospitalManagementSystemName()<br />
+            <div style="height: 80px;">
+                <span style="font-size: 15px; text-align: center">@HospitalManagementSystem.Utility.HospitalManagementSystemAddress()</span><br />
+                <span style="font-size: 14px; text-align: center">Website:-@HospitalManagementSystem.Utility.HospitalManagementSystemUrl()</span><br />
+                <span style="font-size: 14px; text-align: center">Ph:-@HospitalManagementSystem.Utility.HospitalManagementSystemPhone()</span>
+
+            </div>
+
+        </div>
+        <h2 style="text-align: center;">Balance Sheet</h2>
+        <table border="0" style="width: 500px; margin-top: 20px;" align="center">
+            <tr>
+                <td>As On :&nbsp;@Model.objBalanceSheetModelView.EndDate.ToShortDateString() (@HospitalManagementSystem.Utility.getNepaliDate(@Model.objBalanceSheetModelView.EndDate.ToShortDateString()))
+                </td>                
+            </tr>
+        </table>
+        <br />
+
+        <table class="table">
+            <tr>
+                <th>
+                    <h4 style="text-align: center;">Equity And Liabilities</h4>
+                </th>
+                <th>
+                    <h4 style="text-align: center;">Current Year</h4>
+                </th>
+                <th>
+                    <h4 style="text-align: center;">Previous Year</h4>
+                </th>
+            </tr>    
+                @{  
+                decimal TotalCurrent = 0, TotalPrevious = 0, Current=0, Previous=0;           
+                HospitalManagementSystem.Providers.JVMasterProvider pro = new HospitalManagementSystem.Providers.JVMasterProvider();
+                Model.objBalanceSheetModelViewList = pro.GetBalanceSheetLiability(Model);
+                }
+                @foreach (var item in Model.objBalanceSheetModelViewList)
+                {
+                    Current = item.ClosingDr - item.ClosingCr*-1;
+                    Previous = item.PrevClosingDr - item.PrevClosingCr*-1;
+                    <tr>
+                    <td><h4>@item.AccountHeadName</h4></td>
+                    <td>
+                        <h3 style="text-align: right;">@Current</h3>
+                    </td>
+                    <td>
+                        <h3 style="text-align: right;">@Previous</h3>
+                    </td>
+                </tr>
+                    TotalCurrent =TotalCurrent-item.ClosingDr+item.ClosingCr;
+                    TotalPrevious = TotalPrevious - item.PrevClosingDr + item.PrevClosingCr;
+                }
+             <tr>
+                 <td><h3 style="text-align: right;">Total</h3></td>
+                 <td><h3 style="text-align: right;">@TotalCurrent</h3></td>
+                 <td><h3 style="text-align: right;">@TotalPrevious</h3></td>
+
+             </tr>
+        </table>
+
+        <br />
+
+        <table class="table">
+            <tr>
+
+                <th>
+                    <h4 style="text-align: center;">Assets</h4>
+                </th>
+                <th>
+                    <h4 style="text-align: center;">Current Year</h4>
+                </th>
+                <th>
+                    <h4 style="text-align: center;">Previous Year</h4>
+                </th>
+            </tr>                  
+                @{  
+                    Model.objBalanceSheetModelViewList = pro.GetBalanceSheetAssets(Model);
+                    TotalCurrent = 0; TotalPrevious = 0; Current = 0; Previous = 0;
+                }
+                @foreach (var item in Model.objBalanceSheetModelViewList)
+                {
+                    Current = item.ClosingDr - item.ClosingCr;
+                    Previous = item.PrevClosingDr - item.PrevClosingCr;
+                    <tr>
+                    <td><h4>@item.AccountHeadName</h4></td>
+                    <td>
+                        <h3 style="text-align: right;">@Current</h3>
+                    </td>
+                    <td>
+                        <h3 style="text-align: right;">@Previous</h3>
+                    </td>
+                </tr>
+                    TotalCurrent = TotalCurrent + item.ClosingDr - item.ClosingCr;
+                    TotalPrevious = TotalPrevious + item.PrevClosingDr - item.PrevClosingCr;
+                }
+             <tr>
+                 <td><h3 style="text-align: right;">Total</h3></td>
+                 <td><h3 style="text-align: right;">@TotalCurrent</h3></td>
+                 <td><h3 style="text-align: right;">@TotalPrevious</h3></td>
+
+             </tr>
+        </table>
+    </div>
+    <div style="float: right;">
+        <input type="button" id="export" style="width: 50px;" onclick="tableToExcel('printdiv', '')" value="Export" />
+        <input type="button" id="btnPrintDeposite" style="width: 50px; float: right;" value="Print" />
+    </div>
+
+</div>
+
+<script>
+
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+          , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+          , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+          , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+        return function (table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })()
+
+    var hh = $.noConflict();
+    hh('#btnPrintDeposite').click(function (e) {
+
+        e.preventDefault();
+        var msg = 'Do You Want To Print?';
+        var div = hh("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            resizable: false,
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0', 'alert("hi");');
+
+                        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+
+    });
+
+</script>

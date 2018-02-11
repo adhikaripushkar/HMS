@@ -1,0 +1,46 @@
+﻿@using Hospital.Helpers;
+@model Hospital.Models.PathoTestModel
+
+
+
+<style>
+
+    .SectionID
+    {
+        width:185px;
+    }
+    .TestID
+    {
+        width:185px;
+    }
+    .Price
+    {
+        width:185px;
+    }
+     </style>
+
+@using (Html.BeginCollectionItem("PathoTestModelList"))
+{
+    <div class="rowr">
+        
+            
+        @Html.DropDownListFor(model => model.SectionId, Model.GetPathoTestSection(), new { @class = "SectionId" })
+        @Html.ValidationMessageFor(model => model.SectionId)
+                
+
+            
+        @Html.DropDownListFor(model => model.TestId, Model.GetPathoTest(), new { @class = "TestId" })
+        @Html.ValidationMessageFor(model => model.TestId)
+                
+            
+        @Html.EditorFor(model => model.TestCode)
+        @Html.ValidationMessageFor(model => model.TestCode)
+              
+        @Html.EditorFor(model => model.Price,new {@class="Price" })
+        @Html.ValidationMessageFor(model => model.Price)
+            
+        <input type="button" class="row-button btn btn-warning" value="Remove" />
+            
+    </div>
+     
+}

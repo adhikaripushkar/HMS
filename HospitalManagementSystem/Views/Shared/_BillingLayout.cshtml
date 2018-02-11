@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - EHMS</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+
+
+    @Styles.Render("~/Content/css")
+
+
+    @*for designs*@
+
+    <link href="~/css/layout.css" rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
+    <link href="~/css/menu_assets/styles.css" rel="stylesheet" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+
+    @*for validation or many more*@
+
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.8.20.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+    @*<script src="~/Scripts/jquery.ui.datepicker.js"></script>*@
+
+    @*for talble sorter*@
+
+    <link href="~/Content/TableSort.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.4.4.min.js"></script>
+    <script src="~/Scripts/jquery.tablesorter.js"></script>
+    <script src="~/Scripts/jquery.tablesorter.pager.js"></script>
+
+
+
+    <script type="text/javascript">
+        var j = $.noConflict();
+        //j(function () {
+        //    j("table.tablesorter").tablesorter({ widthFixed: true, sortList: [[0, 0]] })
+        //    .tablesorterPager({ container: j("#pager"), size: j(".pagesize option:selected").val() });
+        //});
+    </script>
+
+
+</head>
+
+
+<body>
+
+    @Html.Partial("_Header")
+
+
+            <div class="leftMenu" style="margin-left: -10px; padding-top: 20px">
+
+                <div class="left-s-heading">
+                    <h1><a href='~/Billing/Main' title=""><span style="color: white;">Account Modules</span></a></h1>
+                </div>
+                <ul id="menu" class="nav">
+                    <li class="tables" style="text-align: left;"><a href='~/JVMaster/MainMenu' title=""><span style="font-size: 12px;">Journal Voucher</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/JVMaster/LedgerAccountHeadWise' title=""><span style="font-size: 12px;">Ledger Detail</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/JVMaster/GetAllTrialBalance' title=""><span style="font-size: 12px;">Trial Balance</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/JVMaster/PLSchedule' title=""><span style="font-size: 12px;">PL Schedule</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/JVMaster/BSSchedule' title=""><span style="font-size: 12px;">BS Schedule</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/JVMaster/GetBillDetailByUser/1' title=""><span style="font-size: 12px;">User Transaction Detail</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/JVMaster/GetBillDetailByDepartment/1' title=""><span style="font-size: 12px;">Department Transaction Detail</span></a> </li>
+                    @*<li class="tables" style="text-align: left;"><a href='~/JVMaster/GetCashHandover' title=""><span style="font-size: 12px;">Cash HandOver</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/JVMaster/HandOverReport' title=""><span style="font-size: 12px;">HandOver Report</span></a> </li>*@
+                    <li class="tables" style="text-align: left;"><a href='~/JVMaster/OpeningBalance' title=""><span style="font-size: 12px;">Opening Balance</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/JVMaster/BalanceSheet' title=""><span style="font-size: 12px;">Balance Sheet</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/JVMaster/IncomeAndExpenditure' title=""><span style="font-size: 12px;">Income And Expenditure</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/JVMaster/BankReconcilation' title=""><span style="font-size: 12px;">Bank Reconcilation</span></a> </li>
+
+                    <li class="tables" style="text-align: left;"><a href='~/JVMaster/ShowLedgerDetail' title=""><span style="font-size: 12px;">Patient Deposit Detail</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/Billing/GetBalanceDeposit' title=""><span style="font-size: 12px;">Deposit Detail</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/Billing/BillingDetails/1' title=""><span style="font-size: 12px;">SEARCH BY DATE</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/Billing/SearchBy' title=""><span style="font-size: 12px;">SEARCH BY ID/NAME</span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div id="body">
+        @RenderSection("featured", required: false)
+        <section class="">
+            @RenderBody()
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="footer">
+
+            <div class="footer-left"><span>© 2017. HospitalManagementSystem Management System. All Rights Reserved.</span> </div>
+            <div class="footer-right"><span>Designed and Developed by: Pushkar Adhikari</span> </div>
+        </div>
+    </footer>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+<script>
+
+    $(document).ready(function () {
+        $('#menu a').on('click', function () {
+            $('#menu a').removeClass('active');
+            $(this).addClass('active');
+
+        });
+    });
+
+</script>

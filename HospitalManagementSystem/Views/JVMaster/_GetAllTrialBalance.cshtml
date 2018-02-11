@@ -1,0 +1,354 @@
+﻿@model HospitalManagementSystem.Models.JVMasterModel
+
+<style>
+    table#tblnoborder,
+    table#tblnoborder td {
+        border: none !important;
+    }
+
+    .font {
+        font-weight: bold;
+    }
+
+    .small-table td {
+        border: none;
+    }
+
+
+
+    .holder img {
+        max-height: 48px;
+        max-width: 55px;
+        object-fit: cover;
+    }
+
+
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+    }
+</style>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        text-align: center;
+        font-size: 13px;
+    }
+</style>
+
+<script type="text/javascript">
+    function print()
+    {   
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+</script>
+
+<div class="contentWrapper">
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto; padding: 5px;">
+
+
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != null && @HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalManagementSystemLogo/@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() == "")
+        { 
+            
+            <br />
+        
+        }
+        <div style="font: bold; font-size: 18px; text-align: center; height: 115px;">
+            @if (@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != null && @HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != "")
+            {
+                <span>@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName()</span>
+            }
+            <br />
+            @HospitalManagementSystem.Utility.GetHospitalManagementSystemName()<br />
+            <div style="height: 80px;">
+                <span style="font-size: 15px; text-align: center">@HospitalManagementSystem.Utility.HospitalManagementSystemAddress()</span><br />
+                <span style="font-size: 14px; text-align: center">Website:-@HospitalManagementSystem.Utility.HospitalManagementSystemUrl()</span><br />
+                <span style="font-size: 14px; text-align: center">Ph:-@HospitalManagementSystem.Utility.HospitalManagementSystemPhone()</span>
+
+            </div>
+
+        </div>
+        <h2 style="text-align: center;">Trial Balance</h2>
+        <table border="0" style="width: 500px; margin-top: 20px;" align="center">
+            <tr>
+                <td>From Date :&nbsp;@Model.objGetAllTrialBalanceModelView.StartDate.ToShortDateString() (@HospitalManagementSystem.Utility.getNepaliDate(@Model.objGetAllTrialBalanceModelView.StartDate.ToShortDateString()))
+                </td>
+                <td>To Date :&nbsp;@Model.objGetAllTrialBalanceModelView.EndDate.ToShortDateString() (@HospitalManagementSystem.Utility.getNepaliDate(@Model.objGetAllTrialBalanceModelView.EndDate.ToShortDateString()))
+                </td>
+            </tr>
+        </table>
+        @Html.HiddenFor(model => Model.objGetAllTrialBalanceModelView.UpToLevel)
+        <br />
+
+         <table class="table">
+            <tr>
+                <th rowspan="2">
+                    <h4 style="text-align: center;">Particulars</h4>
+                </th>
+                <th colspan="2">
+                    <h4 style="text-align: center;">Opening Balance</h4>
+                </th>
+                <th colspan="2">
+                    <h4 style="text-align: center;">Transaction</h4>
+                </th>
+                <th colspan="2">
+                    <h4 style="text-align: center;">Closing Balance</h4>
+                </th>
+            </tr>
+            <tr>
+                <td> <h5 style="text-align: center;">Debit</h5></td>
+                <td> <h5 style="text-align: center;">Credit</h5></td>
+                <td> <h5 style="text-align: center;">Debit</h5></td>
+                <td> <h5 style="text-align: center;">Credit</h5></td>
+                <td> <h5 style="text-align: center;">Debit</h5></td>
+                <td> <h5 style="text-align: center;">Credit</h5></td>
+            </tr> 
+             @{
+                 decimal TotalOpngDr = 0, TotalOpngCr = 0, TotalTranDr = 0, TotalTranCr = 0, TotalClosingDr = 0, TotalClosingCr = 0;
+               }
+            @foreach (var item in Model.objGetAllTrialBalanceModelViewList)
+            {                
+                <tr>
+                    <td><h3>@item.MainHead</h3></td>
+                    <td>
+                        <h3 style="text-align: right;">@item.TotalOpeningDebit</h3>
+                    </td>
+                    <td>
+                        <h3 style="text-align: right;">@item.TotalOpeningCredit</h3>
+                    </td>
+                    <td>
+                        <h3 style="text-align: right;">@item.TotalDebit</h3>
+                    </td>
+                    <td>
+                        <h3 style="text-align: right;">@item.TotalCredit</h3>
+                    </td>
+                    <td>
+                        <h3 style="text-align: right;">@item.ClosingDr</h3>
+                   </td>
+                    <td>
+                        <h3 style="text-align: right;">@item.ClosingCr</h3>                       
+                    </td>
+                </tr>               
+                TotalOpngDr = TotalOpngDr + item.TotalOpeningDebit;
+                TotalOpngCr = TotalOpngCr + item.TotalOpeningCredit;
+                TotalTranDr = TotalTranDr + item.TotalDebit;
+                TotalTranCr = TotalTranCr + item.TotalCredit;
+                TotalClosingDr = TotalClosingDr + item.ClosingDr;
+                TotalClosingCr = TotalClosingCr + item.ClosingCr;
+                Model.objGetAllTrialBalanceModelView.Level = 2;
+                Model.objGetAllTrialBalanceModelView.ParentID = item.firstHierarchy;
+                if(Model.objGetAllTrialBalanceModelView.UpToLevel>=2)
+                {
+                HospitalManagementSystem.Providers.JVMasterProvider pro = new HospitalManagementSystem.Providers.JVMasterProvider();
+                Model.objGetAllTrialBalanceModelViewList1=pro.GetAllTrialBalance(Model);
+                foreach (var item1 in Model.objGetAllTrialBalanceModelViewList1)
+                {
+                    <tr>
+                    <td style="padding-left:20px" ><h4>@item1.SecondHead</h4></td>
+                    <td>
+                        <h4 style="text-align: right;">@item1.TotalOpeningDebit</h4>
+                    </td>
+                    <td>
+                        <h4 style="text-align: right;">@item1.TotalOpeningCredit</h4>
+                    </td>
+                    <td>
+                        <h4 style="text-align: right;">@item1.TotalDebit</h4>
+                    </td>
+                    <td>
+                        <h4 style="text-align: right;">@item1.TotalCredit</h4>
+                    </td>
+                    <td>
+                        <h4 style="text-align: right;">@item1.ClosingDr</h4>
+                   </td>
+                    <td>
+                        <h4 style="text-align: right;">@item1.ClosingCr</h4>                       
+                    </td>
+                </tr>
+              
+                    Model.objGetAllTrialBalanceModelView.Level = 3;
+                    Model.objGetAllTrialBalanceModelView.ParentID = item1.SecondID;
+                       if(Model.objGetAllTrialBalanceModelView.UpToLevel>=3)
+                {
+                    HospitalManagementSystem.Providers.JVMasterProvider pro1 = new HospitalManagementSystem.Providers.JVMasterProvider();
+                    Model.objGetAllTrialBalanceModelViewList2 = pro1.GetAllTrialBalance(Model);
+                    foreach (var item2 in Model.objGetAllTrialBalanceModelViewList2)
+                    {
+                    <tr>
+                    <td style="padding-left:35px"><h5>@item2.ThirdHead</h5></td>
+                    <td>
+                        <h5  style="text-align: right;">@item2.TotalOpeningDebit</h5>
+                    </td>
+                    <td>
+                        <h5 style="text-align: right;">@item2.TotalOpeningCredit</h5>
+                    </td>
+                    <td>
+                        <h5 style="text-align: right;">@item2.TotalDebit</h5>
+                    </td>
+                    <td>
+                        <h5 style="text-align: right;">@item2.TotalCredit</h5>
+                    </td>
+                    <td>
+                        <h5 style="text-align: right;">@item2.ClosingDr</h5>
+                   </td>
+                    <td>
+                        <h5 style="text-align: right;">@item2.ClosingCr</h5>                       
+                    </td>
+                </tr>
+                        Model.objGetAllTrialBalanceModelView.Level = 4;
+                        Model.objGetAllTrialBalanceModelView.ParentID = item2.ThirdID;
+                         if(Model.objGetAllTrialBalanceModelView.UpToLevel>=4)
+                {
+                        HospitalManagementSystem.Providers.JVMasterProvider pro2 = new HospitalManagementSystem.Providers.JVMasterProvider();
+                        Model.objGetAllTrialBalanceModelViewList3 = pro2.GetAllTrialBalance(Model);
+                        
+                        foreach (var item3 in Model.objGetAllTrialBalanceModelViewList3)
+                        {
+                    <tr>
+                    <td style="padding-left:45px"><h6>@item3.ForthHead</h6></td>
+                    <td>
+                        <h6 style="text-align: right;">@item3.TotalOpeningDebit</h6>
+                    </td>
+                    <td>
+                        <h6 style="text-align: right;">@item3.TotalOpeningCredit</h6>
+                    </td>
+                    <td>
+                        <h6 style="text-align: right;">@item3.TotalDebit</h6>
+                    </td>
+                    <td>
+                        <h6 style="text-align: right;">@item3.TotalCredit</h6>
+                    </td>
+                    <td>
+                        <h6 style="text-align: right;">@item3.ClosingDr</h6>
+                   </td>
+                    <td>
+                        <h6 style="text-align: right;">@item3.ClosingCr</h6>                       
+                    </td>
+                </tr>
+                         Model.objGetAllTrialBalanceModelView.Level = 5;
+                         Model.objGetAllTrialBalanceModelView.ParentID = item3.fourthID;
+                         if (item.firstHierarchy != 1 )
+                         {
+                             if (item.firstHierarchy != 3 )
+                             {
+                                 if(item2.ThirdID !=2157)
+                                 {
+                                     if (item2.ThirdID != 1255)
+                                   {
+                                      if(Model.objGetAllTrialBalanceModelView.UpToLevel>=5)
+                                       {
+                                        HospitalManagementSystem.Providers.JVMasterProvider pro3 = new HospitalManagementSystem.Providers.JVMasterProvider();
+                                        Model.objGetAllTrialBalanceModelViewList4 = pro3.GetAllTrialBalance(Model);
+                                        foreach (var item4 in Model.objGetAllTrialBalanceModelViewList4)
+                                        {
+                                            <tr>
+                                            <td style="padding-left:55px"><h6>@item4.FifthHead</h6></td>
+                                            <td>
+                                                <h6 style="text-align: right;">@item4.TotalOpeningDebit</h6>
+                                            </td>
+                                            <td>
+                                                <h6 style="text-align: right;">@item4.TotalOpeningCredit</h6>
+                                            </td>
+                                            <td>
+                                                <h6 style="text-align: right;">@item4.TotalDebit</h6>
+                                            </td>
+                                            <td>
+                                                <h6 style="text-align: right;">@item4.TotalCredit</h6>
+                                            </td>
+                                            <td>
+                                                <h6 style="text-align: right;">@item4.ClosingDr</h6>
+                                           </td>
+                                            <td>
+                                                <h6 style="text-align: right;">@item4.ClosingCr</h6>                       
+                                            </td>
+                                            </tr>
+                                          }
+                                         }
+                                        }
+                                       }
+                                      }
+                                     }
+                                    }
+                                   }
+                                  }
+                                 }
+                                }
+                               }
+                              }
+             <tr>
+                 <td><h3>Total</h3></td>
+                 <td><h3 style="text-align: right;">@TotalOpngDr</h3></td>
+                 <td><h3 style="text-align: right;">@TotalOpngCr</h3></td>
+                 <td><h3 style="text-align: right;">@TotalTranDr</h3></td>
+                 <td><h3 style="text-align: right;">@TotalTranCr</h3></td>
+                 <td><h3 style="text-align: right;">@TotalClosingDr</h3></td>
+                 <td><h3 style="text-align: right;">@TotalClosingCr</h3></td>
+             </tr>
+          </table>
+    </div>
+    <div style="float: right;">
+         <input type="button" id="export" style="width: 50px;" onclick="tableToExcel('printdiv', '')" value="Export" />
+        <input type="button" id="btnPrintDeposite" style="width: 50px; float: right;" value="Print" />
+    </div>
+
+</div>
+
+<script>
+
+    var hh = $.noConflict();
+    hh('#btnPrintDeposite').click(function (e) {
+
+        e.preventDefault();
+        var msg = 'Do You Want To Print?';
+        var div = hh("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            resizable: false,
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0', 'alert("hi");');
+
+                        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+
+    });
+
+</script>

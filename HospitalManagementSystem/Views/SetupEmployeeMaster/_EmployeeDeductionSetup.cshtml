@@ -1,0 +1,37 @@
+﻿@using Hospital.Helpers
+@model Hospital.Models.EmployeeDeductionSetupModel
+
+@using (Html.BeginCollectionItem("EmployeeDeductionSetupModelList"))
+{
+    <div class="row" style="margin-left: 0px;" id="clsdiv">
+        <table>
+            <tr>
+                <td>
+                 @Html.DropDownListFor(model => model.DeductionID, Hospital.Utility.GetAllDeduction(), new { @id="DeductionID", @class = "DedClass"})
+                </td>
+                <td>
+                 @Html.TextBoxFor(model => model.DeductionAmount, new { @class = "DeductionClass", @id="DeductionAmount" })
+                </td>
+                <td>
+                 <input type="button" class="row-button btn btn-warning" value="Remove" />
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+
+
+
+<script>
+
+    $(".DedClass").on("change", function (e) {
+        e.preventDefault();
+        var df = $(this).closest("tr");
+        var DeductId = df.find(".DedClass").val();
+        $.post('@Url.Action("GetDeductionAmount")', { ID: DeductId }, function (result) {               
+            df.find(".DeductionClass").val(result.Amount);
+        });
+    });
+
+</script>
+

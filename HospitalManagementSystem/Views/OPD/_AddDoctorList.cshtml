@@ -1,0 +1,24 @@
+﻿@using HospitalManagementSystem.Helpers;
+@model HospitalManagementSystem.Models.OpdDoctorListModel
+
+
+
+
+<style>
+    .DepartmentID {
+        width: 150px;
+    }
+</style>
+
+
+
+
+<tr>
+    <td>@Html.DropDownListFor(model => model.DepartmentID, Model.GetDepartmentList(), new { @class = "DepartmentID", @disabled = "disabled" })</td>
+    <td>@Html.DropDownListFor(model => model.DoctorID, Model.GetDoctorList(), new { @class = "DepartmentID", @disabled = "disabled" })</td>
+    <td>@Convert.ToDateTime(Model.PreferDate).ToShortDateString()</td>
+    <td>@Html.DisplayFor(model => model.PreferTime)</td>
+
+</tr>
+
+

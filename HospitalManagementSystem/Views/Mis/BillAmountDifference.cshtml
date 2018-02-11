@@ -1,0 +1,145 @@
+﻿@model HospitalManagementSystem.Models.MisModel
+
+@{
+    ViewBag.Title = "BillAmountDifference";
+    Layout = "~/Views/Shared/_SecurityModelLayout.cshtml";
+    decimal TotalAmountValue = Convert.ToDecimal(0);
+}
+<script>
+    var j = $.noConflict();
+    j(document).ready(function (e) {
+
+        $('#FromDateString').val("");
+        $('#TodateString').val("");
+
+        $("#FromDateString").attr("value", "@DateTime.Now.ToShortDateString()");
+        $("#TodateString").attr("value", "@DateTime.Now.ToShortDateString()");
+
+
+        j("#FromDateString").datepicker();
+        j("#TodateString").datepicker();
+
+    });
+
+
+</script>
+<h2 style="text-align: center;">Bill Detail</h2>
+<div class="contentWrapper">
+
+    <div class="general-box clearfix">
+        <div style="font-weight: bold;">
+            @using (Html.BeginForm("BillAmountDifference", "Mis", FormMethod.Get))
+            {
+                <p>
+                    <span style="font-size: 14px; font-weight: bold;">From:&nbsp;&nbsp;</span>@Html.TextBox("FromDateString")
+                    <span style="font-size: 14px; font-weight: bold;">To:&nbsp;&nbsp;</span>@Html.TextBox("TodateString")
+                    <input type="submit" value="Search" />
+                </p>
+            }
+        </div>
+
+        <div class="general-box clearfix">
+
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Details</h1>
+                </div>
+                <div id="DateDetails"></div>
+                <div id="PrintDiv">
+                    <table class="table table-hover tablesorter">
+
+                        <tr>
+                            <th>Bill No</th>
+                            <th>Bill Date</th>
+                            <th>Income Amount</th>
+                            <th>Payment Amount</th>
+                            <th>Difference Amount</th>
+                            <th>Action</th>
+                        </tr>
+
+                        @foreach (var item in Model.BillAmountDifferenceModelList)
+                        {     
+                            <tr>
+                                <td>@item.BillNo</td>
+                                <td>@item.BillDate</td>
+                                <td>@item.DetailAmount</td>
+                                <td>@item.PaymentAmount</td>
+                                <td>@item.DifferenceAmount</td>
+
+
+                                @if (@item.DifferenceAmount > 0)
+                                {
+                                    <td style="color: #f00; font-weight: bold;">@Html.ActionLink("CheckBill", "CheckBill","Mis", new { @id=item.BillNo},null)</td>
+                                }
+                                else
+                                {
+                                    <td>Okay</td>
+                                }
+
+
+                            </tr> 
+                                TotalAmountValue += item.DifferenceAmount;
+                        }
+                        <tr style="font-weight: bold;">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Total Difference :</td>
+                            <td>@TotalAmountValue</td>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <span style="float: right;">
+            <input type="button" id="btnPrint" style="width: 50px;" onclick="print()" value="Print" />
+        </span>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var hhv = $.noConflict();
+    function print() {
+        var msg = 'Do You Want To Print?';
+        var div = hhv("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            resizable: false,
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0', 'alert("hi");');
+
+                        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('PrintDiv').innerHTML.toString());
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+    };
+</script>
+
+
+
+
+
+
+
+
+

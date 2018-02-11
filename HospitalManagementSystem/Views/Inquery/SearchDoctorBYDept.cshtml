@@ -1,0 +1,29 @@
+﻿@model HospitalManagementSystem.Models.DoctorPartialDetails
+@{
+    ViewBag.Title = "SearchDoctorBYDept";
+    Layout = "~/Views/Shared/_DashboardInqueryLayout.cshtml";
+}
+
+<div class="contentWrapper">
+
+    @if (ViewBag.msz != null)
+    {
+            
+        @ViewBag.msz;
+    }
+    @using (Html.BeginForm("SearchDoctorBYDept", "Inquery", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        <div style="">
+            <span>Department Name:</span>@Html.DropDownList("srchDetpId", HospitalManagementSystem.Utility.GetDepartmentList().Take(20), "Select One", new { @class = "srchvaldept",@style = "width: 150px" })
+            <input type="submit" value="Find" id="btnsubmit" />
+        </div>
+    }
+
+    <br />
+
+    <div id="oldSearchResultidd">
+        @Html.Partial("_DocSearchDept",Model)
+    </div>
+
+</div>
+

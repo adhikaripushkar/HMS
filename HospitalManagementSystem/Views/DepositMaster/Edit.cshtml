@@ -1,0 +1,158 @@
+﻿@model HospitalManagementSystem.Models.DepositMasterModel
+
+@{
+    ViewBag.Title = "Deposit";
+    Layout = "~/Views/Shared/_BillingCounterLayout.cshtml";
+}
+
+<script>
+    var j = $.noConflict();
+    j(document).ready(function (e) {
+        //j('#DepoDate').val("");
+        //  j("#DepoDate").attr("value", "@DateTime.Now.ToShortDateString()");
+        j("#DepoDate").datepicker();
+    });
+</script>
+
+<div class="contentWrapper">
+
+
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.PatientDepositMasterId)
+
+        <fieldset>
+            <div class="bs-docs-example form-inline">
+                <legend>Edit</legend>
+
+
+
+                <div class="row-fluid singleline">
+
+
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.PatientId)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.PatientId, new { @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.PatientId)
+                        </div>
+                    </label>
+
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DepartmentId)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.DepartmentId, new { @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.DepartmentId)
+                        </div>
+                    </label>
+
+                    <label>
+
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.PatientDepartmentId)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.PatientDepartmentId, new { @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.PatientDepartmentId)
+                        </div>
+                    </label>
+
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.objPatientPartialDetail.PatientFullName)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.objPatientPartialDetail.PatientFullName, new { @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.objPatientPartialDetail.PatientFullName)
+                        </div>
+
+
+                    </label>
+
+                </div>
+                <div class="row-fluid singleline">
+
+                    <label>
+
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DepositedAmount)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.DepositedAmount,new { @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.DepositedAmount)
+                        </div>
+                    </label>
+
+                    <label>
+
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DepositedDate)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.DepositedDate, @Model.DepositedDate.ToShortDateString(), new { @id = "DepoDate", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.DepositedDate)
+                        </div>
+                    </label>
+
+                    <label>
+
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DepostedBy)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.DepostedBy)
+                            @Html.ValidationMessageFor(model => model.DepostedBy)
+                        </div>
+                    </label>
+
+                    <label>
+
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.RelationId)
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.RelationId, Hospital.Utility.GetRelationTypeDD())
+                            @Html.ValidationMessageFor(model => model.RelationId)
+                        </div>
+                    </label>
+
+                </div>
+                <div class="row-fluid singleline">
+
+                    <label>
+
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DepositeType)
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.DepositeType, HospitalManagementSystem.Utility.GetDepositeType(),new { @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.DepositeType)
+                        </div>
+                    </label>
+                </div>
+
+                <p>
+                    <input type="submit" value="Edit" />
+                </p>
+
+            </div>
+        </fieldset>
+    }
+
+    <div id="linkNewBack">
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

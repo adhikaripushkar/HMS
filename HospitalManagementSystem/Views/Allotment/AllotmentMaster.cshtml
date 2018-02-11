@@ -1,0 +1,99 @@
+﻿@model HospitalManagementSystem.Models.AllotmentMasterModel
+
+@{
+    ViewBag.Title = "AllotmentMaster";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+
+
+<h2 style="text-align:center;">Allotment Details</h2>
+<p>
+    @TempData["message"]
+</p>
+<div class="contentWrapper">
+
+ 
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+    <h1>Allotment List</h1>
+
+                </div>
+<table class="table table-hover tablesorter">
+    <thead>
+    <tr>
+       
+        <th>
+            Allotment No.
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AllotmentDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Orderer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrdererPost)
+        </th>
+       
+        <th>Actions</th>
+    </tr>
+        </thead><tbody>
+@foreach (var item in Model.AllotmentMasterList) {
+    <tr>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemAllotmentNo)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.AllotmentDate)*@
+
+            @Convert.ToDateTime(item.AllotmentDate).ToShortDateString()
+
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Orderer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrdererPost)
+        </td>
+      
+        <td>
+          
+            @Html.ActionLink("Details", "AllotmentDetails", new { id=item.ItemAllotmentMasterID }) |
+            @Html.ActionLink("Allotment Report", "AllotmentReport", new { id=item.ItemAllotmentMasterID })
+        </td>
+    </tr>
+}
+</tbody>
+</table>
+            </div></div></div>
+    <div class="boxFooter">
+                   
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+
+               </div>
+<br />
+@*<p id="linkNewBack">
+     @Html.ActionLink("Back","Index")
+</p>*@
+    </div>

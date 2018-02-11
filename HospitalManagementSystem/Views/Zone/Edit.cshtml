@@ -1,0 +1,45 @@
+﻿@model Hospital.Models.ZoneModel
+@{
+    ViewBag.Title = "Edit";
+}
+<h2>Edit</h2>
+  <div class="block-header">
+              
+ <div class="well" style="border-radius:0;">
+              <div class="side-by-side clearfix">
+           
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class="form-horizontal"}))
+{
+     @Html.ValidationSummary(true)
+        <div class="clearfix">
+                 
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                      <div class="contGroup">
+                         @Html.LabelFor(model => model.ZoneInEng)
+                          @Html.TextBoxFor(x =>x.ZoneInEng,new { @class="form-control"})
+                          
+                            @Html.ValidationMessageFor(model => model.ZoneInEng)
+
+                      </div>
+                    </div>
+                
+            </div>
+ 
+    
+    <div class="bottom_btn">
+                   
+        <a href="@Url.Action("Index","Zone")" class="btn btn-sm btn-warning"><i class="fa fa-undo"></i> Go Back</a>
+
+      
+                    <button type="submit" id="" name="" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                    
+                  </div>
+    
+}
+</div></div></div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

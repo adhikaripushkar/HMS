@@ -1,0 +1,246 @@
+﻿@model HospitalManagementSystem.Models.VitalForOthersModel
+
+
+
+
+
+
+
+
+@*Required Js and Css For TimePicker*@
+
+<link href="~/Content/themes/base/jquery.ui.timepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.ui.timepicker.js"></script>
+
+@*---------------------------*@
+
+<script>
+
+    var j = $.noConflict();
+    j(function ()
+    {
+        j("#Date").datepicker();
+        j("#VTime").timepicker();
+    });
+
+
+</script>
+
+<div class="bs-docs-example form-inline">
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Edit</legend>
+
+
+        <label>
+
+            <div class="editor-label">
+            @Html.HiddenFor(model => model.VitalForOtherId)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.VitalForOtherId, new{@readonly="true"})
+            @Html.ValidationMessageFor(model => model.VitalForOtherId)
+        </div>
+
+        </label>
+        <label>
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.OpdId)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.OpdId, new{@readonly="true"})
+            @Html.ValidationMessageFor(model => model.OpdId)
+        </div>
+              </label>
+      <div class="row-fluid singleline">
+
+          
+          <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AVPU)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AVPU)
+            @Html.ValidationMessageFor(model => model.AVPU)
+        </div>
+              </label>
+          <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Pulse)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Pulse)
+            @Html.ValidationMessageFor(model => model.Pulse)
+        </div>
+              </label>
+          <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BP_Left)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.BP_Left)
+            @Html.ValidationMessageFor(model => model.BP_Left)
+        </div>
+              </label>
+
+          <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BP_Right)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.BP_Right)
+            @Html.ValidationMessageFor(model => model.BP_Right)
+        </div>
+              </label>
+
+
+          </div>
+
+        <div class="row-fluid singleline">
+            <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RR)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RR)
+            @Html.ValidationMessageFor(model => model.RR)
+        </div>
+                </label>
+
+            <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SPO2)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SPO2)
+            @Html.ValidationMessageFor(model => model.SPO2)
+        </div>
+                </label>
+            <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TPR)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TPR)
+            @Html.ValidationMessageFor(model => model.TPR)
+        </div>
+                </label>
+            <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Wt)<span>(Kg)</span>
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Wt, new {@id="wtId",@onkeyup = "onchangeevent();" })
+            @Html.ValidationMessageFor(model => model.Wt)
+        </div>
+                </label>
+
+            <br />
+            <fieldset>
+               <h6>Height</h6>
+
+            <label>
+              
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Feet)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Feet, new{@id="FeetId",@onkeyup = "onchangeevent();",@style="width:90px;"})
+            @Html.ValidationMessageFor(model => model.Feet)
+        </div>
+                </label>
+            <label>
+                
+                <div class="editor-label">
+            @Html.LabelFor(model => model.Inch)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Inch, new{@id="inchId",@onkeyup = "onchangeevent();",@style="width:90px;" })
+            @Html.ValidationMessageFor(model => model.Inch)
+        </div>
+                </label>
+
+                <label>
+                       
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BMI)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.BMI, new {@id="BMIId" })
+            @Html.ValidationMessageFor(model => model.BMI)
+        </div>
+
+
+                </label>
+
+                <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Date)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Date)
+            @Html.ValidationMessageFor(model => model.Date)
+        </div>
+                </label>
+            <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.VTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.VTime)
+            @Html.ValidationMessageFor(model => model.VTime)
+        </div>
+                </label>
+
+                </fieldset>
+              
+
+            </div>
+        <div class="row-fluid singleline">
+
+
+            <label>
+
+        <div class="editor-label">
+           Elergery To Drugs
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.ElergeryToDrugs)
+            @Html.ValidationMessageFor(model => model.ElergeryToDrugs)
+        </div>
+                </label>
+
+            
+            <label>
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.PatinetLogId)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.PatinetLogId, new{ @readonly="true"})
+            @Html.ValidationMessageFor(model => model.PatinetLogId)
+        </div>
+            </label>
+
+            </div>
+
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+</div>
+
+

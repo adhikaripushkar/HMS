@@ -1,0 +1,282 @@
+﻿@model HospitalManagementSystem.Models.BillingCounterModel
+
+@{
+    ViewBag.Title = "PatientDscrgh";
+    Layout = "~/Views/Shared/_BillingCounterLayout.cshtml";
+    decimal SumTotalDeposit = Convert.ToDecimal(0);
+    decimal SumTotalByCash = Convert.ToDecimal(0);
+    decimal SumTotalByDeposit = Convert.ToDecimal(0);
+    decimal SumTotalTaxAmt = Convert.ToDecimal(0);
+
+
+    decimal OnlyTaxAmountOfCashTran = Convert.ToDecimal(0);
+    decimal OnlyTaxAmountOfDepoTran = Convert.ToDecimal(0);
+}
+
+
+<link href="~/Content/themes/bootstrap.min.css" rel="stylesheet" />
+<div id="printdiv">
+    <h2>Patient Discharge</h2>
+    <div class="contentWrapper">
+        <div class="general-box clearfix">
+            <div class="containerBoots">
+                <div class="row" style="font-size: 14px; font-weight: bold;">
+                    <div class="col-sm-1" style="width: 74px;">Patient Id :</div>
+                    <div class="col-md-2">@Model.ObjPatientDischageBillDetailsViewModel.PatientId</div>
+                    <div class="col-md-1" style="width: 66px;">Name :</div>
+                    <div class="col-md-4">@Hospital.Utility.GetPatientNameWithIdFromEmergency(Model.ObjPatientDischageBillDetailsViewModel.PatientId)</div>
+                </div>
+                <div class="row" style="font-size: 14px; font-weight: bold; margin-top: 4px;">
+                    <div class="col-sm-1" style="width: 74px;">Age/Sex :</div>
+                    <div class="col-md-2">@Model.ObjPatientDischageBillDetailsViewModel.Age</div>
+                    <div class="col-md-1" style="width: 66px;">Address :</div>
+                    <div class="col-md-4">@Model.ObjPatientDischageBillDetailsViewModel.Address</div>
+                </div>
+                <hr />
+                <div class="row" style="margin-top: 10px;">
+                    <h3>Deposit Detail</h3>
+                </div>
+
+
+                <div class="table-responsive" style="font-size: 13px;">
+                    <table class="table" style="width: 50%;">
+                        <tr>
+                            <th class="active">Date</th>
+                            <th class="warning">By</th>
+                            <th class="active">Amount</th>
+                            <th class="active">User</th>
+
+                        </tr>
+                        @foreach (var item in Model.PatientDischageBillDetailsListDeposit)
+                        {
+                            <tr>
+
+                                <td class="info">@item.BillDate.ToShortDateString()</td>
+                                <td class="info">@item.FirstName</td>
+                                <td class="info">@item.DepositAmount</td>
+                                <td class="info">@Hospital.Utility.GetEmployeeNameFromEmpID(item.CreatedUser)</td>
+                            </tr>
+                            SumTotalDeposit += item.DepositAmount;
+                        }
+                        <tr style="font-weight: bold;">
+                            <td>Total</td>
+                            <td></td>
+                            <td>
+                                @SumTotalDeposit
+
+                            </td>
+                            <td></td>
+                        </tr>
+
+
+                    </table>
+
+                </div>
+                @*<div>Total Deposit : @SumTotalDeposit</div>*@
+                <div class="row" style="margin-top: 10px;">
+                    <h3>Transaction By Cash And Deposit</h3>
+                </div>
+                <div class="table-responsive" style="font-size: 13px;">
+                    <table class="table" style="width: 50%;">
+                        <tr>
+                            <th class="active">Date</th>
+                            <th class="warning">Particulars</th>
+                            <th class="active">Amount</th>
+                            <th class="active">User</th>
+
+
+                        </tr>
+                        @foreach (var item in Model.PatientDischageBillDetailsListByCash)
+                        {
+                            if (item.AccountMainHeadId != 1261)
+                            {
+                            <tr>
+
+                                <td class="info">@item.BillDate.ToShortDateString()</td>
+                                <td class="info">@item.Particulars</td>
+                                <td class="info">@item.BillAmount</td>
+                                <td class="info">@Hospital.Utility.GetEmployeeNameFromEmpID(item.CreatedBy)</td>
+
+                            </tr>
+                            
+                                SumTotalByCash += item.BillAmount;
+                            }
+                            else
+                            {
+                                OnlyTaxAmountOfCashTran += item.BillAmount;
+                            }
+                        }
+
+                        <tr style="font-weight: bold;">
+                            <td colspan="2">Particular Total :
+                            </td>
+                            
+                            <td>
+                                @SumTotalByCash
+
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr style="font-weight: bold;">
+                            <td colspan="2">5 % Health tax :
+                            </td>
+                            
+                            <td>
+                                @OnlyTaxAmountOfCashTran
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr style="font-weight: bold;">
+                            <td colspan="2">Grand Total :
+                            </td>
+                            
+                            <td>
+                                @{decimal GrndTotal = SumTotalByCash + OnlyTaxAmountOfCashTran;
+                                  }
+                                @GrndTotal
+                            </td>
+                            <td></td>
+                        </tr>
+
+                    </table>
+
+                </div>
+                @* <div>Total Transaction By Cash : @SumTotalByCash</div>
+           
+                <div>Grand Total : @SumTotalByCash</div>*@
+                <div class="row" style="margin-top: 10px;">
+                    @*<h3>Transaction By Deposit</h3>*@
+                    <h3>Transaction By Centralized Billing</h3>
+                </div>
+                <div class="table-responsive" style="font-size: 13px;">
+                    <table class="table" style="width: 50%;">
+                        <tr>
+                            <th class="active">Date</th>
+                            <th class="warning">Particulars</th>
+                            <th class="active">Amount</th>
+                            <th class="active">User</th>
+
+                        </tr>
+
+                        @foreach (var item in Model.PatientDischageBillDetailsByDepoViewModelList)
+                        {
+                            if(item.AccountMainHeadId!=1261)
+                            {
+                            <tr>
+
+                                <td class="info">@item.DepoBillDate.ToShortDateString()</td>
+                                <td class="info">@item.DepoParticulars</td>
+                                <td class="info">@item.DepoBillAmount</td>
+                                <td class="info">@Hospital.Utility.GetEmployeeNameFromEmpID(item.CreatedUser)</td>
+
+
+                            </tr>
+                            SumTotalByDeposit += item.DepoBillAmount;
+                            }else{
+                                OnlyTaxAmountOfDepoTran += item.DepoBillAmount;
+                            }
+
+                        }
+                        <tr style="font-weight: bold;">
+                            <td colspan="2">Particular Total :
+                            </td>
+                            
+                            <td>
+                                @SumTotalByDeposit
+                            </td>
+                            <td></td>
+                        </tr>
+
+                        <tr style="font-weight: bold;">
+                            <td colspan="2">5 % Health Tax :
+                            </td>
+                            
+                            <td>
+                                @OnlyTaxAmountOfDepoTran
+                            </td>
+                            <td></td>
+                        </tr>
+
+                        <tr style="font-weight: bold;">
+                            <td colspan="2">Grand Total :
+                            </td>
+                            
+                            <td>
+                                @{decimal GrandTotalByDepo = SumTotalByDeposit + OnlyTaxAmountOfDepoTran;}
+                                @GrandTotalByDepo
+                            </td>
+                            <td></td>
+                        </tr>
+
+
+                    </table>
+                    @*<span>Total Transaction By Deposit</span>@SumTotalByDeposit*@
+
+                </div>
+
+                <div class="row" style="margin-top: 10px;">
+
+                    <h3>Balance Deposit</h3>
+                    @{var totalDepo = Convert.ToDecimal(0);
+                      if (SumTotalDeposit > 0)
+                      {
+                          totalDepo = SumTotalDeposit - SumTotalByDeposit;
+                      }
+                  
+                    }
+
+                    <h3>Total Balance Deposit : &nbsp;@Model.ObjDepositRefundViewModel.RemainingAmount</h3>
+                </div>
+                <div>
+                    @Html.ActionLink("Refund", "DepositRefund", new { @id = Model.ObjPatientDischageBillDetailsViewModel.PatientId }, null)
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div style="float: right;">
+        <input type="button" id="btnPrintTestReport" style="width: 50px; float: right;" value="Print" />
+    </div>
+    <div class="clearfix"></div>
+</div>
+<script>
+
+    var hh = $.noConflict();
+    hh('#btnPrintTestReport').click(function (e) {
+
+        e.preventDefault();
+        var msg = 'Do You Want To Print?';
+        var div = hh("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            resizable: false,
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0', 'alert("hi");');
+
+                        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+
+    });
+
+</script>

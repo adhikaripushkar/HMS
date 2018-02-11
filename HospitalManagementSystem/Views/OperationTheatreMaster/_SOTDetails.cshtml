@@ -1,0 +1,121 @@
+﻿@model HospitalManagementSystem.Models.OperationTheatreMasterModel
+<script type="text/javascript">
+    function print() {
+
+        var values = document.getElementById('SearchOperationTheatreDetails').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+  
+  </script>
+<script type="text/javascript">
+    $('#btnExport').click(function (e) {
+        window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#printdiv').html()));
+        e.preventDefault();
+    });
+</script>
+  <div id="printdiv">
+  <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+
+                <div class="boxHeadingPanel">
+                    <h1>Operation Theatre Details</h1>
+                </div>
+
+
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.OperationDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OperationStartTime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OperationEndTime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OperationRoomID)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.SourceID)
+                            </th>
+                            <th>Patient Name</th>
+                            <th>Address</th>
+                         
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OperationTheatreMasterList)
+                        {
+                            <tr>
+
+                                <td style="text-align:center;">
+                                    @*@Html.DisplayFor(modelItem => item.OperationDate)*@
+
+                                    @Convert.ToDateTime(item.OperationDate).ToShortDateString()
+                                </td>
+                                <td style="text-align:center;">
+                                    @Html.DisplayFor(modelItem => item.OperationStartTime)
+                                </td>
+                                <td style="text-align:center;">
+                                    @Html.DisplayFor(modelItem => item.OperationEndTime)
+                                </td>
+                                 <td style="text-align:center;">
+                                    @HospitalManagementSystem.Utility.GetOperationRoomName(item.OperationRoomID)
+                                </td>
+
+
+                               <td style="text-align:center;">
+                                    @Html.DisplayFor(modelItem => item.SourceID)
+                                </td>
+                                <td style="text-align:center;">
+                                    @HospitalManagementSystem.Utility.GetPatientNameWithIdFromEmergency(item.SourceID)
+                                </td>
+                               <td style="text-align:center;">
+                                    @HospitalManagementSystem.Utility.GetOpdAddress(item.SourceID)
+                                </td>
+                                 </tr>
+                        }
+                    </tbody>
+                </table>
+                </div>
+            </div>
+      </div>
+      </div>
+ @* <div style="width: 715px; margin-top: 20px;">
+        <input type="button" id="btnPrint" style="width: 60px; float: right; margin-right: 110px;" onclick="print()" value="Print" />*@
+        <div style="margin-top: 15px;">
+        <p>
+            <input type="button" id="btnPrint" value="Print" onclick="print()" class="btn btn-primary" />
+             <input type="button" id="btnExport"  value="Export" class="btn btn-primary" />
+        </p>
+        <p>
+            
+        </p>
+    </div>
+
+
+
+  @*  </div>*@
+
+      
+     
+

@@ -1,0 +1,133 @@
+﻿@model HospitalManagementSystem.Models.Employee
+
+@{
+    ViewBag.Title = "More";
+    Layout = "~/Views/Shared/_LayOutManageForEmp.cshtml";
+}
+
+
+
+<div class="leftMenu"style="margin-left:-260px;">
+<div class="left-s-heading">
+  <h1>Modules</h1>
+  </div>
+      <ul id="menu" class="nav">
+          <li class=""><a href='~/Emp/Name' title="" class="linkAddress"><span>Name</span></a> </li>
+
+        <li class=""><a href='~/Emp/Address' title="" class="linkAddress"><span>Address</span></a></li>
+
+        <li class="test"><a href='~/SetUpHospitalManagementSystemFee/Index' title="" id="yy"><span>Phone No</span></a></li>
+          <li class="charts"><a href='~/SetUpHospitalManagementSystemFeeDiscount/Index' title=""><span>Education</span></a></li>
+
+@*        <li class="forms"><a href='~/SetUpIpdRoom/Index' title=""><span>Ipd Room Setup</span></a> </li>
+        <li class="ui"><a href='~/SetUpIpdWard/Index' title=""><span>Ipd Ward Setup</span></a></li>
+        <li class="tables"><a href='~/SetUpSection/Index' title=""><span>Section Setup</span></a> </li>
+        <li class="widgets"><a href='~/MemberTypeSetup/Index' title=""><span>Member Type Setup</span></a> </li>
+          <li class="widgets"><a href='~/MemberTypeDiscount/Index' title=""><span>Member Type Discount Setup</span></a> </li>
+          <li class="widgets"><a href='~/Relationship/Index' title=""><span>Relationship Setup</span></a> </li>
+          <li class="widgets"><a href='~/FiscalYear/Index' title=""><span>FiscalYear</span></a> </li>
+          <li class="widgets"><a href='~/DoctorSetup/Index' title=""><span>Doctor Setup</span></a> </li>*@
+       
+      </ul>
+    </div>
+<div class="contentWrapper">
+ 
+
+
+<fieldset>
+
+   
+
+    <legend>Employee:
+
+        @Html.HiddenFor(model => model.id, new { id="empId"})<span>-</span>
+        @Html.DisplayFor(model => model.name)
+    </legend>
+
+    <div id="load"></div>
+
+  @*   <div class="display-label">
+         @Html.DisplayFor(model => model.name)
+    </div>*@
+
+    @*<div class="display-label">
+         @Html.DisplayNameFor(model => model.name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.address)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.address)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.mobileNo)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.mobileNo)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Education)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Education)
+    </div>*@
+</fieldset>
+@*<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@
+    </div>
+
+
+<script>
+
+
+    $(".linkAddress").click(function(e)
+    {
+
+        e.preventDefault();
+        alert('hi');
+
+        var data = $('#empId').val();
+
+        alert(data);
+
+        var url = this.href;
+
+      
+
+
+
+        $.get(url, { id: data }, function (res) {
+
+            $("#load").html(res);
+
+        });
+
+    
+        })
+
+     
+
+    
+
+
+
+</script>
+
+
+@*<script type="text/jscript">
+    $('#SubmitName').click(function () {
+        var url = "/Home/WelcomeMsg";
+        var name = $('#Name').val();
+        $.get(url, { input: name }, function (data) {
+            $("#rData").html(data);
+        });
+    })
+</script>*@

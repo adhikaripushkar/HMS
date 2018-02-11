@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - EHMS</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="~/fontaw/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width" />
+
+
+
+    @Styles.Render("~/Content/css")
+
+
+    @*for designs*@
+
+    <link href="~/css/layout.css" rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
+    <link href="~/css/menu_assets/styles.css" rel="stylesheet" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+    @*for validation or many more*@
+
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.8.20.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    @*<script src="~/Scripts/jquery.ui.datepicker.js"></script>*@
+
+
+    @*for talble sorter*@
+
+    <link href="~/Content/TableSort.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.4.4.min.js"></script>
+    <script src="~/Scripts/jquery.tablesorter.js"></script>
+    <script src="~/Scripts/jquery.tablesorter.pager.js"></script>
+
+
+
+    <script type="text/javascript">
+        var j = $.noConflict();
+        j(function () {
+            j("table.tablesorter").tablesorter({ widthFixed: true, sortList: [[0, 0]] })
+            .tablesorterPager({ container: j("#pager"), size: j(".pagesize option:selected").val() });
+        });
+    </script>
+
+
+    <style type="text/css">
+        .layer1 {
+            margin: 0;
+            padding: 0;
+            width: 500px;
+        }
+
+        .heading {
+            margin: 1px;
+            color: black;
+            padding: 3px 10px;
+            cursor: pointer;
+            position: relative;
+            background-color: #C5B971;
+        }
+
+        .content {
+            padding: 5px 10px;
+            background-color: #fafafa;
+            height: auto;
+        }
+    </style>
+
+
+
+</head>
+
+
+<body>
+
+    @Html.Partial("_Header")
+
+
+    <div class="leftMenu" style="margin-left: -10px; padding-top: 20px">
+        <div class="left-s-heading">
+
+            <h2><a href='~/PatientTest/Index' title=""><span style="color: white;">Patient Test Modules</span></a></h2>
+        </div>
+        <ul id="menu" class="nav" style="font-size: 14px; text-align: left;">
+            @*<li class="tables"><a href='~/PatientTest/Index' title=""><span>Patient Test</span></a> </li>*@
+            <li class="tables"><a href='~/PatientTest/BillPaidTest' title=""><span>Paid Test List</span></a> </li>
+            @* <li class="tables"><a href='~/PatientTest/Create' title=""><span>Test Create</span></a> </li>*@
+            @*<li class="tables"><a href='~/PatientTest/SampleCollectedIndex' title=""><span>Sample Collected List</span></a> </li>*@
+            <li class="tables"><a href='~/PatientTestResult/Create' title=""><span>Test Result</span></a> </li>
+            <li class="tables"><a href='~/PatientTestResult/PatientReport' title=""><span>Test Report</span></a> </li>
+
+            @*<li class="tables"><a href='~/PatientTestResult/SearchPatient' title=""><span>Other Tests</span></a> </li>*@
+            <li class="tables"><a href='~/PatientTestResult/OtherTestMenu' title=""><span>Other Tests</span></a> </li>
+            <li class="tables"><a href='~/PatientTest/DisplayCommission' title=""><span>Add Commission Details</span></a> </li>
+
+            <li class="tables"><a href="#" title=""><span></span></a></li>
+            <li class="tables"><a href="#" title=""><span></span></a></li>
+
+            <li class="tables"><a href="#" title=""><span><h5>Pathology Package Setup</h5></span></a></li>
+            @*<li class="tables">
+                <span style="color: white;"></span>
+            </li>*@
+
+
+
+            <li class="tables"><a href='~/Package/Index' title=""><span>Create Package</span></a> </li>
+
+        </ul>
+    </div>
+
+
+    </nav>
+
+        </header>
+
+
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="">
+                @RenderBody()
+            </section>
+
+        </div>
+
+    <footer>
+        <div class="footer">
+
+            <div class="footer-left"><span>© 2017. HospitalManagementSystem Management System. All Rights Reserved.</span> </div>
+            <div class="footer-right"><span>Designed and Developed by: Pushkar Adhikari</span> </div>
+        </div>
+    </footer>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+    </div>
+</body>
+
+</html>
+
+
+<script>
+
+
+    $(document).ready(function () {
+        $('#menu a').on('click', function () {
+            $('#menu a').removeClass('active');
+            $(this).addClass('active');
+
+        });
+    });
+
+
+
+
+</script>

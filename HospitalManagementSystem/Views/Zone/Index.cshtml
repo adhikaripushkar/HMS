@@ -1,0 +1,134 @@
+﻿@model Hospital.Models.ZoneModel
+
+@{
+    ViewBag.Title = "Index";
+    int i = 1;
+}
+
+<h2>Zone List </h2>
+
+
+
+<script type = "text/javascript">
+    var j = jQuery.noConflict();
+
+    j(document).ready(function () {
+     
+        j('.message').delay(10000).fadeOut();
+
+
+    });
+
+</script>
+
+
+ 
+@if (TempData["Msg"] != null)
+{
+<div  class="alert alert-success message" onload="startTimer()" >
+                            <button type="button" class="close" data-dismiss="alert"> <i class="ace-icon fa fa-times"></i> </button>
+                            <strong> <i class="ace-icon fa fa-envelope"></i>  </strong>@TempData["Msg"]<br>
+    </div>
+
+}
+@if (TempData["MsgError"] != null)
+{
+    <div  class="alert alert-success message" onload="startTimer()" >
+                            <button type="button" class="close" data-dismiss="alert"> <i class="ace-icon fa fa-times"></i> </button>
+                            <strong> <i class=" fa fa-exclamation-triangle"></i>  </strong>Oops error,Something went wrong: @TempData["MsgError"]<br>
+    </div>
+
+}
+@if (TempData["MsgFail"] != null)
+{
+     <div  class="alert alert-success message" onload="startTimer()" >
+                            <button type="button" class="close" data-dismiss="alert"> <i class="ace-icon fa fa-times"></i> </button>
+                            <strong> <i class=" fa fa-exclamation-triangle"></i>  </strong>Oops error,Something went wrong: @TempData["Msg"]<br>
+    </div>
+}
+
+ @* <div class="block-header">
+                <h4 class="block-title">Index</h4>
+              </div>*@
+ <div class="well" style="border-radius:0;">
+              <div class="side-by-side clearfix">
+           
+            
+
+                  <div class="bottom_btn marginBottom">
+                   
+        <a href="@Url.Action("Create","Zone")"  class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> Add New</a>
+
+       
+                    
+                  </div>
+              
+                
+
+                <div class="clearfix"></div>
+<div id="divTableDataHolder" class="table-responsive">
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+    <tr>
+         <th class="width30">S.N.</th>
+        <th>
+            @Html.DisplayNameFor(model => model.ZoneInEng)
+        </th>
+         <th>
+            @Html.DisplayNameFor(model => model.Zone)
+        </th>
+        
+        <th class="width130">Action</th>
+
+    </tr>
+        </thead>
+
+@foreach (var item in Model.ZoneRecordsModelList)
+{
+    
+    <tr>
+        <td>@i</td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ZoneInEng)
+        </td>
+         <td>
+            @Html.DisplayFor(modelItem => item.Zone)
+        </td>
+        
+
+      <td class="text-center">
+          <div class="btn btn-success btn-xs btn-edit">
+          <i class="fa fa-pencil-square-o"></i> @Html.ActionLink("Edit", "Edit", new { id = item.ZoneID })
+              </div>
+           <div class="btn btn-danger btn-xs btn-delete"><i class="fa fa-trash"></i>
+                @Html.ActionLink("Delete", "Delete", new { id = item.ZoneID }, new { onclick = "return confirm('Do you want to delete?')"})</div> 
+
+      </td>
+
+                          
+          
+    </tr>
+
+    i++;
+}
+
+</table>
+
+  @*  <ul class="pagination">
+            <li class="previous disabled"><a href="#">← Previous</a></li>
+            <li class="disabled"><a href="#">«</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">»</a></li>
+            <li class="next"><a href="#">Next →</a></li>
+          </ul>*@
+
+</div>
+</div>
+                  </div>
+
+
+

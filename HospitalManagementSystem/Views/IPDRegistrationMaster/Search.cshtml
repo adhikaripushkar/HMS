@@ -1,0 +1,244 @@
+﻿@model HospitalManagementSystem.Models.IpdSearchResults
+
+@{
+    ViewBag.Title = "IPD";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+<h2 style="text-align: center;">IPD Department</h2>
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("Search", "IpdRegistrationMaster", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {   
+        
+        <fieldset>
+
+            <legend>Search</legend>
+
+            <div class="row-fluid singleline">
+                <label>
+
+                    <div>
+                        @Html.LabelFor(model => model.WardNo)
+                    </div>
+                    <div>
+                        @Html.DropDownListFor(model => model.WardNo, HospitalManagementSystem.Utility.GetIpdWardName(), new { @id = "wardid" })
+
+                    </div>
+
+                </label>
+
+                <label>
+
+                    <div>
+                        @Html.LabelFor(model => model.RoomType)
+                    </div>
+                    <div>
+                        @Html.DropDownListFor(model => model.RoomType, HospitalManagementSystem.Utility.GetRoomType(), new { @required = "@required", @id = "RoomTypeDivId", @onchange = "JqueryAjaxLoadSelectOption(this.value,'RoomNumberId','/AjaxRequest/GetRoomNumber/')" })
+
+                    </div>
+                </label>
+
+
+                <label>
+
+                    <div>
+                        @Html.LabelFor(model => model.RoomNo)
+                    </div>
+                    <div>
+                        @Html.DropDownListFor(model => model.RoomNo, HospitalManagementSystem.Utility.GetRoomNumber(Model.Values), new { @required = "@required", @id = "RoomNumberId", @onchange = "JqueryAjaxLoadSelectForBed(this.value, 'BedId','/AjaxRequest/GetBedNumber/')" })
+                    </div>
+
+                </label>
+            </div>
+            <input type="submit" value="Search" />
+        </fieldset>
+     
+    }
+
+
+    <br />
+
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Result</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FullName)
+                        </th>
+                        <th>Age</th>
+                        <th>Address</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.RegistrationDate)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.BedNo)
+                        </th>
+                        
+
+                    </tr>
+                    @if (Model.IpdSearchResultList != null)
+                    {
+                        foreach (var item in Model.IpdSearchResultList)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FullName)
+                            </td>
+                            <td>@item.Age</td>
+                            <td>@item.Address</td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RegistrationDate)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BedNo)
+                            </td>
+
+
+                        </tr>
+                        }
+                    }
+
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+    <script src="~/Scripts/json.cycle.js"></script>
+    <script>
+
+        function JqueryAjaxLoadSelectForBed(selValue, targetElm, url) {
+
+            var roomTypeId = $("#RoomTypeDivId").val()
+            //alert(selValue + " " + roomTypeId + " " + targetElm + "" + url)
+            $.ajax({
+                async: false,
+                type: "GET",
+                url: url,
+                contentType: "text/json",
+                data: ({ RoomNumber: selValue, RoomTypeID: roomTypeId }),
+                beforeSend: function () {
+                    $("#" + targetElm).attr('disabled', 'disabled');
+                    $("#" + targetElm).addClass('ac_loading');
+                },
+
+                success: function (jsonResult) {
+                    //sPropose For Retrive Bed Amount Here
+                    var newUrl = "/AjaxRequest/GetRoomAmount/";
+                    JqueryAjaxAmountDisplay(roomTypeId, selValue, newUrl)
+                    //End Bed Amount Here
+                    var evlResult = JSON.retrocycle(jsonResult);
+                    var selOption = "";
+                    selOption = ParseJsonResultForSelectOptions(evlResult);
+                    tempTargetElm = targetElm.split(',');
+                    for (var i = 0; i < tempTargetElm.length; i++) {
+                        // alert(tempTargetElm.length + " : " + tempTargetElm[i]);
+                        $("#" + tempTargetElm[i]).empty().append(selOption);
+                        $("#" + tempTargetElm[i]).removeClass('ac_loading');
+                        $("#" + tempTargetElm[i]).removeAttr('disabled');
+                    }
+
+
+                },
+                error: function (jsonResult) {
+                }
+            });
+
+            function ParseJsonResultForSelectOptions(evlResult) {
+                var selOption = "";
+                $.each(evlResult, function (key, item) {
+                    var isSelected = (item['Selected'] == "true") ? "Selected='Selected'" : "";
+                    //var otherAttrib = (item['Attribs']!=undefined)? item['Attribs']:"";
+                    var otherAttrib = "";
+                    $.each(item, function (name, value) {
+                        if (name != 'Selected' && name != 'Value' && name != 'Text') {
+                            otherAttrib += " " + name + '="' + value + '" ';
+                        }
+                    });
+                    selOption += "<option value='" + item['Value'] + "' " + isSelected + " " + otherAttrib + " >"
+                    + evlResult[key].Text + "</option>";
+                });
+
+                return selOption;
+            }
+
+        }
+
+    </script>
+
+    <script type="text/javascript">
+        function JqueryAjaxLoadSelectOption(selValue, targetElm, url) {
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: url + selValue,
+                contentType: "text/json",
+                data: ({ id: selValue }),
+                beforeSend: function () {
+                    $("#" + targetElm).attr('disabled', 'disabled');
+                    $("#" + targetElm).addClass('ac_loading');
+                },
+
+                success: function (jsonResult) {
+                    //alert(jsonResult);
+
+                    var evlResult = JSON.retrocycle(jsonResult);
+                    var selOption = "";
+                    selOption = ParseJsonResultForSelectOptions(evlResult);
+                    tempTargetElm = targetElm.split(',');
+                    for (var i = 0; i < tempTargetElm.length; i++) {
+
+                        $("#" + tempTargetElm[i]).empty().append(selOption);
+                        $("#" + tempTargetElm[i]).removeClass('ac_loading');
+                        $("#" + tempTargetElm[i]).removeAttr('disabled');
+                    }
+
+
+                },
+                error: function (jsonResult) {
+                }
+            });
+
+            function ParseJsonResultForSelectOptions(evlResult) {
+                var selOption = "";
+                $.each(evlResult, function (key, item) {
+                    var isSelected = (item['Selected'] == "true") ? "Selected='Selected'" : "";
+                    //var otherAttrib = (item['Attribs']!=undefined)? item['Attribs']:"";
+                    var otherAttrib = "";
+                    $.each(item, function (name, value) {
+                        if (name != 'Selected' && name != 'Value' && name != 'Text') {
+                            otherAttrib += " " + name + '="' + value + '" ';
+                        }
+                    });
+                    selOption += "<option value='" + item['Value'] + "' " + isSelected + " " + otherAttrib + " >"
+                    + evlResult[key].Text + "</option>";
+                });
+
+                return selOption;
+            }
+
+        }
+
+
+
+    </script>

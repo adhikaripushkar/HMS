@@ -1,0 +1,63 @@
+﻿@model Hospital.Models.SetUpHospitalFeeModel
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>SetUpHospitalFeeModel</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.HospitalFee)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.HospitalFee)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Tax)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Tax)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Vat)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Vat)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TotalFee)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TotalFee)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Status)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Status)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Remarks)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Remarks)
+    </div>
+
+   
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

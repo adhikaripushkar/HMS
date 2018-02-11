@@ -1,0 +1,80 @@
+﻿@using Hospital.Helpers
+@model Hospital.Models.StockItemEntry
+
+
+<script src="~/Scripts/OrderManagerScript.js"></script>
+<script src="~/Scripts/json.cycle.js"></script>
+
+
+
+
+
+@using (Html.BeginCollectionItem("StockItemEntryList"))
+{
+    
+    @Html.ValidationSummary(true)
+    <style>
+        .CategoryId {
+            width: 150px;
+        }
+
+        .SubCategoryId {
+            width: 150px;
+        }
+
+        .ItemEntryId {
+            width: 150px;
+        }
+    </style>
+    
+  
+    <div class="row" style="margin-left: 0px;">
+
+        @*@Hospital.Utility.GetStockCategoryName(Model.StockCategoryId)*@
+       @* @Html.TextBox("catid", Model.StockCategoryId, new { @readonly = "readonly", style = "width:100px;border:none", @Value = Hospital.Utility.GetStockCategoryName(Model.StockCategoryId) })*@
+        @Html.HiddenFor(model => model.StockCategoryId)
+        @*@try
+        {
+            //Hospital.Utility.GetSubCategoryName(Model.StockSubCategoryId)
+            @Html.TextBox("subcatid", Model.StockSubCategoryId, new { @readonly = "readonly", style = "width:100px;border:none", @Value = Hospital.Utility.GetSubCategoryName(Model.StockSubCategoryId) })
+            @Html.HiddenFor(model => model.StockSubCategoryId)   
+        }
+        catch
+        {
+
+        }*@
+
+        @try
+        {
+            //Hospital.Utility.GetItemNameFromStockItemEntry(Model.StockItemEntryId)
+            @Html.TextBox("item", Model.StockItemEntryId, new { @readonly = "readonly", style = "width:100px;border:none", @Value = Hospital.Utility.GetItemNameFromStockItemEntry(Model.StockItemEntryId) })
+            @Html.HiddenFor(model => model.StockItemEntryId)   
+        }
+        catch
+        {
+
+        }
+@*@Convert.ToInt32( Model.QuotQty)*@
+        @Html.TextBox("qoty", (int)Model.QuotQty, new { @readonly = "readonly", @id = "qqty_" + ViewBag.id, style = "width:75px;border:none" })
+        @Html.HiddenFor(model => model.QuotQty)
+        @*@Model.QuotRate*@
+        @Html.TextBox("qorate", Model.QuotRate, new { @readonly = "readonly", @id = "qrate_" + ViewBag.id, style = "width:75px;border:none" })
+        @Html.HiddenFor(model => model.QuotRate)
+        @Html.TextBoxFor(model => model.Quantity, new { @class = "Quantity", @id = "qty_" + ViewBag.id, style = "width:85px", @Value = "" })
+
+        @Html.TextBoxFor(model => model.Rate, new { @class = "Rate", @id = "rate_" + ViewBag.id, style = "width:85px", @Value = "" })
+
+        @Html.TextBoxFor(model => model.BatchNo, new { @class = "BatchNo", style = "width:85px", @Value = "" })
+        @Html.TextBoxFor(model => model.ManufacturedDate, new { @class = "MfdDate", style = "width:100px", @Value = "" })
+        @Html.TextBoxFor(model => model.WarrentyDate, new { @class = "WarrentyDate", style = "width:100px", @Value = "" })
+        @Html.TextBoxFor(model => model.ExpiryDate, new { @class = "ExpiryDate", style = "width:100px", @Value = "" })
+
+        <input type="button" class="row-button btn btn-warning" value="Remove" />
+
+    </div>
+        
+   
+}
+
+
+

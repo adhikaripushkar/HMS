@@ -1,0 +1,20 @@
+﻿@model HospitalManagementSystem.Models.MisModel
+
+@{
+    ViewBag.Title = "RenderPieChart";
+    //Layout = "~/Views/Shared/_MisLayOutLayout.cshtml";
+}
+
+<h2>Pie Chart</h2>
+
+@{
+    var db = Database.Open("setupdepartments");
+
+    var data = db.Query("SELECT deptname, deptid FROM setupdepartments");
+
+    var myChart = new Chart(width: 600, height: 400)
+        .AddTitle("Product Sales")
+        .DataBindTable(dataSource: data, xField: "deptname")
+        .Write();
+        
+}

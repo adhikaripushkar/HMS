@@ -1,0 +1,375 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+
+
+
+
+
+
+
+    @Styles.Render("~/Content/css")
+
+
+    @*for designs*@
+
+    <link href="~/css/layout.css" rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
+    <link href="~/css/menu_assets/styles.css" rel="stylesheet" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+
+    <style>
+        select {
+            width: 210px;
+            height: 27px;
+        }
+    </style>
+
+
+    @*for validation or many more*@
+
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.8.20.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.ui.datepicker.js"></script>
+
+    @*for talble sorter*@
+
+    <link href="~/Content/TableSort.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.4.4.min.js"></script>
+    <script src="~/Scripts/jquery.tablesorter.js"></script>
+    <script src="~/Scripts/jquery.tablesorter.pager.js"></script>
+
+
+
+    <script type="text/javascript">
+        var j = $.noConflict();
+        j(function () {
+            j("table.tablesorter").tablesorter({ widthFixed: true, sortList: [[0, 0]] })
+            .tablesorterPager({ container: j("#pager"), size: j(".pagesize option:selected").val() });
+        });
+    </script>
+
+
+</head>
+
+
+<body>
+
+
+    <header>
+
+
+        <header class="header1 clearfix" role="header">
+
+            <div class="logoPanel">
+
+                <img src="~/Images/HospitalManagementSystem-logo.png" />
+            </div>
+
+            <div class="userInfo">
+                <div class="userloggedinfo clearfix">
+
+                    <div class="userinfo">
+
+
+
+
+
+                        <div class="userloggedinfo clearfix">
+                            <img src="~/Images/emplogo3.jpg" alt="">
+                            <div class="userinfo">
+                                @Html.Partial("_LoginPartial")
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <nav class="mainaccesPanel clearfix" role="navigation">
+
+
+                <div class="userNav">
+
+                    <div id='cssmenu'>
+                        <ul>
+
+                            <li class='active'><a href='~/Welcome/Index' class="mainNav dashboard"><span>Welcome</span></a></li>
+                            <li class='active'><a href='~/Home/ShowDashBoard' class="mainNav dashboard"><span>Dashboard</span></a></li>
+                            <li><a href='~/DepartmentSetup/Main' class="mainNav package"><span>Master Setup</span></a></li>
+
+
+                            @*   <li ><a href='#' class="mainNav booking"><span>bookings</span></a>
+   <ul>
+            
+        
+      </ul>
+   </li>*@
+
+
+
+                            <li><a href='~/Employee/Index' class="mainNav employee"><span>Employees</span></a>
+                                <ul>
+                                    @if (Request.IsAuthenticated)
+                                    {
+
+                                        //var UserContext = new UsersContext();
+
+                                        if (HospitalManagementSystem.Utility.GetCurrentLoginUserName() == "superadmin")
+                                        {
+                                        
+                                        <li class='has-sub'><a href='~/Account/Register'><span>Register</span></a></li>
+                                        
+                                        }
+
+                                    }
+                                    <li class='has-sub'><a href='~/Employee/DocSetup'><span>Doctor Setup</span></a></li>
+                                </ul>
+                            </li>
+
+
+
+
+
+                            <li><a href='~/Setting/Index' class="mainNav setting"><span>settings</span></a>
+
+                            </li>
+
+
+
+                           <li><a href='~/Mis/Main' class="mainNav reports"><span>reports</span></a>
+                                @*     <ul>
+         <li class='has-sub'><a href='#'><span>agent reporting</span></a></li>
+         <li class='has-sub'><a href='#'><span>reservation reporting</span></a></li>
+         <li class='has-sub'><a href='#'><span>customer reporting</span></a></li>
+      </ul>*@
+                            </li>
+                            <li class='last'><a href="~/BillingCounter/Create" class="mainNav about"><span>Centralized Billing</span></a> </li>
+                            <li class='last'><a href="~/AboutUs/Index" class="mainNav about"><span>About us</span></a> </li>
+                        </ul>
+                    </div>
+                </div>
+                <br />
+                <br />
+
+                <div class="leftMenu" style="margin-left: -10px;">
+                    <div class="left-s-heading">
+
+                        <h2><a href='~/PreRegistration/Index' title=""><span style="color: white;">Pre-Registration Modules</span></a></h2>
+
+                    </div>
+                    <ul id="menu" class="nav">
+
+                        <li class="tables"><a href='~/PreRegistration/Index' title=""><span>Pre-Registration</span></a> </li>
+                        <li class="tables"><a href='~/PreRegistration/ReportPreRegistration' title=""><span>Pre-Reports</span></a> </li>
+                        @*<li class="tables"><a href='~/Opd/OldPatient' title=""><span>Old Patient</span></a> </li>*@
+                        @*<li class="tables"><a href='~/Opd/OpdBilling' title=""><span>Billing</span></a> </li>*@
+
+                        @* <li class="test"><a href='~/DepartmentSetup/DeptMain' title="" class="" id=""><span>Department Setup</span></a></li>
+        <li class="test"><a href='~/SetUpHospitalManagementSystemFee/Index' title="" id="yy"><span> Fee Setup</span></a></li>
+          <li class="charts"><a href='~/SetUpHospitalManagementSystemFeeDiscount/Index' title=""><span>Fee Discount Setup</span></a></li>
+
+        <li class="forms"><a href='~/SetUpIpdRoom/Index' title=""><span>Ipd Room Setup</span></a> </li>
+        <li class="ui"><a href='~/SetUpIpdWard/Index' title=""><span>Ipd Ward Setup</span></a></li>
+        <li class="tables"><a href='~/SetUpSection/Index' title=""><span>Section Setup</span></a> </li>
+        <li class="widgets"><a href='~/MemberTypeSetup/Index' title=""><span>Member Type Setup</span></a> </li>
+          <li class="widgets"><a href='~/MemberTypeDiscount/Index' title=""><span>Member Type Discount Setup</span></a> </li>
+          <li class="widgets"><a href='~/Relationship/Index' title=""><span>Relationship Setup</span></a> </li>
+          <li class="widgets"><a href='~/FiscalYear/Index' title=""><span>FiscalYear</span></a> </li>
+          <li class="widgets"><a href='~/DoctorSetup/Index' title=""><span>Doctor Setup</span></a> </li>*@
+
+                    </ul>
+                </div>
+
+
+
+
+
+            </nav>
+
+        </header>
+    </header>
+
+
+    @*<nav class="mainaccesPanel clearfix" role="navigation">
+    
+      <div class="userNav">
+      <!--<ul>
+        <li> <a href="" class="mainNav dashboard"><span >Dashboard</span></a> </li>
+        <li> <a href="" class="mainNav agents"><span>agents</span></a></li>
+        <li> <a href="" class="mainNav package"><span>packages</span></a></li>
+        <li><a href="" class="mainNav booking"><span>bookings</span></a></li>
+        <li><a href="" class="mainNav employee"><span>employees</span></a></li>
+        <li><a href="" class="mainNav setting"><span>settings</span></a></li>
+        <li><a href="" class="mainNav reports"><span>reports</span></a> </li>
+        <li><a href="" class="mainNav about"><span>About us</span></a> </li>
+      </ul>-->
+     <div id='cssmenu'>
+<ul>
+   <li class='active'><a href='index.html' class="mainNav dashboard"><span>Dashboard</span></a></li>
+    <li class='active'><a href="../Home/Welcome" class="mainNav dashboard"><span>Welcome</span></a></li>
+   <li class='has-sub'><a href='#' class="mainNav agents"><span>agents</span></a>
+       
+      <ul>
+         <li class='has-sub'><a href='#'><span>agent</span></a>
+            
+         </li>
+         <li class='has-sub'><a href='#'><span>fit agent</span></a>
+            
+         </li>
+      </ul>
+   </li>
+   <li><a href='#' class="mainNav package"><span>package master</span></a>
+   <ul>
+         <li class='has-sub'><a href='#'><span>operated country</span></a></li>
+         <li class='has-sub'><a href='#'><span>service </span></a></li>
+         <li class='has-sub'><a href='#'><span>package </span></a></li>
+         <li class='has-sub'><a href='#'><span>package agent </span></a></li>
+        
+        
+      </ul>
+   </li>
+   <li ><a href='#' class="mainNav booking"><span>bookings</span></a>
+   <ul>
+         <li class='has-sub'><a href='booking.html'><span>create booking</span></a></li>
+         <li class='has-sub'><a href='#'><span>booking list</span></a></li>
+        
+        
+      </ul>
+   </li>
+   <li><a href="" class="mainNav employee"><span>employees</span></a>
+   <ul>
+         <li class='has-sub'><a href='#'><span>employee category</span></a></li>
+         <li class='has-sub'><a href='#'><span>employee</span></a></li>
+        
+        
+      </ul>
+   </li>
+    <li><a href="" class="mainNav setting"><span>settings</span></a>
+    <ul>
+         <li class='has-sub'><a href='#'><span>hotel</span></a></li>
+         <li class='has-sub'><a href='#'><span>airline</span></a></li>
+         <li class='has-sub'><a href='#'><span>company setting</span></a></li>
+         <li class='has-sub'><a href='#'><span>manage roles</span></a></li>
+         <li class='has-sub'><a href='#'><span>manage permissions</span></a></li>
+         <li class='has-sub'><a href='#'><span>manage users</span></a></li>
+        
+      </ul>
+    </li>
+       <li><a href="" class="mainNav reports"><span>reports</span></a>
+        <ul>
+         <li class='has-sub'><a href='#'><span>agent reporting</span></a></li>
+         <li class='has-sub'><a href='#'><span>reservation reporting</span></a></li>
+         <li class='has-sub'><a href='#'><span>customer reporting</span></a></li>
+      </ul>
+         </li>
+        <li class='last'><a href="" class="mainNav about"><span>About us</span></a> </li>
+</ul>
+</div>
+    </div>
+     
+    
+    
+    
+    
+  </nav>*@
+
+
+
+    @*<header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+
+
+
+
+
+
+                    <nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>*@
+
+
+    <div id="body">
+        @RenderSection("featured", required: false)
+        <section class="">
+            @RenderBody()
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="footer">
+
+            <div class="footer-left"><span>© 2017. HospitalManagementSystem Management System. All Rights Reserved.</span> </div>
+            <div class="footer-right"><span>Designed and Developed by: Pushkar Adhikari</span> </div>
+        </div>
+    </footer>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+<script>
+
+
+    // $('.test').click(function (e) {
+
+
+    //    // $(this).find('active').ready();
+
+
+    //     $(this).find('a').addClass('active');
+    //});
+
+
+    $(document).ready(function () {
+        $('#menu a').on('click', function () {
+            $('#menu a').removeClass('active');
+            $(this).addClass('active');
+
+            //  alert($(this).val());
+
+            //  $(this).attr.apply('active');
+
+
+
+
+
+        });
+    });
+
+
+
+
+</script>

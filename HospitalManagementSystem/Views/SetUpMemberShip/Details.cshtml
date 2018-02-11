@@ -1,0 +1,144 @@
+﻿@model Hospital.Models.SetUpMemberShipModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>SetUpMemberShipModel</legend>
+
+    <table>
+
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.SetupMemberID)</td>
+            <td> @Html.DisplayFor(model => model.SetupMemberID)</td>
+</tr>
+        <tr>
+            <td>  @Html.DisplayNameFor(model => model.MemberID)</td>
+            <td>  @Html.DisplayFor(model => model.MemberID)</td>
+            </tr>
+        <tr>
+            <td>  @Html.DisplayNameFor(model => model.MemberTypeID)</td>
+            <td>@Html.DisplayFor(model => model.MemberTypeID)</td>
+            </tr>
+        <tr>
+            <td>  @Html.DisplayNameFor(model => model.JoinDate)</td>
+            <td> @Html.DisplayFor(model => model.JoinDate)</td>
+</tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.FullName)</td>
+            <td>  @Html.DisplayFor(model => model.FullName)</td>
+</tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.DateofBirth)</td>
+            <td> @Html.DisplayFor(model => model.DateofBirth)</td>
+            </tr>
+
+
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.MaximumDependent)</td>
+            <td>  @Html.DisplayFor(model => model.MaximumDependent)</td>
+</tr>
+        <tr>
+            <td>  @Html.DisplayNameFor(model => model.Address)</td>
+            <td>  @Html.DisplayFor(model => model.Address)</td>
+        </tr>
+
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.MobileNumber)</td>
+            <td>@Html.DisplayFor(model => model.MobileNumber)</td>
+        </tr>
+
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.ContactNumber)</td>
+            <td>@Html.DisplayFor(model => model.ContactNumber)</td>
+        </tr>
+
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.Gender)</td>
+            <td> @Html.DisplayFor(model => model.Gender)
+    </td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.BloodGroupID)</td>
+            <td> @Html.DisplayFor(model => model.BloodGroupID)</td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Email)</td>
+            <td> @Html.DisplayFor(model => model.Email)</td>
+        </tr>
+
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.CreatedBy)</td>
+            <td> @Html.DisplayFor(model => model.CreatedBy)</td>
+        </tr>
+
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.CreatedDate)</td>
+            <td>  @Html.DisplayFor(model => model.CreatedDate)</td>
+        </tr>
+
+
+         <tr>
+            <td> @Html.DisplayNameFor(model => model.Remarks)</td>
+            <td> @Html.DisplayFor(model => model.Remarks)</td>
+        </tr>
+
+         <tr>
+            <td> @Html.DisplayNameFor(model => model.Status)</td>
+            <td> @Html.DisplayFor(model => model.Status)</td>
+        </tr>
+
+        
+
+         <tr>
+            <td></td>
+            <td></td>
+        </tr>
+
+        </table>
+
+
+    
+
+    <div class="display-label">
+        
+    </div>
+    <div class="display-field">
+       
+    </div>
+
+    <div class="display-label">
+        
+    </div>
+    <div class="display-field">
+      
+    </div>
+
+    <div class="display-label">
+        
+    </div>
+    <div class="display-field">
+       
+    </div>
+
+    <div class="display-label">
+        
+    </div>
+    <div class="display-field">
+       
+    </div>
+
+        
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new {  id=Model.SetupMemberID  }) |
+
+
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,217 @@
+﻿@model Hospital.Models.VitalsModel
+@using Hospital
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.ui.timepicker.js"></script>
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery.ui.timepicker.css" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+<script src="~/Scripts/json.cycle.js"></script>
+
+<script type="text/javascript">
+    var nojqr = $.noConflict();
+    nojqr(document).ready(function () {
+        nojqr(function () {
+           
+            nojqr(".DateId").datepicker();
+            nojqr(".TimeeId").timepicker();
+        });
+        nojqr(".staffid").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/EmergencyTreatmentAllergies/SearchStaffName",
+                    type: "POST",
+                    dataType: "json",
+                    data: { s: request.term },
+                    success: function (data) {
+                        response(nojqr.map(data, function (item) {
+                            return { label: item, value: item };
+                        }))
+                    },
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    });
+
+
+</script>
+
+
+
+
+
+
+
+@using (Html.BeginForm("ViatalForm", "Viatal", FormMethod.Post, new { @id = "VitalFormId", @class = "bs-docs-example form-inline" }))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend></legend>
+
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.EmergencyVitalId)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.EmergencyVitalId)
+            @Html.ValidationMessageFor(model => model.EmergencyVitalId)
+        </div>
+        
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.EmergencyMasterId)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.EmergencyMasterId)
+            @Html.ValidationMessageFor(model => model.EmergencyMasterId)
+        </div>
+
+        <div class="row-fluid singleline">
+            
+            <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AVPU)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AVPU)
+            @Html.ValidationMessageFor(model => model.AVPU)
+        </div>
+                </label>
+            <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Pulse)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Pulse)
+            @Html.ValidationMessageFor(model => model.Pulse)
+        </div>
+                </label>
+
+            <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BP)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.BP)
+            @Html.ValidationMessageFor(model => model.BP)
+        </div>
+
+                </label>
+           
+
+            </div>
+
+        <div class="row-fluid singleline">
+             <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RR)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RR)
+            @Html.ValidationMessageFor(model => model.RR)
+        </div>
+                </label>
+            <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SPO2)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SPO2)
+            @Html.ValidationMessageFor(model => model.SPO2)
+        </div>
+</label>
+            <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TPR)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TPR)
+            @Html.ValidationMessageFor(model => model.TPR)
+        </div>
+                </label>
+        
+</div>
+ <div class="row-fluid singleline">
+     <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Wt)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Wt)
+            @Html.ValidationMessageFor(model => model.Wt)
+        </div>
+          
+                </label>
+         
+
+            <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Date)
+               </div>
+                <div class="editor-field">
+            @Html.TextBoxFor(model => model.Date, new { @class = "DateId", @Value = DateTime.Now.ToShortDateString() })
+            @Html.ValidationMessageFor(model => model.Date)
+        </div>
+         
+            </label>
+              <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.VTime)
+               </div>
+                <div class="editor-field">
+            @Html.TextBoxFor(model => model.VTime, new { @class = "TimeeId",@Value = DateTime.Now.ToString("hh:mm") })
+            @Html.ValidationMessageFor(model => model.VTime)
+        </div>
+         
+            </label>
+     </div>
+           <div class="row-fluid singleline">
+            <label>
+
+                            <div class="editor-label">
+                                @Html.Label("Staff")
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.Staff, new {@class="staffid" , style = "width:13.5em;" })
+                        
+                            </div>
+                        </label>
+      </div>
+        <p>
+            <input type="submit" value="Create" id="btnid" />
+        </p>
+    </fieldset>
+}
+
+
+<script>
+ 
+    $("#btnid").on("click", function (e) {
+            e.preventDefault();
+       
+
+            var form = $('#VitalFormId');
+
+            var url = form.attr("action");
+
+            var formData = form.serialize();
+            $.post(url, formData, function (data) {
+
+                $('#vltlistId').empty();
+
+                $('#vltlistId').html(data);
+                $('#VitalFormId').remove();
+
+            });
+    });
+   
+
+    </script>
+
+   

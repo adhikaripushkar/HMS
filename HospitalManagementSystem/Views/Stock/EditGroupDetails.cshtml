@@ -1,0 +1,61 @@
+﻿@model Hospital.Models.StockItemModel
+
+@{
+    ViewBag.Title = "CreateGroupSetup";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("EditGroupDetails", "Stock", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(m => m.ObjStockItemGroupSetupViewModel.StockGroupingId)
+        <fieldset>
+            <legend>Create</legend>
+
+            @if (TempData["message"] != null)
+            {
+                <div class="alert alert-error">
+                    @TempData["message"]
+                </div>
+
+            }
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.ObjStockItemGroupSetupViewModel.GroupName)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjStockItemGroupSetupViewModel.GroupName)<br />
+
+                        @Html.TextBoxFor(model => model.ObjStockItemGroupSetupViewModel.GroupName)
+
+                    </div>
+                </label>
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.ObjStockItemGroupSetupViewModel.FromId)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjStockItemGroupSetupViewModel.FromId)<br />
+
+                        @Html.TextBoxFor(model => model.ObjStockItemGroupSetupViewModel.FromId)
+
+                    </div>
+                </label>
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.ObjStockItemGroupSetupViewModel.ToId)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjStockItemGroupSetupViewModel.ToId)<br />
+
+                        @Html.TextBoxFor(model => model.ObjStockItemGroupSetupViewModel.ToId)
+
+                    </div>
+                </label>
+                
+                <p>
+                    <input type="submit" value="Edit" />
+                </p>
+        </fieldset>
+    }
+</div>

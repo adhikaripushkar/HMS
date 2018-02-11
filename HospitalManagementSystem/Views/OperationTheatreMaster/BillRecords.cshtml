@@ -1,0 +1,247 @@
+﻿@model HospitalManagementSystem.Models.OperationTheatreMasterModel
+
+@{
+    ViewBag.Title = "BillRecords";
+    Layout = "~/Views/Shared/_OperationTheatreLayout.cshtml";
+    decimal? charge = Model.TotalCharge - Model.Discount;
+}
+
+<style>
+    table.mytbl td {
+        border:none !important;
+    }
+
+    .ui-dialog {
+        background-color: #B0E0E6;
+    }
+
+</style>
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        //var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        //printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        //printing.document.write('<div style="font-size:small;">');
+        //printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        //printing.document.close();
+        //printing.focus();
+        //printing.print();
+        //printing.close();
+
+    }
+
+    function printTicket() {
+
+
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        //  alert("do u want to cont..");
+        //var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0','alert("hi");');
+
+        //printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        //printing.document.write('<div style="font-size:small;">');
+        //printing.document.write(document.getElementById('divPrintTicket').innerHTML.toString());
+
+        //printing.document.close();
+        //printing.focus();
+        //printing.print();
+        //printing.close();
+
+    }
+
+
+
+
+</script>
+
+<h2 style="text-align:center;">Operation Bill Records</h2>
+
+
+
+<div class="contentWrapper">
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width:100%; height:auto; float:left;">
+
+         @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != null && @HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalManagementSystemLogo/@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() == "")
+        { 
+            
+            <br />
+        
+        }
+        <div style="font: bold; font-size: 18px; text-align: center; height: 115px;">
+            @if (@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != null && @HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != "")
+            {
+                <span>@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName()</span>
+            }
+            <br />
+            @HospitalManagementSystem.Utility.GetHospitalManagementSystemName()<br />
+            <div style="height: 80px;">
+                <span style="font-size: 15px; text-align: center">@HospitalManagementSystem.Utility.HospitalManagementSystemAddress()</span><br />
+                <span style="font-size: 14px; text-align: center">Website:-@HospitalManagementSystem.Utility.HospitalManagementSystemUrl()</span><br />
+                <span style="font-size: 14px; text-align: center">Ph:-@HospitalManagementSystem.Utility.HospitalManagementSystemPhone()</span>
+
+            </div>
+
+        </div>
+
+        <h5 style="text-align: center;"><u>Operation Bill</u> </h5>
+        <hr />
+        
+        <center>
+    <table class="mytbl" style="width:90%;">
+        @{
+            
+            string PatientName = "", address = "", Phone = "",sex="";
+            int age;
+            
+            HospitalManagementSystem.Utility.FullPatientInfoWithOpdId(Model.SourceID,out PatientName,out age,out sex,out address,out Phone);
+        
+        }
+        <tr>
+            <td><b>Patient Id</b></td>
+            <td><b>PatientName</b></td>
+            <td><b>Sex</b></td>
+            <td><b>Age</b></td>
+            <td><b>Address</b></td>
+            <td><b>Phone</b></td>
+        </tr>
+        <tr>
+            <td>@Model.SourceID</td>
+            <td>@PatientName</td>
+            <td>@sex</td>
+            <td>@age</td>
+            <td>@address</td>
+            <td>@Phone</td>
+        </tr>
+    </table>
+            </center>
+        <br />   <br />   <br />
+        <div>
+            <div style="padding-left:130px;">
+  
+            Operation Name:<br /><b>@Model.ChargeName</b>
+           
+                </div>
+
+            <div style="margin-left: 69%; margin-top: -3%;">
+
+    <table class="mytbl" style="margin-right:30px;">
+        <tr>
+            <td>Charge:</td><td>@Model.Charge</td>
+                                                        
+            
+        </tr>
+        <tr>
+            <td>Discount Amout:</td><td>@Model.Discount</td>
+        </tr>
+        <tr>
+            <td>Total Charge:</td><td><b>@charge</b></td>
+        </tr>
+        
+       
+
+    </table>
+                 </div>
+        </div>
+
+        
+<br />
+</div>
+    <input type="button" id="btnPrint" style="width: 50px; float:right;" onclick="print()" value="Print" />
+
+</div>
+
+
+
+<script>
+
+    var hh = $.noConflict();
+    hh('#btnPrintTicket').click(function (e) {
+
+        e.preventDefault();
+        var msg = 'Do You Want To Print?';
+        var div = hh("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            resizable: false,
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0', 'alert("hi");');
+
+                        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('divPrintTicket').innerHTML.toString());
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+
+    });
+
+    hh('#btnPrint').click(function (e) {
+
+        e.preventDefault();
+        var msg = 'Do You Want To Print?';
+        var div = hh("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+                        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+
+    });
+
+
+</script>

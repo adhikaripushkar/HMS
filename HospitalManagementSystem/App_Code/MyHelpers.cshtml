@@ -1,0 +1,124 @@
+﻿@helper MakeNote(string content)
+{
+    <div class="note"
+        style="border: 1px solid black; width: 90%; padding: 5px; margin-left: 15px;">
+        <p>
+            <strong>Note</strong>&nbsp;&nbsp; @content
+        </p>
+    </div>
+}
+
+
+@helper DesingForLogo()
+{
+
+    if (@HospitalManagementSystem.Utility.GetPathOfHospitalLogo() != null && @HospitalManagementSystem.Utility.GetPathOfHospitalLogo() != "")
+    {
+    <div style="text-align: center;">
+        <div class="holder">
+            <img src="~/Content/HospitalLogo/@HospitalManagementSystem.Utility.GetPathOfHospitalLogo()" style="width:48px; height:55px;"/>
+        </div>
+    </div>
+    }
+    if (@HospitalManagementSystem.Utility.GetPathOfHospitalLogo() == "")
+    { 
+            
+    <br />
+        
+    }
+    <div style="font: bold; font-size: 16px; text-align: center; height: 100px; margin-top: 0px;">
+        @if (@HospitalManagementSystem.Utility.GetHospitalTitleName() != null && @HospitalManagementSystem.Utility.GetHospitalTitleName() != "")
+        {
+            <span>@HospitalManagementSystem.Utility.GetHospitalTitleName()</span>
+        }
+        <br />
+        @HospitalManagementSystem.Utility.GetHospitalName()<br />
+        <div style="height: 80px;">
+            <span style="font-size: 15px; text-align: center">@HospitalManagementSystem.Utility.HospitalAddress()</span><br />
+            <span style="font-size: 14px; text-align: center">Website:-@HospitalManagementSystem.Utility.HospitalUrl()</span><br />
+            <span style="font-size: 14px; text-align: center">Ph:-@HospitalManagementSystem.Utility.HospitalPhone()</span><br />
+            @*<span style="font-size: 14px; text-align: center">Pan No:-@Hospital.Utility.HospitalPanNo()</span>*@
+        </div>
+
+    </div>
+    <div>
+        <span style="font-size: 12px; text-align: left;"><b>PAN NO:-</b>@HospitalManagementSystem.Utility.HospitalPanNo()</span>
+    </div>
+    
+
+}
+
+@helper PatientInfoWithOpdId(int OpdId)
+{
+    
+    string Name = "", Sex = "", Address = "", Phone = "";
+    int Age;
+
+    HospitalManagementSystem.Utility.FullPatientInfoWithOpdId(OpdId, out Name, out Age, out Sex, out Address, out Phone);
+    <div style="width: auto; border-top: 1px solid gray; border-left: 1px solid gray; border-right: 1px solid gray; border-bottom: 1px solid gray; padding-top: 5px; padding-left: 5px; padding-bottom: 5px;">
+        <table style="width: 70%;" class="nobordertable">
+            <tr>
+
+                <td><b>Patient Name</b></td>
+                <td><b>Sex</b></td>
+                <td><b>Age</b></td>
+                <td><b>Address</b></td>
+                <td><b>Phone</b></td>
+            </tr>
+            <tr>
+                <td>@Name</td>
+                <td>@Sex</td>
+                <td>@Age</td>
+                <td>@Address</td>
+                <td>@Phone</td>
+            </tr>
+
+        </table>
+    </div>
+    <style>
+        table.nobordertable td {
+            border: none !important;
+        }
+    </style>
+    
+    
+}
+
+
+
+@helper PatientInfoWithOpdIdForDeposite(int OpdId)
+{
+    
+    string Name = "", Sex = "", Address = "", Phone = "";
+    int Age;
+
+    HospitalManagementSystem.Utility.FullPatientInfoWithOpdId(OpdId, out Name, out Age, out Sex, out Address, out Phone);
+    <div style="width: auto; border-top: 1px solid gray; border-left: 1px solid gray; border-right: 1px solid gray; border-bottom: 1px solid gray; padding-top: 5px; padding-left: 5px; padding-bottom: 5px;">
+        <table style="width: 70%;" class="nobordertable">
+            <tr>
+                <td><b>Patient Id</b></td>
+                <td><b>Patient Name</b></td>
+                <td><b>Sex</b></td>
+                <td><b>Age</b></td>
+                <td><b>Address</b></td>
+                <td><b>Phone</b></td>
+            </tr>
+            <tr>
+                <td>@OpdId</td>
+                <td>@Name</td>
+                <td>@Sex</td>
+                <td>@Age</td>
+                <td>@Address</td>
+                <td>@Phone</td>
+            </tr>
+
+        </table>
+    </div>
+    <style>
+        table.nobordertable td {
+            border: none !important;
+        }
+    </style>
+    
+    
+}

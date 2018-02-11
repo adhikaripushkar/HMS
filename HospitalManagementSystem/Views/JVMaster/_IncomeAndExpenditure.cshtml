@@ -1,0 +1,339 @@
+﻿@model HospitalManagementSystem.Models.JVMasterModel
+
+<style>
+    table#tblnoborder,
+    table#tblnoborder td {
+        border: none !important;
+    }
+
+    .font {
+        font-weight: bold;
+    }
+
+    .small-table td {
+        border: none;
+    }
+
+    .holder img {
+        max-height: 48px;
+        max-width: 55px;
+        object-fit: cover;
+    }
+
+
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+    }
+</style>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        text-align: center;
+        font-size: 13px;
+    }
+</style>
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+</script>
+
+<div class="contentWrapper">
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto; padding: 5px;">
+
+
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != null && @HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalManagementSystemLogo/@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() == "")
+        { 
+          <br />        
+        }
+        <div style="font: bold; font-size: 18px; text-align: center; height: 115px;">
+            @if (@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != null && @HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != "")
+            {
+                <span>@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName()</span>
+            }
+            <br />
+            @HospitalManagementSystem.Utility.GetHospitalManagementSystemName()<br />
+            <div style="height: 80px;">
+                <span style="font-size: 15px; text-align: center">@HospitalManagementSystem.Utility.HospitalManagementSystemAddress()</span><br />
+                <span style="font-size: 14px; text-align: center">Website:-@HospitalManagementSystem.Utility.HospitalManagementSystemUrl()</span><br />
+                <span style="font-size: 14px; text-align: center">Ph:-@HospitalManagementSystem.Utility.HospitalManagementSystemPhone()</span>
+
+            </div>
+
+        </div>
+        <h2 style="text-align: center;">INCOME AND EXPENDITURE STATEMENT</h2>
+       <table border="0" style="width: 500px; margin-top: 20px;" align="center">
+            <tr>
+                <td>From Date :&nbsp;@Model.objIncomeAndExpenditureModelView.StartDate.ToShortDateString() (@HospitalManagementSystem.Utility.getNepaliDate(@Model.objIncomeAndExpenditureModelView.StartDate.ToShortDateString()))
+                </td>
+                <td>To Date :&nbsp;@Model.objIncomeAndExpenditureModelView.EndDate.ToShortDateString() (@HospitalManagementSystem.Utility.getNepaliDate(@Model.objIncomeAndExpenditureModelView.EndDate.ToShortDateString()))
+                </td>
+            </tr>
+        </table>
+        <br />
+        <br />
+
+        <table class="table">
+            <tr>
+                <th>
+                    <h3 style="text-align: center;">Particulars</h3>
+                </th>
+                <th>
+                    <h3 style="text-align: center;">Current Year(Rs)</h3>
+                </th>
+                <th>
+                    <h3 style="text-align: center;">Previous Year(Rs)</h3>
+                </th>
+            </tr>    
+                @{  
+                decimal Current=0, Previous=0;
+                decimal OperatingIncome = 0, OperatingProfit = 0, ProfitBeforeExtraOrdinaryIncome = 0, ProfitBeforeIncomeTax = 0, NetProfitAfterTax = 0, Total = 0;
+                decimal OperatingIncomePrev = 0, OperatingProfitPrev = 0, ProfitBeforeExtraOrdinaryIncomePrev = 0, ProfitBeforeIncomeTaxPrev = 0, NetProfitAfterTaxPrev = 0, TotalPrev = 0;
+                HospitalManagementSystem.Providers.JVMasterProvider pro = new HospitalManagementSystem.Providers.JVMasterProvider();
+                Model.objIncomeAndExpenditureModelViewList = pro.GetIncomeAndExpenditure(Model);
+                }
+                @foreach (var item in Model.objIncomeAndExpenditureModelViewList)
+                {
+                    Current = (item.ClosingDr - item.ClosingCr)*-1;
+                    Previous = (item.PrevClosingDr - item.PrevClosingDr)*-1;
+                    if (Current < 0)
+                    {
+                        Current = Current * -1;
+                    }
+                    if (Previous < 0)
+                    {
+                        Previous = Previous * -1;
+                    }
+                    <tr>
+                    <td><h4>@item.AccountHeadName</h4></td>
+                    <td>
+                        <h4 style="text-align: right;">@Current</h4>
+                    </td>
+                    <td>
+                        <h4 style="text-align: right;">@Previous</h4>
+                    </td>
+                </tr>
+                    if (item.Rono == 1 || item.Rono == 2)
+                    {
+                        OperatingIncome = OperatingIncome - item.ClosingDr + item.ClosingCr;
+                        OperatingIncomePrev = OperatingIncomePrev - item.PrevClosingDr + item.PrevClosingDr;
+                        OperatingProfit = OperatingIncome;
+                        OperatingProfitPrev = OperatingIncomePrev;
+                        if (OperatingIncome < 0)
+                        {
+                            OperatingIncome = OperatingIncome * -1;
+                        }
+                        if (OperatingIncomePrev < 0)
+                        {
+                            OperatingIncomePrev = OperatingIncomePrev * -1;
+                        }
+                    }
+                    if (item.Rono == 3)
+                    {
+                        OperatingProfit = OperatingProfit - item.ClosingDr + item.ClosingCr;
+                        OperatingProfitPrev = OperatingProfitPrev - item.PrevClosingDr + item.PrevClosingDr;
+                        ProfitBeforeExtraOrdinaryIncome = OperatingProfit;
+                        ProfitBeforeExtraOrdinaryIncomePrev = OperatingProfitPrev;
+                        if (OperatingProfit < 0)
+                        {
+                            OperatingProfit = OperatingProfit * -1;
+                        }
+                        if (OperatingProfitPrev < 0)
+                        {
+                            OperatingProfitPrev = OperatingProfitPrev * -1;
+                        }
+                    }
+                    if (item.Rono == 4)
+                    {
+                        ProfitBeforeExtraOrdinaryIncome = ProfitBeforeExtraOrdinaryIncome - item.ClosingDr + item.ClosingCr;
+                        ProfitBeforeExtraOrdinaryIncomePrev = ProfitBeforeExtraOrdinaryIncomePrev - item.PrevClosingDr + item.PrevClosingDr;
+                        ProfitBeforeIncomeTax = ProfitBeforeExtraOrdinaryIncome;
+                        ProfitBeforeIncomeTaxPrev = ProfitBeforeExtraOrdinaryIncomePrev;
+                        if (ProfitBeforeExtraOrdinaryIncome < 0)
+                        {
+                            ProfitBeforeExtraOrdinaryIncome = ProfitBeforeExtraOrdinaryIncome * -1;
+                        }
+                        if (ProfitBeforeExtraOrdinaryIncomePrev < 0)
+                        {
+                            ProfitBeforeExtraOrdinaryIncomePrev = ProfitBeforeExtraOrdinaryIncomePrev * -1;
+                        }
+                    }
+                    if (item.Rono == 5 || item.Rono==6)
+                    {
+                        ProfitBeforeIncomeTax = ProfitBeforeIncomeTax - item.ClosingDr + item.ClosingCr;
+                        ProfitBeforeIncomeTaxPrev = ProfitBeforeIncomeTaxPrev - item.PrevClosingDr + item.PrevClosingDr;
+                        NetProfitAfterTax = ProfitBeforeIncomeTax;
+                        NetProfitAfterTaxPrev = ProfitBeforeIncomeTaxPrev;
+                        if (ProfitBeforeIncomeTax < 0)
+                        {
+                            ProfitBeforeIncomeTax = ProfitBeforeIncomeTax * -1;
+                        }
+                        if (ProfitBeforeIncomeTaxPrev < 0)
+                        {
+                            ProfitBeforeIncomeTaxPrev = ProfitBeforeIncomeTaxPrev * -1;
+                        }
+                    }
+                    if (item.Rono == 7)
+                    {
+                        NetProfitAfterTax = NetProfitAfterTax + item.ClosingDr - item.ClosingCr;
+                        NetProfitAfterTaxPrev = NetProfitAfterTaxPrev + item.PrevClosingDr - item.PrevClosingDr;
+                        Total = NetProfitAfterTax;
+                        TotalPrev = NetProfitAfterTaxPrev;
+                        if (NetProfitAfterTax < 0)
+                        {
+                            NetProfitAfterTax = NetProfitAfterTax * -1;
+                        }
+                        if (NetProfitAfterTaxPrev < 0)
+                        {
+                            NetProfitAfterTaxPrev = NetProfitAfterTaxPrev * -1;
+                        }
+                    }
+                    if (item.Rono == 8)
+                    {
+                        Total = Total - item.ClosingDr + item.ClosingCr;
+                        TotalPrev = TotalPrev - item.PrevClosingDr + item.PrevClosingDr;
+                        if (Total < 0)
+                        {
+                            Total = Total * -1;
+                        }
+                        if (TotalPrev < 0)
+                        {
+                            TotalPrev = TotalPrev * -1;
+                        }
+                    }
+                   if(item.Rono==2)
+                   {
+                    <tr>
+                        <td><h3>Operating Income</h3></td>
+                        <td><h3 style="text-align: right;">@OperatingIncome</h3></td>
+                        <td><h3 style="text-align: right;">@OperatingIncomePrev</h3></td>
+                    </tr>
+                   }
+                    if(item.Rono==3)
+                   {
+                    <tr>
+                        <td><h3>Operating Profit</h3></td>
+                        <td><h3 style="text-align: right;">@OperatingProfit</h3></td>
+                        <td><h3 style="text-align: right;">@OperatingProfitPrev</h3></td>
+                    </tr>
+                   }
+                    if(item.Rono==4)
+                   {
+                    <tr>
+                        <td><h3>Profit Before Extraordinary Income</h3></td>
+                        <td><h3 style="text-align: right;">@ProfitBeforeExtraOrdinaryIncome</h3></td>
+                        <td><h3 style="text-align: right;">@ProfitBeforeExtraOrdinaryIncomePrev</h3></td>
+                    </tr>
+                   }
+                    if(item.Rono==6)
+                   {
+                    <tr>
+                        <td><h3>Profit Before Income Tax</h3></td>
+                        <td><h3 style="text-align: right;">@ProfitBeforeIncomeTax</h3></td>
+                        <td><h3 style="text-align: right;">@ProfitBeforeIncomeTaxPrev</h3></td>
+                    </tr>
+                   }
+                   if(item.Rono==7)
+                   {
+                    <tr>
+                        <td><h3>Net Profit After Tax</h3></td>
+                        <td><h3 style="text-align: right;">@NetProfitAfterTax</h3></td>
+                        <td><h3 style="text-align: right;">@NetProfitAfterTaxPrev</h3></td>
+                    </tr>
+                   }
+                }
+             <tr>
+                 <td><h2 style="text-align: right;">Total</h2></td>
+                 <td><h2 style="text-align: right;">@Total</h2></td>
+                 <td><h2 style="text-align: right;">@TotalPrev</h2></td>
+
+             </tr>
+        </table>
+        
+    </div>
+    <div style="float: right;">
+        <input type="button" id="export" style="width: 50px;" onclick="tableToExcel('printdiv', '')" value="Export" />
+        <input type="button" id="btnPrintDeposite" style="width: 50px; float: right;" value="Print" />
+    </div>
+
+</div>
+
+<script>
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+          , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+          , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+          , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+        return function (table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })()
+
+    var hh = $.noConflict();
+    hh('#btnPrintDeposite').click(function (e) {
+
+        e.preventDefault();
+        var msg = 'Do You Want To Print?';
+        var div = hh("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            resizable: false,
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0', 'alert("hi");');
+
+                        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+
+    });
+
+</script>
+

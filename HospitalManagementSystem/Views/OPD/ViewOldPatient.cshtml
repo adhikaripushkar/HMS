@@ -1,0 +1,1015 @@
+﻿@model HospitalManagementSystem.Models.OpdModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_OpdLayOut.cshtml";
+}
+
+<style>
+    select {
+        width: 208px;
+        height: 27px;
+    }
+
+
+
+
+
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+    }
+</style>
+
+
+
+<script src="~/Scripts/OrderManagerScript.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        AddClickEvents();
+    });
+
+</script>
+
+
+
+<h2 style="text-align: center;">OPD Department@{
+    if (Session["OpdTypeIdInt"] != null)
+    {
+        if ((int)Session["OpdTypeIdInt"] == 1)
+        {
+    @:<span style="color:#8cb4c8;font-size:12px;">(General)</span>
+            }
+        else
+        {
+    @:<span style="color:#8cb4c8;font-size:12px;">(Payable)</span>
+            }
+    }
+
+    else
+    {
+    @:<span style="color:#8cb4c8;font-size:12px;">(General)</span>
+        }
+}
+
+</h2>
+
+<div class="contentWrapper">
+    
+    @using (Html.BeginForm("ViewOldPatient", "Opd", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+     <h3 style="color:#0026ff;">Patient Details:-</h3>
+
+        <table style="border:2px solid gray; width:100%;" id="mytbl">
+                    <tr>
+                        <td><b>Country:-</b></td>
+                        <td>
+                            @{
+        string str = HospitalManagementSystem.Utility.GetCountryNameList().Where(x => x.Value == Model.CountryID.ToString()).SingleOrDefault().Text.ToString();
+                                   }
+                            @str
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Patient Id:-</b></td><td>@Model.OpdID</td>
+                        
+                        <td><b>Patient Name:-</b></td>
+                        <td>@Model.FirstName<span>&nbsp;</span><span>@Model.MiddleName</span>&nbsp;<span>@Model.LastName</span></td>
+                        <td><b>Sex:-</b></td>
+                        <td>@{
+                            
+        string sex = HospitalManagementSystem.Utility.GetGenderList().Where(x => x.Value == Model.Sex).SingleOrDefault().Text.ToString();
+                            
+                            }
+                            @sex
+                        </td>
+                        <td>
+                            <b>Age:-</b>
+                        </td>
+                        <td>
+                            @Model.AgeYear
+                        </td>
+                        </tr>
+                    <tr>
+                        <td><b>Blood Group:-</b></td>
+                        <td>
+                            @{
+        string bloodgroup = "";
+        try
+        {
+            bloodgroup = HospitalManagementSystem.Utility.BloodGroupList().Where(x => x.Value == Model.BloodGroup).SingleOrDefault().Text.ToString();
+        }
+        catch (Exception e)
+        {
+
+            bloodgroup = "---";
+        }                     
+                                }
+                            @bloodgroup
+                        </td>
+                        <td><b>Marital Status:-</b></td>
+                        <td>
+                            @{
+        string MatitalStatus = "";
+
+        try
+        {
+
+            MatitalStatus = HospitalManagementSystem.Utility.MatitalStatusList().Where(x => x.Value == Model.MaritalStatus).SingleOrDefault().Text.ToString();
+        }
+        catch (Exception e)
+        {
+            MatitalStatus = "---";
+
+        }                       
+                                
+                                
+                                
+                                }
+                            @MatitalStatus
+                        </td>
+                        <td><b>Registration Date:-</b></td><td>@Model.RegistrationDate.ToShortDateString()</td>
+                        <td><b>Member Type:-</b></td>
+                        <td>
+                            @{
+        string membertype = "";
+        try
+        {
+            membertype = HospitalManagementSystem.Utility.MemberTypeList().Where(x => x.Value == Model.MemberTypeID.ToString()).SingleOrDefault().Text.ToString();
+
+        }
+        catch (Exception e)
+        {
+            membertype = "---";
+        }           
+                                }
+                            @membertype
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Address:-</b></td><td>@Model.Address</td>
+                        <td><b>Contact No:-</b></td><td>@Model.ContactName</td>
+                        <td><b>Mobile No:-</b></td><td>@Model.MobileNumber</td>
+                        <td><b>Email Id:-</b></td><td>@Model.Email</td>
+                        
+                    </tr>
+
+                </table>
+      @Html.HiddenFor(model => model.OpdID)
+        @Html.HiddenFor(model => model.MobileNumber)
+        @Html.HiddenFor(model => model.ContactName)
+        @Html.HiddenFor(model => model.MemberTypeID)
+        @Html.HiddenFor(model => model.Status)
+        @Html.HiddenFor(model => model.RegistrationDate)
+        @Html.HiddenFor(model => model.CountryID)
+        @Html.HiddenFor(model => model.Email)
+        @Html.HiddenFor(model => model.FirstName)
+        @Html.HiddenFor(model => model.MiddleName)
+        @Html.HiddenFor(model => model.LastName)
+        @Html.HiddenFor(model => model.MaritalStatus)
+        @Html.HiddenFor(model => model.RegistrationMode)
+        @Html.HiddenFor(model => model.Sex)
+        @Html.HiddenFor(model => model.AgeYear)
+        @Html.HiddenFor(model => model.BloodGroup)
+        @Html.HiddenFor(model => model.Address)
+       
+         <hr /> 
+       
+        <fieldset>
+            <legend>
+                <h3 style="color:#0026ff;">Doctor:-</h3>
+            </legend>
+            <div class="well well-small" id="Add-Item">
+
+                @*@Html.ActionLink("Add More", "AddDoctorList", null, new { @class = "addProductItem btn btn-primary" })*@
+                <table id="mytbl">
+                    <tr>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;Department</td>
+                        <td>Doctor</td>
+                        @if (TempData["PreferDate"] != null)
+                        {
+                               <span style="color:red;"> @TempData["PreferDate"]</span>
+                        }
+                        <td>Prefer Date</td>
+                        <td>Prefer Time</td>
+                    </tr>
+                </table>
+                <table>
+                    @foreach (var item in Model.OpdDoctorList)
+                    {
+                        <tr>
+                            @Html.Partial("AddDoctorList", item)
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </fieldset>
+       <fieldset>
+           @* @if (IsSelfBilling)
+            {
+                *@
+
+
+           <legend>
+               <h3 style="color:#0026ff;">Bill:-</h3>
+           </legend>
+                <div class="row-fluid singleline">
+
+                    <label>
+                        <span class="size"></span>
+                        <div class="editor-label">
+                            @Html.Label("Registration")
+                        </div>
+                        
+                        <div class="editor-field">
+                            @*@Html.DropDownListFor(model => model.OldOrNewRegistration, HospitalManagementSystem.Utility.GetFeeTypeOPD(), "Select --One--", new { onchange = "GetRegistrationModeDetails()"})*@
+                            @Html.DropDownListFor(model => model.OldOrNewRegistration, HospitalManagementSystem.Utility.GetFeeType(), "Select--One", new { onchange = "GetRegistrationModeDetails()" })
+                        </div>
+                        
+                    </label>
+
+
+                    <label>
+                        <span class="size"></span>
+                        <div class="editor-label">
+                            @Html.Label("Other Discount")
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.OtherDiscountID, HospitalManagementSystem.Utility.GetOtherDiscountForDropDown(), "Select--One", new { onchange = "getOtherDiscountPercentage()" })
+                        </div>
+                    </label>
+                </div>
+
+                <div class="row-fluid singleline">
+                     <label>
+                        <span class="size">@*@Html.ValidationMessageFor(model => model.OpdFeeDetailsModel.RegistrationFee)*@</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.OpdFeeDetailsModel.RegistrationFee)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.OpdFeeDetailsModel.RegistrationFee, new { @id = "txtRegistrationFee", @onkeyup = "onchangeevent();", @readonly = "readonly" })
+
+                        </div>
+                    </label>
+
+                    <label>
+                        <span class="size">@*@Html.ValidationMessageFor(model => model.OpdFeeDetailsModel.DoctorFee)*@</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.OpdFeeDetailsModel.DoctorFee)
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.OpdFeeDetailsModel.DoctorFee, new { @id = "txtDoctorFee", @onkeyup = "onchangeevent();", @readonly = "readonly" })
+
+                        </div>
+
+                    </label>
+
+
+                    <label>
+                        <div class="size">@*@Html.ValidationMessageFor(model => model.OpdFeeDetailsModel.MemberDiscountAmount)*@</div>
+                        <div class="editor-label">
+                            @*@Html.LabelFor(model => model.OpdFeeDetailsModel.MemberDiscountAmount)*@
+                            Member Discount(%)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.OpdFeeDetailsModel.MemberDiscountAmount, new { @id = "txtMemberDiscountAmount", @onkeyup = "onchangeevent();" })
+
+                        </div>
+
+                    </label>
+
+
+
+
+                    <label>
+                        <div class="size">@*@Html.ValidationMessageFor(model => model.OpdFeeDetailsModel.OtherDiscountAmount)*@</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.OpdFeeDetailsModel.OtherDiscountAmount)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.OpdFeeDetailsModel.OtherDiscountAmount, new { @id = "txtOtherDiscountAmount", @onkeyup = "onchangeevent();", @readonly = "readonly" })
+
+                        </div>
+                    </label>
+
+                </div>
+
+                <div class="row-fluid singleline">
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.OpdFeeDetailsModel.TotalAmount)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.OpdFeeDetailsModel.TotalAmount)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.OpdFeeDetailsModel.TotalAmount, new { @id = "txtTotalAmount", @readonly = "readonly" })
+                            @*<input type="text" id="txtTotalAmount" value="@Model.OpdFeeDetailsModel.RegistrationFee" />*@
+                        </div>
+                    </label>
+
+
+
+
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.OpdFeeDetailsModel.Tender)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.OpdFeeDetailsModel.Tender)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.OpdFeeDetailsModel.Tender, new { @id = "tender", @Value = "" })
+                            @*<input type="text" id="txtTotalAmount" value="@Model.OpdFeeDetailsModel.RegistrationFee" />*@
+                        </div>
+                    </label>
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.OpdFeeDetailsModel.ReturnAmount)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.OpdFeeDetailsModel.ReturnAmount)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.OpdFeeDetailsModel.ReturnAmount, new { @id = "rtamt", @Value = "", @readonly = "readonly" })
+                            @*<input type="text" id="txtTotalAmount" value="@Model.OpdFeeDetailsModel.RegistrationFee" />*@
+                        </div>
+                    </label>
+
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.OpdFeeDetailsModel.Remarks)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.OpdFeeDetailsModel.Remarks)
+                        </div>
+                        <div class="editor-field">
+                            @*   ,new { @required = "@required" ,@onkeyup = "JqueryAjaxDeletePatientDoctor(this.value,'IDHERE','/AjaxRequest/TEST/')" }*@
+                            @Html.TextBoxFor(model => model.OpdFeeDetailsModel.Remarks)
+
+                        </div>
+
+
+                    </label>
+
+                </div>
+
+        </fieldset>
+        <div>
+            <p>
+                <input type="submit" value="Save" />
+            </p>
+        </div>
+    }
+
+    <div id="linkNewBack">
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+
+        function GetRegistrationModeDetails() {
+            var RegModeId = $("#OldOrNewRegistration").val();
+            $.ajax({
+                url: "@Url.Action("NewoldRegistration", "AjaxRequest")",
+            data: { Id: RegModeId },
+            dataType: "json",
+            type: "POST",
+            error: function () {
+                alert("An error occurred.");
+            },
+            success: function (data) {
+
+
+                $("#txtRegistrationFee").val(parseFloat(data));
+                $("#txtTotalAmount").val(parseFloat(data));
+                $("#rtamt").val(parseFloat(data));
+                //$("#txtTotalAmountwithTax").val(parseFloat(data))
+            }
+        })
+    }
+
+
+</script>
+
+<script type="text/javascript">
+    $("#Add-Item").on('click', '.row-button', function () {
+        $(this).closest("div.rowr").remove();
+    });
+
+</script>
+
+<script type="text/javascript">
+
+    $("#Add-Item").on('change', '.DepartmentID', function () {
+        var id = this.id;
+
+        id = id.replace("__DepartmentID", "__DoctorID");
+        $('#' + id).val('');
+
+
+        $.get('/AjaxRequest/GetDoctorNameList/' + this.value,
+              function (data) {
+                  $('#' + id).find('option').remove()
+                  $(data).each(
+                      function (index, item) {
+                          $('#' + id).append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                      });
+              }
+    );
+    });
+
+</script>
+
+<script type="text/javascript">
+    function JqueryAjaxDeletePatientDoctor(selvalue, targetElm, url) {
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: url,
+            contentType: "text/json",
+
+            beforeSend: function () {
+                $("#" + targetElm).attr('disabled', 'disabled');
+                $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#IDHERE").val(jsonResult);
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+    function JqueryAjaxLoadSelectOption(selValue, targetElm, url) {
+
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: url + selValue,
+            contentType: "text/json",
+            data: ({ id: selValue }),
+            beforeSend: function () {
+                $("#" + targetElm).attr('disabled', 'disabled');
+                $("#" + targetElm).addClass('ac_loading');
+            },
+
+            success: function (jsonResult) {
+                var evlResult = JSON.retrocycle(jsonResult);
+                var selOption = "";
+                selOption = ParseJsonResultForSelectOptions(evlResult);
+                tempTargetElm = targetElm.split(',');
+                for (var i = 0; i < tempTargetElm.length; i++) {
+                    // alert(tempTargetElm.length + " : " + tempTargetElm[i]);
+                    $("#" + tempTargetElm[i]).empty().append(selOption);
+                    $("#" + tempTargetElm[i]).removeClass('ac_loading');
+                    $("#" + tempTargetElm[i]).removeAttr('disabled');
+                }
+
+
+            },
+            error: function (jsonResult) {
+            }
+        });
+
+        function ParseJsonResultForSelectOptions(evlResult) {
+            var selOption = "";
+            $.each(evlResult, function (key, item) {
+                var isSelected = (item['Selected'] == "true") ? "Selected='Selected'" : "";
+                //var otherAttrib = (item['Attribs']!=undefined)? item['Attribs']:"";
+                var otherAttrib = "";
+                $.each(item, function (name, value) {
+                    if (name != 'Selected' && name != 'Value' && name != 'Text') {
+                        otherAttrib += " " + name + '="' + value + '" ';
+                    }
+                });
+                selOption += "<option value='" + item['Value'] + "' " + isSelected + " " + otherAttrib + " >"
+                + evlResult[key].Text + "</option>";
+            });
+            return selOption;
+        }
+
+    }
+</script>
+@*<script type="text/javascript">
+
+    function onchangeevent() {
+        //$('#txtMiddleName').val($('#txtid').val + 3);
+        //var b = $("#textbox2").val();
+        //if ($("#txtMiddleName").is(":checked")) {
+        //}
+        // $("#txtMiddleName").hide();
+        // $("#txtMiddleName").show();
+        //var a = $("#txtid").val();
+        //var a = $("#txtid").val();
+        //var total = parseInt(a) + 2;
+        //$("#txtMiddleName").val(total);
+
+        var vartxtRegistrationFee = $("#txtRegistrationFee").val();
+        var vartxtDoctorFee = $("#txtDoctorFee").val();
+        var vartxtMemberDiscountAmount = $("#txtMemberDiscountAmount").val();
+        var vartxtOtherDiscountAmount = $("#txtOtherDiscountAmount").val();
+
+        var vartxtTotalAmount = $('#txtTotalAmount').val();
+
+        var varTotal = 0;
+        var varDiscount = 0;
+
+        if (vartxtRegistrationFee == '') {
+            vartxtRegistrationFee = 0;
+        }
+        if (vartxtDoctorFee == '') {
+            vartxtDoctorFee = 0;
+        }
+        if (vartxtMemberDiscountAmount == '') {
+            vartxtMemberDiscountAmount = 0;
+        }
+        if (vartxtOtherDiscountAmount == '') {
+            vartxtOtherDiscountAmount = 0;
+        }
+        if (vartxtOtherDiscountAmount == '') {
+            vartxtOtherDiscountAmount = 0;
+        }
+
+        if (vartxtTotalAmount == '') {
+
+            vartxtTotalAmount = 0;
+        }
+
+
+        varTotal = parseFloat(vartxtRegistrationFee) + parseFloat(vartxtDoctorFee);
+
+        var MemdiscAmt = parseFloat(vartxtTotalAmount) * parseFloat(vartxtMemberDiscountAmount) / 100;
+        varDiscount = parseFloat(MemdiscAmt) + parseFloat(vartxtOtherDiscountAmount);
+        var varTotalAmount = parseFloat(varTotal) - parseFloat(varDiscount);
+        if (varTotalAmount < 0) {
+            $("#txtTotalAmount").val(0);
+        }
+        else {
+            $("#txtTotalAmount").val(parseFloat(varTotalAmount.toFixed(2)));
+        }
+        // alert(vartxtRegistrationFee);
+
+    }
+</script>*@
+    <script type="text/javascript">
+
+        function onchangeevent() {
+
+            var vartxtRegistrationFee = $("#txtRegistrationFee").val();
+            var vartxtDoctorFee = $("#txtDoctorFee").val();
+
+            var vartxtOtherDiscountAmount = $("#txtOtherDiscountAmount").val();
+            //var vartxtTaxAmount = $("#txtTaxAmount").val();
+            var vartxtMemberDiscountAmount = $("#txtMemberDiscountAmount").val();
+            var vartxtTotalAmountAfterDiscount = $("#txtTotalAmountAfterDiscount").val();
+            var vartxtTotalAmount = $("#txtTotalAmount").val();
+
+
+
+            var varTotal = 0;
+            var varDiscount = 0;
+
+
+            if (vartxtRegistrationFee == '') {
+                vartxtRegistrationFee = 0;
+            }
+            if (vartxtDoctorFee == '') {
+                vartxtDoctorFee = 0;
+            }
+            if (vartxtTotalAmountAfterDiscount == '') {
+                vartxtTotalAmountAfterDiscount = 0;
+            }
+            //if (vartxtTaxAmount == '') {
+            //    vartxtTaxAmount = 0;
+            //}
+
+            if (vartxtOtherDiscountAmount == '') {
+                vartxtOtherDiscountAmount = 0;
+            }
+
+            if (vartxtTotalAmount == '') {
+
+                vartxtTotalAmount = 0;
+            }
+
+            //var varTotalAmount = parseFloat(varTotal) - parseFloat(vartxtOtherDiscountAmount);
+
+
+            varTotal = parseFloat(vartxtRegistrationFee) + parseFloat(vartxtDoctorFee);
+            var MemdiscAmt = parseFloat(vartxtTotalAmount) * parseFloat(vartxtMemberDiscountAmount) / 100;
+
+
+            varDiscount = parseFloat(vartxtOtherDiscountAmount);
+            var varTotalAmount1 = parseFloat(varTotal) - parseFloat(vartxtOtherDiscountAmount);
+
+            var TaxAmt = parseFloat(varTotalAmount1) * 0.05;
+            //var varTotalAmount = parseFloat(varTotal) - parseFloat(vartxtOtherDiscountAmount) + parseFloat(TaxAmt
+            var varTotalAmount = parseFloat(varTotalAmount1) + parseFloat(TaxAmt);
+            //var TaxAmt = parseFloat(varTotalAmount1) * 0.05;
+            if (varTotalAmount < 0) {
+                $("#txtTotalAmount").val(0);
+            }
+            else {
+                $("#txtTotalAmount").val(parseFloat(varTotalAmount.toFixed(2)));
+            }
+
+        }
+</script>
+
+
+
+
+<script>
+
+    var dlg = $.noConflict();
+
+    dlg('.srchValcls').change(function (e) {
+
+        e.preventDefault();
+
+        // alert("hi");
+
+
+        var val = dlg('.srchValcls').val();
+
+        //alert(val);
+
+        var url = "/Opd/_SearchOption";
+
+        //alert(url);
+
+        dlg.get(url, null, function (data) {
+
+
+            dlg('#memsrch').html(data);
+
+            dlg(function () {
+
+                dlg("#memsrch").dialog({
+                    position: [290, 190],
+                    resizable: true,
+                    overFlow: scroll,
+                    minWidth: 1000,
+                    maxWidth: 1000,
+                    maxHeight: 200,
+
+
+                    title: "Search Member Ship"
+
+
+
+
+                    //close: function () { $(this).remove() },
+                    //modal: true
+
+                });
+
+            });
+
+
+        });
+
+
+    });
+
+
+
+
+</script>
+
+
+@*<script>
+    function getOtherDiscountPercentage() {
+        var otherDisAmount = $("#OtherDiscountID").val();
+
+        if (otherDisAmount == null || otherDisAmount == "") {
+
+            var vartxtRegistrationFee = $("#txtRegistrationFee").val();
+            var vartxtDoctorFee = $("#txtDoctorFee").val();
+            var vartxtMemberDiscountAmount = $("#txtMemberDiscountAmount").val();
+            var vartxtOtherDiscountAmount = $("#txtOtherDiscountAmount").val();
+
+            var vartxtTotalAmount = $('#txtTotalAmount').val();
+
+            var varTotal = 0;
+            var varDiscount = 0;
+
+            if (vartxtRegistrationFee == '') {
+                vartxtRegistrationFee = 0;
+            }
+            if (vartxtDoctorFee == '') {
+                vartxtDoctorFee = 0;
+            }
+            if (vartxtMemberDiscountAmount == '') {
+                vartxtMemberDiscountAmount = 0;
+            }
+            if (vartxtOtherDiscountAmount == '') {
+                vartxtOtherDiscountAmount = 0;
+            }
+            if (vartxtOtherDiscountAmount == '') {
+                vartxtOtherDiscountAmount = 0;
+            }
+
+            if (vartxtTotalAmount == '') {
+                vartxtTotalAmount = 0;
+            }
+
+
+
+            $('#txtOtherDiscountAmount').val(0);
+
+            vartxtOtherDiscountAmount = 0;
+
+            varTotal = parseFloat(vartxtRegistrationFee) + parseFloat(vartxtDoctorFee);
+
+            var MemdiscAmt = parseFloat(varTotal) * parseFloat(vartxtMemberDiscountAmount) / 100;
+
+
+
+
+
+            varDiscount = parseFloat(MemdiscAmt) + parseFloat(vartxtOtherDiscountAmount);
+            var varTotalAmount = parseFloat(varTotal) - parseFloat(varDiscount);
+            if (varTotalAmount < 0) {
+                $("#txtTotalAmount").val(0);
+            }
+            else {
+                $("#txtTotalAmount").val(parseFloat(varTotalAmount.toFixed(2)));
+            }
+
+
+
+        }
+
+
+
+
+        if (otherDisAmount == "") {
+            $("#txtOtherDiscountAmount").val(0);
+            return;
+        }
+
+
+        var url = "/AjaxRequest/GetOtherDiscountAmtFinal/";
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: url + otherDisAmount,
+
+            contentType: "text/json",
+
+            beforeSend: function () {
+                //$("#" + targetElm).attr('disabled', 'disabled');
+                //$("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                //$("#IDHERE").val(jsonResult);
+                //alert(jsonResult);
+                $("#txtOtherDiscountAmount").val(jsonResult);
+
+                var vartxtRegistrationFee = $("#txtRegistrationFee").val();
+                var vartxtDoctorFee = $("#txtDoctorFee").val();
+                var vartxtMemberDiscountAmount = $("#txtMemberDiscountAmount").val();
+                var vartxtOtherDiscountAmount = $("#txtOtherDiscountAmount").val();
+                var vartxtTotalAmount = $('#txtTotalAmount').val();
+
+
+
+                var varTotal = 0;
+                var varDiscount = 0;
+
+                if (vartxtRegistrationFee == '') {
+                    vartxtRegistrationFee = 0;
+                }
+                if (vartxtDoctorFee == '') {
+                    vartxtDoctorFee = 0;
+                }
+                if (vartxtMemberDiscountAmount == '') {
+                    vartxtMemberDiscountAmount = 0;
+                }
+                if (vartxtOtherDiscountAmount == '') {
+                    vartxtOtherDiscountAmount = 0;
+                }
+                if (vartxtOtherDiscountAmount == '') {
+                    vartxtOtherDiscountAmount = 0;
+                }
+
+
+                if (vartxtTotalAmount == '') {
+                    vartxtTotalAmount = 0;
+                }
+
+                varTotal = parseFloat(vartxtRegistrationFee) + parseFloat(vartxtDoctorFee);
+
+                var MemdiscAmt = parseFloat(vartxtTotalAmount) * parseFloat(vartxtMemberDiscountAmount) / 100;
+
+
+                var varTotalAmount = parseFloat(varTotal) - (parseFloat(MemdiscAmt) + parseFloat(jsonResult));
+                if (varTotalAmount < 0) {
+                    $("#txtTotalAmount").val(0);
+                }
+                else {
+                    $("#txtTotalAmount").val(parseFloat(varTotalAmount.toFixed(2)));
+                }
+
+            }
+        });
+    }
+
+
+
+</script>*@
+    @*Edited By Pushkar Adhikari*@
+    
+<script>
+    function getOtherDiscountPercentage() {
+        var otherDisAmount = $("#OtherDiscountID").val();
+
+        if (otherDisAmount == null || otherDisAmount == "") {
+
+            var vartxtRegistrationFee = $("#txtRegistrationFee").val();
+            var vartxtDoctorFee = $("#txtDoctorFee").val();
+            var vartxtOtherDiscountAmount = $("#txtOtherDiscountAmount").val();
+            var vartxtTaxAmount = $("#txtTaxAmount").val();
+            var vartxtTotalAmountAfterDiscount = $("#txtTotalAmountAfterDiscount").val();
+            var vartxtTotalAmount = $("#txtTotalAmount").val();
+
+            var varTotal = 0;
+            var varDiscount = 0;
+
+
+            if (vartxtRegistrationFee == '') {
+                vartxtRegistrationFee = 0;
+            }
+            if (vartxtDoctorFee == '') {
+                vartxtDoctorFee = 0;
+            }
+            if (vartxtTaxAmount == '') {
+                vartxtTaxAmount = 0;
+            }
+
+            if (vartxtOtherDiscountAmount == '') {
+                vartxtOtherDiscountAmount = 0;
+            }
+            if (vartxtTotalAmountAfterDiscount == '') {
+                vartxtTotalAmountAfterDiscount = 0;
+            }
+
+
+            if (vartxtTotalAmount == '') {
+
+                vartxtTotalAmount = 0;
+            }
+
+            $('#txtOtherDiscountAmount').val(0);
+            vartxtOtherDiscountAmount = 0;
+
+            varTotal = parseFloat(vartxtRegistrationFee) + parseFloat(vartxtDoctorFee);
+
+
+            varDiscount = parseFloat(vartxtOtherDiscountAmount);
+            var varTotalAmount1 = parseFloat(varTotal) - parseFloat(vartxtOtherDiscountAmount);
+
+            var TaxAmt = parseFloat(varTotalAmount1) * 0.05;
+            //var varTotalAmount = parseFloat(varTotal) - parseFloat(vartxtOtherDiscountAmount) + parseFloat(TaxAmt
+            var varTotalAmount = parseFloat(varTotalAmount1) + parseFloat(TaxAmt);
+
+            if (varTotalAmount < 0) {
+                $("#txtTotalAmount").val(0);
+            }
+            else {
+                $("#txtTotalAmount").val(parseFloat(varTotalAmount.toFixed(2)));
+            }
+
+            //if (otherDisAmount == "") {
+            //    $("#txtOtherDiscountAmount").val(0);
+            //    return;
+        }
+
+
+        var RegModeId = $("#OldOrNewRegistration").val();
+        var url = "/AjaxRequest/GetOtherDiscountAmtFinal/";
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: url + otherDisAmount + "?id2=" + RegModeId,
+
+            contentType: "text/json",
+
+            beforeSend: function () {
+            },
+            success: function (jsonResult) {
+                $("#txtOtherDiscountAmount").val(jsonResult);
+
+
+                var vartxtRegistrationFee = $("#txtRegistrationFee").val();
+                var vartxtDoctorFee = $("#txtDoctorFee").val();
+                var vartxtOtherDiscountAmount = $("#txtOtherDiscountAmount").val();
+                var vartxtTaxAmount = $("#txtTaxAmount").val();
+                var vartxtTotalAmountAfterDiscount = $("#txtTotalAmountAfterDiscount").val();
+                var vartxtTotalAmount = $("#txtTotalAmount").val();
+
+                var varTotal = 0;
+                var varDiscount = 0;
+
+
+                if (vartxtRegistrationFee == '') {
+                    vartxtRegistrationFee = 0;
+                }
+                if (vartxtDoctorFee == '') {
+                    vartxtDoctorFee = 0;
+                }
+                if (vartxtTaxAmount == '') {
+                    vartxtTaxAmount = 0;
+                }
+
+
+                if (vartxtOtherDiscountAmount == '') {
+                    vartxtOtherDiscountAmount = 0;
+                }
+
+                if (vartxtTotalAmount == '') {
+
+                    vartxtTotalAmount = 0;
+                }
+
+
+                varTotal = parseFloat(vartxtRegistrationFee) + parseFloat(vartxtDoctorFee);
+
+
+                varDiscount = parseFloat(vartxtOtherDiscountAmount);
+                var varTotalAmount1 = parseFloat(varTotal) - parseFloat(vartxtOtherDiscountAmount);
+
+                var TaxAmt = parseFloat(varTotalAmount1) * 0.05;
+                //var varTotalAmount = parseFloat(varTotal) - parseFloat(vartxtOtherDiscountAmount) + parseFloat(TaxAmt
+                var varTotalAmount = parseFloat(varTotalAmount1) + parseFloat(TaxAmt);
+
+                if (varTotalAmount < 0) {
+                    $("#txtTotalAmount").val(0);
+                }
+                else {
+                    $("#txtTotalAmount").val(parseFloat(varTotalAmount.toFixed(2)));
+                }
+
+
+            }
+        });
+    }
+
+
+
+</script>
+    @*f*@
+
+<script>
+
+    $('.DoctorID').change(function (e) {
+
+        e.preventDefault();
+        // alert('hi');
+
+        //var i = this.value;
+
+        $.get('/opd/GetDoctorFeeWithId/' + this.value,
+        function (data) {
+
+            var fee = parseInt(data);
+            //alert(fee);
+            $('#txtDoctorFee').val(fee);
+
+            var totalfee = $('#txtRegistrationFee').val();
+
+            var totalfeeNew = parseInt(totalfee) + parseInt(fee);
+            //alert(totalfeeNew);
+
+            $('#txtTotalAmount').val(totalfeeNew);
+
+            $("#txtMemberDiscountAmount").val(0);
+            $("#txtOtherDiscountAmount").val(0);
+
+
+
+        });
+    });
+
+</script>
+<script>
+    $("#tender").keyup(function () {
+
+
+        var te = $("#tender").val();
+
+        var to = $("#txtTotalAmount").val();
+
+        var r = parseFloat(te) - parseFloat(to);
+        $("#rtamt").val(r);
+    })
+</script>
+
+</div>

@@ -1,0 +1,160 @@
+﻿@model HospitalManagementSystem.Models.DepositRefundViewModel
+
+@{
+    ViewBag.Title = "RefundReceipt";
+    Layout = "~/Views/Shared/_BillingCounterLayout.cshtml";
+}
+
+<style>
+    table#mytabl td {
+        border: none !important;
+    }
+
+    .ui-dialog {
+        background-color: #B0E0E6;
+    }
+</style>
+
+<h4 style="text-align: center;">Deposit Refund Receipt</h4>
+
+<div class="contentWrapper">
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto; height: auto; padding-top: 5px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px;">
+        <img src="~/Images/mmh-logo1.png" style="position: absolute; margin-left: 25%; margin-top: 0%;" />
+
+        @MyHelpers.DesingForLogo()<br />
+        <h3 style="text-align: center;"><u>Deposit Refund Receipt</u></h3>
+        <hr />
+
+        <b><span>Refund Receipt No:-@Model.DepositRefundId</span></b>
+        @*<b><span>Receipt No:-@Hospital.Utility.GetDepositeReceipt(Model.PatientId)</span></b>*@
+
+        <span style="margin-left: 5%;"><b>Fiscal Year:-</b> <span>@HospitalManagementSystem.Utility.CurrentFisicalYear()</span>
+
+            <span style="margin-left: 15%;"><b>Refund Date:</b>&nbsp;@Convert.ToDateTime(Model.RefundDate).ToShortDateString()</span>
+            <span style="margin-left: 15%;"><b>Time:</b>&nbsp;@DateTime.Now.ToShortTimeString()</span>
+        </span>
+        <br />
+        <br />
+
+        @MyHelpers.PatientInfoWithOpdIdForDeposite(Model.PatientId)
+
+        <div>
+            <table class="table" id="mytabl" style="width: 50%">
+                <tr>
+                    @*<td>Deposit By : @Model.DepostedBy
+                    </td>
+                    <td>Relation : @Hospital.Utility.GetRelationship(Model.RelationId)
+                    </td>*@
+                </tr>
+                <tr>
+                    <td>User : @HospitalManagementSystem.Utility.GetCurrentLoginUserName()</td>
+                </tr>
+            </table>
+
+
+
+            <table style="width: 100%;" id="mytabl">
+
+                @*<tr>
+            <td>@Html.DisplayNameFor(model => model.DepostedBy)</td>
+            <td>@Html.DisplayFor(model => model.DepostedBy)</td>
+        </tr>*@
+                <tr>@*<td>@Html.DisplayNameFor(model => model.DepositeType)</td>
+            <td>
+
+          @{
+              string str = Hospital.Utility.GetDepositeType().Where(x => x.Value == Model.DepositeType.ToString()).SingleOrDefault().Text;
+                }
+
+               <b> @str</b>
+                </td>*@
+                </tr>
+
+
+
+                <tr>
+
+                    <td colspan="2"><b style="float: left;">@*Deposited Date:@Convert.ToDateTime(Model.DepositedDate).ToShortDateString()*@</b>
+                        <b style="float: right;">@Html.DisplayNameFor(model => model.RefundAmount) : @Html.DisplayFor(model => model.RefundAmount)</b></td>
+
+
+
+
+                </tr>
+
+
+                <tr>
+
+                    <td style="float: right;" colspan="2"></td>
+                </tr>
+            </table>
+
+            <div style="float: right;">
+
+                @{
+                    Hospital.NumberToEnglish obj = new Hospital.NumberToEnglish();
+
+                    string strb = obj.changeNumericToWords(@Convert.ToDouble(Model.RefundAmount));
+                }
+
+                <span style="float: right;"><b><span style="">Amount in Word <span>&nbsp;</span>:-</span><span>&nbsp;&nbsp;</span>(NRS)&nbsp;@strb<span> Only.</span></b></span>
+
+            </div>
+
+        </div>
+        <br />
+
+
+
+
+
+    </div>
+    <div style="float: right;">
+        <input type="button" id="btnPrintDeposite" style="width: 50px; float: right;" value="Print" />
+
+    </div>
+</div>
+
+
+<script>
+
+    var hh = $.noConflict();
+    hh('#btnPrintDeposite').click(function (e) {
+
+        e.preventDefault();
+        var msg = 'Do You Want To Print?';
+        var div = hh("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            resizable: false,
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0', 'alert("hi");');
+
+                        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+
+    });
+
+</script>

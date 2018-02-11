@@ -1,0 +1,612 @@
+﻿@model HospitalManagementSystem.Models.IpdRegistrationMasterModel
+@{
+    
+    ViewBag.Title = "IPD";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+<style>
+    select {
+        width: 208px;
+        height: 27px;
+    }
+</style>
+
+
+<script>
+    $(function () {
+        $('#OpdPatientId').css('border', '2px solid blue');
+        $('#OpdPatientId').focus();
+
+    });
+
+    $("#OpdPatientId").live("focusout", function (e) {
+        $('#OpdPatientId').css('border', '0px');
+        $('#btnClick').css('border', '2px solid blue');
+        $('#btnClick').focus();
+
+
+    });
+
+
+    $("#btnClick").live("focusout", function (e) {
+        $('#btnClick').css('border', '0px');
+        //$('#btnClick').css('border', '2px solid blue');
+        //$('#btnClick').focus();
+
+
+    });
+
+    $("#DepoAmountId").live("focusout", function (e) {
+        //$('#BtnSubmit').css('border', '0px');
+        $('#BtnSubmit').css('border', '4px solid Yellow');
+        $('#BtnSubmit').focus();
+
+
+    });
+
+
+
+
+
+
+</script>
+
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+
+        j("#RegistrationDate").datepicker();
+        j("#RoomTypeDivId").val(0);
+        j("#BedId").val(0);
+        var OpdNoEmergencyNo = $("#OpdPatientId").val();
+
+        if (parseInt(OpdNoEmergencyNo) != 0) {
+
+            $.ajax({
+                url: '/IpdRegistrationMaster/_GetPatientDetails/',
+                type: 'GET',
+                data: {
+
+                    OpdNoEmergencyNo: OpdNoEmergencyNo
+                },
+                success: function (data) {
+                    $('#SearchById').html(data);
+                },
+                errro: function () {
+                    alert('Sorry Error Occured');
+                }
+            });
+        }
+
+    });
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        AddClickEvents();
+
+    });
+</script>
+
+
+@if (TempData["Failed"] == "0")
+{
+    <script type="text/javascript">
+
+        alert('Insertion Failed Check Data Again!! ')
+
+    </script>
+}
+
+
+
+<h2 style="text-align: center;">IPD Registration</h2>
+
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("Create", "IpdRegistrationMaster", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+      
+    
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Create</legend>
+
+
+            <div class="row-fluid singleline">
+
+
+
+
+                <label>
+
+                    <div class="size">
+                        @Html.ValidationMessageFor(model => model.OpdNoEmergencyNo)
+                    </div>
+                    <div>@Html.LabelFor(model => model.OpdNoEmergencyNo)</div>
+                    <div>
+                        @if (Model.OpdNoEmergencyNo > 0)
+                        {
+@* @Html.DropDownListFor(model => model.OpdNoEmergencyNo,HospitalManagementSystem.Utility.GetPatientIDAndNameFormOpdMaster(), new { @id = "OpdPatientId" })*@
+                            @Html.TextBoxFor(model => model.OpdNoEmergencyNo, new { @id = "OpdPatientId", @readonly = "readonly" })
+                        }
+                        else
+                        {
+@* @Html.DropDownListFor(model => model.OpdNoEmergencyNo, HospitalManagementSystem.Utility.GetPatientNameFromOpdMaster(), "~Select Patient~", new { @id = "OpdPatientId" })*@
+                            @Html.TextBoxFor(model => model.OpdNoEmergencyNo, new { @id = "OpdPatientId" })
+                            
+                        }
+
+                    </div>
+
+                </label>
+
+
+                <label>
+                    <input type="button" id="btnClick" value="Search" />
+                </label>
+
+            </div>
+
+
+
+            <span id="SearchById"></span>
+
+
+            @if (TempData["existPatientinIpd"] != null)
+            {
+                <span style="color: red;">@TempData["existPatientinIpd"]</span>
+            }
+
+
+            <div class="row-fluid singleline">
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.RegistrationDate)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.RegistrationDate)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.RegistrationDate, new { @Value = DateTime.Now.ToShortDateString() })
+                    </div>
+
+                </label>
+
+                <label>
+                    <div>
+                        Doctor/Incharge
+                    </div>
+                    <div>
+                        @Html.DropDownListFor(model => model.ReferDoctorId, HospitalManagementSystem.Utility.GetDoctors())
+                    </div>
+                </label>
+
+
+
+                <label>
+                    <div>
+                        @Html.LabelFor(model => model.IpdPatientroomDetailsModel.WardNo)
+                    </div>
+                    <div>
+                        @Html.DropDownListFor(model => model.IpdPatientroomDetailsModel.WardNo, HospitalManagementSystem.Utility.GetIpdWardName())
+                    </div>
+                </label>
+
+
+
+
+            </div>
+
+
+
+            <div class="row-fluid singleline">
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.IpdPatientroomDetailsModel.RoomType)</span>
+                    <div>
+                        @Html.LabelFor(model => model.IpdPatientroomDetailsModel.RoomType)
+                    </div>
+                    <div>
+                        @Html.DropDownListFor(model => model.IpdPatientroomDetailsModel.RoomType, HospitalManagementSystem.Utility.GetRoomType(), new { @required = "@required", @id = "RoomTypeDivId", @onchange = "JqueryAjaxLoadSelectOption(this.value,'RoomNumberId','/AjaxRequest/GetRoomNumber/')" })
+                    </div>
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.IpdPatientroomDetailsModel.RoomNo)</span>
+                    <div>
+                        @Html.LabelFor(model => model.IpdPatientroomDetailsModel.RoomNo)
+                    </div>
+                    <div>
+                        @Html.DropDownListFor(model => model.IpdPatientroomDetailsModel.RoomNo, HospitalManagementSystem.Utility.GetRoomNumber(1), "select", new { @required = "@required", @disabled = "disabled", @id = "RoomNumberId", @onchange = "JqueryAjaxLoadSelectForBed(this.value, 'BedId','/AjaxRequest/GetBedNumber/')" })
+                    </div>
+
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.IpdPatientroomDetailsModel.BedNo)</span>
+                    <div>
+                        @Html.LabelFor(model => model.IpdPatientroomDetailsModel.BedNo)
+                    </div>
+                    <div>
+
+                        @Html.DropDownListFor(model => model.IpdPatientroomDetailsModel.BedNo, HospitalManagementSystem.Utility.GetBedNumber(1), "select", new { @required = "@required", @disabled = "disabled", @id = "BedId", @onchangeerwe = "JqueryAjaxAmountDisplay(this.value,'/AjaxRequest/GetRoomAmount/')" })
+                    </div>
+
+                </label>
+
+                <label>
+                    <div>
+                        Charge
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(model => model.IpdPatientBedDetailsModel.Amount, new { @readonly = "readonly", @id = "bedAmountDiv" })
+                    </div>
+                </label>
+
+            </div>
+            <div class="row-fluid singleline">
+
+                <label>
+
+                    <div class="size">
+                        @Html.ValidationMessageFor(model => model.StringICD)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.StringICD)
+                    </div>
+
+
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.StringICD, null, new { @id = "IcdCode", style = "width:415px;" })
+                    </div>
+                </label>
+
+                <label>
+                    <div>
+                        Deposit Amount
+                    </div>
+                    <div>
+                        @*@Html.TextBoxFor(model => model.DepositeAmount, new { @id = "DepoAmountId", @onKeyup = "CalculationAmount();" })*@
+                        @Html.TextBoxFor(model => model.DepositeAmount, new { @id = "DepoAmountId", @onKeyup = "CalculationAmount();" })
+                    </div>
+                </label>
+
+                <label>
+                    <div>
+                        Total Amount
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(model => model.DepositeAmount, new { @id = "TotalAmount", @readonly = "readonly" })
+                    </div>
+                </label>
+
+
+            </div>
+
+            <div class="well well-small" id="Add-Item">
+
+                @Html.ActionLink("Add Diagnosis", "IpdPatientDiagnosisDetails", null, new { @class = "addProductItem btn btn-primary" })
+                <br />
+                <br />
+                <table id="tblotm" style="width: 650px; margin-left: -200px">
+                    <tr>
+                        <td class="span5 pagination-centered" style="border: none">Diagnosis</td>
+
+
+                    </tr>
+                </table>
+                <table>
+                    @try
+                    {
+                        <div class="row" style="margin-left: 40px;">
+
+                            @Html.DropDownListFor(m => m.ObjIpdPatientDiagnosisDetailsModel.DiagnosisID, HospitalManagementSystem.Utility.GetDiagosisList())
+                            <input type="button" class="row-button btn btn-warning" value="Remove" />
+
+
+                        </div>
+
+                        foreach (var item in Model.ipdPatientDiagnosisDetailList)
+                        {
+                            
+                        <tr>
+                            @Html.Partial("IpdPatientDiagnosisDetails", item)
+                        </tr>
+                           
+                        }
+                    }
+                    catch { }
+
+                </table>
+            </div>
+
+
+            <p>
+                <input type="submit" value="Create" id="BtnSubmit" />
+
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+    </div>
+
+
+    <script type="text/javascript">
+        $("#Add-Item").on('click', '.row-button', function () {
+            $(this).closest("div.row").remove();
+
+        });
+
+    </script>
+    <script src="~/Scripts/json.cycle.js"></script>
+    <script>
+
+        function JqueryAjaxLoadSelectForBed(selValue, targetElm, url) {
+
+            var roomTypeId = $("#RoomTypeDivId").val()
+            //alert(selValue + " " + roomTypeId + " " + targetElm + "" + url)
+            $.ajax({
+                async: false,
+                type: "GET",
+                url: url,
+                contentType: "text/json",
+                data: ({ RoomNumber: selValue, RoomTypeID: roomTypeId }),
+                beforeSend: function () {
+                    $("#" + targetElm).attr('disabled', 'disabled');
+                    $("#" + targetElm).addClass('ac_loading');
+                },
+
+                success: function (jsonResult) {
+                    //sPropose For Retrive Bed Amount Here
+                    var newUrl = "/AjaxRequest/GetRoomAmount/";
+                    JqueryAjaxAmountDisplay(roomTypeId, selValue, newUrl)
+                    //End Bed Amount Here
+                    var evlResult = JSON.retrocycle(jsonResult);
+                    var selOption = "";
+                    selOption = ParseJsonResultForSelectOptions(evlResult);
+                    tempTargetElm = targetElm.split(',');
+                    for (var i = 0; i < tempTargetElm.length; i++) {
+                        // alert(tempTargetElm.length + " : " + tempTargetElm[i]);
+                        $("#" + tempTargetElm[i]).empty().append(selOption);
+                        $("#" + tempTargetElm[i]).removeClass('ac_loading');
+                        $("#" + tempTargetElm[i]).removeAttr('disabled');
+                    }
+
+
+                },
+                error: function (jsonResult) {
+                }
+            });
+
+            function ParseJsonResultForSelectOptions(evlResult) {
+                var selOption = "";
+                $.each(evlResult, function (key, item) {
+                    var isSelected = (item['Selected'] == "true") ? "Selected='Selected'" : "";
+                    //var otherAttrib = (item['Attribs']!=undefined)? item['Attribs']:"";
+                    var otherAttrib = "";
+                    $.each(item, function (name, value) {
+                        if (name != 'Selected' && name != 'Value' && name != 'Text') {
+                            otherAttrib += " " + name + '="' + value + '" ';
+                        }
+                    });
+                    selOption += "<option value='" + item['Value'] + "' " + isSelected + " " + otherAttrib + " >"
+                    + evlResult[key].Text + "</option>";
+                });
+
+                return selOption;
+            }
+
+        }
+
+    </script>
+
+    <script type="text/javascript">
+        function JqueryAjaxLoadSelectOption(selValue, targetElm, url) {
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: url + selValue,
+                contentType: "text/json",
+                data: ({ id: selValue }),
+                beforeSend: function () {
+                    $("#" + targetElm).attr('disabled', 'disabled');
+                    $("#" + targetElm).addClass('ac_loading');
+                },
+
+                success: function (jsonResult) {
+                    //alert(jsonResult);
+
+                    var evlResult = JSON.retrocycle(jsonResult);
+                    var selOption = "";
+                    selOption = ParseJsonResultForSelectOptions(evlResult);
+                    tempTargetElm = targetElm.split(',');
+                    for (var i = 0; i < tempTargetElm.length; i++) {
+
+                        $("#" + tempTargetElm[i]).empty().append(selOption);
+                        $("#" + tempTargetElm[i]).removeClass('ac_loading');
+                        $("#" + tempTargetElm[i]).removeAttr('disabled');
+                    }
+                    $("#bedAmountDiv").val("0");
+
+                    $("#BedId").val("0");
+
+
+                },
+                error: function (jsonResult) {
+                }
+            });
+
+            function ParseJsonResultForSelectOptions(evlResult) {
+                var selOption = "";
+                $.each(evlResult, function (key, item) {
+                    var isSelected = (item['Selected'] == "true") ? "Selected='Selected'" : "";
+                    //var otherAttrib = (item['Attribs']!=undefined)? item['Attribs']:"";
+                    var otherAttrib = "";
+                    $.each(item, function (name, value) {
+                        if (name != 'Selected' && name != 'Value' && name != 'Text') {
+                            otherAttrib += " " + name + '="' + value + '" ';
+                        }
+                    });
+                    selOption += "<option value='" + item['Value'] + "' " + isSelected + " " + otherAttrib + " >"
+                    + evlResult[key].Text + "</option>";
+                });
+
+                return selOption;
+            }
+
+        }
+
+
+
+    </script>
+    @*//Get Amount*@
+    <script type="text/javascript">
+        function JqueryAjaxAmountDisplay(roomtype, RoomNumber, url) {
+
+            $.ajax({
+
+                async: false,
+                type: "GET",
+                url: url,
+                contentType: "text/json",
+                data: ({ roomTypeId: roomtype, RoomNumber: RoomNumber }),
+                beforeSend: function () {
+                    //$("#" + targetElm).attr('disabled', 'disabled');
+                    //$("#" + targetElm).addClass('ac_loading');
+                },
+
+                success: function (jsonResult) {
+
+                    var aa = $('#BedId').val();
+
+                    $("#bedAmountDiv").val(jsonResult);
+                    var depo = $('#DepoAmountId').val();
+                    if (depo == "" || depo == null) {
+                        depo = parseFloat("0");
+                    }
+                    $('#TotalAmount').val(jsonResult + parseFloat(depo));
+
+
+                },
+                error: function (jsonResult) {
+                }
+            });
+        }
+
+    </script>
+
+
+    <script type="text/javascript">
+
+        $('#btnClick').click(function () {
+
+            // var DepartmentID = $("#DepartmentID").val();
+            var OpdNoEmergencyNo = $("#OpdPatientId").val();
+            // alert(OpdNoEmergencyNo);
+
+            $.ajax({
+                url: '/IpdRegistrationMaster/_GetPatientDetails/',
+                type: 'GET',
+                data: {
+
+                    OpdNoEmergencyNo: OpdNoEmergencyNo
+                },
+                success: function (data) {
+                    $('#SearchById').html(data);
+                },
+                errro: function () {
+                    alert('Sorry Error Occured');
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $('#RoomTypeDivId').on("change", function (e) {
+
+            // alert("ji");
+
+            var val = this.value;
+
+            // alert(this.value);
+            if (this.value == "Select Room Type") {
+                $('#BedId').val("");
+                $('#bedAmountDiv').val("");
+
+
+            }
+
+
+        });
+
+
+
+    </script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var BedAmount = $('#bedAmountDiv').val();
+            $('#TotalAmount').val(BedAmount);
+        });
+
+
+        function CalculationAmount() {
+
+            var BedAmount = $('#bedAmountDiv').val();
+            var DepositAmount = $('#DepoAmountId').val();
+
+            if (isNaN(DepositAmount)) {
+                DepositAmount = 0;
+            }
+            if (isNaN(BedAmount)) {
+                BedAmount = 0;
+            }
+
+            //var BPlusDe = parseFloat(BedAmount) + parseFloat(DepositAmount);
+            var BPlusDe = parseFloat(DepositAmount);
+            $('#TotalAmount').val(BPlusDe);
+
+        };
+
+
+        $(document).ready(function () {
+
+
+            $("#IcdCode").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/AjaxRequest/GetIcdCode?Name=" + $('#IcdCode').val(),
+                        type: "POST",
+                        dataType: "json",
+                        //data: { s: request.term },
+                        success: function (data) {
+
+                            response($.map(data, function (item) {
+                                //alert(item);
+                                return { label: item, value: item };
+
+                            }))
+                        }
+                    })
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+        });
+
+
+    </script>
+
+
+
+
+
+</div>

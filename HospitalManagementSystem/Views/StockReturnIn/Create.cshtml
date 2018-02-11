@@ -1,0 +1,166 @@
+﻿@model Hospital.Models.StockReturnInModel
+
+@{
+    ViewBag.Title = "IndexSearchForm";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+<style>
+
+    table#tblsrchid td {
+        width:auto;
+        height:auto;
+    }
+
+    table#tblmy, 
+    table#tblmy td {
+        border:none !important;
+    }
+
+</style>
+
+
+<script>
+
+
+    var jsrch = $.noConflict();
+    jsrch(function () {
+        jsrch("#fromdate").datepicker();
+        jsrch("#todate").datepicker();
+        jsrch("#ReturnInDate").datepicker();
+    });
+
+</script>
+
+
+<h2 style="text-align:center;">Return In View/Form</h2>
+<div class="contentWrapper">
+
+<div>
+
+@*@using (Html.BeginForm("Create", "StockReturnIn", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+{
+<table id="tblmy">
+    <tr>
+        <td>Return Out No</td>
+        <td>@Html.TextBox("returnoutno")</td>
+    </tr>
+    <tr>
+        <td>From Date</td>
+        <td>@Html.TextBox("fromdate")</td>
+        <td>To Date</td>
+        <td>@Html.TextBox("todate")</td>
+    </tr>
+    <tr>
+        <td>Supplier Name</td>
+        <td>@Html.DropDownList("SupplierId", @Hospital.Utility.GetSupplier())</td>
+        <td><input type="submit" value="Search"/></td>
+    </tr>
+    
+
+
+
+</table>
+    
+
+}*@
+
+</div>
+    <br />
+
+    <div>
+         @using (Html.BeginForm("SaveReturnIn", "StockReturnIn", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+{
+        <table style="width:100%;">
+            <thead>
+                <tr>
+                <th>Return Out No</th>
+                <th>Bill No</th>
+                <th>Item Name</th>
+                <th>Return Out Quantity</th>
+                <th>Return In Qty</th>
+                    </tr>
+            </thead>
+            
+            <tbody>
+              
+                @for (int i = 0; i < Model.ReturnInList.Count; i++)
+                {
+                     <tr>
+                <td>
+                    @Model.ReturnInList[i].Remarks
+                </td>
+                <td>
+                    @Model.ReturnInList[i].ReturnInId
+                </td>
+                    <td>
+                        @Hospital.Utility.GetItemNameFromStockItemEntry(Model.ReturnInList[i].ItemId)
+                    </td>
+                    <td>
+                        @((int)Model.ReturnInList[i].ReturnInQty)
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(modelItem => Model.ReturnInList[i].ReturnInQty, new { @Value = "0" })
+                        @Html.HiddenFor(modelItem => Model.ReturnInList[i].PurchaseId)
+                        @Html.HiddenFor(modelItem => Model.ReturnInList[i].ReturnOutId)
+                          @Html.HiddenFor(modelItem => Model.ReturnInList[i].ItemId)
+                    </td>
+                         </tr>
+                }
+          
+               <tr>
+                   <td style="border:none">
+                       Remarks:
+                   </td>
+                   <td style="border:none">
+                       @Html.TextBoxFor(model=>model.Remarks)
+                   </td>
+                   <td style="border:none">
+                       Date:
+                   </td>
+                   <td style="border:none">
+                       @Html.TextBoxFor(model => model.ReturnInDate, new { @Value=Model.ReturnInDate.ToShortDateString()})
+                   </td>
+               </tr>
+            </tbody>
+
+        </table>
+             <input type="submit" value="Save"/>
+         }
+
+    </div>
+    <span id="linkNewBack">
+    @Html.ActionLink("Back to List","Index","ReturnOut")</span>
+
+    </div>
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+<script type="text/javascript">
+    var autocom = $.noConflict();
+    autocom(document).ready(function () {
+        autocom("#returnoutno").autocomplete({
+            source: function (request, response) {
+                autocom.ajax({
+                    url: "/StockReturnIn/AutocompleteReturnOut",
+                    type: "GET",
+                    dataType: "json",
+                    data: { s: request.term },
+                    success: function (data) {
+                        response(autocom.map(data, function (item) {
+                            return { label: item, value: item };
+                        }))
+                    },
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    });
+        </script>
+    }
+
+
+
+             

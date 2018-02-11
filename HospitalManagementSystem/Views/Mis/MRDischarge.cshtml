@@ -1,0 +1,58 @@
+﻿@model HospitalManagementSystem.Models.MisModel
+
+@{
+    ViewBag.Title = "MRDischarge";
+    Layout = "~/Views/Shared/_MRecordLayout.cshtml";
+}
+
+<h2>Medical Record Discharge</h2>
+
+<div class="contentWrapper">
+
+
+
+    @using (Html.BeginForm("MRDischarge", "Mis", FormMethod.Post, new { @id = "myform" }))
+    {
+        <span>IPD Number:&nbsp;</span><span id="txtid"></span> @Html.TextBox("value", null, new { @id = "value", @placeholder = "Value Here" })
+        <input type="submit" value="show" class="btnsub" />
+    }
+
+    <div id="showResult">
+    </div>
+
+
+    <br />
+
+
+    <script type="text/javascript">
+
+        var nonn = $.noConflict();
+
+        nonn('.btnsub').on('click', function (e) {
+            e.preventDefault();
+
+
+            var optVal = nonn('.srchoptn').val();
+            if (optVal == 0) {
+                nonn(".srchoptn").focus();
+                nonn('#showResult').empty();
+
+
+            }
+            else {
+
+
+                var form = nonn('#myform');
+                var url = form.attr("action");
+                var formData = form.serialize();
+                nonn.post(url, formData, function (data) {
+
+                    nonn('#showResult').empty();
+                    nonn('#showResult').html(data);
+
+                });
+            }
+
+        });
+
+    </script>

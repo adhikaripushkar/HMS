@@ -1,0 +1,34 @@
+﻿@using HospitalManagementSystem.Helpers
+@model HospitalManagementSystem.Models.OpdMedicalRecordCommonTestModel
+
+
+<style>
+    .txtone {
+        background-color: #FEFFB0;
+        font-weight: bold;
+        text-align: right;
+    }
+</style>
+
+
+@using (Html.BeginCollectionItem("PatientCommonTestList"))
+{
+   
+    <div class="row row-fluid singleline" style="margin-left:0.2px; margin-top:-15px;">
+
+        <label style="padding-top:1px;">
+        @Html.TextBoxFor(model => model.ShortDesc)
+        @Html.ValidationMessageFor(model => model.ShortDesc)
+            </label>
+        <label style="padding-top:1px;">
+        @Html.TextBoxFor(model => model.Details )
+        @Html.ValidationMessageFor(model => model.Details)
+            </label>
+
+        <input type="button" class="row-button btn btn-warning" value="Remove" />
+    </div>
+    
+   
+   
+}
+

@@ -1,0 +1,76 @@
+﻿@model Hospital.Models.ReportModel
+
+@{
+    ViewBag.Title = "Pre-Registration";
+    Layout = "~/Views/Shared/_Pre-RegistrationLayout.cshtml";
+}
+<script>
+    var j = $.noConflict();
+   
+    j(function () {
+        j("#FromDateRegMode").datepicker();
+
+    });
+    j(function () {
+        j("#ToDateRegMode").datepicker();
+
+    });
+    
+
+  </script>
+
+<h2 style="text-align:center;">Pre-Registration Reports</h2>
+
+
+<div class="contentWrapper">
+
+  
+    <div class="bs-docs-example form-inline">
+
+        @using (Html.BeginForm("PreRegistrationReportRegMode", "PreRegistration", FormMethod.Post))
+        {
+            @*<p>Total No of PreRegistration Data with Registration Mode</p>*@
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+
+                <div class="row-fluid singleline">
+
+                    @Html.LabelFor(Model => Model.FromDateRegMode)
+
+                    @Html.TextBoxFor(Model => Model.FromDateRegMode, new {@Value=DateTime.Now.ToShortDateString()})
+
+                    @Html.LabelFor(Model => Model.ToDateRegMode)
+
+                    @Html.TextBoxFor(Model => Model.ToDateRegMode, new { @Value=DateTime.Now.ToShortDateString()})
+
+                    @Html.LabelFor(Model => Model.Regstrationmode)
+
+                    @Html.DropDownListFor(Model => Model.Regstrationmode, @Hospital.Utility.RegistrationModeLists())
+                </div>
+               <div>
+    
+    </div>
+            </fieldset>
+            
+        
+                
+            <input type="submit" value=" Show" />
+
+        }
+         @if(ViewBag.Total != null)
+        {
+        
+       @Html.Partial("ReportModel",Model)
+        
+        }
+
+    </div>
+
+    
+
+
+</div>
+
+
+

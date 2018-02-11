@@ -1,0 +1,151 @@
+﻿@model HospitalManagementSystem.Models.BillingCounterNewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_BillingCounterLayout.cshtml";
+}
+
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            AddClickEvents();
+        });
+
+
+    </script>
+
+
+
+
+
+<h2>Create</h2>
+
+<div class="contentWrapper">
+
+
+
+
+
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <fieldset>
+        <legend>Billing Counter</legend>
+        <div class="well well-small" id="Add-Item">
+            @*@Html.TextBox("txtTestName", null, new { @id = "txtTestName", style = "width:20em;" })*@
+            @Html.ActionLink("Add More", "AddMoreParticulars", null, new { @class = "addProductItem btn btn-primary" })
+            
+
+            <table id="particularTable" style="width: 751px;">
+                <tr>
+                    <td>Department</td>
+                    <td>Particular</td>
+                    <td>Times</td>
+                    <td>DiscountIN</td>
+                    <td>Per/Amount</td>
+                    <td>Rate</td>
+                    <td>Tax(@@5)</td>
+                    <td>Total Price</td>
+                    <td>Discount(%)</td>
+                    <td>Discount(Rs)</td>
+                    <td>Amount</td>
+                    <td>Remove</td>
+                </tr>
+
+                @foreach (var item in Model.BillingCounterNewTestListModelList)
+                {
+                    <tr>
+                        @Html.Partial("AddMoreParticulars", item)
+                           
+                    </tr>
+                }
+     
+            </table></div>
+    </fieldset>
+   
+
+    <p>
+        <input type="submit" value="Create" disabled="disabled" id="Savebtn" />
+    </p>
+    
+    
+    <script type="text/javascript">
+        $("#Add-Item").on('click', '.row-button', function () {
+            $(this).closest("div.row").remove();
+        });
+
+    </script>
+   
+    
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+@*@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryui")*@
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

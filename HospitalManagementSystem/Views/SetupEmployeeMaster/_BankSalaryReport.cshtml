@@ -1,0 +1,191 @@
+﻿@model Hospital.Models.SetupEmployeeMasterModel
+
+<style>
+    table#tblnoborder,
+    table#tblnoborder td
+    {
+        border: none !important;
+    }
+
+    .font
+    {
+        font-weight: bold;
+    }
+
+    .small-table td
+    {
+        border: none;
+    }
+
+    .holder img
+    {
+        max-height: 48px;
+        max-width: 55px;
+        object-fit: cover;
+    }
+
+
+    table#mytbl,
+    table#mytbl td
+    {
+        width: 880px;
+        border: none !important;
+    }
+</style>
+
+<style>
+    table, th, td
+    {
+        border: 1px solid black;
+        text-align: center;
+        font-size: 13px;
+    }
+</style>
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+</script>
+
+<div class="contentWrapper">
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto; padding: 5px;">
+
+
+        @if (@Hospital.Utility.GetPathOfHospitalLogo() != null && @Hospital.Utility.GetPathOfHospitalLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalLogo/@Hospital.Utility.GetPathOfHospitalLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@Hospital.Utility.GetPathOfHospitalLogo() == "")
+        { 
+            <br />        
+        }
+        <div style="font: bold; font-size: 18px; text-align: center; height: 115px;">
+            @if (@Hospital.Utility.GetHospitalTitleName() != null && @Hospital.Utility.GetHospitalTitleName() != "")
+            {
+                <span>@Hospital.Utility.GetHospitalTitleName()</span>
+            }
+            <br />
+            @Hospital.Utility.GetHospitalName()<br />
+            <div style="height: 80px;">
+                <span style="font-size: 15px; text-align: center">@Hospital.Utility.HospitalAddress()</span><br />
+                <span style="font-size: 14px; text-align: center">Website:-@Hospital.Utility.HospitalUrl()</span><br />
+                <span style="font-size: 14px; text-align: center">Ph:-@Hospital.Utility.HospitalPhone()</span>
+
+            </div>
+
+        </div>
+        <h2 style="text-align: center;">Salary Detail</h2>
+        <table border="0" style="width: 500px; margin-top: 20px;" align="center">
+            <tr>
+                @Html.HiddenFor(model => model.MonthId)
+                @Html.HiddenFor(model => model.YearId)
+                  <td>Year:@Html.LabelFor(model => model.YearName, Hospital.Utility.GetYearName(Model.YearId))
+                </td>
+                <td>Month:@Html.LabelFor(model => model.MonthName, Hospital.Utility.GetMonthName(Model.MonthId))
+                </td>
+            </tr>
+        </table>
+        <br />
+
+        <div style="overflow-x: scroll">
+            <table class="table" id="exporttable">
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Bank AccountNo</th>                   
+                    <th>Salary Payable</th>
+                </tr>
+                @{ 
+                Hospital.Providers.SetupEmployeeMasterProviders pro = new Hospital.Providers.SetupEmployeeMasterProviders();
+                Model.SetupEmployeeMasterModelList = pro.GetSalarySheet(Model.MonthId, Model.YearId);
+                }
+                @foreach (var item in Model.SetupEmployeeMasterModelList)
+                {
+                <tr>
+                    <td>@item.EmployeeFullName</td>
+                    <td>@item.BankAccountNo</td>
+                    <td>@item.SalaryPayable</td>
+                </tr>
+                }
+            </table>
+        </div>
+        <br />
+    </div>
+    <div style="float: right;">
+        <input type="button" id="export" style="width: 50px;" onclick="tableToExcel('exporttable', '')" value="Export" />
+        <input type="button" id="btnPrintDeposite" style="width: 50px; float: right;" value="Print" />
+    </div>
+
+</div>
+
+<script>
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+          , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+          , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+          , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+        return function (table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })()
+    
+    var hh = $.noConflict();
+    hh('#btnPrintDeposite').click(function (e) {
+
+        e.preventDefault();
+        var msg = 'Do You Want To Print?';
+        var div = hh("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            resizable: false,
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0', 'alert("hi");');
+
+                        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+
+    });
+
+</script>
+

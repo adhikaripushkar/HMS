@@ -1,0 +1,242 @@
+﻿@model Hospital.Models.SetupEmployeeMasterModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_PayRollLayout.cshtml";
+}
+
+
+<h2 style="text-align: center;">Employee Setup</h2>
+
+@if (TempData["success"] == "Record Created Successfully !")
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Record Creation Failed !")
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Serial Number or Emergency Number Already Exist !")
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+ @if (ViewBag.SaruMessage != "")
+{ 
+ <div class="alert">
+@ViewBag.SaruMessage
+ </div>
+ }
+
+@if (TempData["success"] == "Record Updated Successfully !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == "Record Updation Failed !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == "Record Deleted Successfully !")
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == "Record Deletion Failed !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+<div class="contentWrapper">
+
+
+
+
+
+
+
+
+    <p>
+        @Html.ActionLink("Create New", "Create", null, new { @id = "linkNewBack" })
+    </p>
+    <div>
+        @using (Html.BeginForm("Index", "SetupEmployeeMaster", FormMethod.Get))
+        {
+            <p>
+                @Html.TextBox("searchString")
+                <input type="submit" value="Search" />
+            </p>
+        }
+    </div>
+    <div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Employee Details</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+
+                            @Html.HiddenFor(model => model.EmployeeMasterId)
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.EmployeeCode)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EmployeeTypeId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EmployeeFullName)
+                            </th>
+                            @* <th>
+            @Html.DisplayNameFor(model => model.EmployeeDOB)
+        </th>*@
+                            <th>
+                                @Html.DisplayNameFor(model => model.PermanentAddress)
+                            </th>
+                            @* <th>
+            @Html.DisplayNameFor(model => model.EmployeePhone)
+        </th>*@
+                            <th>
+                                @Html.DisplayNameFor(model => model.EmployeeMobile)
+                            </th>
+                            @*  <th>
+            @Html.DisplayNameFor(model => model.EmployeeEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeJoinDate)
+        </th>*@
+
+                            @Html.HiddenFor(model => model.CreatedDate)
+
+
+                            @Html.HiddenFor(model => model.CreatedBy)
+
+
+                            @Html.HiddenFor(model => model.Status)
+
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.SetupEmployeeMasterModelList)
+                        {
+                            <tr>
+
+                                @Html.HiddenFor(modelItem => item.EmployeeMasterId)
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EmployeeCode)
+                                </td>
+                                <td>
+                                    @Hospital.Utility.GetEmployeeType(item.EmployeeTypeId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EmployeeFullName)
+                                </td>
+                                @*  <td>
+            @Html.DisplayFor(modelItem => item.EmployeeDOB)
+        </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PermanentAddress)
+                                </td>
+                                @* <td>
+            @Html.DisplayFor(modelItem => item.EmployeePhone)
+        </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EmployeeMobile)
+                                </td>
+                                @*  <td>
+            @Html.DisplayFor(modelItem => item.EmployeeEmail)
+        </td>*@
+                                @* <td>
+            @Html.DisplayFor(modelItem => item.EmployeeJoinDate)
+        </td>*@
+
+                                @Html.HiddenFor(modelItem => item.CreatedDate)
+
+                                @Html.HiddenFor(modelItem => item.CreatedBy)
+
+                                @Html.HiddenFor(modelItem => item.Status)
+
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeMasterId }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeMasterId }, new { onclick = "return confirm('Do you want to delete?');" }) |
+                                    @Html.ActionLink("CreatePayroll", "EmployeePayrollMaster", new { id = item.EmployeeMasterId }) |
+                                    @Html.ActionLink("EditPayroll", "EditEmployeePayrollMaster", new { id = item.EmployeeMasterId }) |
+                                    @Html.ActionLink("ResignationDetail", "ResignationDetail", new { id = item.EmployeeMasterId }) 
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    
+
+
+    @*for sorting *@
+
+
+    
+
+    <div class="boxFooter">
+
+        <div id="pager" style="">
+            <form>
+                <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                <select class="pagesize valid" style="width: 70px; height: 30px;">
+                    <option selected="selected" value="10">10</option>
+                    <option value="5">5</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                </select>
+            </form>
+        </div>
+
+    </div>
+
+   
+
+</div>
+
+

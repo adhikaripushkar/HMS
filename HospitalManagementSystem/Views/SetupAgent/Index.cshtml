@@ -1,0 +1,179 @@
+﻿@model Hospital.Models.SetupAgentModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+<h2 style="text-align:center;">Agent Setup</h2>
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+@TempData["success"]
+        </div>
+}
+
+@if (TempData["success"] == Hospital.UtilityMessage.savefailed)
+{ 
+    <div class="alert alert-error">
+@TempData["success"]
+        </div>
+
+}
+
+@if (TempData["success"] == Hospital.UtilityMessage.edit)
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.editfailed)
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}
+
+ 
+
+@if (TempData["success"] == Hospital.UtilityMessage.delete)
+{ 
+    <div class="alert alert-info">
+@TempData["success"]
+        </div>
+
+}
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.deletefailed)
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}
+
+
+<div class="contentWrapper">
+<p id="linkNewBack">
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+       <div class="boxWrapper">
+    <div class="boxHeadingPanel"><h1>Agent</h1></div>
+
+<table class="table table-hover tablesorter">
+    <thead>
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.AgentId)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.AgentFirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AgentMiddleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AgentLastName)
+        </th>
+      @*  <th>
+            @Html.DisplayNameFor(model => model.AgentAddress)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.AgentContactNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AgentMobileNo)
+        </th>
+        <th style="width:200px;">
+            @Html.DisplayNameFor(model => model.ManpowerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>Action</th>
+    </tr>
+        </thead>
+    <tbody>
+@foreach (var item in Model.lstOfSetupAgentModel)
+{
+    
+    <tr>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.AgentId)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.AgentFirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AgentMiddleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AgentLastName)
+        </td>
+       @* <td>
+            @Html.DisplayFor(modelItem => item.AgentAddress)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.AgentContactNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AgentMobileNo)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.ManpowerId)*@
+
+            @Hospital.Utility.GetManpowerNameWithId(Convert.ToInt16(item.ManpowerId))
+        </td>
+        <td style="width:100px;">
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AgentId }) |
+            @*@Html.ActionLink("Details", "Details", new { id=item.AgentId }) |*@
+            
+            @Html.ActionLink("Delete", "Delete", new { id=item.AgentId },new {onclick = "return confirm('Do you want to delete?');"})
+        </td>
+    </tr>
+}
+
+        </tbody>
+</table>
+
+           </div>
+
+             @*for sorting *@
+        
+               <div class="boxFooter">
+                   
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+
+               </div> 
+
+        @*---------------*@
+            </div></div></div>

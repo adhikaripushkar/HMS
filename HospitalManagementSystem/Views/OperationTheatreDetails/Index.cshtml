@@ -1,0 +1,80 @@
+﻿@model HospitalManagementSystem.Models.OperationTheatreDetailsModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<link href="~/Content/TableSort.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.4.4.min.js"></script>
+<script src="~/Scripts/jquery.tablesorter.js"></script>
+<script src="~/Scripts/jquery.tablesorter.pager.js"></script>
+
+<script type="text/javascript">
+    var k = $.noConflict();
+    k(function () {
+        k("table.tablesorter").tablesorter({ widthFixed: true, sortList: [[0, 0]] })
+        .tablesorterPager({ container: k("#pager"), size: k(".pagesize option:selected").val() });
+    });
+    </script>
+
+<h2 align="center">Operation Theatre Details</h2>
+<div class="contentWrapper">
+    <div class="boxHeadingPanel" style="width:453px">
+        <p>Details List</p>
+            
+        
+    </div>
+<table class="tablesorter">
+    <thead>
+    <tr>
+        
+        
+        <th>
+            @Html.DisplayNameFor(model => model.PersonAllocatedID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PersonAllocatedTypeID)
+        </th>
+        <th>Actions</th>
+    </tr>
+        </thead>
+@foreach (var item in Model.OperationTheatreDetalisList)
+{
+    <tr>
+        
+        
+        <td>
+            @HospitalManagementSystem.Utility.GetDoctorName(item.PersonAllocatedID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PersonAllocatedTypeID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.OperationTheatreDetailsID }) 
+          
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.OperationTheatreDetailsID })*@
+        </td>
+    </tr>
+}
+
+</table>
+    <div class="boxFooter" style="width:453px">  
+          <div id="pager" style="position: none;">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input type="text" class="pagedisplay" style="width:60px"/>
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize" style="width:60px">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+        </div>
+        </div>
+</div>

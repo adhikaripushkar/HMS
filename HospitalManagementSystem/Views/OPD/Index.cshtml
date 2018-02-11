@@ -1,0 +1,368 @@
+﻿@model HospitalManagementSystem.Models.OpdModel
+@{
+    ViewBag.Title = "OPD";
+    Layout = "~/Views/Shared/_OpdLayOut.cshtml";
+    DateTime date;
+    int count = 0;
+}
+
+
+<style>
+    .info .ui-widget-header {
+        background: #CECECE;
+    }
+
+    .info .ui-dialog-content {
+        /*background: #e3edf3;*/
+    }
+
+    .linkDetail {
+    }
+
+
+    #droplink {
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        $('#linkNewBack').css('border', '2px solid blue');
+        $('#linkNewBack').css('padding', '6px');
+
+        $('#linkNewBack').focus();
+
+    });
+
+    $("#linkNewBack").live("focusout", function (e) {
+        $('#linkNewBack').css('border-width', '0');
+
+    });
+</script>
+<h2 style="text-align: center;">OPD Deparment
+    @{
+        if (Session["OpdTypeIdInt"] != null)
+        {
+            if ((int)Session["OpdTypeIdInt"] == 1)
+            {
+        @:<span style="color:#8cb4c8;font-size:12px;">(General)</span>
+            }
+            else
+            {
+        @:<span style="color:#8cb4c8;font-size:12px;">(Payable)</span>
+            }
+        }
+
+        else
+        {
+        @:<span style="color:#8cb4c8;font-size:12px;">(General)</span>
+        }
+    }
+
+</h2>
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.savefailed)
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.edit)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.editfailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.delete)
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.deletefailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+@{
+    var PrintConfirmation = TempData["AlertPrint"] ?? string.Empty;
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var message = '@PrintConfirmation';
+        if (message) {
+            if (confirm("Are you sure?")) {
+                window.location.href = '@Url.Action("BillForm", "Opd", 1)';
+            }
+        }
+    });
+</script>
+
+
+
+<script>
+    var j = $.noConflict();
+    j(document).ready(function (e) {
+
+        $('#FromDate').val("");
+        $('#toDate').val("");
+
+        $("#FromDate").attr("value", "@DateTime.Now.ToShortDateString()");
+        $("#toDate").attr("value", "@DateTime.Now.ToShortDateString()");
+
+
+        j("#FromDate").datepicker();
+        j("#toDate").datepicker();
+
+    });
+
+
+</script>
+
+<div class="general-box clearfix">
+    <div style="font-weight: bold;">
+        @using (Html.BeginForm("SearchIndex", "Opd", FormMethod.Get))
+        {
+            <p>
+                <span style="font-size: 14px; font-weight: bold;">From:&nbsp;&nbsp;</span>@Html.TextBoxFor(m => m.FromDate)
+                <span style="font-size: 14px; font-weight: bold;">To:&nbsp;&nbsp;</span>@Html.TextBoxFor(m => m.toDate)
+                <span style="font-size: 14px; font-weight: bold;">Patient Name:&nbsp;&nbsp;</span>@Html.TextBoxFor(m => m.NameofPatent)
+
+                <input type="submit" value="Search" />
+            </p>
+        }
+    </div>
+
+
+</div>
+
+
+
+
+<div class="contentWrapper">
+    <div id="DetailsId"></div>
+
+    <p>
+        <i class="fa  fa-plus fa-2x" style="color: blue;"></i>&nbsp;@Html.ActionLink("Create New", "Create", null, new { @id = "linkNewBack" })
+    </p>
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>OPD Department</h1>
+                </div>
+                @if (Model.OpdModelList.Count > 0)
+                {
+                    int Sno = ViewBag.currentPage == 1 ? 0 : (ViewBag.currentPage - 1) * 10;
+                }
+
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px;">
+                                @*@Html.DisplayNameFor(model => model.OpdID)*@
+                                <span>Opd ID</span>
+                            </th>
+                            <th>Full Name
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Sex)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ContactName)
+                            </th>
+                            @*<th>
+                                @Html.DisplayNameFor(model => model.MobileNumber)
+                            </th>*@
+                            <th>
+                                @Html.DisplayNameFor(model => model.RegistrationDate)
+                            </th>
+
+                            <th>Age
+                            </th>
+                            <th>Address</th>
+
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OpdModelList)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OpdID)
+                                </td>
+                                <td>
+                                    @{
+                            // DateTime date;
+                            //int count = 0;
+
+                            string str = item.FirstName + " " + item.MiddleName + " " + item.LastName;
+                                        @str
+
+                            HospitalManagementSystem.Utility.PatientCheckOldOrNotWithOldPatientNewRegstration(item.OpdID, out count, out date);
+
+                            if (count >= 2)
+                            { 
+                                        <span style="color: #0088CC;">(Old)</span>
+                            
+                            }
+                            
+                                    }
+
+
+
+
+                                </td>
+
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Sex)
+                                </td>
+                                <td>
+                                    @{string phoneNubmer = string.Empty;
+                                      phoneNubmer = item.ContactName;
+                                      if (phoneNubmer == null)
+                                      {
+                                          phoneNubmer = item.MobileNumber;
+                                      }
+                                    }
+                                    @phoneNubmer
+                                </td>
+
+                                <td>
+
+                                    @if (count >= 2)
+                                    { 
+                                        @date.ToShortDateString()
+                            
+                                    }
+                                    else
+                                    {
+
+
+                                        @Html.DisplayFor(modelItem => item.RegistrationDate)
+                                    }
+
+                                </td>
+                                <td>
+                                    @item.AgeYear
+                                    @*@{
+                                        
+                                    string deptname = HospitalManagementSystem.Utility.DepartmentNameForOpd(item.OpdID);
+                                        @deptname
+
+                                    }*@
+                                </td>
+                                <td>@item.Address</td>
+                                <td>
+                                    <span onclick="viewDetails(@item.OpdID)" style="cursor:pointer;" title="Detail"><i class="fa fa-eye" style="color: blue; font-size: 16px;"></i></span>
+                                    @*@Html.ActionLink("Details", "Details", null, new { id = item.OpdID, @class = "linkDetail" })*@|   
+            <a href="/Opd/Edit/@item.OpdID" title="Edit"><i class="fa fa-edit" style="color: blue; font-size: 16px;"></i></a>
+                                    @*@Html.ActionLink("Edit", "Edit", new { id = item.OpdID })*@ |
+                                    <a href="/Opd/BillForm/@item.OpdID?FromSource=2" title="Print"><i class="fa fa-print" style="color: blue; font-size: 16px;"></i></a>
+
+
+
+
+                                    | @Html.ActionLink("Vital", "OpdVital", new { id = item.OpdID })
+
+
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+                <div class="pagination pagination-centered">
+                    <ul class="pager">
+                        <li><a href="#">Page:</a></li>
+                        @for (int p = 1; p <= ViewBag.TotalPages; p++)
+                        {           
+                            <li><a class="@(p == ViewBag.currentPage ? "btn btn-default" : "")"
+					        href="@Url.Action("Index", "Opd", new { Page = p })">@p</a></li>          
+                        }
+                    </ul>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    <script>
+
+
+        function viewDetails(id) {
+            var k = $.noConflict();
+            k.get('/Opd/Details/' + id,
+                           function (data) {
+                               k('#DetailsId').html(data);
+                               k(function () {
+                                   k("#DetailsId").dialog({
+                                       position: [490, 190],
+                                       resizable: true,
+                                       minWidth: 550,
+                                       maxWidth: 550,
+                                       height: 400,
+                                       title: "Patient Details",
+                                       dialogClass: 'info'
+
+                                   });
+
+                               });
+
+                           }
+                 );
+
+        };
+
+    </script>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/jqueryval")
+
+    }
+
+
+
+</div>
+
+
+

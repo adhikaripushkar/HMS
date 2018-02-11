@@ -1,0 +1,68 @@
+﻿@using Hospital.Helpers
+@model Hospital.Models.StockItemEntry
+
+<script src="~/Scripts/OrderManagerScript.js"></script>
+<script src="~/Scripts/json.cycle.js"></script>
+
+@using (Html.BeginCollectionItem("StockItemEntryList"))
+{
+    @Html.ValidationSummary(true)
+    <style>
+        .CategoryId {
+            width:150px;
+        }
+        .SubCategoryId {
+            width:150px;
+        }
+        .ItemEntryId {
+            width:150px;
+        }
+        #size{
+            width:150px;
+        }
+
+        
+       
+    </style>
+    
+  
+    <div class="row" style="margin-left: 40px;">
+
+        @Html.DropDownListFor(model => model.StockCategoryId, Hospital.Utility.GetCategory(), new { @class = "CategoryId" })
+        @Html.ValidationMessageFor(model => model.StockCategoryId)
+
+
+        @try
+        {
+             @Html.DropDownListFor(model => model.StockSubCategoryId, Hospital.Utility.GetSubCategory(Model.StockCategoryId), new { @class = "SubCategoryId" })
+        @Html.ValidationMessageFor(model => model.StockSubCategoryId)
+        }
+        catch
+        {
+        @Html.DropDownListFor(model => model.StockSubCategoryId, Hospital.Utility.GetSubCategory(), new { @class = "SubCategoryId" })
+        @Html.ValidationMessageFor(model => model.StockSubCategoryId)
+        }
+
+        @try
+        {
+            @Html.DropDownListFor(model => model.StockItemEntryId, Hospital.Utility.GetItemNameEdit(Model.StockSubCategoryId), new { @class = "ItemEntryId" })
+        @Html.ValidationMessageFor(model => model.StockItemEntryId)
+        }
+        catch
+        {
+        @Html.DropDownListFor(model => model.StockItemEntryId, Hospital.Utility.GetItemNameInDep(), new { @class = "ItemEntryId" })
+        @Html.ValidationMessageFor(model => model.StockItemEntryId)
+        }
+        
+        @Html.TextBoxFor(model => model.Quantity, new { @class = "Quantity" ,@id="size"})
+
+        @Html.TextBoxFor(model => model.Rate, new { @class = "Rate" ,@id="size"})
+           
+        <input type="button" class="row-button btn btn-warning" value="Remove" />
+
+    </div>
+        
+   
+}
+
+

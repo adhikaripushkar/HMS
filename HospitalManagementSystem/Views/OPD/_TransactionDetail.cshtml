@@ -1,0 +1,61 @@
+﻿@model HospitalManagementSystem.Models.OpdModel
+
+<div class="general-box clearfix">
+
+    <div class="general-box clearfix">
+
+        <div class="boxWrapper">
+            @if (Model.BillingModelList != null)
+            {
+                <table class="table table-hover tablesorter">
+
+                    <div class="boxHeadingPanel">
+                        <h1>Transaction Details</h1>
+                    </div>
+                    <thead>
+                        <tr><th>Title</th>
+                            <th>Amount</th>
+                            <th>Transaction Date</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @{decimal TotalAmount = 0;}
+                        @foreach (var item in Model.BillingModelList)
+                        {
+                            <tr>
+                                @*<td>@item.PainName</td>*@
+                                <td>@item.FeeTypeName</td>
+                                @*<td>@item.LedgerName</td>*@
+                                <td>@item.Amount</td>
+                                <td>@item.TransectionDate.ToShortDateString()</td>
+
+                            </tr>
+                            TotalAmount += item.Amount;
+                            
+                        }
+
+
+                    </tbody>
+                </table>
+                @*<h4><span style="margin-left: 580px">Total Amount:@TotalAmount</span></h4>*@
+            }
+            else
+            {
+                <div>
+                </div>
+            }
+
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+

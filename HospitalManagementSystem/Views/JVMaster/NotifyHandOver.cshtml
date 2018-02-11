@@ -1,0 +1,336 @@
+﻿@model HospitalManagementSystem.Models.JVMasterModel
+
+@{
+    ViewBag.Title = "NotifyHandOver";
+    Layout = "~/Views/Shared/_BillingLayout.cshtml";
+    decimal FinalTotalHandOverAmount = 0;
+}
+
+<style>
+    table#tblnoborder,
+    table#tblnoborder td {
+        border: none !important;
+    }
+
+    .font {
+        font-weight: bold;
+    }
+
+    .small-table td {
+        border: none;
+    }
+
+
+
+    .holder img {
+        max-height: 48px;
+        max-width: 55px;
+        object-fit: cover;
+    }
+
+
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+    }
+</style>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        text-align: center;
+        font-size: 13px;
+    }
+</style>
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+</script>
+
+<div class="contentWrapper">
+    @using (Html.BeginForm("NotifyHandOver", "JvMaster", FormMethod.Post, new { @class = "", @style = "", @id = "" }))
+    {  
+        @Html.HiddenFor(model => model.objNotificationHandoverModelView.HandOverFromId)
+        if (Model.objNotificationHandoverModelViewList.Count > 0)
+        {
+            foreach (var item in Model.objNotificationHandoverModelViewList)
+            {      
+        <div class="row-fluid singleline">
+            <div class="table-responsive" style="font-size:14px;">
+
+                <h4 style="text-align: left;"><b>HandOver Date: @item.HandoverDate.ToShortDateString() </b></h4>
+
+                <h4 style="text-align: left;"><b>HandOver From: @item.HandOverFrom </b></h4>
+
+                <table class="table" style="width: 60%">
+                    <tr>
+                        <th>Amount
+                        </th>
+                        <th></th>
+                        <th>Number
+                        </th>
+                        <th></th>
+                        <th>Total
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>Rs.1000
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                            @Html.Label(@item.Rs1000.ToString(), new { @onkeyup = "onchangeevent(1, this.value);" })
+                        </td>
+                        <td>=
+                        </td>
+                        <td>
+                            @{decimal total1000 = 1000;
+                              decimal FinalTotal = item.Rs1000 * total1000;
+                              FinalTotalHandOverAmount += FinalTotal;
+                              
+                            }
+
+                            @FinalTotal
+
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>Rs.500
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                            @Html.Label(@item.Rs500.ToString(), new { @onkeyup = "onchangeevent(1, this.value);" })
+                        </td>
+                        <td>=
+                        </td>
+                        <td>
+                            @{decimal total500 = 500;
+                              decimal FinalTotal500 = item.Rs500 * total500;
+                              FinalTotalHandOverAmount += FinalTotal500;
+                              
+                            }
+                            @FinalTotal500
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>Rs.100
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                            @Html.Label(@item.Rs100.ToString(), new { @onkeyup = "onchangeevent(1, this.value);" })
+                        </td>
+                        <td>=
+                        </td>
+
+                        <td>
+                            @{decimal total100 = 100;
+                              decimal FinalTotal100 = item.Rs100 * total100;
+                              FinalTotalHandOverAmount += FinalTotal100;
+                              
+                            }
+                            @FinalTotal100
+                        </td>
+
+
+                    </tr>
+                    <tr>
+                        <td>Rs.50
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                            @Html.Label(@item.Rs50.ToString(), new { @onkeyup = "onchangeevent(1, this.value);" })
+                        </td>
+                        <td>=
+                        </td>
+                        <td>
+                            @{decimal total50 = 50;
+                              decimal FinalTotal50 = item.Rs50 * total50;
+                              FinalTotalHandOverAmount += FinalTotal50;
+                              
+                            }
+                            @FinalTotal50
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>Rs.20
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                            @Html.Label(@item.Rs20.ToString(), new { @onkeyup = "onchangeevent(1, this.value);" })
+                        </td>
+                        <td>=
+                        </td>
+                        <td>
+                            @{decimal total20 = 20;
+                              decimal FinalTotal20 = item.Rs20 * total20;
+                              FinalTotalHandOverAmount += FinalTotal20;
+                              
+                            }
+                            @FinalTotal20
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>Rs.10
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                            @Html.Label(@item.Rs10.ToString(), new { @onkeyup = "onchangeevent(1, this.value);" })
+
+                        </td>
+                        <td>=
+                        </td>
+                        <td>
+                            @{decimal total10 = 10;
+                              decimal FinalTotal10 = item.Rs10 * total10;
+                              FinalTotalHandOverAmount += FinalTotal10;
+                              
+                            }
+                            @FinalTotal10
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>Rs.5
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                            @Html.Label(@item.Rs5.ToString(), new { @onkeyup = "onchangeevent(1, this.value);" })
+                        </td>
+                        <td>=
+                        </td>
+                        <td>
+                            @{decimal total5 = 5;
+                              decimal FinalTotal5 = item.Rs5 * total5;
+                              FinalTotalHandOverAmount += FinalTotal5;
+                              
+                            }
+                            @FinalTotal5
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>Rs.2
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                            @Html.Label(@item.Rs2.ToString(), new { @onkeyup = "onchangeevent(1, this.value);" })
+                        </td>
+                        <td>=
+                        </td>
+                        <td>
+                            @{decimal total2 = 2;
+                              decimal FinalTotal2 = item.Rs2 * total2;
+                              FinalTotalHandOverAmount += FinalTotal2;
+                              
+                            }
+                            @FinalTotal2
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>Rs.1
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                            @Html.Label(@item.Rs1.ToString(), new { @onkeyup = "onchangeevent(1, this.value);" })
+                        </td>
+                        <td>=
+                        </td>
+                        <td>
+                            @{decimal total1 = 1;
+                              decimal FinalTotal1 = item.Rs1 * total1;
+                              FinalTotalHandOverAmount += FinalTotal1;
+                              
+                            }
+                            @FinalTotal1
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+            <div style="margin-top: 10px; font-size: 15px; font-weight: bold;">
+                <span>Total Amount :</span>@FinalTotalHandOverAmount
+            </div>
+
+            @if (Model.objNotificationHandoverModelViewList.Count > 0)
+            {
+                <div class="row-fluid singleline">
+
+                    <input type="submit" value="Ok" />
+
+
+                </div>              
+            }
+
+        </div>
+            }
+        }
+    }
+
+</div>
+<script type="text/javascript">
+
+    $(".HandOverAmountClass").live("keyup", function () {
+
+        //CalculateHandOverTotal();
+    });
+
+
+    function CalculateHandOverTotal() {
+        //alert('hello');
+        var allNumberFromHandover = $('.TotalNumberAndAmount');
+        var TotalAmount = 0;
+        var sectorAmountCount = 0;
+        sectorAmountCount = $(allNumberFromHandover).length;
+
+        ///////////////////////////////////////////////////
+        for (var i = 0; i <= sectorAmountCount - 1; i++) {
+            if (isNaN(parseFloat($(allNumberFromHandover[i]).val())))
+                $(allNumberFromHandover[i]).val('0');
+            TotalAmount += parseFloat($(allNumberFromHandover[i]).val());
+        }
+
+        $('#DisplayTotalAmountFinal').val('Rs: ' + TotalAmount);
+
+    };
+
+    function onchangeevent(Rsamount, valNumber) {
+        //var rsAmount = parseFloat(Rsamount);
+        //var valnumber = parseFloat(valnumber);
+        var TotalAmount = parseFloat(Rsamount * valNumber);
+        //alert(TotalAmount);
+
+        $("#DisplayTotalAmount_" + Rsamount).val(TotalAmount);
+        CalculateHandOverTotal();
+
+    };
+
+</script>

@@ -1,0 +1,29 @@
+﻿@model HospitalManagementSystem.Models.IpdMedicalRecord
+@using HospitalManagementSystem.Helpers;
+
+@{
+    ViewBag.Title = "IpdMedicalRecordList";
+ }
+
+
+
+
+    @using (Html.BeginCollectionItem("IpdMedicalRecordList"))
+    {
+         <div class="row" style="margin-left:5px;">
+      
+        @Html.TextBoxFor(model=>model.MedicineName)
+
+      
+        @Html.TextBoxFor(model=>model.Doses)
+
+      
+        @Html.TextBoxFor(model=>model.DosesTimes)
+
+       
+        @Html.TextBoxFor(model=>model.DosesTotalDays)
+
+           <input type="button" class="row-button btn btn-warning" value="Remove" id="rbtn" />
+           </div>
+    }
+

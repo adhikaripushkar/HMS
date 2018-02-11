@@ -1,0 +1,252 @@
+﻿@model HospitalManagementSystem.Models.JVMasterModel
+
+<style>
+    table#tblnoborder,
+    table#tblnoborder td {
+        border: none !important;
+    }
+
+    .font {
+        font-weight: bold;
+    }
+
+    .small-table td {
+        border: none;
+    }
+
+    .holder img {
+        max-height: 48px;
+        max-width: 55px;
+        object-fit: cover;
+    }
+
+
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+    }
+</style>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        text-align: center;
+        font-size: 13px;
+    }
+</style>
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+</script>
+
+<div class="contentWrapper">
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto; padding: 5px;">
+
+
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != null && @HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalManagementSystemLogo/@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() == "")
+        { 
+          <br />        
+        }
+        <div style="font: bold; font-size: 18px; text-align: center; height: 115px;">
+            @if (@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != null && @HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != "")
+            {
+                <span>@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName()</span>
+            }
+            <br />
+            @HospitalManagementSystem.Utility.GetHospitalManagementSystemName()<br />
+            <div style="height: 80px;">
+                <span style="font-size: 15px; text-align: center">@HospitalManagementSystem.Utility.HospitalManagementSystemAddress()</span><br />
+                <span style="font-size: 14px; text-align: center">Website:-@HospitalManagementSystem.Utility.HospitalManagementSystemUrl()</span><br />
+                <span style="font-size: 14px; text-align: center">Ph:-@HospitalManagementSystem.Utility.HospitalManagementSystemPhone()</span>
+
+            </div>
+
+        </div>
+        <h2 style="text-align: center;">BS-Schedule</h2>
+        <table border="0" style="width: 500px; margin-top: 20px;" align="center">
+            <tr>
+                <td>From Date :&nbsp;@Model.objBSScheduleModelView.StartDate.ToShortDateString() (@HospitalManagementSystem.Utility.getNepaliDate(@Model.objBSScheduleModelView.StartDate.ToShortDateString()))
+                </td>
+                <td>To Date :&nbsp;@Model.objBSScheduleModelView.EndDate.ToShortDateString() (@HospitalManagementSystem.Utility.getNepaliDate(@Model.objBSScheduleModelView.EndDate.ToShortDateString()))
+                </td>
+            </tr>
+        </table>
+        @Html.HiddenFor(model => Model.objBSScheduleModelView.HierarchyCode)
+        <br />
+
+         <table class="table">
+            <tr>
+
+                <th>
+                    <h4 style="text-align: center;">Particulars</h4>
+                </th>
+                <th>
+                    <h4 style="text-align: center;">Current Year</h4>
+                </th>
+                <th>
+                    <h4 style="text-align: center;">Previous Year</h4>
+                </th>
+            </tr>    
+                <tr>
+                    <td><h3>@HospitalManagementSystem.Utility.GetNameByHierarchyCode(Model.objBSScheduleModelView.HierarchyCode)</h3></td>
+                    <td>
+                        <h3 style="text-align: right;"></h3>
+                    </td>
+                    <td>
+                        <h3 style="text-align: right;"></h3>
+                    </td>
+                </tr>
+                @if (Model.objBSScheduleModelView.HierarchyCode == "3.1" || Model.objBSScheduleModelView.HierarchyCode == "1.741" || Model.objBSScheduleModelView.HierarchyCode == "1.320")
+                {
+                    Model.objBSScheduleModelView.Level = 3;
+                }
+                else
+                {
+                    Model.objBSScheduleModelView.Level = 4;
+                }  
+                @{  
+                decimal TotalCurrent = 0, TotalPrevious = 0, Current = 0, Previous = 0, Current1 = 0, Previous1 = 0;           
+                HospitalManagementSystem.Providers.JVMasterProvider pro = new HospitalManagementSystem.Providers.JVMasterProvider();
+                Model.objBSScheduleModelViewList = pro.GetBSSchedule(Model);
+                }
+                @foreach (var item in Model.objBSScheduleModelViewList)
+                {
+                    Current = item.ClosingDr - item.ClosingCr;
+                    Previous = item.PrevClosingDr - item.PrevClosingDr;
+                    if (Current < 0)
+                    {
+                        Current = Current * -1;
+                    }
+                    if (Previous < 0)
+                    {
+                        Previous = Previous * -1;
+                    }
+                    <tr>
+                    <td style="padding-left:20px"><h4>@item.AccountHeadName</h4></td>
+                    <td>
+                        <h3 style="text-align: right;">@Current</h3>
+                    </td>
+                    <td>
+                        <h3 style="text-align: right;">@Previous</h3>
+                    </td>
+                </tr>
+                    if (Model.objBSScheduleModelView.HierarchyCode == "1.731" || Model.objBSScheduleModelView.HierarchyCode == "1.320" || Model.objBSScheduleModelView.HierarchyCode == "1.741" || Model.objBSScheduleModelView.HierarchyCode == "1.738")
+                   {
+                       Model.objBSScheduleModelView.Level = 4;
+                       Model.objBSScheduleModelView.HierarchyCode =Model.objBSScheduleModelView.HierarchyCode +'.'+item.AccountHeadId;                   
+                       Model.objBSScheduleModelViewList1 = pro.GetBSSchedule(Model);
+                       foreach (var item1 in Model.objBSScheduleModelViewList1)
+                         {
+                             Current1 = item1.ClosingDr - item1.ClosingCr;
+                             Previous1 = item1.PrevClosingDr - item1.PrevClosingDr;
+                             if (Current1 < 0)
+                             {
+                                 Current1 = Current1 * -1;
+                             }
+                             if (Previous1 < 0)
+                             {
+                                 Previous1 = Previous1 * -1;
+                             }
+                             <tr>
+                             <td style="padding-left:40px"><h4>@item1.AccountHeadName</h4></td>
+                             <td>
+                                 <h3 style="text-align: right;">@Current1</h3>
+                             </td>
+                             <td>
+                                 <h3 style="text-align: right;">@Previous1</h3>
+                             </td>
+                             </tr>
+                             Model.objBSScheduleModelView.HierarchyCode = item1.firstHierarchy + '.' + item1.SecondID; 
+                         }
+                  }
+                  TotalCurrent = TotalCurrent + item.ClosingDr - item.ClosingCr;
+                  TotalPrevious = TotalPrevious + item.PrevClosingDr - item.PrevClosingDr;
+                }
+             <tr>
+                  @if (TotalCurrent < 0)
+                    {
+                        TotalCurrent = TotalCurrent * -1;
+                    }
+                  @if (TotalPrevious < 0)
+                    {
+                        TotalPrevious = TotalPrevious * -1;
+                    }
+                 <td><h3 style="text-align: right;">Total</h3></td>
+                 <td><h3 style="text-align: right;">@TotalCurrent</h3></td>
+                 <td><h3 style="text-align: right;">@TotalPrevious</h3></td>
+
+             </tr>
+        </table>
+    </div>
+    <div style="float: right;">
+        <input type="button" id="btnPrintDeposite" style="width: 50px; float: right;" value="Print" />
+    </div>
+
+</div>
+
+<script>
+
+    var hh = $.noConflict();
+    hh('#btnPrintDeposite').click(function (e) {
+
+        e.preventDefault();
+        var msg = 'Do You Want To Print?';
+        var div = hh("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            resizable: false,
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0', 'alert("hi");');
+
+                        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+
+    });
+
+</script>

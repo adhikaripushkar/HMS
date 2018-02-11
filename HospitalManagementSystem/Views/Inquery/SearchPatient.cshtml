@@ -1,0 +1,248 @@
+﻿@model HospitalManagementSystem.Models.OpdModel
+
+
+@{
+    ViewBag.Title = "SearchPatient";
+    Layout = "~/Views/Shared/_DashboardInqueryLayout.cshtml";
+    int i = 1;
+}
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+
+        j(".datetime").datepicker();
+    });
+</script>
+
+
+
+<div class="contentWrapper">
+
+
+    <span>Search Patient</span>
+    @Html.DropDownList("srchVal", HospitalManagementSystem.Utility.GetOpdSearchDDL(), "Search Options", new { @class = "srchValcls", @style = "width: 150px" })
+    <span id="change1"></span>
+    <input type="text" id="blnkid" placeholder="Enter patient name" />
+    <input type="text" id="adress" placeholder="">
+    <input type="text" id="registradate" class="datetime" placeholder="select date time" />
+    @Html.DropDownList("bLoodGroupid", HospitalManagementSystem.Utility.BloodGroupList(), new { @id = "bLoodGroupid", @style = "width: 150px" })
+
+    <input type="submit" value="Find" id="btnSearch" />
+
+    <br />
+    <br />
+    <div id="ShowIOpdColumnDetails"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+
+
+
+    $('#btnSearch').click(function (e) {
+        e.preventDefault();
+
+        var Columnid = $('.srchValcls').val();
+        var txtValue = "";
+        if (Columnid == "1" || Columnid == "3" || Columnid == "4" || Columnid == "5" || Columnid == "6") {
+            txtValue = $('#adress').val();
+        }
+        else if (Columnid == "2") {
+            txtValue = $('#blnkid').val();
+
+        }
+        else if (Columnid == "8") {
+            txtValue = $('#registradate').val();
+        }
+        else if (Columnid == "7") {
+            txtValue = $('#bLoodGroupid').val();
+        }
+        //alert(Columnid);
+        //alert(txtValue);
+
+        $.ajax({
+            url: '@Url.Action("SearchPatient1", "Inquery")',
+            type: "POST",
+            data: { srchVal: Columnid, value: txtValue },
+            success: function (result) {
+
+                $('#ShowIOpdColumnDetails').empty();
+                $('#ShowIOpdColumnDetails').html(result);
+
+            },
+
+        });
+
+    });
+
+
+</script>
+<script>
+
+
+    $(document).ready(function () {
+        $('#blnkid').hide();
+        $('#bLoodGroupid').hide();
+        $('#registradate').hide();
+        $('#adress').show();
+    });
+
+
+    $('.srchValcls').change(function (e) {
+        e.preventDefault();
+        var trackid = $('.srchValcls').val();
+
+        // alert(trackid);
+        if (trackid == "1" || trackid == "3" || trackid == "4" || trackid == "5" || trackid == "6") {
+
+            $('#adress').val("");
+            $('#adress').show();
+            $('#registradate').hide();
+            $('#bLoodGroupid').hide();
+            $('#blnkid').hide();
+        }
+
+        if (trackid == "2") {
+            $('#blnkid').val("");
+            $('#blnkid').show();
+            $('#bLoodGroupid').hide();
+            $('#adress').hide();
+            $('#registradate').hide();
+
+        }
+        if (trackid == "8") {
+
+
+            $('#registradate').show();
+            $('#blnkid').hide();
+            $('#bLoodGroupid').hide();
+            $('#adress').hide();
+
+        }
+        if (trackid == "7") {
+            $('#bLoodGroupid').show();
+            $('#blnkid').hide();
+            $('#adress').hide();
+            $('#registradate').hide();
+
+        }
+
+
+    });
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+
+    $(document).ready(function () {
+        $('#blnkid').hide();
+
+        $('#registradate').hide();
+    });
+
+
+    $(document).ready(function () {
+
+        $('.srchValcls').change(function (e) {
+            e.preventDefault();
+            var trackid = $('.srchValcls').val();
+
+
+            if (trackid == "1" || trackid == "4" || trackid == "5" || trackid == "6") {
+
+                $('#adress').show();
+                $('#registradate').hide();
+                $('#blnkid').hide();
+            }
+
+            if (trackid == "2") {
+                $('#blnkid').show();
+                $('#adress').hide();
+                $('#registradate').hide();
+
+            }
+            if (trackid == "8") {
+                $('#registradate').show();
+                $('#blnkid').hide();
+                $('#adress').hide();
+
+            }
+
+
+        });
+    });
+
+
+
+</script>
+
+
+
+
+
+<script type="text/javascript">
+    jQuery.noConflict();
+    var autocom = $.noConflict();
+
+    autocom(document).ready(function () {
+        //alert();
+
+
+        autocom("#blnkid").autocomplete({
+            source: function (request, response) {
+                autocom.ajax({
+                    url: "/Inquery/AutocomplereOpdMaster",
+                    type: "GET",
+                    dataType: "json",
+                    data: { s: request.term },
+                    success: function (data) {
+
+                        response(autocom.map(data, function (item) {
+
+                            return { label: item, value: item };
+
+
+                        }));
+
+                    },
+                    //error:function(data){
+                    //    response($.map(data, function (item) {
+
+                    //        return { label: item.StockUnitName, Value: item.StockUnitName };
+                    //    }))
+                    //}
+                });
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    });
+</script>

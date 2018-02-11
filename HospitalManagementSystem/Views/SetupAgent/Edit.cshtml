@@ -1,0 +1,143 @@
+﻿@model Hospital.Models.SetupAgentModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 style="text-align:center;">Agent Setup</h2>
+
+
+<div class="contentWrapper">
+
+
+@using (Html.BeginForm()) {
+    
+    <div class="bs-docs-example form-inline">
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Create</legend>
+
+        <div class="row-fluid singleline">
+
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.AgentId)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.AgentId)
+            @Html.ValidationMessageFor(model => model.AgentId)
+        </div>
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.AgentFirstName)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AgentFirstName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AgentFirstName)
+            
+        </div>
+                </label>
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.AgentMiddleName)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AgentMiddleName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AgentMiddleName)
+            
+        </div>
+
+                </label>
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.AgentLastName)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AgentLastName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AgentLastName)
+            
+        </div>
+                </label>
+
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.AgentAddress)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AgentAddress)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AgentAddress)
+            
+        </div>
+                </label>
+
+            </div>
+        <div class="row-fluid singleline">
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.AgentContactNo)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AgentContactNo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AgentContactNo)
+            
+        </div>
+                </label>
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.AgentMobileNo)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AgentMobileNo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AgentMobileNo)
+            
+        </div>
+                </label>
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.ManpowerId)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ManpowerId)
+        </div>
+        <div class="editor-field">
+            @*@Html.EditorFor(model => model.ManpowerId)*@
+            @Html.DropDownListFor(model=>model.ManpowerId,Hospital.Utility.GetManpowerNameList())
+            
+        </div>
+</label>
+            <label>
+                <span class="size">@Html.ValidationMessageFor(model => model.Status)</span>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Status)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Status)
+            @Html.ValidationMessageFor(model => model.Status)
+        </div>
+                </label>
+
+            </div>
+        <br /><br />
+        <p>
+            <input type="submit" value="Edit" />
+        </p>
+    </fieldset>
+        </div>
+}
+
+<div id="linkNewBack">
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+</div>

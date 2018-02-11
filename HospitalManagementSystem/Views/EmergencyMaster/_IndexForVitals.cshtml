@@ -1,0 +1,140 @@
+﻿@model HospitalManagementSystem.Models.VitalsModel
+
+
+
+
+            
+        
+       
+  @Html.HiddenFor(model => model.EmergencyMasterId, new {@id = "EmergencyMID" })
+
+<div id="vltlistId">
+
+<br />
+<table>
+    <tr>    
+        <th>
+            @Html.DisplayNameFor(model => model.AVPU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pulse)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SPO2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TPR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Wt)
+        </th>
+       @* <th>Edit</th>*@
+    </tr>
+    @foreach (var item in Model.ListVitalModels)
+{
+
+
+    <tr>
+   
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.AVPU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pulse)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SPO2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TPR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Wt)
+        </td>
+     
+        @*<a href='~/EmergencyMaster/EditForvitals?id=@Model.EmergencyVitalId' title="" class="updtlink"><span>Edit</span></a>*@
+      
+    </tr>
+    }
+
+
+</table>
+
+
+
+    <p>
+<a href='~/Viatal/ViatalForm?id=@Model.EmergencyMasterId' title="" class="crtlink"><span>Create new</span></a> 
+
+</p>
+
+    </div>
+<div id="cart"></div>
+<div id="udpvitals"></div>
+
+@*<script>
+
+    $('.link').live('click',function (e) {
+        var data = @Model.EmergencyMasterId
+        alert(data);
+        alert('hi');
+        $.ajax(
+        {
+            url: '/EmergencyMaster/ViatalForm',
+          type: "POST",
+          data: { id: data },
+          success: function (data) {
+
+              $("#cart").html(data);
+          },  
+          error: function (e) { alert("fail");}
+      });
+    });
+</script>*@
+
+
+<script>
+    $(".crtlink").click(function (e) {
+        e.preventDefault();
+        var data = $('#EmergencyMasterId').val();
+        var url = this.href;
+
+        $.get(url, { id: data }, function (res) {
+
+            $("#cart").html(res);
+
+        });
+    });
+</script>
+<script>
+    $(".updtlink").click(function (e) {
+        e.preventDefault();
+        var data = $('#EmergencyMasterId').val();
+        var url = this.href;
+
+        $.get(url, { id: data }, function (res) {
+
+            $("#udpvitals").html(res);
+
+        });
+    });
+</script>
+
+
+
+
+
+
+  

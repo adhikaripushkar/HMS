@@ -1,0 +1,227 @@
+﻿@model HospitalManagementSystem.Models.MisModel
+
+@{
+    ViewBag.Title = "PathoReportDetails";
+    Layout = "~/Views/Shared/_MisLayOutLayout.cshtml";
+}
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.maskedinput.js"></script>
+
+<script>
+    $(function () {
+        $.noConflict();
+
+
+        $("#JvDateEnd").datepicker().datepicker("setDate", new Date());
+        $("#JvDate").datepicker().datepicker("setDate", new Date());
+    });
+
+</script>
+
+<div class="contentWrapper">
+
+    <div class="bs-docs-example form-inline">
+
+        @using (Html.BeginForm())
+        { 
+            <div class="row-fluid singleline">
+                <label>
+                    <label style="width: 135px;">From Date (Nepali)</label>
+                    @Html.TextBox("FromNepaliDate", null, new { @onblur = "ChangeNepalidateFrom(this.value,'DobId','/AjaxRequest/GetEnglishDate/')" })
+                </label>
+
+                <label>
+                    <label style="width: 115px;">To Date (Nepali)</label>
+                    @Html.TextBox("ToNepaliDate", null, new { @onblur = "ChangeNepalidateTo(this.value,'DobId','/AjaxRequest/GetEnglishDate/')" })
+                </label>
+            </div>
+            
+            <div class="row-fluid singleline">
+                <label>
+                    <label style="width: 135px;">From Date (English)</label>
+                    @Html.TextBox("JvDate", null, new { @onchange = "ChangeEnglishdateFrom(this.value,'txtNepalidate','/AjaxRequest/getNepaliDate/')" })
+                </label>
+                <label>
+                    <label style="width: 115px;">To Date (English)</label>
+                    @Html.TextBox("JvDateEnd", null, new { @onchange = "ChangeEnglishdateTo(this.value,'txtNepalidate','/AjaxRequest/getNepaliDate/')" })
+                </label>
+            </div>
+            
+            <div class="row-fluid singleline">
+                <label>
+                    <label style="width: 135px;">Choose Department</label>
+                    @Html.DropDownList("PathoDept", @HospitalManagementSystem.Utility.GetDepartmentListForPathology().Take(1))
+                </label>
+                
+            </div>
+            
+            
+            <div class="row-fluid singleline">
+                <label>
+                    <span>
+                        <input type="submit" value="Show" /></span>
+                </label>
+            </div>
+        }
+
+
+    </div>
+
+    <br />
+
+    @{  decimal DiffAmount = 0;
+        decimal discountAmount = 0;
+        decimal CrAmount = 0;
+        decimal DrAmount = 0;
+        if (Model.PathoTestDetailViewModelList != null)
+        {
+            if (Model.PathoTestDetailViewModelList.Count() > 0)
+            {
+                
+        <div style="margin-top: 20px;">
+            <div style="font-size: 16px; margin-bottom: 10px;">All Patho Test summary :</div>
+            <table style="font-size: 14px; width: 600px;">
+
+                <tr style="font-size: 18px; color: blue;">
+                    <td>Section Name
+                    </td>
+                    <td>Test Name
+                    </td>
+                    <td>Total
+                    </td>
+
+                </tr>
+                @foreach (var item in Model.PathoTestDetailViewModelList)
+                {   
+                    <tr>
+                        <td>
+                            @item.SectionName
+                        </td>
+                        <td>
+                            @item.TestName
+                        </td>
+                        <td>
+                            @item.Total
+                        </td>
+
+
+                    </tr>
+                    
+                }
+
+            </table>
+
+        </div> 
+           
+            }
+        }
+    }
+    <br />
+
+
+    <div id="MakeJVDiv">
+    </div>
+
+
+
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $("#FromNepaliDate").mask("9999/99/99");
+            $("#ToNepaliDate").mask("9999/99/99");
+
+        });
+
+
+
+
+
+
+    </script>
+
+    <script type="text/javascript">
+        function ChangeNepalidateFrom(selvalue, targetElm, url) {
+
+
+            $.ajax({
+                async: false,
+                type: "get",
+                url: url,
+                data: { NepaliDate: selvalue },
+                contentType: "text/json",
+                beforeSend: function () {
+                    // $("#" + targetElm).attr('disabled', 'disabled');
+                    // $("#" + targetElm).addClass('ac_loading');
+                },
+                success: function (jsonResult) {
+                    $("#JvDate").val(jsonResult);
+                }
+            });
+        };
+
+        function ChangeNepalidateTo(selvalue, targetElm, url) {
+
+
+            $.ajax({
+                async: false,
+                type: "get",
+                url: url,
+                data: { NepaliDate: selvalue },
+                contentType: "text/json",
+                beforeSend: function () {
+                    // $("#" + targetElm).attr('disabled', 'disabled');
+                    // $("#" + targetElm).addClass('ac_loading');
+                },
+                success: function (jsonResult) {
+                    $("#JvDateEnd").val(jsonResult);
+                }
+            });
+        };
+
+
+
+        function ChangeEnglishdateFrom(selvalue, targetElm, url) {
+
+            $.ajax({
+                async: false,
+                type: "get",
+                url: url,
+                data: { EnglishDate: selvalue },
+                contentType: "text/json",
+
+
+                beforeSend: function () {
+                    // $("#" + targetElm).attr('disabled', 'disabled');
+                    // $("#" + targetElm).addClass('ac_loading');
+                },
+                success: function (jsonResult) {
+                    $("#FromNepaliDate").val(jsonResult);
+                }
+            });
+        };
+
+        function ChangeEnglishdateTo(selvalue, targetElm, url) {
+
+
+            $.ajax({
+                async: false,
+                type: "get",
+                url: url,
+                data: { EnglishDate: selvalue },
+                contentType: "text/json",
+
+
+                beforeSend: function () {
+                    // $("#" + targetElm).attr('disabled', 'disabled');
+                    // $("#" + targetElm).addClass('ac_loading');
+                },
+                success: function (jsonResult) {
+                    $("#ToNepaliDate").val(jsonResult);
+                }
+            });
+        };
+
+    </script>

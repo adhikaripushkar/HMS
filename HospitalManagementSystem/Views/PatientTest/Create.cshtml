@@ -1,0 +1,759 @@
+﻿@model Hospital.Models.PatientTestModel
+
+@{
+    ViewBag.Title = "Pathology";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+    decimal? total = 0;
+    
+}
+<link href="~/Content/themes/base/jquery.ui.timepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.ui.core.js"></script>
+<script src="~/Scripts/jquery.ui.widget.js"></script>
+<script src="~/Scripts/jquery.ui.datepicker.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.ui.timepicker.js"></script>
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+
+<style>
+    table#mytbl td {
+        width: 850px;
+        border: none !important;
+    }
+
+
+
+    table#testdesign .clsdate {
+        width: 150px;
+    }
+
+
+
+    table#testdesign .clstime {
+        width: 150px;
+    }
+
+    table#testdesign .clssize {
+        width: 150px;
+    }
+</style>
+
+<style>
+    select {
+        width: 208px;
+        height: 27px;
+    }
+
+
+    .title_box {
+        border: #3c5a86 1px dotted;
+    }
+
+        .title_box #title {
+            position: relative;
+            top: -0.5em;
+            margin-left: 1em;
+            display: inline;
+            background-color: #B4FDFD;
+            font-size: 18px;
+            color: blue;
+        }
+
+        .title_box #content {
+        }
+
+    .PatDetails {
+        border: #3c5a86 1px dotted;
+    }
+
+    .title_box #PatDetailsTitle {
+        position: relative;
+        top: -0.5em;
+        margin-left: 1em;
+        display: inline;
+        background-color: #B4FDFD;
+        font-size: 18px;
+        color: blue;
+    }
+
+    .title_box #ReferDocTitle {
+        position: relative;
+        top: -0.5em;
+        margin-left: 1em;
+        display: inline;
+        background-color: #B4FDFD;
+        font-size: 18px;
+        color: blue;
+    }
+</style>
+@if (TempData["failed"] != null)
+{
+    @TempData["failed"]
+}
+
+
+<script>
+
+    $(document).ready(function () {
+
+        $('.clsdate').val("");
+        $('#TestRegistrationDate').val("");
+
+        @*$("#TestRegistrationDate").attr("placeholder", "@DateTime.Now.ToShortDateString()").val("").focus().blur();*@
+
+        $("#TestRegistrationDate").attr("value", "@DateTime.Now.ToShortDateString()");
+        $(".clsdate").attr("value", "@DateTime.Now.ToShortDateString()");
+        $(".clstime").attr("value", "@DateTime.Now.ToString("HH:mm")");
+
+
+    });
+
+
+
+</script>
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+        j(".clsdate").datepicker();
+        j("#TestRegistrationDate").datepicker();
+        j(".clstime").timepicker();
+
+    });
+
+</script>
+
+
+<script src="~/Scripts/OrderManagerScript.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        AddClickEvents();
+    });
+
+</script>
+
+<h2 style="text-align: center;">Patient Test</h2>
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("Create", "PatientTest", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+    
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+
+            <legend></legend>
+
+            <div class="title_box" id="bill_to">
+                <div id="title">Search Patient</div>
+                <div class="row-fluid singleline">
+
+                
+
+                    <label>
+
+                        <div class="size">@Html.ValidationMessageFor(model => model.PatientID)</div>
+
+                        <div class="editor-label">
+                            @Html.Label("Patient ID")
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.TextBox("txtpatientName", Model.PatientID)
+                        </div>
+
+                    </label>
+
+
+                    <label>
+                        <span id="linkNewBack">@Html.ActionLink("Search", "Create", "PatientTest", new { ipValue = "xxx", deptId = "yyy" }, new { @class = "linkb" })</span>
+                    </label>    
+                     <label>
+                         <span id="lnSearchPatient">@Html.ActionLink("More..", "SeachPatient", "PatientTest", new { @class = "linkf" })</span>
+                    </label>               
+                </div>
+                 <div id="memsrch"></div>
+            </div>
+            @if (Model.PatientInformationModel != null)
+            {
+                <div class="title_box" id="PatDetails" style="margin-top: 16px;">
+                    <div id="PatDetailsTitle">Patient Details</div>
+                    <div class="row-fluid singleline">
+                        <label>
+                            <div class="editor-label">
+                                @Html.Label("Patient Full Name")
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBox("PatientFullName", Model.PatientInformationModel.FirstName + " " + Model.PatientInformationModel.MiddleName + " " + Model.PatientInformationModel.LastName, new { @readonly = "readolny" })
+                                @Html.HiddenFor(m => Model.PatientInformationModel.FirstName)
+                                @Html.HiddenFor(m => Model.PatientInformationModel.LastName)
+                                @Html.HiddenFor(m => Model.PatientInformationModel.MiddleName)
+                                @Html.HiddenFor(m => Model.PatientInformationModel.EmergencyMasterId)
+                            </div>
+
+
+                        </label>
+
+
+                        <label>
+
+                            <div class="size">@Html.ValidationMessageFor(model => model.PatientInformationModel.Gender)</div>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.PatientInformationModel.Gender)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.PatientInformationModel.Gender, new { @readonly = "readolny" })
+
+                            </div>
+
+                        </label>
+
+                        <label>
+                            <div class="size">@Html.ValidationMessageFor(model => model.PatientInformationModel.Age)</div>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.PatientInformationModel.Age)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.PatientInformationModel.Age, new { @readonly = "readolny" })
+
+                            </div>
+
+                        </label>
+                        <label>
+
+                            <div class="size">@Html.ValidationMessageFor(model => model.PatientInformationModel.EmergencyMasterId)</div>
+                            <div class="editor-label">
+                                @Html.HiddenFor(model => model.PatientInformationModel.EmergencyMasterId)
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.HiddenFor(model => model.PatientInformationModel.EmergencyMasterId)
+
+                            </div>
+                        </label>
+
+                    </div>
+                </div>
+            }
+
+
+            <div class="row-fluid singleline">
+                <div class="title_box" id="ReferDoc">
+                    <div id="ReferDocTitle">Choose Doctor</div>
+                    <div style="padding-bottom:10px;">
+                        <label>
+                            <div class="size">@Html.ValidationMessageFor(model => model.TestRegistrationDate)</div>
+
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.TestRegistrationDate)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.TestRegistrationDate)
+                            </div>
+                        </label>
+
+                        <label>
+                            <div class="size">@Html.ValidationMessageFor(model => model.ReferDoctorID)</div>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.ReferDoctorID)
+                            </div>
+                            <div class="editor-field">
+                                @Html.DropDownListFor(model => model.ReferDoctorID, Hospital.Utility.GetDoctors())
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="layer1" style="width: 1000px;">
+                <fieldset>
+
+                    <legend>
+                        <h4>Test List</h4>
+                    </legend>
+
+                    <div class="row-fluid singleline">
+
+                        <label>
+                    <div class="editor-label">
+                        @Html.Label("Test Name")
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.TextBox("txtTestName", null, new { @id = "txtTestName",@style="width:400px;" })
+                        @Html.Hidden("hdTestName", null, new { @id = "hdTestName" })
+                    </div>
+                </label>
+
+                       
+                 
+
+                        <label>
+
+                        <div class="editor-label">
+                            @Html.Label("Times")
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.DropDownList("Times", Hospital.Utility.getTimes(), new { style = "width:5em;" })
+                        </div>
+                    </label>
+                        
+                    <label>
+
+                        <div class="editor-label">
+                            @Html.Label("Discount IN")
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.DropDownList("DiscountIN", Hospital.Utility.getDiscountIN(), new { style = "width:8em;" })
+                        </div>
+                    </label>
+
+                    <label>
+
+                        <div class="editor-label">
+                            @Html.Label("Amt/Per")
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.TextBox("txtPer", "0", new { style = "width:4em;" })
+                        </div>
+                    </label>
+
+
+                        @Html.ActionLink("Add", "PopulateTestDetail", "PatientTest", new { ipValue = "xxx", ipid = "yyy", ipDept = "zzz",tim="ttt",disin="ddd",amt="aaa",userid="uuu" }, new { @class = "linkc" })
+                    </div>
+                        </fieldset>
+                        </div>
+            
+
+                @*list selected test*@
+                <table id="testdesign" style="width: 1000px;">
+                <thead style="background-color: silver;">
+                <tr style="font-size: 15px;">
+                    <td style="width: 250px;">Item Name</td>
+                    <td>Time(s)</td>
+                    <td>Rate</td>
+                    <td>Tax(@@5%)</td>
+                    <td>Total Price</td>
+                    <td>Discount(%)</td>
+                    <td>Discount(Rs)</td>
+                    <td>Amount</td>
+                    <td>Remove</td>
+                    @*<td>DeptID</td>*@
+                </tr>
+            </thead>
+
+
+
+                    @for (int i = 0; i < Model.TestCheckBoxListModelList.Count; i++)
+            {
+                            
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(m => Model.TestCheckBoxListModelList[i].TestName)
+                        @Html.HiddenFor(m => Model.TestCheckBoxListModelList[i].TestName)
+                        @Html.HiddenFor(m => Model.TestCheckBoxListModelList[i].TestId)
+
+                    </td>
+
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <td>@Html.DisplayFor(m => Model.TestCheckBoxListModelList[i].Tim)</td>
+                    <td>@Html.DisplayFor(m => Model.TestCheckBoxListModelList[i].Rate)</td>
+
+                    <td>@Html.DisplayFor(m => Model.TestCheckBoxListModelList[i].TaxAmount)</td>
+                    <td>
+
+                        @* @Html.HiddenFor(m => Model.TestCheckBoxListModelList[i].Price,new { @id = "chk", @text = Model.TestCheckBoxListModelList[i].Price })*@
+                        @Html.DisplayFor(m => Model.TestCheckBoxListModelList[i].Price, new { @id = "Price" })
+                        @Html.HiddenFor(m => Model.TestCheckBoxListModelList[i].Price)
+
+                    </td>
+                    <td>@Html.DisplayFor(m => Model.TestCheckBoxListModelList[i].Discount, new { @id = "Discount" })</td>
+                    <td>@Html.DisplayFor(m => Model.TestCheckBoxListModelList[i].DiscountPer, new { @id = "DiscountPer" })</td>
+
+                    @{decimal totalamount = (decimal)(Model.TestCheckBoxListModelList[i].Price - Model.TestCheckBoxListModelList[i].DiscountPer);}
+
+                    <td>@totalamount</td>
+                    @*@Model.BillingCounterTestListModelList[i].Price + @Model.BillingCounterTestListModelList[i].DiscountPer*@
+
+                    <td>
+                        @Html.ActionLink("Remove", "PopulateTestDetail", "PatientTest", new { ipTestID = Model.TestCheckBoxListModelList[i].TestId, ipid = Model.PatientID, ipDept = "yyy" }, new { @class = "linkd", @id = "btnRemove" })
+                        @* <input type="button"  id="@(Model.TestCheckBoxListModelList[i].TestId)" class="row-button btn btn-warning" value="Remove" />*@</td>
+                    
+                    @Html.HiddenFor(m => Model.TestCheckBoxListModelList[i].SectionId)
+                    @Html.HiddenFor(m => Model.TestCheckBoxListModelList[i].TaxAmount)
+                    @Html.HiddenFor(m => Model.TestCheckBoxListModelList[i].HospitalFee)
+                    @Html.HiddenFor(m => Model.TestCheckBoxListModelList[i].Discount)
+                    @Html.HiddenFor(m => Model.TestCheckBoxListModelList[i].DiscountPer)
+                    @Html.HiddenFor(m => Model.TestCheckBoxListModelList[i].Tim)
+                    @Html.HiddenFor(m => Model.TestCheckBoxListModelList[i].Rate)
+
+
+
+                </tr>                       
+                                
+                total += Model.TestCheckBoxListModelList[i].Price - Model.TestCheckBoxListModelList[i].DiscountPer;
+            }
+
+        </table>
+       
+                @*...........*@
+
+
+
+
+
+                <div style="float: right; margin-top: 10px;">
+                    <table>
+
+                <tr>
+                    <td>Total Price:</td>
+                    <td>@Html.TextBoxFor(m => Model.TotalAmount, new { @id = "txtTotalAmount", @Value = total, @readonly = "readonly" })</td>
+                    <tr>
+                        <td>Discount(%)</td>
+                        <td>@Html.TextBoxFor(m => Model.Discount, new { @id = "txtDiscount", @onkeyup = "onDiscountChange();" })</td>
+                    </tr>
+                </tr>
+
+                <tr>
+                    <td>Payable Amount</td>
+                    <td>@Html.TextBoxFor(m => Model.PayableAmount, new { @id = "txtPayableAmount", @readonly = "readonly" })</td>
+
+                </tr>
+
+                <tr>
+                    <td>Tender Amount</td>
+                    <td>@Html.TextBox("TenderAmountId", null, new { @onkeyup = "ExecuteTenderAmount();" })</td>
+
+                </tr>
+
+                <tr>
+                    <td>Return Amount</td>
+                    <td>@Html.TextBox("ReturnAmountId", null, new { @readonly = "readonly" })</td>
+
+                </tr>
+
+
+            </table>
+
+
+
+
+
+
+
+
+
+            @Html.Hidden("hduserid", Hospital.Utility.GetCurrentLoginUserId())
+
+
+                    <div style="display: none;">
+                        User total usage: <span id="usertotal"></span>
+                    </div>
+
+                </div>
+               
+        </fieldset>
+        <br />
+           
+       <div>
+                    <p style="float:right;">
+                        <input type="submit" value="Save & Print" />
+                    </p>
+          </div>
+    <br /><br />  
+         
+    }
+
+
+   
+
+</div>
+
+
+
+<script>
+    function onBlurTestID() {
+        var vartxttestname = $("#txtTestName").val();
+        var strSub = vartxttestname.substring(vartxttestname.indexOf('/'), vartxttestname.indexOf(')'));
+
+    }
+
+</script>
+
+
+<script type="text/javascript">
+    function onDiscountChange() {
+        var vartxtTotalAmount = $("#txtTotalAmount").val();
+        var vartxtDiscount = $("#txtDiscount").val();
+        var vartxtPayableAmount = $("#txtPayableAmount").val();
+
+        if (vartxtTotalAmount == "") {
+            vartxtTotalAmount = 0;
+        }
+        if (vartxtDiscount == "") {
+            vartxtDiscount = 0;
+        }
+
+
+        var discountAmt = parseFloat(vartxtTotalAmount) * parseFloat(vartxtDiscount) / 100;
+
+        varTotal = parseFloat(vartxtTotalAmount) - parseFloat(discountAmt);
+        $("#txtPayableAmount").val(parseFloat(varTotal.toFixed(2)));
+
+    };
+
+        function ExecuteTenderAmount() {
+            var vartxtPayableAmount = $("#txtPayableAmount").val();
+            var TenderAmountVal = $("#TenderAmountId").val();
+
+            varTotal = parseFloat(TenderAmountVal) - parseFloat(vartxtPayableAmount);
+            $("#ReturnAmountId").val(parseFloat(varTotal.toFixed(2)));
+        };
+
+    
+</script>
+
+<script type="text/javascript">
+    var $cbsRadiology = $('input[id="chkRadiology"]');
+    function calcUsageRadioLogy() {
+
+        var totalRadiology = $("#usertotal").val();
+        alert(totalRadiology);
+        if (totalRadiology == "") {
+            totalRadiology = 0;
+        }
+
+        $cbsRadiology.each(function () {
+            if (this.checked) {
+                var data = $(this).attr('text');
+                totalRadiology = parseFloat(totalRadiology) + parseFloat(data);
+            }
+        });
+
+        $("#usertotal").text(totalRadiology);
+        var totalForModelRadiology = $("#usertotal").text();
+        $("#txtTotalAmount").val(totalForModelRadiology);
+        $("#txtPayableAmount").val(totalForModelRadiology);
+        onDiscountChange();
+    };
+    $cbsRadiology.click(calcUsageRadioLogy);
+
+</script>
+
+<script type="text/javascript">
+
+    function showHideDiv(divId) {
+        $("#con_" + divId).slideToggle("slow");
+    };
+</script>
+
+<script>
+    $(function () {
+        $('.linkb').click(function () {
+            var ipvalue = $("#txtpatientName").val();
+            var deptId = $("#DepartmentID").val();
+            this.href = this.href.replace("xxx", ipvalue);
+            this.href = this.href.replace("yyy", deptId);
+
+        });
+    });
+</script>
+<script>
+    $(function () {
+        $('.linkc').click(function () {
+            var ipvalue = $("#txtTestName").val();
+            var ipid = $("#txtpatientName").val();
+            var deptId = "1006";
+
+            var disin = $("#DiscountIN").val();
+            var times = $("#Times").val();
+            var amount=$("#txtPer").val();
+            var userid = $("#hduserid").val();
+            this.href = this.href.replace("xxx", ipvalue);
+            this.href = this.href.replace("yyy", ipid);
+            this.href = this.href.replace("zzz", deptId);
+            this.href = this.href.replace("aaa", amount);
+            this.href = this.href.replace("ddd", disin);
+            this.href = this.href.replace("ttt", times); 
+            this.href = this.href.replace("uuu", userid);
+            onDiscountChange();
+        });
+    });
+</script>
+<script>
+    $(function () {
+        $('.linkd').click(function () {
+            this.href = this.href;
+            var deptId = $("#DepartmentID").val();
+            this.href = this.href.replace("yyy", deptId);
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('.linkd').addClass("row-button btn btn-warning");
+        $('.linkc').addClass("row-button btn btn-warning");
+        $('.linkf').addClass("row-button btn btn-warning");
+        $('.linkb').addClass("row-button btn btn-warning");
+        //for calculation
+        var vartxtTotalAmount = $("#txtTotalAmount").val();
+        var vartxtDiscount = $("#txtDiscount").val();
+        var vartxtPayableAmount = $("#txtPayableAmount").val();
+        if (vartxtTotalAmount == "") {
+            vartxtTotalAmount = 0;
+        }
+        if (vartxtDiscount == "") {
+            vartxtDiscount = 0;
+        }
+
+
+        var discountAmt = parseFloat(vartxtTotalAmount) * parseFloat(vartxtDiscount) / 100;
+
+        varTotal = parseFloat(vartxtTotalAmount) - parseFloat(discountAmt);
+        $("#txtPayableAmount").val(parseFloat(varTotal.toFixed(2)));
+
+
+    });
+</script>
+
+
+<script type="text/javascript">
+    $("#Add-Item").on('click', '.row-button', function () {
+        $(this).closest("div.rowr").remove();
+    });
+
+</script>
+<script type="text/javascript">
+    var $cbs = $('input[id="chk"]');
+    function calcUsage() {
+
+        var total = $("#usertotal").val();
+        //alert(total + " pathotest");
+        if (total == "") {
+            total = 0;
+        }
+
+        $cbs.each(function () {
+            // if (this.checked) {
+            var data = $(this).attr('text');
+            total = parseFloat(total) + parseFloat(data);
+            //  }
+        });
+        $("#usertotal").text(total);
+        var totalForModel = $("#usertotal").text();
+        $("#txtTotalAmount").val(totalForModel);
+        $("#txtPayableAmount").val(totalForModel);
+    };
+    //$cbs.click(calcUsage);
+    //$(".linkc").click(calcUsage);
+
+</script>
+
+
+<script type="text/javascript">
+
+    $("#Add-Item").on('change', '.SectionId', function () {
+        var id = this.id;
+
+        id = id.replace("__SectionId", "__TestId");
+        $('#' + id).val('');
+        $.get('/AjaxRequest/GetPathoTest/' + this.value,
+              function (data) {
+                  $('#' + id).find('option').remove()
+                  $(data).each(
+                      function (index, item) {
+                          $('#' + id).append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                      });
+              }
+    );
+    });
+
+</script>
+
+@*for getting price of test*@
+
+<script type="text/javascript">
+    $("#Add-Item").on('change', '.TestId', function () {
+        var id = this.id;
+
+        id = id.replace("__TestId", "__Price");
+        $('#' + id).val('');
+        $.get('/AjaxRequest/getTestPrice/' + this.value,
+              function (jsonResult) {
+                  // alert(jsonResult);
+                  $('#' + id).val(jsonResult);
+                  var data = $('#' + id).val();
+                  alert(data);
+
+                  var varTotalAmount = $("#TotalAmount").val();
+                  if (varTotalAmount == '') {
+                      varTotalAmount = 0;
+                  }
+                  $("#TotalAmount").val(parseFloat(data) + parseFloat(varTotalAmount));
+              });
+
+    });
+</script>
+
+
+@*for popup*@
+<script>
+    var dlg = $.noConflict();
+    dlg('.linkf').click(function (e) {
+        e.preventDefault();
+        var val = dlg('.linkf').val();
+        var url = "/PatientTest/SearchPatient";
+        dlg.get(url, null, function (data) {
+            dlg('#memsrch').html(data);
+            dlg(function () {
+                dlg("#memsrch").dialog({
+                    position: [290, 190],
+                    resizable: true,
+                    overFlow: scroll,
+                    minWidth: 1000,
+                    maxWidth: 1000,
+                    maxHeight: 200,
+                    title: "Patient Search"
+                });
+            });
+        });
+    });
+</script>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#txtTestName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/PatientTest/SearchTestName",
+                        type: "POST",
+                        dataType: "json",
+                        data: { s: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                //alert(item);
+                                return { label: item, value: item };
+                            }))
+                        }
+                    })
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+        })
+    </script>

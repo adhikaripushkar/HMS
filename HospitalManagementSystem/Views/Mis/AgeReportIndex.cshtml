@@ -1,0 +1,198 @@
+﻿@model HospitalManagementSystem.Models.EmergecyMasterModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MisLayOutLayout.cshtml";
+    int b = 1;
+}
+
+
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+
+
+
+}
+
+<style>
+    .customtable td {
+        border: none;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+
+        var id = $('.agelist').val();
+        
+    });
+
+
+</script>
+
+<h2>Search Patient on The Age Base</h2>
+<div class="contentWrapper">
+    @using (Html.BeginForm())
+    {
+       <table class="customtable">
+        <tr>
+            <td>Report</td>
+                <td>
+                    @Html.DropDownList("agegrouplist", HospitalManagementSystem.Utility.GetAgeRange(), new { @class = "agelist" })
+            </td>
+        </tr>
+        </table>
+               <input type="submit" value="Show Report" id="btnsubmit" />
+        
+        <div id="stat"></div>
+        <div id="printdiv">
+        @*{*@
+        <table id="opd" class="table">
+            <tr>
+                <th>S. NO
+                </th>
+                <th>Name
+                </th>
+                <th>Sex
+                </th>
+                <th>Registration Date
+                </th>
+
+                <th>Amount
+                </th>
+            </tr>
+
+            @try
+            {
+                int i = 0;
+                foreach (var item in ViewBag.List)
+                {
+                    i++;
+                <tr>
+                    <td>
+                        @b
+                        @*@item.OpdId*@
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Sex     
+                    </td>
+                    <td>
+                        @*// @item.RegistrationDate*@
+
+                        @Convert.ToDateTime(@item.RegistrationDate).ToShortDateString()
+                    </td>
+
+                    <td>
+                        @item.Amount
+                    </td>
+                    
+            @{b++;}
+                </tr>
+                }
+
+                  if (i == 0)
+                  {
+                      TempData["message"] = "No Results Found.";
+                <tr>
+                    @TempData["message"]
+                </tr>
+                  }
+
+            }
+
+            catch (Exception e)
+            {
+
+            }
+
+        </table>
+
+    </div>
+    }
+   
+    <div id="msg" title="Message!!!" style="display: none;">An error occured!!!</div>
+</div>
+<div>
+        <span style="float: right;">
+            <input type="button" id="btnPrint" style="width: 50px;" onclick="print()" value="Print" /></span>
+    </div>
+<script type="text/javascript">
+    function print() {
+
+    }
+</script>
+@*Script for the Print*@
+
+
+<script>
+
+    var hh = $.noConflict();
+    
+    hh('#btnPrint').click(function (e) {
+        e.preventDefault();
+        var msg = 'Do You Want To Print?';
+        var div = hh("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+                        //var printing = window.open('','','');
+                        window.print();
+                        printing.document.write('<div style="width: 100%;  font-size: x-large; font-weight: 700; background:url(../../Images/mmh-logo.png) no-repeat center; background-size:35%;">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+                        printing.document.wi
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+
+    });
+
+
+</script>
+
+<script type="text/javascript">
+
+    //var jq = $.noConflict();
+
+    @*$('.patientname').keyup(function () {
+        //alert(this.value);
+        //alert("second");
+        var id = this.value;
+        var url = '@Url.Action("SearchPatient","Mis")';
+        $.post(url + "/" + id, function (data) {
+            $(data).each(function (i) {
+                //alert(data[i]);
+
+            });
+            
+            
+        });
+    
+    });*@
+
+    
+
+</script>

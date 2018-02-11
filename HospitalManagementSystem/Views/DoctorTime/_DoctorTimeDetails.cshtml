@@ -1,0 +1,104 @@
+﻿@model HospitalManagementSystem.Models.DoctorTimeModel
+
+
+@if (TempData["NOTFOUND"] == "0")
+{
+    <script type="text/javascript">
+
+        alert('Data Can Not Found||')
+    </script>
+}
+
+<br />
+
+
+<div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+       <div class="boxWrapper">
+    <div class="boxHeadingPanel"><h1>Doctor Time Setup</h1></div>
+
+<table class="table table-hover tablesorter">
+    <tbody>
+        <tr>
+            <th>
+              Doctor Name
+            </th>
+            <th>
+               Day Of Week
+            </th>
+            <th>
+                Shift
+              </th>
+            <th>
+                Start Time
+            </th>
+            <th>
+                End Time
+            </th>
+            <th>
+               Check Patient Per Day
+            </th>
+            <th>
+                Web Patient Per Day
+            </th>
+        </tr>
+    </tbody>
+    @foreach (var items in Model.DoctorTimeList)
+    {
+        <tr>
+            <td>
+                @HospitalManagementSystem.Utility.GetDoctorName(items.DoctorID)
+            </td>
+            <td>
+                @items.DoctorDays
+            </td>
+            <td>
+                @items.Shift
+            </td>
+            <td>
+                @items.StartTime
+            </td>
+            <td>
+                @items.EndTime
+            </td>
+            <td>
+                @items.CheckPatientPerDay
+            </td>
+            <td>
+                @items.WebPatientPerDay
+            </td>
+        </tr>
+    }
+</table>
+           </div>
+
+
+
+            
+              @*for sorting *@
+        
+               <div class="boxFooter">
+               @*    
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>*@
+
+               </div> 
+
+        @*---------------*@
+            </div>
+</div>

@@ -1,0 +1,107 @@
+﻿@model HospitalManagementSystem.Models.IpdPartialDetails
+
+
+
+
+<div class="general-box clearfix">
+
+    <div class="general-box clearfix">
+
+        <div class="boxWrapper">
+            <div class="boxHeadingPanel">
+                <h1>Search Result</h1>
+            </div>
+            <table class="table table-hover tablesorter">
+                <thead>
+                    <tr>
+                     
+                        <th style="">
+                            <span>Full Name</span>
+                        </th>
+                         
+                        <th style="">
+                            <span>Address</span>
+                        </th>
+                        <th style="">
+                            <span>Admitted Date</span>
+                        </th>
+                         <th style="">
+                            <span>  Ward No </span>
+                        </th>
+                         <th style="">
+                            <span> Room Type</span>
+                        </th>
+                         <th style="">
+                            <span> Room No</span>
+                        </th>
+                          <th style="">
+                            <span>  Bed No</span>
+                        </th>
+
+                      
+                    </tr>
+                </thead>
+                <tbody>
+
+
+
+
+                        @try{
+                    foreach (var item in Model.IpdPartialDetailsList)
+                    {
+    
+                        <tr>
+                           
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                          
+                                @Html.DisplayFor(modelItem => item.MiddleName) 
+                            
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Admitdate)
+                            </td>
+                             <td>
+                               @* @Html.DisplayFor(modelItem => item.WardNo )*@
+                                  @HospitalManagementSystem.Utility.GetIpdWardNo(item.WardNo)
+                            </td>
+                             <td>
+                              @*  @Html.DisplayFor(modelItem => item.RoomType)*@
+                                 @HospitalManagementSystem.Utility.GetRoomTypeNameForIpdSearch(item.RoomType)
+                            </td>
+                             <td>
+                                @Html.DisplayFor(modelItem => item.RoomNo)
+                            </td>
+                             <td>
+                                @Html.DisplayFor(modelItem => item.BedNo)
+                            </td>
+                          
+                        </tr>
+                        
+                    }
+
+                        }
+                        catch { }
+
+                </tbody>
+
+            </table>
+
+
+
+
+
+        </div>
+
+
+
+        @*---------------*@
+
+    </div>
+</div>
+
+

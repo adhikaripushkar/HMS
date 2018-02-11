@@ -1,0 +1,47 @@
+﻿@model HospitalManagementSystem.Models.CentralizedBillingModel
+@{
+    ViewBag.Title = "PaidPatientResistrationIndex";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+<h2 style="text-align:center;">Paid Patient Resistration</h2>
+
+<div class="contentWrapper">
+
+
+
+<table class="table">
+    <tr>
+       
+        <th>
+           Patient Name
+        </th>
+              
+        <th>
+            Department
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in ViewBag.Data)
+{
+    <tr>
+       
+        <td>
+            @item.PatientId
+          @*  @Html.DisplayFor(modelItem => item.PatientId)*@
+        </td>
+        
+        <td>
+            @item.DepartmentName
+            @*@Html.DisplayFor(modelItem => item.DepartmentName)*@
+        </td>
+        <td>
+           
+            @Html.ActionLink("Add Patient in Ipd", "InsertFroCentralizeBillingInIPDResistrationMaster", new {  id=item.PatientId  })
+        </td>
+    </tr>
+}
+
+</table>
+    </div>

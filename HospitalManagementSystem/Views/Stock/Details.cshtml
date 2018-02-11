@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Hospital.StockDistributionDetail>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div class="contentWrapper">
+<table>
+    <tr>
+       
+       
+        <th>
+            Item
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th>
+            Sales Rate
+        </th>
+        <th>
+            Total Amount
+        </th>
+       
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+       
+        <td>
+            @Hospital.Utility.GetItemNameFromStockItemEntry(item.ItemEntryId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SalesRate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalAmount)
+        </td>
+       
+    </tr>
+}
+
+</table>
+<div id="linkNewBack">
+    @Html.ActionLink("Back", "Index")
+</div>
+    </div>

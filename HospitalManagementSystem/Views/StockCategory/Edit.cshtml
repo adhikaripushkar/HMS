@@ -1,0 +1,48 @@
+﻿@model Hospital.Models.StockCategoryModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_StockSetupLayout.cshtml";
+}
+
+<h2 style="text-align:center;">Stock Category Setup</h2>
+
+<div class="contentWrapper">
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <div class="bs-docs-example form-inline">
+
+    <fieldset>
+        <legend>Edit</legend>
+        @Html.HiddenFor(model => model.StockCategoryID)
+        <div class="row-fluid singleline">
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.StockCategoryName)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StockCategoryName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.StockCategoryName)
+            
+        </div>
+                </label>
+
+            
+            </div>
+        <br />
+        <p>
+            <input type="submit" value="Edit" />
+        </p>
+    </fieldset>
+        </div>
+}
+
+<div id="linkNewBack">
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+    </div>

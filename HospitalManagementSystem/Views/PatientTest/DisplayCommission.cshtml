@@ -1,0 +1,55 @@
+﻿@model Hospital.Models.PatientTestModel
+
+@{
+    ViewBag.Title = "DisplayCommission";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+}
+
+<div class="contentWrapper">
+    <h4>
+        Commission Details
+        @*<i class="fa fa-plus fa-2x" style="color: blue;"></i>&nbsp;@Html.ActionLink("Create New", "Create", null, new { @id = "linkNewBack" })*@
+    </h4>
+
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Details</h1>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Bill Number
+                            </th>
+                            <th>Patient Id</th>
+                            <th>Patient Name</th>
+                            <th>Date</th>
+                            <th>Total Commission</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model.GetCBCommissionViewModelList)
+                    {
+                        <tr>
+                            <td>@item.BillNo</td>
+                            <td>@item.PatientId</td>
+                            <td>@Hospital.Utility.GetPatientNameWithIdFromEmergency(item.PatientId)</td>
+                            <td>@item.CreatedDate.ToShortDateString()</td>
+                            <td>@item.TotalAmount</td>
+                            <td>@Html.ActionLink("Add Commission", "ViewCommissionDetails", new { id = item.BillNo })</td>
+                        </tr>
+                        
+                    }
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

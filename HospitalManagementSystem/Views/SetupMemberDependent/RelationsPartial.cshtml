@@ -1,0 +1,158 @@
+﻿@model Hospital.Models.SetupMemberDependentModel
+
+
+
+
+<div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+       <div class="boxWrapper">
+    <div class="boxHeadingPanel"><h1>Relations</h1></div>
+
+<table class="table table-hover tablesorter">
+    <thead>
+    <tr>
+        
+       
+        <th>
+            
+            Relation
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.DateofBirth)
+        </th>*@
+       @* <th>
+            @Html.DisplayNameFor(model => model.MoibleNumber)
+        </th>*@
+       @* <th>
+            @Html.DisplayNameFor(model => model.ContactNumber)
+        </th>*@
+       @* <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>*@
+        @*<th>
+            @Html.DisplayNameFor(model => model.BloodGroupID)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+    </tr>
+        </thead>
+    <tbody>
+
+@foreach (var item in Model.lstOfSetupMemberDependentModel)
+{
+    <tr>
+      
+       
+        <td>
+       
+
+            @Hospital.Utility.GetRelationName(item.RelationID)
+            
+        </td>
+        <td>
+          <a href='~/Opd/MembershipRealtion?id=@item.SetupMemberDetailID'>@Html.DisplayFor(modelItem => item.FullName)</a>
+
+            @*@Html.DisplayFor(modelItem => item.FullName)*@
+        </td>
+       @* <td>
+            @Convert.ToDateTime(item.DateofBirth).ToShortDateString()
+        </td>*@
+       @* <td>
+            @Html.DisplayFor(modelItem => item.MoibleNumber)
+        </td>*@
+        @*<td>
+            @Html.DisplayFor(modelItem => item.ContactNumber)
+        </td>*@
+     @*   <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>*@
+       @* <td>
+            
+            @if(item.BloodGroupID!=null)
+            {
+
+            @Hospital.Utility.GetBloodGroupNameWithId(Convert.ToInt16(item.BloodGroupID))
+
+            }
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+       
+    </tr>
+}
+        </tbody>
+
+</table>
+
+           
+    </div>
+
+               @*for sorting *@
+        
+              @* <div class="boxFooter">
+                   
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+
+               </div> *@
+
+        @*---------------*@
+           </div> </div>
+
+           <br />
+
+ 
+
+
+
+
+
+@*<script>
+    
+    
+    $('.relId').click(function (e) {
+        e.preventDefault();
+
+        var Url = this.href;
+        alert(Url);
+        $.get(this.href,null,
+                   function (data) {
+
+                       $('#formEditId').empty();
+                       $('#formEditId').html(data);
+
+                       $(window).scrollTop(200);
+                       
+                   }
+         );
+
+    });
+
+    
+
+
+
+</script>*@
+
+

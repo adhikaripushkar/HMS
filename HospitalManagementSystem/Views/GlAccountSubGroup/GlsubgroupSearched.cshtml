@@ -1,0 +1,55 @@
+﻿@model HospitalManagementSystem.Models.GlAccountSubGroupModel
+@{
+    ViewBag.Title = "GlsubgroupSearched";
+    Layout = "~/Views/Shared/_GlAccountSubGrp.cshtml";
+}
+
+<h2>Search Result</h2>
+                 <div class="contentWrapper">
+                <div class="general-box clearfix">
+                    <div class="general-box clearfix">
+
+                        <div class="boxWrapper">
+                            <div class="boxHeadingPanel">
+                                <h1>Search Result</h1>
+                            </div>
+
+                            <table class="table table-hover tablesorter">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                      Account Sub Group Id
+                                        </th>
+                                        <th>
+                                       Account Sub Group Name
+                                        </th>
+                                       
+                                        
+                                        </tr>
+                                    </thead>
+                                <tbody>
+                                     @foreach (var item in Model.GlAccountSubGroupModelList)
+                                     {
+                                         <tr>
+                                         <td>
+                                          @Html.DisplayFor(modelItem => item.AccSubGruupID)
+                                         </td>
+                                         <td>
+                                          @Html.DisplayFor(modelItem => item.AccSubGroupName)
+                                         </td>
+
+                                         </tr>
+                                     }
+                                </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                     <div id="linkNewBack">
+                             @Html.ActionLink("Back to List", "Index")
+                     </div>
+                    </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+  

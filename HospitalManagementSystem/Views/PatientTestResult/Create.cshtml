@@ -1,0 +1,330 @@
+﻿@model Hospital.Models.PatientTestResultModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+}
+
+
+<script>
+    var j = $.noConflict();
+    j(document).ready(function () {
+        j("#txtRegistrationDate").attr("Value", "@DateTime.Now.ToShortDateString()");
+        j("#txtRegistrationDate").datepicker();
+
+    });
+
+</script>
+
+
+<h2 style="text-align: center;">Patient Test Result</h2>
+
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm())
+    {
+    
+        @Html.ValidationSummary(true)
+        <div class="bs-docs-example form-inline">
+
+            <fieldset>
+
+                <legend></legend>
+
+                <div class="row-fluid singleline">
+
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.PopulatePatientTestDetailModel.DepartmentID)</div>
+                        <div class="editor-label">
+                            @Html.Label("Department")
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.PopulatePatientTestDetailModel.DepartmentID, Hospital.Utility.GetDepartmentListForPathology(), new { @id = "PatientDetpId", @disabled = "disabled" })
+
+                        </div>
+
+                    </label>
+
+                    <label>
+                        <div class="editor-label">
+                            @Html.Label("Patient ID")
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBox("txtpatientName")
+                        </div>
+                    </label>
+
+
+                    <label>
+                        <div class="editor-label">
+                            @Html.Label("Test Registration Date")
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBox("txtRegistrationDate")
+                        </div>
+
+                    </label>
+
+                    <label id="linkNewBack">
+                        @Html.ActionLink("Search", "Create", "PatientTestResult", new { ipValue = "xxx" }, new { @class = "linkb" })
+
+                    </label>
+                </div>
+                @*Display Patient Details*@
+
+                <div class="row-fluid singleline">
+
+                    @if (Model.PopulatePatientTestDetailsModel != null)
+                    {           
+                        <table>
+                            <tr>
+                                <th>Patient Name</th>
+                                <th>Gender</th>
+                                <th>Age</th>
+                                <th>Patient ID</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>
+                                        <div class="editor-label">
+                                            @Html.Hidden("Patient Full Name")
+                                        </div>
+                                        <div class="editor-field">
+                                            @Html.Label("PatientFullName", Model.PopulatePatientTestDetailsModel.FirstName + " " + Model.PopulatePatientTestDetailsModel.MiddleName + " " + Model.PopulatePatientTestDetailsModel.LastName)
+                                            @Html.HiddenFor(m => Model.PopulatePatientTestDetailsModel.FirstName)
+                                            @Html.HiddenFor(m => Model.PopulatePatientTestDetailsModel.LastName)
+                                            @Html.HiddenFor(m => Model.PopulatePatientTestDetailsModel.MiddleName)
+                                        </div>
+                                    </label>
+                                </td>
+                                <td>
+
+                                    <label>
+
+                                        <div class="size">@Html.ValidationMessageFor(model => model.PopulatePatientTestDetailsModel.Sex)</div>
+                                        <div class="editor-label">
+                                            @Html.DisplayFor(model => model.PopulatePatientTestDetailsModel.Sex)
+                                        </div>
+                                        <div class="editor-field">
+                                            @Html.HiddenFor(model => model.PopulatePatientTestDetailsModel.Sex)
+                                        </div>
+
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <div class="size">@Html.ValidationMessageFor(model => model.PopulatePatientTestDetailsModel.AgeYear)</div>
+                                        <div class="editor-label">
+                                            @Html.DisplayFor(model => model.PopulatePatientTestDetailsModel.AgeYear)
+                                        </div>
+                                        <div class="editor-field">
+                                            @Html.HiddenFor(model => model.PopulatePatientTestDetailsModel.AgeYear)
+                                        </div>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <div class="size">@Html.ValidationMessageFor(model => model.PopulatePatientTestDetailsModel.OpdID)</div>
+                                        <div class="editor-label">
+                                            @Html.DisplayFor(model => model.PopulatePatientTestDetailsModel.OpdID)
+                                        </div>
+                                        <div class="editor-field">
+                                            @Html.HiddenFor(model => model.PopulatePatientTestDetailsModel.OpdID)
+                                        </div>
+                                    </label>
+                                </td>
+                            </tr>
+                        </table>              
+                          
+                    }
+
+                </div>
+
+
+
+                @*listing test for search patient*@
+                <div>
+                    <table style="width: 700px;">
+                        @if (Model.PopulatePatientTestDetailModelList != null)
+                        {
+@*<thead style="background-color: silver;">
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Patient Id</th>
+                    <th>Registration Date</th>
+                    <td>Action</td>
+
+                </tr>
+
+                </thead>*@
+                            <tr>
+                                <th>Lab Test Id</th>
+                                <th>Patient Id</th>
+                                <th>Patient Name</th>
+                                <th>Refer Doctor Name</th>
+                                <th>Test Date</th>
+                                <th>Test Detail</th>
+                            </tr>
+                            foreach (var item in Model.PopulatePatientTestDetailModelList)
+                            {
+                            <tr>
+                                <td>
+                                    @item.PatientTestID
+                                </td>
+                                <td>
+                                    @item.PatientID
+                                </td>
+                                <td>
+                                    @Hospital.Utility.GetPatientNameWithIdFromEmergency(item.PatientID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.DoctorName)</td>
+                                @*   <td>
+                                    @Html.DisplayFor(m => item.PatientID)</td>*@
+                                <td>
+
+
+                                    @Convert.ToDateTime(@item.TestRegistrationDate).ToShortDateString()
+
+                                </td>
+                                <td id="linkNewBack">@Html.ActionLink("List Test", "Create", new { ipValue = item.PatientID, tdate = item.TestRegistrationDate, PatientTestID = item.PatientTestID })</td>
+                            </tr>
+                            }
+                        }
+
+                    </table>
+                </div>
+
+
+                @*for patient selected Test list*@
+                <div style="margin-top: 20px;">
+
+                    @if (Model.PatientTestResultModelList != null && Model.PatientTestResultModelList.Count() > 0)
+                    {
+                        if (Model.PathoSectionModelResultList != null)
+                        {
+                            foreach (var item in Model.PathoSectionModelResultList)
+                            {
+                        <div class="heading" id="headingOne" onclick="showHideDiv('@item.SectionId')" style="width:800px;">@item.Name</div>
+                 
+                        <div id="con_@item.SectionId">
+
+                            <table style="width: 795px; margin-left: 13px;">
+
+                                @if (Model.PatientTestResultModelList != null)
+                                {
+                                    <thead style="background-color: silver;">
+                                        <tr>
+                                            <th>Test Id  </th>
+                                            <th style="width: 250px;">Test Name</th>
+                                            <td style="width: 250px;">Ref Range</td>
+                                            <th>Value</th>
+                                            <th>Flag</th>
+                                        </tr>
+                                    </thead>
+
+                                    for (int i = 0; i < Model.PatientTestResultModelList.Count; i++)
+                                    {
+                                        if (item.SectionId == Model.PatientTestResultModelList[i].SectionID)
+                                        {
+                                    <tr>
+
+
+                                        <td>
+
+                                            @Html.DisplayFor(m => Model.PatientTestResultModelList[i].TestID)
+                                            @Html.HiddenFor(m => Model.PatientTestResultModelList[i].TestID)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(m => Model.PatientTestResultModelList[i].TestName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(m => Model.PatientTestResultModelList[i].RefRange)
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(m => Model.PatientTestResultModelList[i].Value1)
+                                        </td>
+                                        <td>
+                                            @*@Html.TextBoxFor(m => Model.PatientTestResultModelList[i].Value2)*@
+                                            @Html.DropDownListFor(m => Model.PatientTestResultModelList[i].Value2, @Hospital.Utility.GetPathologyFlag())
+                                        </td>
+                                        @Html.HiddenFor(m => Model.PatientTestResultModelList[i].PatientTestID)
+                                        @Html.HiddenFor(m => Model.PatientTestResultModelList[i].PatientTestDetailID)
+
+                                    </tr>  
+                                        }
+                                    }
+
+                                }
+
+                            </table>
+                        </div>
+                            }
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+
+                </div>
+
+
+                <br />
+
+                @if (Model.PatientTestResultModelList != null && Model.PatientTestResultModelList.Count() > 0)
+                {
+                    <div id="submitButton1">
+                        <p>
+                            <input type="submit" value="Create" />
+                        </p>
+                    </div>
+                }
+
+            </fieldset>
+        </div>
+        <div>
+            @*  @Html.ActionLink("Back to List", "Index", null, new { @id="linkNewBack"})*@
+        </div>
+    }
+
+
+
+
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+<script>
+    $(function () {
+        $('.linkb').click(function () {
+            var ipvalue = $("#txtpatientName").val();
+            var ipdate = $("#txtRegistrationDate").val();
+            var detpId = $("#PatientDetpId").val();
+            var ipanddid = ipvalue + '&did=' + ipdate + '&deptId=' + detpId;
+            this.href = this.href.replace("xxx", ipanddid);
+            //this.href = this.href.replace("yyy", detpId);
+        });
+    });
+</script>
+
+
+<script type="text/javascript">
+
+    function showHideDiv(divId) {
+        $("#con_" + divId).slideToggle("slow");
+    };
+
+    $(document).ready(function () {
+        $("#submitButton").hide();
+    });
+
+
+</script>

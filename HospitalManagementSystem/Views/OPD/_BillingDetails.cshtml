@@ -1,0 +1,129 @@
+﻿@model HospitalManagementSystem.Models.OpdModel
+@using Humanizer;
+
+@{
+    int i=1;
+    }
+<br />
+
+<div class="general-box clearfix">
+
+    <div class="general-box clearfix">
+
+        <div class="boxWrapper">
+
+
+            @if (Model.CentralizeBillingModelList != null)
+            {
+    
+                <table class="table table-hover tablesorter">
+
+                    <div class="boxHeadingPanel">
+                        <h1>OPD</h1>
+                    </div>
+                    <thead>
+                        <tr>
+                            <th>SN</th>
+                            <th>Patient Id</th>
+                            <th>Patient Name</th>
+                            <th>Address</th>
+                            
+                            <th>Amount</th>
+                            <th>Transaction Date</th>
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @{decimal TotalAmountSum = 0;}
+                        @foreach (var item in Model.CentralizeBillingModelList)
+                        {
+                            <tr>
+                                <td>@i</td>
+                                <td>@item.PatientId</td>
+                                <td>@HospitalManagementSystem.Utility.GetPatientNameWithIdFromOpd(item.PatientId)</td>
+                                <td>@HospitalManagementSystem.Utility.GetOpdAddress(item.PatientId)</td>
+                                
+                                <td>@item.TotalAmount</td>
+                                <td>@item.AmountDate.ToShortDateString()</td>
+
+                                <td><i class="fa fa-eye" style="font-size: 15px; color: blue; margin-right: 3px;"></i>@Html.ActionLink("Details", "TransactionDetails", null, new { id = item.BillNumberInteger, @class = "linkDetailmm" })</td>
+                            </tr>
+                            TotalAmountSum += item.TotalAmount;
+                            i++;
+                        }
+
+
+                    </tbody>
+                </table>
+                <h4><span style="margin-left: 580px">Total Amount:@TotalAmountSum</span></h4>
+            }
+            else
+            {
+                <div>
+                </div>
+            }
+
+        </div>
+        <div id="DetailsId" class="easyui-dialog" style="width: 800px; height: 200px;" data-options="iconCls:'icon-save',resizable:true,modal:true"></div>
+    </div>
+    @* <div class="boxFooter">
+                   
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+
+               </div>*@
+
+
+</div>
+<script>
+
+    //$.noConflict();
+    jQuery.noConflict();
+
+    $(".linkDetailmm").live("click", function (e) {
+        e.preventDefault();
+        $.get('/Opd/TransactionDetails/' + this.id,
+                    function (data) {
+                        $('#DetailsId').html(data);
+                        $(function () {
+                            $("#DetailsId").dialog({
+                                //position: [490, 190],
+                                //resizable: true,
+                                width: 800,
+                                height: 300,
+                                //dialogClass: 'infoMain'
+                                //title: "Patient Details",
+
+
+                            });
+
+                        });
+
+                    }
+          );
+    });
+</script>
+
+
+
+
+
+
+
+

@@ -1,0 +1,274 @@
+﻿@model Hospital.Models.SetupMemberDependentModel
+
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+
+   
+    
+}
+
+
+
+<script src="~/Scripts/json.cycle.js"></script>
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+
+
+
+
+
+<script>
+
+    var d = $.noConflict();
+    
+
+    d(".DobId").live("hover", function (e) {
+
+        e.preventDefault();
+
+        d(".DobId").datepicker();
+    });
+
+
+
+</script>
+
+<script type="text/javascript">
+
+    var nn = $.noConflict();
+
+
+    nn(document).ready(function () {
+
+        //e.preventDefault();
+
+        //alert("hi");
+        AddClickEvents();
+
+
+
+        nn("#Add-Item").on('click', '.row-button', function (e) {
+            e.preventDefault();
+
+
+
+            nn(this).closest("div.row").remove();
+
+            var v = $('#current').val();
+            
+            v = parseInt(v) - 1;
+            nn(".btn").show();
+            //alert(v);
+            
+            nn('#current').val(v);
+
+
+            var cv = $("#current").val();
+           // alert(cv);
+
+            if (cv == 0) {
+                $("#btnsub").hide();
+
+            }
+           
+
+        });
+
+        nn(".addProductItem").hide();
+
+        nn('#addbtn').click(function (e) {
+
+            e.preventDefault();
+
+            //alert('hi');
+
+            var v = nn('#current').val();
+            //alert(v);
+            v=parseInt(v)+1;
+
+            var m=nn("#max").val();
+
+            if(v==m)
+            {
+                nn(".addProductItem").hide();
+                
+            }
+
+            nn('#current').val(v);
+
+            var cvn = $("#current").val();
+            
+            if (cvn != 0)
+            {
+                $("#btnsub").show();
+            }
+
+
+
+        });
+
+
+
+
+
+        
+       var maxlist =@Model.lstOfDependentModelRel.Count
+
+          
+
+        nn('#max').val(maxlist);
+        
+
+        nn('#current').val(maxlist);
+        
+        
+       
+
+        });
+
+    </script>
+
+
+
+
+<h2 style="text-align:center;">Set Up Member Dependent</h2>
+
+<div class="contentWrapper">
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="bs-docs-example form-inline">
+    <fieldset>
+
+        <span id="linkNewBack">Member Name:<span style="color:red;" >@Model.refSetUpMemberShipModel.FirstName</span></span>
+
+        <legend>Create</legend>
+
+        @Html.HiddenFor(model=>model.refSetUpMemberShipModel.FirstName)
+        @Html.Hidden("max")
+        @Html.Hidden("current")
+
+
+        <div class="row-fluid singleline">
+
+            <label>
+
+@*                <div>
+
+        @Html.LabelFor(model => model.SetupMemberID)
+                </div>*@
+
+                <div>
+
+        
+
+                    @Html.HiddenFor(model=>model.SetupMemberID)
+
+                    @Html.ValidationMessageFor(model => model.SetupMemberID)
+
+                    </div>
+
+                </label>
+
+            <label>
+
+           @*     <div>
+        @Html.LabelFor(model => model.MemberTypeID)
+                    </div>*@
+
+                <div>
+        @Html.HiddenFor(model => model.MemberTypeID, new { @id = "MemberTypeID" })
+        @Html.ValidationMessageFor(model => model.MemberTypeID)
+
+                    </div>
+
+                </label>
+
+            <label>
+        @*        <div>
+        <span>Max Dependent</span>
+                    </div>
+
+                <div>
+        <input type="text" id="dependentId" />
+                    </div>*@
+
+</label>
+
+            <br /><br />
+           
+             <div class="well well-small" id="Add-Item">
+
+                
+            @Html.ActionLink("Add Persion", "AddDependentPersion", null, new {@class = "addProductItem btn btn-primary",@id="addbtn" })
+                 
+            <table id="mytbl">
+                  <tr>
+                  
+                </tr>
+                  
+                      @foreach (var item in Model.lstOfDependentModelRel)
+                      {
+                   
+                        <tr>
+                        @Html.Partial("AddDependentPersion",item)
+                        </tr>  
+                          
+                         
+                      }    
+                
+                
+                
+            
+            </table>
+        </div>
+       
+     
+           
+
+           
+
+
+        
+
+
+        <div id="getForm">
+        </div>
+
+             </div>
+
+
+
+
+        <p>
+            <input type="submit" value="Create" id="btnsub" />
+        </p>
+    </fieldset>
+        </div>
+    
+    <div>
+    @Html.ActionLink("Back to List", "Index", null, new{@id="linkNewBack" })
+</div>
+}
+
+
+
+
+
+
+
+
+  @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+    
+
+    </div>
+
+  
+
+
+

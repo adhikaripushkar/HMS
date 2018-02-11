@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4d93a7f343624946b27a978abf1765bb" Name="Diagram1">
+        <EntityTypeShape EntityType="HospitalModel.AdmissionDipositFee" Width="1.5" PointX="15.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.AgeRange" Width="1.5" PointX="5.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.AllowanceSetup" Width="1.5" PointX="10.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.BankReconcilation" Width="1.5" PointX="15.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.BillCancelSummary" Width="1.5" PointX="17.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.BloodDonate" Width="1.5" PointX="28.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.BloodStockManagement" Width="1.5" PointX="17.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.BloodStockManagementMaster" Width="1.5" PointX="12.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.BloodTransectionDetail" Width="1.5" PointX="13" PointY="28.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.BloodTransectionMaster" Width="1.5" PointX="10.75" PointY="28" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.BoneMarrowReport" Width="1.5" PointX="28.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.CbDeptRefTable" Width="1.5" PointX="28.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.CentralizedBilling" Width="1.5" PointX="19.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.CentralizedBillingDetail" Width="1.5" PointX="21.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.CentralizedBillingMaster" Width="1.5" PointX="23.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.CentralizedBillingPaymentType" Width="1.5" PointX="25.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.CommissionDetail" Width="1.5" PointX="28.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.CommissionDetaislByType" Width="1.5" PointX="5.75" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.Consulation" Width="1.5" PointX="7.75" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.CytologyReport" Width="1.5" PointX="30.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.DailyJvDetail" Width="1.5" PointX="30.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.DeductionSetup" Width="1.5" PointX="30.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.DemandPatientAssignment" Width="1.5" PointX="30.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.DepartmentWiseStock" Width="1.5" PointX="30.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.DepositRefundDetail" Width="1.5" PointX="30.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.DesignationSetup" Width="1.5" PointX="30.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.DesignationWiseSalarySetup" Width="1.5" PointX="30.75" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.DietTypeSetup" Width="1.5" PointX="15.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.District" Width="1.5" PointX="15" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.DoctorCommision" Width="1.5" PointX="12.75" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.DoctorsDisease" Width="1.5" PointX="14.75" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.DoctorTypeSetup" Width="1.5" PointX="17.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.EmergencyFeeDetail" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.EmergencyInvestigationDetail" Width="1.5" PointX="16.75" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.EmergencyInvestigationMaster" Width="1.5" PointX="25.75" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.EmergencyMaster" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.EmergencyOutcomeType" Width="1.5" PointX="27.75" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.EmergencyPoliceCase" Width="1.5" PointX="32.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.EmergencyTreatmentAllergy" Width="1.5" PointX="0.75" PointY="32.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.EmergencyTriage" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.EmergencyTstCarid" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.EmployeeAllowanceSetup" Width="1.5" PointX="2.75" PointY="32.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.EmployeeDeductionSetup" Width="1.5" PointX="32.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.EmployeeDetail" Width="1.5" PointX="32.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.EmployeeEducationInfo" Width="1.5" PointX="9.75" PointY="32.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.EmployeePayrollMaster" Width="1.5" PointX="32.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.EmployeeTrainingInfo" Width="1.5" PointX="32.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.GL_AccGroups" Width="1.5" PointX="32.75" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.GL_AccountType" Width="1.5" PointX="32.75" PointY="33.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.GL_AccSubGroups" Width="1.5" PointX="34.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.GL_LedgerMaster" Width="1.5" PointX="25.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.GL_Transaction" Width="1.5" PointX="28" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.HandoverDetail" Width="1.5" PointX="4.75" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.HospitalExtraTest" Width="1.5" PointX="34.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.HospitalModuleMaster" Width="1.5" PointX="6.75" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.IpdDischarge" Width="1.5" PointX="34.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.IpdMRCommonTest" Width="1.5" PointX="34.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.IpdMrMainTest" Width="1.5" PointX="16.75" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.IpdMrMedicineRecord" Width="1.5" PointX="34.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.IpdPatientBedDetail" Width="1.5" PointX="21" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.IpdPatientDiagnosisDetail" Width="1.5" PointX="34.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.IpdPatientroomDetail" Width="1.5" PointX="21" PointY="24.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.IpdRegistrationMaster" Width="1.5" PointX="18.75" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.IpdRoomStatu" Width="1.5" PointX="13" PointY="23.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.ItemAllotmentDetail" Width="1.5" PointX="25.75" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.ItemAllotmentMaster" Width="1.5" PointX="34.75" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.ItemBlockRecord" Width="1.5" PointX="26" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.ItemBlockSetup" Width="1.5" PointX="23.75" PointY="23.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.ItemDemandDetail" Width="1.5" PointX="27.75" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.ItemDemandMaster" Width="1.5" PointX="29.75" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.JornalVFormat" Width="1.5" PointX="34.75" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.JVDetail" Width="1.5" PointX="26" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.JVMaster" Width="1.5" PointX="23.75" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.MedicalRecordDischarge" Width="1.5" PointX="11.75" PointY="35.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.MonthlyAllowance" Width="1.5" PointX="13.75" PointY="35.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.MonthlyDeduction" Width="1.5" PointX="18.75" PointY="35.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.OpdFeeDetail" Width="1.5" PointX="3" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.OpdMaster" Width="1.5" PointX="0.75" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.OpdMedicalDetail" Width="1.5" PointX="3" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.OpdMedicalRecordCommonTest" Width="1.5" PointX="8" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.OpdMedicalRecordFurtherTest" Width="1.5" PointX="8" PointY="21.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.OpdMedicalRecordMaster" Width="1.5" PointX="5.75" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.OpdMedicalRecordMedicineRefer" Width="1.5" PointX="8" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.OpdPatientDoctorDetail" Width="1.5" PointX="3" PointY="24.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.OpdPatientOtherDetail" Width="1.5" PointX="3" PointY="27.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.OpeningBalance" Width="1.5" PointX="20.75" PointY="35.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.OperationRecord" Width="1.5" PointX="26" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.OperationTheatreDetail" Width="1.5" PointX="22.75" PointY="35.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.OperationTheatreMaster" Width="1.5" PointX="23.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.PackageDetail" Width="1.5" PointX="34.75" PointY="35.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.PackageMaster" Width="1.5" PointX="36.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.PackagePatientAssignment" Width="1.5" PointX="36.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.PathologyDynamicTestColumn" Width="1.5" PointX="8.75" PointY="36.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.PatientDepositDetail" Width="1.5" PointX="36.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.PatientDepositMaster" Width="1.5" PointX="36.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.PatientDietDetail" Width="1.5" PointX="36.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.PatientLogMaster" Width="1.5" PointX="36.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.PatientTest" Width="1.5" PointX="23.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.PatientTestDetail" Width="1.5" PointX="26" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.PatientTestResult" Width="1.5" PointX="36.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.PayrollMaster" Width="1.5" PointX="31.75" PointY="36.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.PreRegistration" Width="1.5" PointX="36.75" PointY="32.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.PreRegistrationPreferDetail" Width="1.5" PointX="0.75" PointY="37.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.ReferTable" Width="1.5" PointX="36.75" PointY="37.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.ResignationDetail" Width="1.5" PointX="38.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SaveDymanicPathologyTest" Width="1.5" PointX="38.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.ScanFileUpload" Width="1.5" PointX="38.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupAgent" Width="1.5" PointX="38.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupBank" Width="1.5" PointX="38.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupBillingType" Width="1.5" PointX="38.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupBlock" Width="1.5" PointX="20.75" PointY="38.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupBloodGroup" Width="1.5" PointX="22.75" PointY="38.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupBloodType" Width="1.5" PointX="38.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupCountryName" Width="1.5" PointX="24.75" PointY="38.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupDepartment" Width="1.5" PointX="38.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupDiagnosi" Width="1.5" PointX="26.75" PointY="38.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupDoctorAvailableTime" Width="1.5" PointX="28.75" PointY="38.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupDoctorDepartment" Width="1.5" PointX="38.75" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupDoctorFee" Width="1.5" PointX="38.75" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupDoctorMaster" Width="1.5" PointX="13.75" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupDoctorQualification" Width="1.5" PointX="16" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupDoctorSpecialist" Width="1.5" PointX="16" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupDoctorTokenRegister" Width="1.5" PointX="16" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupEmergencyCase" Width="1.5" PointX="15.75" PointY="39.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupEmergencyFee" Width="1.5" PointX="33.75" PointY="39.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupEmployeeDepartment" Width="1.5" PointX="21" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupEmployeeMaster" Width="1.5" PointX="18.75" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupEmployeeShift" Width="1.5" PointX="21" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupEmployeeShiftMaster" Width="1.5" PointX="38.75" PointY="39.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupEmployeeType" Width="1.5" PointX="40.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupFeeType" Width="1.5" PointX="2.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupFiscalYear" Width="1.5" PointX="40.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupFloor" Width="1.5" PointX="4.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupGender" Width="1.5" PointX="6.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupHospitalBillNumber" Width="1.5" PointX="40.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupHospitalDetail" Width="1.5" PointX="8.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupHospitalFee" Width="1.5" PointX="10.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupHospitalFeeDiscount" Width="1.5" PointX="40.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupIcdCode" Width="1.5" PointX="12.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetUpIpdRoom" Width="1.5" PointX="10.75" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupIpdWard" Width="1.5" PointX="40.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupManpower" Width="1.5" PointX="17.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupMedicalcharge" Width="1.5" PointX="40.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupMemberDependent" Width="1.5" PointX="23.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupMemberDiscount" Width="1.5" PointX="21" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupMemberShip" Width="1.5" PointX="21" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupMemberType" Width="1.5" PointX="18.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupOperationTheatreRoom" Width="1.5" PointX="40.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupOtherDiscount" Width="1.5" PointX="40.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupOtherTest" Width="1.5" PointX="40.75" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupPathoTest" Width="1.5" PointX="35.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupRelationship" Width="1.5" PointX="40.75" PointY="38.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupRoomType" Width="1.5" PointX="19.75" PointY="41.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupSection" Width="1.5" PointX="21.75" PointY="41.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupStockCategory" Width="1.5" PointX="5.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupStockItemEntry" Width="1.5" PointX="8" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupStockItemType" Width="1.5" PointX="23.75" PointY="41.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupStockSubCategory" Width="1.5" PointX="5.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupStockSupplier" Width="1.5" PointX="8.75" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupStockUnit" Width="1.5" PointX="5.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupTriageMedium" Width="1.5" PointX="25.75" PointY="41.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupUnit" Width="1.5" PointX="40.75" PointY="41.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SetupVoucherNumber" Width="1.5" PointX="42.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.ShiftFromIPDDepartment" Width="1.5" PointX="42.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.StockBreakage" Width="1.5" PointX="42.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.StockDistributionDetail" Width="1.5" PointX="42.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.StockDistributionMaster" Width="1.5" PointX="14.75" PointY="42.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.StockGroupingItemDetail" Width="1.5" PointX="42.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.StockGroupingItemMaster" Width="1.5" PointX="42.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.StockItemGroupSetup" Width="1.5" PointX="42.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.StockItemGroupSubGroup" Width="1.5" PointX="42.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.StockItemLocationSetup" Width="1.5" PointX="42.75" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.StockItemMaster" Width="1.5" PointX="10.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.StockItemPurchase" Width="1.5" PointX="11" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.StockItemPurchaseDetail" Width="1.5" PointX="13.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.StockItemRackSetup" Width="1.5" PointX="42.75" PointY="35.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.StockPurchaseOrder" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.StockPurchaseOrderDetail" Width="1.5" PointX="10.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.StockReturnIn" Width="1.5" PointX="42.75" PointY="39.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.StockReturnOut" Width="1.5" PointX="0.75" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.SurgeryCharge" Width="1.5" PointX="2.75" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.TaxOtherSetup" Width="1.5" PointX="4.75" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.TaxRangeSetup" Width="1.5" PointX="27.75" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.TBLConfigDetail" Width="1.5" PointX="37.75" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.TblDistrict" Width="1.5" PointX="42.75" PointY="43.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.tblFundDeductionSetup" Width="1.5" PointX="44.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.tblNepaliMonth" Width="1.5" PointX="44.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.tblNepaliYear" Width="1.5" PointX="44.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.TblZone" Width="1.5" PointX="44.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.TrialAudit" Width="1.5" PointX="44.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.VDCMUN" Width="1.5" PointX="16.75" PointY="44.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.VitalForOther" Width="1.5" PointX="44.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.Vital" Width="1.5" PointX="18.75" PointY="44.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.Zone" Width="1.5" PointX="12.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel.Setup_NepCalender" Width="1.5" PointX="44.75" PointY="23.75" IsExpanded="true" />
+        <AssociationConnector Association="HospitalModel.FK_BloodTransectionDetail_BloodTransectionMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_District_Zone" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_EmergencyFeeDetails_EmergencyMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_EmergencyMaster_EmergencyMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_EmergencyMaster_EmergencyMaster1" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_EmergencyTriage_EmergencyMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_EmergencyTstCarid_EmergencyMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_GL_Transaction_GL_LedgerMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_IpdPatientBedDetail_IpdPatientBedDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_IpdPatientroomDetails_IpdPatientroomDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_IpdRoomStatus_SetUpIpdRoom" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_ItemBlockRecord_ItemBlcokSetup" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_JVDetails_JVMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_OpdFeeDetails_OpdMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_OpdMedicalDetail_OpdMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_OpdPatientDoctorDetails_OpdMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_OpdPatientOtherDetails_OpdMaster1" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_OpdMedicalRecordCommonTest_OpdMedicalRecordMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_OpdMedicalRecordFurtherTest_OpdMedicalRecordMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_OpdMedicalRecordMedicineRefer_OpdMedicalRecordMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_OperationRecord_OperationTheatreMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_PatientTestDetail_PatientTest" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_SETUPDOCTORQUALIFICATION_SETUPDOCTORMASTER" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_SETUPDOCTORSPECIALIST_SETUPDOCTORMASTER1" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_SETUPDOCTORTOKENREGISTER_SETUPDOCTORMASTER" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_SetupEmployeeDepartment_SetupEmployeeMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_SetupEmployeeShift_SetupEmployeeMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_SetupMemberDependent_SetupMemberShip" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_SetupMemberDiscount_SetupMemberType" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_SetupMemberShip_SetupMemberType" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_SetupStockItemEntry_SetupStockCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_SetupStockSubCategory_SetupStockCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_SetupStockItemEntry_SetupStockSubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_SetupStockItemEntry_SetupStockUnit" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_StockItemMaster_SetupStockItemEntry" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_StockItemPurchaseDetail_SetupStockItemEntry" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_StockPurchaseOrderDetails_SetupStockItemEntry" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_StockItemPurchase_SetupStockSupplier" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_StockItemMaster_SetupStockUnit" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_StockItemPurchaseDetail_SetupStockUnit" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_StockItemPurchaseDetail_StockItemPurchase" ManuallyRouted="false" />
+        <AssociationConnector Association="HospitalModel.FK_StockPurchaseOrderDetails_StockPurchaseOrder" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

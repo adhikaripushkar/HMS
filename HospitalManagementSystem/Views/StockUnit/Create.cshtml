@@ -1,0 +1,100 @@
+﻿@model Hospital.Models.StockUnitModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_StockSetupLayout.cshtml";
+}
+
+<h2 style="text-align:center;">Stock Unit Setup</h2>
+
+<div class="contentWrapper">
+
+@using (Html.BeginForm()) 
+{
+    <div class="bs-docs-example form-inline">
+
+    @Html.ValidationSummary(true)
+    
+    <fieldset>
+        <legend>Create</legend>
+        
+        @if (TempData["message"] != null || TempData["message"] != "") { 
+    <p>
+        @TempData["message"]
+    </p>
+}
+        <div class="row-fluid singleline">
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.StockUnitName)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StockUnitName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.StockUnitName)<span id="alertmsz"></span>
+            
+        </div>
+                </label>
+
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+            
+        </p>
+    </fieldset>
+
+   
+        </div>
+}
+
+         <span id="linkNewBack">
+    @Html.ActionLink("Back to List", "Index")
+</span>
+
+    </div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //alert();
+      
+       
+        $("#StockUnitName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/StockUnit/AutocompleteUnit",
+                    type: "GET",
+                    dataType: "json",
+                    data: { s: request.term },
+                    success: function (data) {
+                        
+                        response($.map(data, function (item) {
+                            
+                            return { label: item ,value:""};
+                           
+
+                        }))
+
+                    },
+                    //error:function(data){
+                    //    response($.map(data, function (item) {
+
+                    //        return { label: item.StockUnitName, Value: item.StockUnitName };
+                    //    }))
+                    //}
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    });
+</script>
+
+    }

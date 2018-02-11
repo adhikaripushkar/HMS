@@ -1,0 +1,29 @@
+﻿@model HospitalManagementSystem.Models.GetBankReconcilationModelView
+@using HospitalManagementSystem.Helpers
+@using (Html.BeginCollectionItem("objGetBankReconcilationModelView.objGetBankReconcilationModelViewList"))
+{
+    @Html.HiddenFor(model => model.JvNumber);
+    @Html.HiddenFor(model => model.TransactionDate);
+    @Html.HiddenFor(model => model.Narration); 
+    @Html.HiddenFor(model => model.TotalDebit);
+    @Html.HiddenFor(model => model.TotalCredit);
+
+    <tr>
+        <td>
+            <h4 style="text-align: center;">@Html.TextBoxFor(model => model.TransactionDate, null, new { @class = "JvDate", @readonly = "readonly" })</h4>
+        </td>
+        <td>
+            <h4 style="text-align: center;">@Html.TextBoxFor(model => model.Narration, null, new { @readonly = "readonly" })</h4>
+        </td>
+        <td>
+            <h4 style="text-align: right;">@Html.TextBoxFor(model => model.TotalDebit, null, new { @class = "TotalDRClass", @readonly = "readonly" })</h4>
+        </td>
+        <td>
+            <h4 style="text-align: right;">@Html.TextBoxFor(model => model.TotalCredit, null, new { @class = "TotalCredidAmtcls", @readonly = "readonly" })</h4>
+        </td>
+        <td>
+            <h4 style="text-align: center;">@Html.TextBoxFor(model => model.State, new { @class = "ReconcileClass" })</h4>
+            @Html.HiddenFor(model => model.State)
+        </td>
+    </tr>
+}

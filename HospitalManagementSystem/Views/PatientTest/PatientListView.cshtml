@@ -1,0 +1,51 @@
+﻿@model Hospital.Models.PatientTestModel
+<table>
+    <tr>
+        
+        <th>
+            @Html.DisplayName("Patient ID")
+        </th>
+
+         <th>
+            @Html.DisplayName("Patient Name")
+        </th>
+        <th>
+             @Html.DisplayName("Gender")
+            
+        </th>
+          <th>
+               @Html.DisplayName("Age")
+            
+        </th>
+          <th>
+               @Html.DisplayName("Address")
+            
+        </th>
+
+       <th>Action</th>
+    </tr>
+
+@foreach (var item in Model.PatientInformationModelList) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmergencyMasterId)
+        </td>
+        <td>
+            @Html.Label(item.FirstName + " " + item.MiddleName + " " + item.LastName)       
+        </td>   
+        <td>
+             @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+         <td>
+             @Html.DisplayFor(modelItem => item.Age)
+        </td>
+         <td>
+             @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.ActionLink("Select", "Create", new {ipValue=item.EmergencyMasterId})          
+        </td>
+    </tr>
+}
+
+</table>

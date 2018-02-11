@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "DailyJV";
+    Layout = "~/Views/Shared/_BillingLayout.cshtml";
+}
+
+<style>
+    .JvDetails {
+        font-size:15px;
+    }
+
+
+</style>
+
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    <link href="~/Content/jquery-ui-1.8.21.custom.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var m =@ViewBag.mid
+                  m = m;
+            if (m != 0) {
+                //alert(m);
+                if (m == 1) m = "No transactions are entered today!!";
+                if (m == 2) m = "JV Details are already entered for today's transactions!!";
+                $("#msg").html(m);
+                $('#msg').dialog({
+                    resizable: false,
+                    modal: true,
+                    buttons: [
+                      {
+                          text: "Close",
+                          click: function () {
+                              $('#msg').dialog("close");
+                              //                    $(this).dialog("close");
+                          }
+                      }
+                    ],
+                    close: function (event, ui) {
+                        //                $('#confmsg').remove();
+                    }
+                });
+            }
+        })
+    </script>
+}
+
+<h2>JV Details</h2>
+
+<div class="contentWrapper">
+    @Html.ActionLink("View Today Total Payment", "Create", null, new { @class="JvDetails"})
+    <div id="msg" style="display: none" title="Message"></div>
+
+</div>

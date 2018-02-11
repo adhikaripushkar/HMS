@@ -1,0 +1,111 @@
+﻿@model HospitalManagementSystem.Models.IpdMrMainTestModel
+@{
+    ViewBag.Title = "EditMainTest";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+<h2>EditMainTest</h2>
+
+
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+        j("#InsertedDate").datepicker();
+
+    });
+
+  </script>
+
+<div class="contentWrapper">
+
+ @using(Html.BeginForm())
+    {
+         @Html.ValidationSummary(true)
+ 
+         @Html.DisplayNameFor(model=>model.InsertedDate)
+         @Html.EditorFor(model=>model.InsertedDate)
+
+        
+
+   
+     foreach (var item in Model.SectionTestCheckBoxList.GroupBy(x=>x.SectionId).Select(y=>y.FirstOrDefault()))
+     {
+          @*<div class="heading" style="width:200px;background:green" onmouseover="this.style.background='white';" onmouseout="this.style.background='green'; " id="headingOne" onclick="showHideDiv('@item.SectionId')"><h1>@HospitalManagementSystem.Utility.GetSectionNameById(item.SectionId)</h1> </div>*@
+     <div class="heading" style="width:1000px;background:#C5B971;" onmouseover="this.style.background='#C5B971';" onmouseout="this.style.background='#C5B971'; " id="headingOne" onclick="showHideDiv('@item.SectionId')"><h4>@HospitalManagementSystem.Utility.GetSectionNameById(item.SectionId)</h4> </div>
+              
+     
+        <div style="height:auto;">
+          <div id="con_@item.SectionId" style="padding:10px; width:1000px; height:200px; ">
+     
+                    
+
+         
+
+      
+                             
+     
+        @for (int i = 0; i < Model.SectionTestCheckBoxList.Count; i++)
+         {
+            
+            <div style="float:left; margin-left: 0px; margin-right: 0px; margin-top: 15px;">
+             @if (item.SectionId == Model.SectionTestCheckBoxList[i].SectionId)
+             {
+                <div style="width: 120px; height: 30px; font-size:14px">
+                 @if (Model.TestID == Model.SectionTestCheckBoxList[i].TestID)
+                 {
+                     Model.SectionTestCheckBoxList[i].isSelected = true;
+                 }
+                 
+                     
+                         <div style="width: 120px; height: 30px; font-size:14px;">
+             @Html.CheckBoxFor(model => model.SectionTestCheckBoxList[i].isSelected)
+               
+             @Html.DisplayFor(model => model.SectionTestCheckBoxList[i].TestName)
+                             
+                       </div>  
+               
+    
+        @Html.HiddenFor(model => model.SectionTestCheckBoxList[i].TestID)
+        @Html.HiddenFor(model => model.SectionTestCheckBoxList[i].SectionId)
+   </div>
+    
+             }
+                </div>
+                    
+
+         }
+         
+         
+                        </div>
+         </div>
+     }
+     
+     <hr />
+     @Html.HiddenFor(model => model.PatientID)
+        @Html.HiddenFor(model => model.IpdRegistrationID)
+
+        <div>
+        @Html.DisplayNameFor(model=>model.ShortDescription)
+        @Html.EditorFor(model=>model.ShortDescription)
+
+        </div>
+     
+      <div>
+        @Html.DisplayNameFor(model=>model.LongDescription)
+        @Html.TextAreaFor(model=>model.LongDescription)
+      </div>
+    
+      <p>
+          <input type="submit" value="Save" />
+      </p>
+ }
+
+
+    </div>
+<script type="text/javascript">
+
+    function showHideDiv(divId) {
+        $("#con_" + divId).slideToggle("slow");
+    };
+</script>

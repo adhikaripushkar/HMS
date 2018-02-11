@@ -1,0 +1,584 @@
+﻿@model HospitalManagementSystem.Models.EmergecyMasterModel
+@{
+    
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_EmergencyLayout.cshtml";
+}
+
+
+
+<style>
+    #mngsize {
+        width: 208px;
+        height: 28px;
+    }
+
+
+
+    select {
+        width: 210px;
+        height: 27px;
+    }
+</style>
+
+
+
+<script src="~/Scripts/jquery.ui.core.js"></script>
+<script src="~/Scripts/jquery.ui.widget.js"></script>
+<script src="~/Scripts/jquery.ui.datepicker.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.ui.timepicker.js"></script>
+
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery.ui.timepicker.css" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+
+<script src="~/Scripts/json.cycle.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+
+        //$('.PreferDateId').val("");e
+        //$('.PreferTimeId').val("");
+
+    });
+
+</script>
+
+
+<script>
+
+    $(document).ready(function (e) {
+
+        // $(".DateId").val("");
+        //$(".TriageTimeId").val("");
+        //$(".TimeInId").val("");
+        //$(".TimeOutId").val("");
+
+    });
+
+
+</script>
+
+
+
+<script>
+
+
+    var j = $.noConflict();
+    j(function () {
+        j(".DateId").datepicker();
+        j(".TriageTimeId").datepicker();
+        j(".TimeInId").timepicker();
+        j(".TimeOutId").timepicker();
+        j("#EmergencyTriageModel_Time").timepicker();
+    });
+</script>
+
+
+
+
+<h2 style="text-align: center;">Emergency</h2>
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("Create", "EmergencyMaster", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+  
+
+    
+
+        <fieldset>
+
+            <legend>Create</legend>
+            <div class="row-fluid singleline">
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.Case)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Case)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.Case, HospitalManagementSystem.Utility.GetCaseForEmergency())
+                    </div>
+
+                </label>
+
+                <label>
+
+                    <div class="size">
+                        @Html.ValidationMessageFor(model => model.StringICD)
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.StringICD)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.StringICD, null, new { @id = "IcdCode", @style = "width:640px;" })
+                    </div>
+                </label>
+            </div>
+            <div class="row-fluid singleline">
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.ObjOpdMaster.PatientTitle)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjOpdMaster.PatientTitle)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.ObjOpdMaster.PatientTitle, HospitalManagementSystem.Utility.GetPatientTitle(), new { @class = "ddpsize" })
+                    </div>
+
+                </label>
+
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.ObjOpdMaster.FirstName)</span>
+                    <div class="editor-label">
+                        First Name **
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.ObjOpdMaster.FirstName)
+                    </div>
+
+                </label>
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.ObjOpdMaster.MiddleName)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjOpdMaster.MiddleName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.ObjOpdMaster.MiddleName)
+                    </div>
+
+                </label>
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.ObjOpdMaster.LastName)</span>
+                    <div class="editor-label">
+                        Last Name **
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.ObjOpdMaster.LastName)
+                    </div>
+
+                </label>
+
+            </div>
+
+
+            <div class="row-fluid singleline">
+                <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.ObjOpdMaster.Sex)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjOpdMaster.Sex)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.ObjOpdMaster.Sex, HospitalManagementSystem.Utility.GetGenderList(), new { @class = "ddpsize" })
+
+                    </div>
+                </label>
+
+                <label>
+
+                    <div div="size">@Html.ValidationMessageFor(model => model.ObjOpdMaster.AgeYear)</div>
+                    <div class="editor-label">
+                        Age **
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.ObjOpdMaster.AgeYear)
+                    </div>
+
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.ObjOpdMaster.BloodGroup)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjOpdMaster.BloodGroup)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.ObjOpdMaster.BloodGroup, HospitalManagementSystem.Utility.BloodGroupList(), "select", new { @class = "ddpsize" })
+
+                    </div>
+                </label>
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.ObjOpdMaster.MaritalStatus)</span>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjOpdMaster.MaritalStatus)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.ObjOpdMaster.MaritalStatus, HospitalManagementSystem.Utility.MatitalStatusList(), new { @class = "ddpsize" })
+
+                    </div>
+                </label>
+
+
+
+
+
+            </div>
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.ObjOpdMaster.CountryID)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjOpdMaster.CountryID)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.ObjOpdMaster.CountryID, HospitalManagementSystem.Utility.GetCountryNameList(), new { @id = "CountryID" })
+                    </div>
+
+                </label>
+                @*Edited on 9/4/2016*@
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model=>model.ObjOpdMaster.ZoneId)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model =>model.ObjOpdMaster.ZoneId)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.ObjOpdMaster.ZoneId, HospitalManagementSystem.Utility.GetZoneList(), "---Select Zone---", new { @id = "ZoneID"})
+
+                    </div>
+                </label>
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model=>Model.ObjOpdMaster.DistrictID)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model=>model.ObjOpdMaster.DistrictID)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.ObjOpdMaster.DistrictID, HospitalManagementSystem.Utility.GetDistrictList(), "---Select District---", new { @id = "DistrictID"})
+                    </div>
+                </label>
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model=>model.ObjOpdMaster.vdcID)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model =>model.ObjOpdMaster.vdcID)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.ObjOpdMaster.vdcID, HospitalManagementSystem.Utility.GetVdc1(),"---Select VDC---", new { @id = "VdcID"})
+                    </div>
+                </label>
+                <label>
+                    
+                    <span class="size">@Html.ValidationMessageFor(model => model.ObjOpdMaster.Address)</span>
+                    <div class="editor-label">
+                        Ward **
+                        @*(Address= ward for madhyapur)*@
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.ObjOpdMaster.Address)
+                    </div>
+
+                </label>
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.ContactNumber)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ContactNumber)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.ContactNumber)
+                    </div>
+
+                </label>
+
+            </div>
+
+            <div class="row-fluid singleline">
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.Date)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Date)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Date, new { @class = "DateId", @Value = DateTime.Now.ToShortDateString() })
+                    </div>
+
+                </label>
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.TimeIn)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.TimeIn)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.TimeIn, new { @class = "TimeInId", @Value = DateTime.Now.ToString("hh:mm") })
+                    </div>
+
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.EmergencyTriageModel.MediumId)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EmergencyTriageModel.MediumId)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.EmergencyTriageModel.MediumId, HospitalManagementSystem.Utility.GetTriageMedium())
+
+                    </div>
+                </label>
+
+
+                <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.EmergencyTriageModel.Time)</div>
+                    <div class="editor-label">
+                        Triage Time
+          
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.EmergencyTriageModel.Time, new { @Value = DateTime.Now.ToString("hh:mm") })
+
+                    </div>
+                </label>
+
+
+
+            </div>
+
+            <div class="row-fluid singleline">
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.EmergencyTriageModel.DoctorId)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EmergencyTriageModel.DoctorId)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.EmergencyTriageModel.DoctorId, HospitalManagementSystem.Utility.GetDoctors())
+
+                    </div>
+                </label>
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.EmergencyTriageModel.MedicalOfficer)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EmergencyTriageModel.MedicalOfficer)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.EmergencyTriageModel.MedicalOfficer, HospitalManagementSystem.Utility.GetDoctors())
+                    </div>
+
+                </label>
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+            <div class="row-fluid singleline">
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.BroughtBy)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.BroughtBy)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.BroughtBy)
+                    </div>
+
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.RelationShip)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.RelationShip)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.RelationShip, HospitalManagementSystem.Utility.GetRelationTypeDD())
+
+                    </div>
+
+                </label>
+                <label>
+                    <span div="size">@*@Html.ValidationMessageFor(model => model.OpdFeeDetailsModel.RegistrationFee)*@</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EmergencyFeeDetailsModel.RegistrationFee)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.EmergencyFeeDetailsModel.RegistrationFee, new { @id = "txtRegistrationFee", @onkeyup = "onchangeevent();", @readonly = "readonly" })
+
+                    </div>
+
+                </label>
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.EmergencyFeeDetailsModel.Remarks)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EmergencyFeeDetailsModel.Remarks)
+                    </div>
+                    <div class="editor-field">
+
+                        @Html.TextBoxFor(model => model.EmergencyFeeDetailsModel.Remarks)
+
+                    </div>
+
+
+                </label>
+
+                <label>
+                    <span class="size">@*@Html.ValidationMessageFor(model => model.OpdFeeDetailsModel.DoctorFee)*@</span>
+                    <div class="editor-label">
+                        @Html.HiddenFor(model => model.EmergencyFeeDetailsModel.DoctorFee)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.HiddenFor(model => model.EmergencyFeeDetailsModel.DoctorFee, new { @id = "txtDoctorFee", @onkeyup = "onchangeevent();" })
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="size">@*@Html.ValidationMessageFor(model => model.OpdFeeDetailsModel.MemberDiscountAmount)*@</div>
+                    <div class="editor-label">
+                        @Html.HiddenFor(model => model.EmergencyFeeDetailsModel.MemberDiscountAmount)
+                    </div>
+                    <div class="editor-field">
+                        @Html.HiddenFor(model => model.EmergencyFeeDetailsModel.MemberDiscountAmount, new { @id = "txtMemberDiscountAmount", @onkeyup = "onchangeevent();" })
+
+                    </div>
+
+                </label>
+
+                <label>
+
+
+                    <div class="size">@*@Html.ValidationMessageFor(model => model.OpdFeeDetailsModel.OtherDiscountAmount)*@</div>
+                    <div class="editor-label">
+                        @Html.HiddenFor(model => model.EmergencyFeeDetailsModel.OtherDiscountPercentage)
+                    </div>
+                    <div class="editor-field">
+                        @Html.HiddenFor(model => model.EmergencyFeeDetailsModel.OtherDiscountPercentage, new { @id = "txtOtherDiscountAmount", @onkeyup = "onchangeevent();" })
+
+                    </div>
+                </label>
+
+            </div>
+
+            <div class="row-fluid singleline">
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.EmergencyFeeDetailsModel.TotalAmount)</div>
+                    <div class="editor-label">
+                        @Html.HiddenFor(model => model.EmergencyFeeDetailsModel.TotalAmount)
+                    </div>
+                    <div class="editor-field">
+                        @Html.HiddenFor(model => model.EmergencyFeeDetailsModel.TotalAmount, new { @id = "txtTotalAmount" })
+
+                    </div>
+                </label>
+
+
+            </div>
+
+
+
+
+
+        </fieldset>
+    
+         
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    
+    }
+
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+</div>
+
+
+
+<script type="text/javascript">
+    var jj = $.noConflict();
+    jj(document).ready(function () {
+
+        jj("#IcdCode").autocomplete({
+            source: function (request, response) {
+                jj.ajax({
+                    url: "/AjaxRequest/GetIcdCode?Name=" + jj('#IcdCode').val(),
+                    type: "POST",
+                    dataType: "json",
+                    //data: { s: request.term },
+                    success: function (data) {
+
+                        response(jj.map(data, function (item) {
+                            //alert(item);
+                            return { label: item, value: item };
+
+                        }))
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#txtMemberDiscountAmount').live('keydown', function (e) {
+
+            if (parseInt(e.keyCode) > 47 && parseInt(e.keyCode) < 58) {
+                if (parseInt($(this).val().length) <= 1) {
+
+                }
+                else {
+                    e.preventDefault();
+                }
+            }
+
+        });
+
+    });
+
+
+
+
+
+
+
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#txtOtherDiscountAmount').live('keydown', function (e) {
+
+            if (parseInt(e.keyCode) > 47 && parseInt(e.keyCode) < 58) {
+                if (parseInt($(this).val().length) <= 1) {
+
+                }
+                else {
+                    e.preventDefault();
+                }
+            }
+
+        });
+    });
+</script>

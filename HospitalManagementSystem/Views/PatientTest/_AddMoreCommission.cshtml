@@ -1,0 +1,28 @@
+﻿@using HospitalManagementSystem.Helpers
+@model HospitalManagementSystem.Models.AddMoreParticularsViewModel
+
+@using (Html.BeginCollectionItem("AddMoreParticularsViewModelList"))
+{
+    <div class="row" style="margin-left: 0px;" id="clsdiv">
+        <table style="width: 50%;">
+            <tr>
+                <td>
+                    @Html.DropDownListFor(model => model.DoctorId, HospitalManagementSystem.Utility.GetDoctorsForEHS(), new { @class = "firstinput", @style = "width:183px;" })
+                    @Html.ValidationMessageFor(model => model.DoctorId)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.CommissionPerAmount, new { @class = "AccGroupID", @id = "AccGroupID", })
+                    @Html.ValidationMessageFor(model => model.CommissionPerAmount)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.CommissionAmout, new { @class = "DrAmountClass", @id = "DrAmountClassID" })
+                    @Html.ValidationMessageFor(model => model.CommissionAmout)
+                </td>
+
+                <td>
+                    <input type="button" class="row-button btn btn-warning" value="Remove" />
+                </td>
+            </tr>
+        </table>
+    </div>
+}

@@ -1,0 +1,91 @@
+﻿
+@model HospitalManagementSystem.Models.AdmissionDipositFeeModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+
+
+<table>
+    <tr>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.DepartmentID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FeeTypeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepositAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TaxPersentage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VatPersentage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalAmount)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>Action</th>
+    </tr>
+
+@foreach (var item in Model.AdmissionDipositList) {
+    <tr>
+        
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.DepartmentID)
+
+             @{var Department = item.DepartmentID;}
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FeeTypeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepositAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TaxPersentage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VatPersentage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalAmount)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.AdmissionDipositFeeID }) |
+            @*@Html.ActionLink("Details", "Details", new { id=item.AdmissionDipositFeeID }) |*@
+            @Html.ActionLink("Delete", "Delete", new { id=item.AdmissionDipositFeeID }, new{onclick = "return confirm_delete("+Department+")" })
+        </td>
+    </tr>
+}
+
+</table>
+
+
+<script type="text/javascript">
+    function confirm_delete(IpdId) {
+         
+        //var patiendid = $('#MyId').val();
+        
+        return confirm('Are you sure to Delete   '+IpdId+"?");
+    }
+</script>

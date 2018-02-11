@@ -1,0 +1,235 @@
+﻿@model Hospital.Models.PreRegistrationModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Pre-RegistrationLayout.cshtml";
+}
+
+<h2 style="text-align: center;">Pre-Registration</h2>
+
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+@if (TempData["success"] == Hospital.UtilityMessage.savefailed)
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == Hospital.UtilityMessage.edit)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.editfailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.delete)
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.deletefailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+
+
+
+
+
+
+
+<div class="contentWrapper">
+
+
+    <p>
+
+        <a href="@Url.Action("Create", "PreRegistration")" id="linkNewBack">Create New
+        </a>
+    </p>
+
+
+
+    <div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Pre-Registrations</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+
+                            <th style="width: 100px;">Name
+            
+                            </th>
+
+
+
+
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Sex)
+                            </th>
+
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.MobileNumber)
+
+                            </th>
+
+
+
+
+
+                            <th>
+
+                                @Html.DisplayNameFor(model => model.RegistrationDate)
+
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.RegistrationMode)
+
+
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.PreregistrationPreferDetailsModel.DepartmentID)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PreregistrationPreferDetailsModel.DoctorID)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PreregistrationPreferDetailsModel.PreferDate)
+
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PreregistrationPreferDetailsModel.PreferTime)
+
+                            </th>
+
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.PreRegistrationModelList)
+                        {
+    
+                            <tr>
+                                <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Sex)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MobileNumber)
+                                </td>
+
+                                <td>
+                                @string.Format("{0:dd/MM/yyyy}", item.RegistrationDate)
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RegistrationMode)
+                                </td>
+
+
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DepartmentName)
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DoctorName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PreferDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PreferTime)
+                                </td>
+
+                                <td>
+
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.PreRegistrationID }, new { onclick = "return confirm('Are you sure to delete this record?');" })||
+                                    @Html.ActionLink("Print", "Print", new { id = item.PreRegistrationID })
+
+                                </td>
+                            </tr>
+   
+    
+                        }
+                    </tbody>
+                </table>
+
+
+            </div>
+
+
+
+
+
+            @*for sorting *@
+
+            <div class="boxFooter">
+
+                <div id="pager" style="">
+                    <form>
+                        <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                        <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                        <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                        <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                        <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                        <select class="pagesize valid" style="width: 70px; height: 30px;">
+                            <option selected="selected" value="10">10</option>
+                            <option value="5">5</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                        </select>
+                    </form>
+                </div>
+
+            </div>
+
+            @*---------------*@
+
+
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,135 @@
+﻿@model HospitalManagementSystem.Models.EmergecyMasterModel
+@{
+    ViewBag.Title = "ZoneSearchIndex";
+}
+
+<h2>ZoneSearchIndex</h2>
+
+
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+
+
+
+}
+
+<style>
+    .customtable td {
+        border: none;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+
+        var id = $('.zonelist').val();
+        
+    });
+
+
+</script>
+
+
+<h2>Search Patient On The Gender Base</h2>
+<div class="contentWrapper">
+    @using (Html.BeginForm())
+    {
+   
+                @Html.DropDownList("gendertypelist", HospitalManagementSystem.Utility.GetZoneList(), new { @class = "zonelist"})
+               <input type="submit" value="Show Report" id="btnsubmit" />
+        
+        <div id="stat"></div>
+        
+        {
+        <table id="opd" class="table">
+            <tr>
+                <th>Opd Id
+                </th>
+                <th>Name
+                </th>
+                <th>Sex
+                </th>
+                <th>Registration Date
+                </th>
+
+                <th>Amount
+                </th>
+            </tr>
+
+            @try
+            {
+                int i = 0;
+                foreach (var item in ViewBag.List)
+                {
+                    i++;
+                <tr>
+                    <td>
+                        @item.OpdId
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Sex
+                    </td>
+                    <td>
+                        @*// @item.RegistrationDate*@
+
+                        @Convert.ToDateTime(@item.RegistrationDate).ToShortDateString()
+                    </td>
+
+                    <td>
+                        @item.Amount
+                    </td>
+                </tr>
+                }
+
+                if (i == 0)
+                {
+                    TempData["message"] = "No Results Found.";
+                <tr>
+                    @TempData["message"]
+                </tr>
+                }
+
+            }
+
+            catch (Exception e)
+            {
+
+            }
+
+        </table>
+    
+                    }
+                    
+    }
+   
+    <div id="msg" title="Message!!!" style="display: none;">An error occured!!!</div>
+</div>
+<script type="text/javascript">
+
+    //var jq = $.noConflict();
+
+    @*$('.patientname').keyup(function () {
+        //alert(this.value);
+        //alert("second");
+        var id = this.value;
+        var url = '@Url.Action("SearchPatient","Mis")';
+        $.post(url + "/" + id, function (data) {
+            $(data).each(function (i) {
+                //alert(data[i]);
+
+            });
+            
+            
+        });
+    
+    });*@
+
+    
+
+</script>

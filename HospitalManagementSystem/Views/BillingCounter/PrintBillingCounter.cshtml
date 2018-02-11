@@ -1,0 +1,383 @@
+﻿@model HospitalManagementSystem.Models.BillingCounterModel
+
+@{
+    ViewBag.Title = "Pathology";
+    Layout = "~/Views/Shared/_BillingCounterLayout.cshtml";
+    decimal DTotalAmount = Convert.ToDecimal(0);
+    decimal DTotalTaxAmt = Convert.ToDecimal(0);
+    decimal DTotalDiscountAmt = Convert.ToDecimal(0);
+    decimal DGrandTotalAmt = Convert.ToDecimal(0);
+
+}
+
+
+<style>
+    table#mytbl,
+    table#mytbl td {
+        border: none !important;
+        font-size: 15px;
+    }
+
+
+    table#tstDsply {
+        border-style: solid;
+        border-width: 8px;
+    }
+
+        table#tstDsply thead {
+            background-color: #EBEBEB;
+        }
+
+        table#tstDsply th:hover {
+            color: black;
+        }
+
+
+
+    table#tbmdsplyamnt,
+    table#tbmdsplyamnt td {
+        border: none !important;
+    }
+
+    .clear {
+        clear: both;
+    }
+
+
+    .ui-dialog {
+        background-color: #B0E0E6;
+    }
+</style>
+
+
+<script type="text/javascript">
+
+
+    var hhv = $.noConflict();
+
+    function print() {
+
+        var msg = 'Do You Want To Print?';
+        var div = hhv("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            resizable: false,
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0', 'alert("hi");');
+
+                        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+
+                    }
+                }
+            ]
+        });
+
+    }
+
+
+
+    hhv(document).ready(function () {
+
+        var msg = 'Do You Want To Print?';
+        var div = hhv("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            resizable: false,
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0', 'alert("hi");');
+
+                        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                        window.location = "/BillingCounter/Create";
+                    }
+                }
+            ]
+        });
+
+    });
+
+
+
+
+
+
+</script>
+
+@*<h2 style="text-align: center;">Patient Test Bill</h2>*@
+
+
+<div class="contentWrapper">
+
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto; padding: 4px;">
+
+  <img src="~/Images/madhyapur%20hospital%20logo-01.jpg" style="position: absolute;  z-index:-1; opacity:.2; margin-top: 7%;"/>
+      
+
+        @*<img src="~/Images/mmh-logo1.png" style="position: absolute; margin-left: 25%; margin-top: 5%;" />*@
+
+        @MyHelpers.DesingForLogo()
+
+
+        <h4 style="text-align: center;"><u>Bill</u></h4>
+
+        <table style="width: 100%; font-size: 10px;" id="mytbl">
+
+            <tr>
+                <td>
+                    <b>@Model.billno</b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <span><b>Fiscal Year:-</b></span>@HospitalManagementSystem.Utility.CurrentFisicalYear()
+                </td>
+
+
+            </tr>
+
+            <tr>
+                <td style="width: 125px;"><b>Patient ID:</b>@Html.DisplayFor(m => Model.BillingCounterPatientInformationModel.EmergencyMasterId)</td>
+                <td style="width: 245px;"><b>Name:</b>
+                    @HospitalManagementSystem.Utility.GetFirstLetterCapitalize(Model.BillingCounterPatientInformationModel.FirstName)
+                    @HospitalManagementSystem.Utility.GetFirstLetterCapitalize(Model.BillingCounterPatientInformationModel.MiddleName)
+                    @HospitalManagementSystem.Utility.GetFirstLetterCapitalize(Model.BillingCounterPatientInformationModel.LastName)
+
+                </td>
+
+
+                <td><b>Age:</b> @Html.DisplayFor(m => Model.BillingCounterPatientInformationModel.Age) / @HospitalManagementSystem.Utility.GetAgeTypeByItsId(Model.BillingCounterPatientInformationModel.AgeType)
+                </td>
+
+                <td><b>Gender:</b> @Html.DisplayFor(m => Model.BillingCounterPatientInformationModel.Gender)
+                   @*<td><b>Doctor: </b>@Hospital.Utility.GetDoctorNameFromDoctorId(Model.ReferDoctorID)</td>*@             
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+
+                <td>
+                    <b>Address:</b>
+                    @HospitalManagementSystem.Utility.GetFirstLetterCapitalize(Model.BillingCounterPatientInformationModel.Address)
+                    @*@Hospital.Utility.GetFirstLetterCapitalize(Model.BillingCounterPatientInformationModel.ZoneId)*@
+                </td>
+
+                <td><b>Contact No:-</b> @Html.DisplayFor(m => Model.BillingCounterPatientInformationModel.PhoneNo)</td>
+
+                <td><b>Date:-</b>@DateTime.Now.ToShortDateString() <span>(</span>@HospitalManagementSystem.Utility.getNepaliDate(DateTime.Today.ToShortDateString())<span>(BS)</span><span>)</span></td>
+                <td><b>Time:-</b>@DateTime.Now.ToShortTimeString()</td>
+
+
+            </tr>
+
+        </table>
+
+
+        <br />
+
+
+        <table style="border: 1px solid gray; width: 100%; font-size: 12px;" id="tstDsply">
+            @{int i = 1;}
+
+            <tr style="border: 1px solid gray">
+                <th>Sn.No.</th>
+                @*<th>Department</th>*@
+                <th>Particulars</th>
+                @*<th>Time(s)</th>*@
+                <th>Doctor</th>
+                <th>Rate</th>
+                <th>Total Price</th>
+                <th>Discount</th>
+                <th>Tax(@@5%)</th>
+
+                <th>Grand Total
+                </th>
+            </tr>
+
+            <tbody>
+                @foreach (var item in Model.BillingCounterNewTestListModelList)
+                {
+                    //decimal? FinalTaxAmount = item.Price - item.HospitalFee;
+                    
+                    <tr style="border: 1px solid gray">
+                        <td>@i</td>
+                        @*<td>@Hospital.Utility.GetDepartmentNameFromID(item.DepartmentID)</td>*@
+                        <td>@HospitalManagementSystem.Utility.GetOnlyTestNameFromFullText(item.TestName)</td>
+                        @*<td>@Html.DisplayFor(modelItem => item.TestTime)</td>*@
+                        <td>@HospitalManagementSystem.Utility.GetDoctorName(item.ReferDoctorID)</td>
+                        <th>@Html.DisplayFor(modelItem => item.ShowingTaxOnly)</th>
+                        <td>@Html.DisplayFor(modelItem => item.Rate)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Discount)</td>
+                        <td>@Html.DisplayFor(modelItem => item.TaxAmount)</td>
+                        @{
+                    DTotalTaxAmt += item.TaxAmount;
+                    DTotalDiscountAmt += Convert.ToDecimal(item.Discount);
+                    DTotalAmount += item.Rate;
+                    DGrandTotalAmt += item.TotalAmount;
+                    
+                        }
+
+                        @*@{decimal totalamount = (decimal)(item.Price - item.DiscountPer);}*@
+                        <td>@item.TotalAmount</td>
+                    </tr>
+                    i++;
+                }
+                <tr>
+                    <td colspan="4" style="font-weight: bold; text-align: center;">Total:</td>
+
+
+                    <td>@DTotalAmount</td>
+
+                    <td>@DTotalDiscountAmt</td>
+                    <td>@DTotalTaxAmt</td>
+                    <td>@DGrandTotalAmt</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+        <br />
+
+        <div style="float: right; margin-right: 7%; font-size: 10px;">
+
+            <table style="font-size: 10px;" id="tbmdsplyamnt">
+                <tbody>
+
+                    @if (Model.BalanceDeposit > 0)
+                    {
+                        <tr>
+                            <td>
+                            Balance Deposit<td>
+                            <td>:</td>
+                            <td>@Html.DisplayFor(m => Model.BalanceDeposit)</td>
+                        </tr>
+                    }
+
+
+                   @* <tr>
+                        <td>Doctor Fee</td>
+                        <td></td>
+                        <td>:</td>
+                        <td>
+
+                            @{
+                                decimal totalDoctorFee = Model.DoctorFee + Model.DoctorFeeTax;                            
+                            }
+                            @totalDoctorFee</td>
+                    </tr>*@
+
+
+                    @{decimal TenderAmount = Convert.ToDecimal(0);
+                      decimal ReturnedAmount = Convert.ToDecimal(0);
+                      if (Model.PaymentMode != 315)
+                      {
+                          TenderAmount = (decimal)Model.TenderAmount;
+                          ReturnedAmount = Model.ReturnedAmount;
+                      }
+                    }
+
+                    <tr>
+                        <td>Total Amount</td>
+                        <td></td>
+                        <td>:</td>
+                        <td>@Html.DisplayFor(m => Model.TotalAmount)</td>
+                    </tr>
+
+                    <tr>
+
+
+                        <td style="border: none;">
+                            @{
+                                Hospital.NumberToEnglish obj = new Hospital.NumberToEnglish();
+
+                                string str = obj.changeNumericToWords(Convert.ToDouble(Model.TotalAmount));
+
+           
+                            }
+
+
+                            <b><span>Total Amount In Word (NRS):-</span>  @str <span>&nbsp;only.</span></b>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>
+                        Tender Amount<td>
+                        <td>:</td>
+                        @*<td>@Html.DisplayFor(m => Model.TenderAmount)</td>*@
+                        <td>@TenderAmount</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                        Returned Amount<td>
+                        <td>:</td>
+                        @*<td>@Html.DisplayFor(m => Model.ReturnedAmount)</td>*@
+                        <td>@ReturnedAmount</td>
+                    </tr>
+
+
+
+                </tbody>
+
+            </table>
+        </div>
+        <div class="clear"></div>
+
+
+
+
+        <div style="margin-left: 80px;">
+            <span style="font-weight: bold;">User:- @HospitalManagementSystem.Utility.GetEmployeeNameFromEmpID(HospitalManagementSystem.Utility.GetCurrentLoginUserId())</span><br />
+            <span>E.& O.E.</span>
+        </div>
+
+    </div>
+    <span style="float: right;">
+        <input type="button" id="btnPrint" style="width: 50px;" onclick="print()" value="Print" /></span>
+    <br />
+    <p id="linkNewBack">
+        @Html.ActionLink("Back to List", "Create")
+    </p>
+
+</div>
+

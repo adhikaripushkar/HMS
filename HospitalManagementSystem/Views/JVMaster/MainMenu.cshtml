@@ -1,0 +1,48 @@
+﻿@model HospitalManagementSystem.Models.JVMasterModel
+
+@{
+    ViewBag.Title = "MainMenu";
+    Layout = "~/Views/Shared/_BillingLayout.cshtml";
+}
+
+<div class="contentWrapper mainWrapper">
+
+    <div class="row-fluid">
+
+        <div class="container accessBox">
+
+            <ul class="dashboard-actions clearfix wrap clear">
+
+
+                <li>
+                    <a href='~/JVMaster/Index' data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setupjv.jpg" alt="" class="">
+                            <h5>Post Journal Voucher</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="~/JVMaster/createNewJV" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/createNew.png" alt="" class="">
+                            <h5>Create New JV</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="~/JVMaster/Search" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/viewsearch.png" alt="" class="">
+                            <h5>Search JV</h5>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

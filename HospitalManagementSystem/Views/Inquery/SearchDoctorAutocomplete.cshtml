@@ -1,0 +1,80 @@
+﻿@model HospitalManagementSystem.Models.DoctorPartialDetails
+@{
+    ViewBag.Title = "SearchDoctorAutocomplete";
+    Layout = "~/Views/Shared/_DashboardInqueryLayout.cshtml";
+}
+<script src="~/Scripts/OrderManagerScript.js"></script>
+<script src="~/Scripts/json.cycle.js"></script>
+<div class="contentWrapper">
+
+    @if (ViewBag.msz != null)
+    {
+            
+        @ViewBag.msz;
+    }
+    @using (Html.BeginForm("SearchDoctorAutocomplete", "Inquery", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        <div style="">
+            <span>Name</span>
+           
+            <span>
+                <input type="text" id="blnkid" name="value" /></span>
+          
+            <input type="submit" value="Find" id="btnsubmit" />
+        </div>
+    }
+
+    <br />
+
+    <div id="oldSearchResultid">
+           @Html.Partial("_DocSearchDept",Model)
+    </div>
+
+</div>
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+}
+<script type="text/javascript">
+    var autocom = $.noConflict();
+
+    autocom(document).ready(function () {
+        //alert();
+
+
+        autocom("#blnkid").autocomplete({
+            source: function (request, response) {
+                autocom.ajax({
+                    url: "/Inquery/AutocompleteItem",
+                    type: "GET",
+                    dataType: "json",
+                    data: { s: request.term },
+                    success: function(data) {
+
+                        response(autocom.map(data, function(item) {
+
+                            return { label: item, value: item };
+
+
+                        }));
+
+                    },
+                    //error:function(data){
+                    //    response($.map(data, function (item) {
+
+                    //        return { label: item.StockUnitName, Value: item.StockUnitName };
+                    //    }))
+                    //}
+                });
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    });
+</script>
+
+
+
+   

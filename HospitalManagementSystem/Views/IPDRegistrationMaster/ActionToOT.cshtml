@@ -1,0 +1,30 @@
+﻿@model HospitalManagementSystem.Models.IpdRegistrationMasterModel
+
+@{
+    ViewBag.Title = "ActionToOT";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+<div class="contentWrapper">
+    <h3>
+        Shift patient IPD To OT
+    </h3>
+    <table class="table" style="font-weight: bold;">
+        <tr>
+            <td>Patient Id</td>
+            <td>IPD NO</td>
+            <td>Patient Name</td>
+            <td>Action</td>
+        </tr>
+        <tr>
+            <td>@Model.OpdNoEmergencyNo</td>
+            <td>@Model.IpdRegistrationID</td>
+            <td>@HospitalManagementSystem.Utility.GetPatientNameWithIdFromEmergency(Model.OpdNoEmergencyNo)</td>
+            <td>@Html.ActionLink("Shift To OT", "Create", "OperationTheatreMaster", new { id = Model.OpdNoEmergencyNo, Billno = 0 }, null)</td>
+        </tr>
+    </table>
+    @*<p>
+        @Html.ActionLink("Create New", "Create", null, new { @id = "linkNewBack" })
+    </p>*@
+    <div class="general-box clearfix"></div>
+</div>

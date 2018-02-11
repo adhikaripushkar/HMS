@@ -1,0 +1,105 @@
+﻿@model HospitalManagementSystem.Models.EmergecyMasterModel
+<script src="~/Scripts/json.cycle.js"></script>
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        AddClickEvents();
+
+    });
+</script>
+
+@using (Html.BeginForm("CreateEI", "EmergencyInvestigationDetail", FormMethod.Post, new { @id = "EIId", @class = "bs-docs-example form-inline" }))
+{
+     @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend></legend>
+      
+
+           
+          <div class="editor-label">
+            @Html.HiddenFor(model => model.EmergencyMasterId)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.EmergencyMasterId)
+            @Html.ValidationMessageFor(model => model.EmergencyMasterId)
+        </div>
+         <div class="well well-small" id="Add-Item">
+                @Html.ActionLink("Add More", "AddInvestigationList", null, new { @class = "addProductItem btn btn-primary" })
+                <table id="mytbl">
+                    <tr>
+                     
+                        <td style="width:191px; border:none;text-align :center;">Investigation</td>
+                        <td style="width:200px; border:none; text-align:center;">Remarks</td>
+                        @*<td style ="width:200px; border:none; text-align:center;">Suggestion</td>*@
+
+                    </tr>
+                </table>
+                @foreach (var item in Model.EmergencyInvestigationList)
+                {
+                    
+                    @Html.Partial("addInvestigation", item)
+                    
+                }
+            </div>
+       
+        <p>
+            <input type="submit" value="Create" id="btnid" />
+        </p>
+        
+    </fieldset>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+    $("#Add-Item").on('click', '.row-button', function () {
+        $(this).closest("div.row").remove();
+    });
+
+</script>
+<script>
+    $('#crt').live('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            cache: false,
+            async: true,
+            type: "POST",
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {
+                alert(data);
+            }
+        });
+    });
+</script>
+
+
+<script>
+
+    $("#btnid").live("click", function (e) {
+            e.preventDefault();
+       
+
+            var form = $('#EIId');
+
+            var url = form.attr("action");
+
+            var formData = form.serialize();
+            $.post(url, formData, function (data) {
+
+                $('#EIlistId').empty();
+
+                $('#EIlistId').html(data);
+                $('#EIId').remove();
+
+            });
+ });
+
+
+    </script>
+

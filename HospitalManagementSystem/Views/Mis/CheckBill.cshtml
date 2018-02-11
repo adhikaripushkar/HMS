@@ -1,0 +1,311 @@
+﻿@model HospitalManagementSystem.Models.BillingCounterModel
+
+@{
+    ViewBag.Title = "CheckBill";
+    Layout = "~/Views/Shared/_SecurityModelLayout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Check Bill";
+    Layout = "~/Views/Shared/_BillingCounterLayout.cshtml";
+    decimal DTotalRateAmt = Convert.ToDecimal(0);
+    decimal DTotalRateTaxAmt = Convert.ToDecimal(0);
+    decimal DTotalPriceAmt = Convert.ToDecimal(0);
+    decimal DTotalDissAmt = Convert.ToDecimal(0);
+    decimal DTotalTotalAmt = Convert.ToDecimal(0);
+}
+
+<style>
+    table#mytbl,
+    table#mytbl td {
+        border: none !important;
+        font-size: 15px;
+    }
+
+
+    table#tstDsply {
+        border-style: solid;
+        border-width: 8px;
+    }
+
+        table#tstDsply thead {
+            background-color: #EBEBEB;
+        }
+
+        table#tstDsply th:hover {
+            color: black;
+        }
+
+
+
+    table#tbmdsplyamnt,
+    table#tbmdsplyamnt td {
+        border: none !important;
+    }
+
+    .clear {
+        clear: both;
+    }
+
+
+    .ui-dialog {
+        background-color: #B0E0E6;
+    }
+</style>
+
+
+
+@*<h2 style="text-align: center;">Patient Test Bill</h2>*@
+
+
+<div class="contentWrapper">
+
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto; padding: 4px;">
+
+        <table style="width: 100%; font-size: 10px;" id="mytbl">
+
+            <tr>
+                <td>
+                    <b>Bill Number : &nbsp;@Model.billno</b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <span><b>Fiscal Year:-</b></span>@HospitalManagementSystem.Utility.CurrentFisicalYear()
+                </td>
+
+
+            </tr>
+
+            <tr>
+                <td style="width: 125px;"><b>Patient ID:</b>@Html.DisplayFor(m => Model.BillingCounterPatientInformationModel.EmergencyMasterId)</td>
+                <td style="width: 245px;"><b>Name:</b>
+                    @HospitalManagementSystem.Utility.GetFirstLetterCapitalize(Model.BillingCounterPatientInformationModel.FirstName)
+                    @HospitalManagementSystem.Utility.GetFirstLetterCapitalize(Model.BillingCounterPatientInformationModel.MiddleName)
+                    @HospitalManagementSystem.Utility.GetFirstLetterCapitalize(Model.BillingCounterPatientInformationModel.LastName)
+
+                </td>
+
+
+                <td><b>Age:</b> @Html.DisplayFor(m => Model.BillingCounterPatientInformationModel.Age)
+                </td>
+
+                <td><b>Gender:</b> @Html.DisplayFor(m => Model.BillingCounterPatientInformationModel.Gender)
+
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+
+                <td>
+                    <b>Address:</b>
+                    @HospitalManagementSystem.Utility.GetFirstLetterCapitalize(Model.BillingCounterPatientInformationModel.Address)
+
+                </td>
+
+                <td><b>Contact No:-</b> @Html.DisplayFor(m => Model.BillingCounterPatientInformationModel.PhoneNo)</td>
+                <td><b>Date:-</b>@DateTime.Now.ToShortDateString() <span>(</span>@HospitalManagementSystem.Utility.getNepaliDate(DateTime.Today.ToShortDateString())<span>(BS)</span><span>)</span></td>
+                <td><b>Time:-</b>@DateTime.Now.ToShortTimeString()</td>
+
+
+            </tr>
+
+        </table>
+
+
+        <br />
+
+
+        <table style="border: 1px solid gray; width: 100%; font-size: 12px;" id="tstDsply">
+            @{int i = 1;}
+
+            <tr style="border: 1px solid gray">
+                <th>Sn.No.</th>
+                <th>Department</th>
+                <th>Particulars</th>
+                <th>Time(s)</th>
+                <th>Rate</th>
+                <th>Tax(@@5%)</th>
+                <th>Total Price</th>
+                <th>Discount</th>
+                <th>Total Amount
+                </th>
+            </tr>
+
+            <tbody>
+                @foreach (var item in Model.BillingCounterNewTestListModelList)
+                {
+                    //decimal? FinalTaxAmount = item.Price - item.HospitalManagementSystemFee;
+                    decimal TaxAmount = Convert.ToDecimal(0);
+                    decimal TotalPrice = Convert.ToDecimal(0);
+                    decimal TotalDiscount = Convert.ToDecimal(0);
+
+
+                    if (item.TestId != 1261)
+                    {
+                        TaxAmount = Convert.ToDecimal(item.Rate * 5 / 100);
+                        TotalPrice = item.Rate + TaxAmount;
+
+                        //TotalPrice = TotalPrice - item.DiscountPer;
+                    <tr style="border: 1px solid gray">
+                        <td>@i</td>
+                        <td>@HospitalManagementSystem.Utility.GetDepartmentNameFromID(item.DepartmentID)</td>
+                        @*<td>@HospitalManagementSystem.Utility.GetOnlyTestNameFromFullText(item.TestName)</td>*@
+
+                        <td>
+                            @{
+                        int AccountSubHeadId = Convert.ToInt32(0);
+
+                        if (item.SubTestId > 0)
+                        {
+                            AccountSubHeadId = item.SubTestId;
+                        }
+                        else
+                        {
+                            AccountSubHeadId = item.TestId;
+                        }
+                            }
+                            @HospitalManagementSystem.Utility.GetFeeTypeNameFromId(@AccountSubHeadId)
+
+
+
+                        </td>
+
+                        <td>@Html.DisplayFor(modelItem => item.TestTime)</td>
+                        @{decimal TestRateOnly = Convert.ToDecimal(0);
+                          TestRateOnly = item.Rate / item.TestTime;
+                          DTotalRateAmt += TestRateOnly;
+                        }
+
+                        @*<th>@Html.DisplayFor(modelItem => item.Rate)</th>*@
+                        <th>@TestRateOnly</th>
+
+                        @{decimal TotalPriceWithTimes = TotalPrice * item.TestTime;
+                          TotalPrice = TotalPriceWithTimes - item.DiscountPer;
+                          decimal PriceAndTax = item.Rate + TaxAmount;
+                          DTotalRateTaxAmt += TaxAmount;
+                          DTotalTotalAmt += PriceAndTax;
+                          DTotalDissAmt += item.DiscountPer;
+                          decimal TotalPriceFromUtility = Convert.ToDecimal(0);
+                          TotalPriceFromUtility = Convert.ToDecimal(HospitalManagementSystem.Utility.GetTotalPriceForDuplicateBill(Model.ObjPatientDischageBillDetailsViewModel.BillNumberInt, AccountSubHeadId, item.TestId, item.CBDID));
+                          //TotalPriceFromUtility = Convert.ToDecimal(0);
+                          DTotalPriceAmt += TotalPriceFromUtility;
+                          
+                        }
+                        <td>@String.Format("{0:0.00 }", TaxAmount)</td>
+                        <td>@String.Format("{0:0.00 }", PriceAndTax)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DiscountPer)</td>
+
+                        @*@{decimal totalamount = (decimal)(item.Price - item.DiscountPer);}*@
+                        <td>@HospitalManagementSystem.Utility.GetTotalPriceForDuplicateBill(Model.ObjPatientDischageBillDetailsViewModel.BillNumberInt, AccountSubHeadId, item.TestId, item.CBDID)</td>
+                    </tr>
+                          i++;
+                    }
+                }
+                <tr>
+                    <td colspan="5" style="font-weight: bold; text-align: center;">Total:</td>
+
+                    <td>@DTotalRateTaxAmt</td>
+                    <td>@DTotalTotalAmt</td>
+                    <td>@DTotalDissAmt</td>
+                    <td>@DTotalPriceAmt</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+        <br />
+
+        <div style="float: right; margin-right: 7%; font-size: 10px;">
+
+            <table style="font-size: 10px;" id="tbmdsplyamnt">
+                <tbody>
+
+
+                    @*<tr>
+                    <td>
+                     Deposit Amount<td>
+                    <td>:</td>
+                    <td>@Html.DisplayFor(m => Model.Deposit)</td>
+                </tr>*@
+                    <tr>
+                        <td>Doctor Fee</td>
+                        <td></td>
+                        <td>:</td>
+                        <td>
+
+                            @{
+                                decimal totalDoctorFee = Model.DoctorFee + Model.DoctorFeeTax;                            
+                            }
+                            @totalDoctorFee</td>
+                    </tr>
+                    <tr>
+                        <td>Total Amount</td>
+                        <td></td>
+                        <td>:</td>
+                        <td>@Html.DisplayFor(m => Model.ObjBillingCounterPaymentDetails.GrandTotal)</td>
+                    </tr>
+
+
+                    <tr>
+
+                        <td style="border: none;">
+                            @{
+                                HospitalManagementSystem.NumberToEnglish obj = new HospitalManagementSystem.NumberToEnglish();
+
+                                string str = obj.changeNumericToWords(Convert.ToDouble(Model.ObjBillingCounterPaymentDetails.GrandTotal));
+
+           
+                            }
+
+
+                            <b><span>Total Amount In Word (NRS):-</span>  @str <span>&nbsp;only.</span></b>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>
+                        Tender Amount<td>
+                        <td>:</td>
+                        <td>@Html.DisplayFor(m => Model.TenderAmount)</td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                        Returned Amount<td>
+                        <td>:</td>
+                        <td>@Html.DisplayFor(m => Model.ReturnedAmount)</td>
+
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+        </div>
+        <div class="clear"></div>
+
+
+
+
+        <div style="margin-left: 80px;">
+            <span style="font-weight: bold;">User:- @HospitalManagementSystem.Utility.GetEmployeeNameFromEmpID(HospitalManagementSystem.Utility.GetCurrentLoginUserId())</span><br />
+        </div>
+
+    </div>
+
+    <br />
+    @*<p id="linkNewBack">
+        @Html.ActionLink("Back to List", "Create")
+    </p>*@
+
+</div>
+
+

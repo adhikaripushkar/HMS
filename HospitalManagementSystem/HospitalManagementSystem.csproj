@@ -1,0 +1,2265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8280F184-387B-4093-AD7B-43755BF97450}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HospitalManagementSystem</RootNamespace>
+    <AssemblyName>HospitalManagementSystem</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.AspNet, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.AspNet.4.1.4.12333\lib\net45-full\DotNetOpenAuth.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.1.4.12333\lib\net45-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Consumer.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty, Version=4.1.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebHelpers.3.2.3\lib\net45\Microsoft.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebPages.OAuth, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.OAuth.3.2.3\lib\net45\Microsoft.Web.WebPages.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http">
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20505.0\lib\net40\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20505.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.Data, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.3.2.3\lib\net45\WebMatrix.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.3.2.3\lib\net45\WebMatrix.WebData.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.2.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.2.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.2.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.2.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.2.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdmissionDipositFee.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AgeRange.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AllowanceSetup.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BankReconcilation.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BillCancelSummary.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BloodDonate.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BloodStockManagement.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BloodStockManagementMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BloodTransectionDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BloodTransectionMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BoneMarrowReport.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CbDeptRefTable.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CentralizedBilling.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CentralizedBillingDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CentralizedBillingMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CentralizedBillingPaymentType.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CommissionDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CommissionDetaislByType.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Consulation.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\AboutUsController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdmissionDipositFeeController.cs" />
+    <Compile Include="Controllers\AjaxRequestController.cs" />
+    <Compile Include="Controllers\AllotmentController.cs" />
+    <Compile Include="Controllers\AllowanceController.cs" />
+    <Compile Include="Controllers\BillCounterNewController.cs" />
+    <Compile Include="Controllers\BillingController.cs" />
+    <Compile Include="Controllers\BillingCounterController.cs" />
+    <Compile Include="Controllers\BloodDonateController.cs" />
+    <Compile Include="Controllers\BloodStockManagementController.cs" />
+    <Compile Include="Controllers\BloodTransectionController.cs" />
+    <Compile Include="Controllers\CommonTestController.cs" />
+    <Compile Include="Controllers\ComplainEntryController.cs" />
+    <Compile Include="Controllers\ConsulationController.cs" />
+    <Compile Include="Controllers\CreditPatientsController.cs" />
+    <Compile Include="Controllers\DailyJvDetailController.cs" />
+    <Compile Include="Controllers\DeductionController.cs" />
+    <Compile Include="Controllers\DemandController.cs" />
+    <Compile Include="Controllers\DepartmentSetupController.cs" />
+    <Compile Include="Controllers\DepositMasterController.cs" />
+    <Compile Include="Controllers\DesignationSetupController.cs" />
+    <Compile Include="Controllers\DesignationWiseSalarySetupController.cs" />
+    <Compile Include="Controllers\DietDetpController.cs" />
+    <Compile Include="Controllers\DischargeController.cs" />
+    <Compile Include="Controllers\DistrictController.cs" />
+    <Compile Include="Controllers\DoctorFeeSetupController.cs" />
+    <Compile Include="Controllers\DoctorSetupController.cs" />
+    <Compile Include="Controllers\DoctorTimeController.cs" />
+    <Compile Include="Controllers\DoctorTypeSetupController.cs" />
+    <Compile Include="Controllers\EmergencyCountController.cs" />
+    <Compile Include="Controllers\EmergencyInvestigationDetailController.cs" />
+    <Compile Include="Controllers\EmergencyMasterController.cs" />
+    <Compile Include="Controllers\EmergencyPoliceCaseController.cs" />
+    <Compile Include="Controllers\EmergencyTreatmentAllergiesController.cs" />
+    <Compile Include="Controllers\EmergencyTstCaridController.cs" />
+    <Compile Include="Controllers\EmpController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FiscalYearController.cs" />
+    <Compile Include="Controllers\GlAccountSubGroupController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InqueryController.cs" />
+    <Compile Include="Controllers\IPDCountController.cs" />
+    <Compile Include="Controllers\IPDDietController.cs" />
+    <Compile Include="Controllers\IpdMedicalRecordController.cs" />
+    <Compile Include="Controllers\IpdNurseReportController.cs" />
+    <Compile Include="Controllers\IpdRegistrationMasterController.cs" />
+    <Compile Include="Controllers\ItemBlockRecordController.cs" />
+    <Compile Include="Controllers\ItemBlockSetupController.cs" />
+    <Compile Include="Controllers\JournalVFormatController.cs" />
+    <Compile Include="Controllers\JVMasterController.cs" />
+    <Compile Include="Controllers\MedicalTestController.cs" />
+    <Compile Include="Controllers\MemberTypeDiscountController.cs" />
+    <Compile Include="Controllers\MemberTypeSetupController.cs" />
+    <Compile Include="Controllers\MisController.cs" />
+    <Compile Include="Controllers\OPDController.cs" />
+    <Compile Include="Controllers\OpdMedicalDetailController.cs" />
+    <Compile Include="Controllers\OpdMedicalRecordController.cs" />
+    <Compile Include="Controllers\OperationTheatreDetailsController.cs" />
+    <Compile Include="Controllers\OperationTheatreMasterController.cs" />
+    <Compile Include="Controllers\OperationTheatreRoomController.cs" />
+    <Compile Include="Controllers\PackageController.cs" />
+    <Compile Include="Controllers\PatientBillController.cs" />
+    <Compile Include="Controllers\PatientDischargedController.cs" />
+    <Compile Include="Controllers\PatientTestController.cs" />
+    <Compile Include="Controllers\PatientTestResultController.cs" />
+    <Compile Include="Controllers\PharmacyController.cs" />
+    <Compile Include="Controllers\PreRegistrationController.cs" />
+    <Compile Include="Controllers\ReferController.cs" />
+    <Compile Include="Controllers\RelationshipController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\ReturnOutController.cs" />
+    <Compile Include="Controllers\SecurityController.cs" />
+    <Compile Include="Controllers\SettingController.cs" />
+    <Compile Include="Controllers\SetupAgentController.cs" />
+    <Compile Include="Controllers\SetupBankController.cs" />
+    <Compile Include="Controllers\SetupBillingTypeController.cs" />
+    <Compile Include="Controllers\SetupBlockController.cs" />
+    <Compile Include="Controllers\SetupBreakageController.cs" />
+    <Compile Include="Controllers\SetupCategoryController.cs" />
+    <Compile Include="Controllers\SetupDiagnosisController.cs" />
+    <Compile Include="Controllers\SetupEmergencyCaseController.cs" />
+    <Compile Include="Controllers\SetupEmergencyFeeController.cs" />
+    <Compile Include="Controllers\SetupEmergencyInvestigationMasterController.cs" />
+    <Compile Include="Controllers\SetupEmployeeMasterController.cs" />
+    <Compile Include="Controllers\SetupEmployeeShiftMasterController.cs" />
+    <Compile Include="Controllers\SetupEmployeeTypeController.cs" />
+    <Compile Include="Controllers\SetupFloorController.cs" />
+    <Compile Include="Controllers\SetupHospitalDetailController.cs" />
+    <Compile Include="Controllers\SetupHospitalFeeController.cs" />
+    <Compile Include="Controllers\SetupHospitalFeeDiscountController.cs" />
+    <Compile Include="Controllers\SetupIpdRoomController.cs" />
+    <Compile Include="Controllers\SetupIpdWardController.cs" />
+    <Compile Include="Controllers\SetupManpowerController.cs" />
+    <Compile Include="Controllers\SetupMedicalChargeController.cs" />
+    <Compile Include="Controllers\SetupMemberDependentController.cs" />
+    <Compile Include="Controllers\SetupMembershipController.cs" />
+    <Compile Include="Controllers\SetupOtherDiscountController.cs" />
+    <Compile Include="Controllers\SetupOtherTestController.cs" />
+    <Compile Include="Controllers\SetupPathoTestController.cs" />
+    <Compile Include="Controllers\SetupRoomTypeController.cs" />
+    <Compile Include="Controllers\SetupSectionController.cs" />
+    <Compile Include="Controllers\SetupUnitController.cs" />
+    <Compile Include="Controllers\StockController.cs" />
+    <Compile Include="Controllers\StockItemController.cs" />
+    <Compile Include="Controllers\StockItemEntryController.cs" />
+    <Compile Include="Controllers\StockItemPurchaseController.cs" />
+    <Compile Include="Controllers\StockPurchaseOrderController.cs" />
+    <Compile Include="Controllers\StockReturnInController.cs" />
+    <Compile Include="Controllers\StockSubCattegoryController.cs" />
+    <Compile Include="Controllers\StockSuplierController.cs" />
+    <Compile Include="Controllers\StockUnitController.cs" />
+    <Compile Include="Controllers\TrialAuditController.cs" />
+    <Compile Include="Controllers\VDCMUNController.cs" />
+    <Compile Include="Controllers\ViatalController.cs" />
+    <Compile Include="Controllers\WelComeController.cs" />
+    <Compile Include="Controllers\ZoneController.cs" />
+    <Compile Include="CytologyReport.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DailyJvDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DeductionSetup.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DemandPatientAssignment.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DepartmentWiseStock.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DepositRefundDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DesignationSetup.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DesignationWiseSalarySetup.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DietTypeSetup.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="District.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DoctorCommision.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DoctorsDisease.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DoctorTypeSetup.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EHMS.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EHMS.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EHMS.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EHMS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EHMS.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="EmergencyFeeDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmergencyInvestigationDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmergencyInvestigationDetailProvider.cs" />
+    <Compile Include="EmergencyInvestigationMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmergencyMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmergencyOutcomeType.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmergencyPoliceCase.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmergencyTreatmentAllergy.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmergencyTriage.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmergencyTstCarid.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeAllowanceSetup.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeDeductionSetup.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeEducationInfo.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeePayrollMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeTrainingInfo.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="GL_AccGroups.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GL_AccountType.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GL_AccSubGroups.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GL_LedgerMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GL_Transaction.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HandoverDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\CommonHelper.cs" />
+    <Compile Include="Helpers\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Helpers\HtmlModelBindingHelperExtensions.cs" />
+    <Compile Include="Helpers\SessionExpire.cs" />
+    <Compile Include="Helpers\UserEnvironmentVariables.cs" />
+    <Compile Include="HospitalExtraTest.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HospitalModuleMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IpdDischarge.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IpdMRCommonTest.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IpdMrMainTest.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IpdMrMedicineRecord.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IpdPatientBedDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IpdPatientDiagnosisDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IpdPatientroomDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IpdRegistrationMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IpdRoomStatu.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemAllotmentDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemAllotmentMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemBlockRecord.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemBlockSetup.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemDemandDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemDemandMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JornalVFormat.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JVDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JVMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MedicalRecordDischarge.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\AdmissionDischargeModel.cs" />
+    <Compile Include="Models\AllotmentDetailModel.cs" />
+    <Compile Include="Models\AllotmentMasterModel.cs" />
+    <Compile Include="Models\BillingCounterModel.cs" />
+    <Compile Include="Models\BillingCounterNewModel.cs" />
+    <Compile Include="Models\BillingModel.cs" />
+    <Compile Include="Models\BloodDonateModel.cs" />
+    <Compile Include="Models\BloodStockManagementMasterModel.cs" />
+    <Compile Include="Models\BloodStockManagementModel.cs" />
+    <Compile Include="Models\BloodTransactionModel.cs" />
+    <Compile Include="Models\BreakageReturnReportModel.cs" />
+    <Compile Include="Models\CentrallizedBillingModel.cs" />
+    <Compile Include="Models\CommonTestSetupModel.cs" />
+    <Compile Include="Models\CreditPatientDetailModel.cs" />
+    <Compile Include="Models\DailyJvDetailModel.cs" />
+    <Compile Include="Models\DemandDetailModel.cs" />
+    <Compile Include="Models\DemandMasterModel.cs" />
+    <Compile Include="Models\DemandPatientAssignmentModel.cs" />
+    <Compile Include="Models\DepartmentSetupModel.cs" />
+    <Compile Include="Models\DepositMasterModel.cs" />
+    <Compile Include="Models\DietIPDModel.cs" />
+    <Compile Include="Models\DistrictModel.cs" />
+    <Compile Include="Models\DoctorFeeSetupModel.cs" />
+    <Compile Include="Models\DoctorSetupModel.cs" />
+    <Compile Include="Models\DoctorTimeModel.cs" />
+    <Compile Include="Models\DoctorTypeSetupModel.cs" />
+    <Compile Include="Models\EmergencyCountModel.cs" />
+    <Compile Include="Models\EmergencyMasterModel.cs" />
+    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\EmployeePayrollModel.cs" />
+    <Compile Include="Models\ErrorModel.cs" />
+    <Compile Include="Models\FiscalYearModel.cs" />
+    <Compile Include="Models\GlAccountSubGroupModel.cs" />
+    <Compile Include="Models\IPDCountModel.cs" />
+    <Compile Include="Models\IPDInQueryModel.cs" />
+    <Compile Include="Models\IpdMRCommonTestModel.cs" />
+    <Compile Include="Models\IpdPatientDeischargedModel.cs" />
+    <Compile Include="Models\IpdRegistrationMasterModel.cs" />
+    <Compile Include="Models\ItemBlockRecordModel.cs" />
+    <Compile Include="Models\ItemBlockSetupModel.cs" />
+    <Compile Include="Models\JournalVFormatModel.cs" />
+    <Compile Include="Models\JVMasterModel.cs" />
+    <Compile Include="Models\MemberTypeDiscountModel.cs" />
+    <Compile Include="Models\MemberTypeModel.cs" />
+    <Compile Include="Models\MisModel.cs" />
+    <Compile Include="Models\OpdMedicalRecordModel.cs" />
+    <Compile Include="Models\OpdModel.cs" />
+    <Compile Include="Models\OperationRecordModel.cs" />
+    <Compile Include="Models\OperationTheatreDetailsModel.cs" />
+    <Compile Include="Models\OperationTheatreMasterModel.cs" />
+    <Compile Include="Models\OperationTheatreRoomModel.cs" />
+    <Compile Include="Models\OtListModel.cs" />
+    <Compile Include="Models\PackageModel.cs" />
+    <Compile Include="Models\PatientTestModel.cs" />
+    <Compile Include="Models\PatientTestResultModel.cs" />
+    <Compile Include="Models\PreRegistrationCommonModel.cs" />
+    <Compile Include="Models\PreRegistrationModel.cs" />
+    <Compile Include="Models\RecordNumGen.cs" />
+    <Compile Include="Models\ReferModel.cs" />
+    <Compile Include="Models\RelationshipModel.cs" />
+    <Compile Include="Models\ScanFileUploadModel.cs" />
+    <Compile Include="Models\SetupAgentModel.cs" />
+    <Compile Include="Models\SetupBankModel.cs" />
+    <Compile Include="Models\SetupBillingTypeModel.cs" />
+    <Compile Include="Models\SetupBlockModel.cs" />
+    <Compile Include="Models\SetupDiagnosisModel.cs" />
+    <Compile Include="Models\SetupEmergencyCaseModel.cs" />
+    <Compile Include="Models\SetupEmergencyFeeModel.cs" />
+    <Compile Include="Models\SetupEmergencyInvestigationMasterModel.cs" />
+    <Compile Include="Models\SetupEmployeeMasterModel.cs" />
+    <Compile Include="Models\SetupEmployeeShiftMasterModel.cs" />
+    <Compile Include="Models\SetupEmployeeTypeModel.cs" />
+    <Compile Include="Models\SetupFloorModel.cs" />
+    <Compile Include="Models\SetupHospitalDetailModel.cs" />
+    <Compile Include="Models\SetupHospitalFeeDiscountModel.cs" />
+    <Compile Include="Models\SetupHospitalFeeModel.cs" />
+    <Compile Include="Models\SetupIpdRoomModel.cs" />
+    <Compile Include="Models\SetupIpdWardModel.cs" />
+    <Compile Include="Models\SetupManpowerModel.cs" />
+    <Compile Include="Models\SetupMedicalChargemodel.cs" />
+    <Compile Include="Models\SetupMemberDependentModel.cs" />
+    <Compile Include="Models\SetUpMembership.cs" />
+    <Compile Include="Models\SetupOtherDiscountModel.cs" />
+    <Compile Include="Models\SetupPathoTestModel.cs" />
+    <Compile Include="Models\SetupRoomTypeModel.cs" />
+    <Compile Include="Models\SetupSectionModel.cs" />
+    <Compile Include="Models\SetupUnitModel.cs" />
+    <Compile Include="Models\StockBreakageModel.cs" />
+    <Compile Include="Models\StockCategoryModel.cs" />
+    <Compile Include="Models\StockDistributionMasterModel.cs" />
+    <Compile Include="Models\StockItemEntryModel.cs" />
+    <Compile Include="Models\StockItemModel.cs" />
+    <Compile Include="Models\StockItemPurchaseModel.cs" />
+    <Compile Include="Models\StockPurchaseOrderModel.cs" />
+    <Compile Include="Models\StockReturnOutModel.cs" />
+    <Compile Include="Models\StockSubCategoryModel.cs" />
+    <Compile Include="Models\StockSuplierModel.cs" />
+    <Compile Include="Models\StockUnitModel.cs" />
+    <Compile Include="Models\SurgeryChargeModel.cs" />
+    <Compile Include="Models\TrialAuditModel.cs" />
+    <Compile Include="Models\VDCMunModel.cs" />
+    <Compile Include="Models\ZoneModel.cs" />
+    <Compile Include="MonthlyAllowance.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MonthlyDeduction.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OpdFeeDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OpdMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OpdMedicalDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OpdMedicalRecordCommonTest.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OpdMedicalRecordFurtherTest.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OpdMedicalRecordMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OpdMedicalRecordMedicineRefer.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OpdPatientDoctorDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OpdPatientOtherDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OpeningBalance.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OperationRecord.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OperationTheatreDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OperationTheatreMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PackageDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PackageMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PackagePatientAssignment.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PathologyDynamicTestColumn.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PatientDepositDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PatientDepositMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PatientDietDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PatientLogMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PatientTest.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PatientTestDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PatientTestResult.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PayrollMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PreRegistration.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PreRegistrationPreferDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\AdmissionDipositFeeProvider.cs" />
+    <Compile Include="Providers\AllotmentProvider.cs" />
+    <Compile Include="Providers\AllowanceProvider.cs" />
+    <Compile Include="Providers\BillingCounterNewProvider.cs" />
+    <Compile Include="Providers\BillingCounterProvider.cs" />
+    <Compile Include="Providers\BillingProvider.cs" />
+    <Compile Include="Providers\BloodDonateProvider.cs" />
+    <Compile Include="Providers\BloodStockManagementProvider.cs" />
+    <Compile Include="Providers\BloodTransectionProvider.cs" />
+    <Compile Include="Providers\CommonTestSetProvider.cs" />
+    <Compile Include="Providers\ComplainEntryProvider.cs" />
+    <Compile Include="Providers\ConsulationProvider.cs" />
+    <Compile Include="Providers\CreditPatientProvider.cs" />
+    <Compile Include="Providers\DailyJVDetailProvider.cs" />
+    <Compile Include="Providers\DeductionSetupProvider.cs" />
+    <Compile Include="Providers\DemandMasterProvider.cs" />
+    <Compile Include="Providers\DemandPatientAssignmentProvider.cs" />
+    <Compile Include="Providers\DepartmentSetupProvider.cs" />
+    <Compile Include="Providers\DepositMasterProvider.cs" />
+    <Compile Include="Providers\DesignationSetupProvider.cs" />
+    <Compile Include="Providers\DesignationWiseSalarySetupProvider.cs" />
+    <Compile Include="Providers\DietIPDProviders.cs" />
+    <Compile Include="Providers\DischargeProvider.cs" />
+    <Compile Include="Providers\DistributionProvider.cs" />
+    <Compile Include="Providers\DistrictProvider.cs" />
+    <Compile Include="Providers\DoctorFeeSetupProvider.cs" />
+    <Compile Include="Providers\DoctorSetupProvider.cs" />
+    <Compile Include="Providers\DoctorTimeProvider.cs" />
+    <Compile Include="Providers\DoctorTypeSetupProvider.cs" />
+    <Compile Include="Providers\EmergencyCountProvider.cs" />
+    <Compile Include="Providers\EmergencyMasterProvider.cs" />
+    <Compile Include="Providers\EmergencyPoliceCaseProvider.cs" />
+    <Compile Include="Providers\EmergencyTreatmentAllergiesProvider.cs" />
+    <Compile Include="Providers\EmergencyTstCaridProvider.cs" />
+    <Compile Include="Providers\FiscalYearProvider.cs" />
+    <Compile Include="Providers\GlAccountSubGroupProvider.cs" />
+    <Compile Include="Providers\InqueryProvider.cs" />
+    <Compile Include="Providers\IpdCountProvider.cs" />
+    <Compile Include="Providers\IpdDischargeProvider.cs" />
+    <Compile Include="Providers\IpdMedicalRecordProvider.cs" />
+    <Compile Include="Providers\IpdNurseDailyReportProvider.cs" />
+    <Compile Include="Providers\IpdRegistrationMasterProvider.cs" />
+    <Compile Include="Providers\ItemBlockSetupProvider.cs" />
+    <Compile Include="Providers\JournalVFormatProvider.cs" />
+    <Compile Include="Providers\JVMasterProvider.cs" />
+    <Compile Include="Providers\MemberTypeDiscountProvider.cs" />
+    <Compile Include="Providers\MemberTypeSetupProvider.cs" />
+    <Compile Include="Providers\MisProvider.cs" />
+    <Compile Include="Providers\OpdMedicalProvider.cs" />
+    <Compile Include="Providers\OpdMedicalRecordsProvider.cs" />
+    <Compile Include="Providers\OpdProvider.cs" />
+    <Compile Include="Providers\OperationRecordProviders.cs" />
+    <Compile Include="Providers\OperationTheatreDetailsProvider.cs" />
+    <Compile Include="Providers\OperationTheatreMasterProvider.cs" />
+    <Compile Include="Providers\OperationTheatreRoomProvider.cs" />
+    <Compile Include="Providers\PatientTestProvider.cs" />
+    <Compile Include="Providers\PatientTestResultProvider.cs" />
+    <Compile Include="Providers\PreRegistrationProvider.cs" />
+    <Compile Include="Providers\ReferProvider.cs" />
+    <Compile Include="Providers\RelationshipProvider.cs" />
+    <Compile Include="Providers\ScanFileUploadProvider.cs" />
+    <Compile Include="Providers\SetupAgentProvider.cs" />
+    <Compile Include="Providers\SetupBankProvider.cs" />
+    <Compile Include="Providers\SetupBillingTypeProvider.cs" />
+    <Compile Include="Providers\SetupBlockProvider.cs" />
+    <Compile Include="Providers\SetupDiagnosisProvider.cs" />
+    <Compile Include="Providers\SetupEmergencyCaseProvider.cs" />
+    <Compile Include="Providers\SetupEmergencyFeeProvider.cs" />
+    <Compile Include="Providers\SetupEmergencyInvestigationMasterProvider.cs" />
+    <Compile Include="Providers\SetupEmployeeMasterProvider.cs" />
+    <Compile Include="Providers\SetupEmployeeTypeProvider.cs" />
+    <Compile Include="Providers\SetupFloorProvider.cs" />
+    <Compile Include="Providers\SetupHospitalDetailProvider.cs" />
+    <Compile Include="Providers\SetupHospitalDiscountProvider.cs" />
+    <Compile Include="Providers\SetupIpdHospitalFeeProvider.cs" />
+    <Compile Include="Providers\SetupIpdRoomProvider.cs" />
+    <Compile Include="Providers\SetupIpdWardProvider.cs" />
+    <Compile Include="Providers\SetupManPowerProvider.cs" />
+    <Compile Include="Providers\SetupMedicalChargeProvider.cs" />
+    <Compile Include="Providers\SetupMemberDependentProvider.cs" />
+    <Compile Include="Providers\SetupMembershipProvider.cs" />
+    <Compile Include="Providers\SetupOtherDiscountProvider.cs" />
+    <Compile Include="Providers\SetupOtherTestProvider.cs" />
+    <Compile Include="Providers\SetupPathoTestProvider.cs" />
+    <Compile Include="Providers\SetupRoomTypeProvider.cs" />
+    <Compile Include="Providers\SetupSectionProvider.cs" />
+    <Compile Include="Providers\SetupUnitProvider.cs" />
+    <Compile Include="Providers\StockCategoryProvider.cs" />
+    <Compile Include="Providers\StockItemEntryProvider.cs" />
+    <Compile Include="Providers\StockItemProvider.cs" />
+    <Compile Include="Providers\StockItemPurchaseProvider.cs" />
+    <Compile Include="Providers\StockPurchaseOrderProvider.cs" />
+    <Compile Include="Providers\StockSubCategoryProvider.cs" />
+    <Compile Include="Providers\StockSuplierProvider.cs" />
+    <Compile Include="Providers\StockUnitProvider.cs" />
+    <Compile Include="Providers\SurgeryChargeProvider.cs" />
+    <Compile Include="Providers\TrialAuditProvider.cs" />
+    <Compile Include="Providers\VDCMUNProvider.cs" />
+    <Compile Include="Providers\VitalsProvider.cs" />
+    <Compile Include="Providers\ZoneProvider.cs" />
+    <Compile Include="ReferTable.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ResignationDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SaveDymanicPathologyTest.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScanFileUpload.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupAgent.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupBank.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupBillingType.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupBlock.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupBloodGroup.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupBloodType.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupCountryName.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupDepartment.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupDiagnosi.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupDoctorAvailableTime.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupDoctorDepartment.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupDoctorFee.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupDoctorMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupDoctorQualification.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupDoctorSpecialist.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupDoctorTokenRegister.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupEmergencyCase.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupEmergencyFee.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupEmployeeDepartment.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupEmployeeMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupEmployeeShift.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupEmployeeShiftMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\SetupEmployeeShiftMasterProvider.cs" />
+    <Compile Include="SetupEmployeeType.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupFeeType.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupFiscalYear.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupFloor.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupGender.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupHospitalBillNumber.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupHospitalDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupHospitalFee.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupHospitalFeeDiscount.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupIcdCode.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetUpIpdRoom.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupIpdWard.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupManpower.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupMedicalcharge.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupMemberDependent.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupMemberDiscount.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupMemberShip.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupMemberType.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupOperationTheatreRoom.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupOtherDiscount.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupOtherTest.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupPathoTest.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupRelationship.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupRoomType.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupSection.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupStockCategory.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupStockItemEntry.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupStockItemType.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupStockSubCategory.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupStockSupplier.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupStockUnit.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupTriageMedium.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupUnit.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SetupVoucherNumber.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Setup_NepCalender.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShiftFromIPDDepartment.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockBreakage.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockDistributionDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockDistributionMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockGroupingItemDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockGroupingItemMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockItemGroupSetup.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockItemGroupSubGroup.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockItemLocationSetup.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockItemMaster.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockItemPurchase.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockItemPurchaseDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockItemRackSetup.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockPurchaseOrder.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockPurchaseOrderDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockReturnIn.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockReturnOut.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SurgeryCharge.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="System\Data\EntityState.cs" />
+    <Compile Include="TaxOtherSetup.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaxRangeSetup.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TBLConfigDetail.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TblDistrict.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblFundDeductionSetup.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblNepaliMonth.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblNepaliYear.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TblZone.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TrialAudit.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Utility.cs" />
+    <Compile Include="UtilityMessage.cs" />
+    <Compile Include="VDCMUN.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Vital.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VitalForOther.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Zone.cs">
+      <DependentUpon>EHMS.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\add.png" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\DashSite.css" />
+    <Content Include="Content\del.jpg" />
+    <Content Include="Content\HospitalLogo\LOGO.png" />
+    <Content Include="Content\images\ajax-loading.gif" />
+    <Content Include="Content\images\asc.gif" />
+    <Content Include="Content\images\asc.png" />
+    <Content Include="Content\images\bg.gif" />
+    <Content Include="Content\images\bg.png" />
+    <Content Include="Content\images\desc.gif" />
+    <Content Include="Content\images\desc.png" />
+    <Content Include="Content\images\first.png" />
+    <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="Content\images\last.png" />
+    <Content Include="Content\images\next.png" />
+    <Content Include="Content\images\prev.png" />
+    <Content Include="Content\index.jpg" />
+    <Content Include="Content\jquery-ui-1.8.21.custom.css" />
+    <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Content\jquery.timepicker.css" />
+    <Content Include="Content\Login\main.css" />
+    <Content Include="Content\Login\Normalize.css" />
+    <Content Include="Content\main.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\remove.png" />
+    <Content Include="Content\ScanFile\Tulips.jpg" />
+    <Content Include="Content\styles.css" />
+    <Content Include="Content\TableSort.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\jquery.ui.timepicker.css" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\themes\bootstrap.min.css" />
+    <Content Include="css\layout.css" />
+    <Content Include="css\main.css" />
+    <Content Include="css\menu_assets\styles.css" />
+    <Content Include="css\print.css" />
+    <Content Include="css\responsive.css" />
+    <Content Include="css\slickscroll.css" />
+    <Content Include="EHMS.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EHMS.edmx</DependentUpon>
+      <LastGenOutput>EHMS.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="EHMS.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EHMS.edmx</DependentUpon>
+      <LastGenOutput>EHMS.cs</LastGenOutput>
+    </Content>
+    <Content Include="favicon.ico" />
+    <Content Include="Fontaw\css\font-awesome.css" />
+    <Content Include="Fontaw\css\font-awesome.min.css" />
+    <Content Include="Fontaw\fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Helpers\jquery.ui.autocomplete.selectFirst.js" />
+    <Content Include="Helpers\nepali.datepicker.css" />
+    <Content Include="Helpers\nepali.datepicker.js" />
+    <Content Include="Helpers\nepalijquery.js" />
+    <Content Include="Helpers\unicode_mgr.js" />
+    <Content Include="Helpers\unicode_mgr_new.js" />
+    <Content Include="Images\1391963551_46798.ico" />
+    <Content Include="Images\accent.png" />
+    <Content Include="Images\agentsetup.jpg" />
+    <Content Include="Images\arrow.png" />
+    <Content Include="Images\asc.gif" />
+    <Content Include="Images\asc.png" />
+    <Content Include="Images\bg.gif" />
+    <Content Include="Images\bg.png" />
+    <Content Include="Images\billing.jpg" />
+    <Content Include="Images\bloodbank.jpg" />
+    <Content Include="Images\booking.png" />
+    <Content Include="Images\bullet.png" />
+    <Content Include="Images\Centralbill.jpg" />
+    <Content Include="Images\createNew.png" />
+    <Content Include="Images\dash-icon.png" />
+    <Content Include="Images\department.jpg" />
+    <Content Include="Images\DepositSetting.jpg" />
+    <Content Include="Images\desc.gif" />
+    <Content Include="Images\desc.png" />
+    <Content Include="Images\discount.jpg" />
+    <Content Include="Images\doctorfee.jpg" />
+    <Content Include="Images\doctormaster.jpg" />
+    <Content Include="Images\doctortime.jpg" />
+    <Content Include="Images\doctype.jpg" />
+    <Content Include="Images\emergency1.jpg" />
+    <Content Include="Images\emplogo3.jpg" />
+    <Content Include="Images\empmaster.jpg" />
+    <Content Include="Images\empshift.jpg" />
+    <Content Include="Images\emptype.jpg" />
+    <Content Include="Images\enquiry.jpg" />
+    <Content Include="Images\fee2.jpg" />
+    <Content Include="Images\first.png" />
+    <Content Include="Images\fiscal_year.jpg" />
+    <Content Include="Images\foot-logo.png" />
+    <Content Include="Images\glyphicons-halflings-white.png" />
+    <Content Include="Images\glyphicons-halflings.png" />
+    <Content Include="Images\glyphicons-halflingsNew.png" />
+    <Content Include="Images\h-wrap-bac.jpg" />
+    <Content Include="Images\heading-bg.png" />
+    <Content Include="Images\heroAccent.png" />
+    <Content Include="Images\home.png" />
+    <Content Include="Images\hospital-logo.png" />
+    <Content Include="Images\Hospital.jpg" />
+    <Content Include="Images\hospitalblock.jpg" />
+    <Content Include="Images\hospitalfloor.jpg" />
+    <Content Include="Images\icon.png" />
+    <Content Include="Images\images.jpg" />
+    <Content Include="Images\info.jpg" />
+    <Content Include="Images\ipd-img.jpg" />
+    <Content Include="Images\ipd-ward.jpg" />
+    <Content Include="Images\itour-chart.jpg" />
+    <Content Include="Images\itour-pre-icon.png" />
+    <Content Include="Images\label-sep.png" />
+    <Content Include="Images\last.png" />
+    <Content Include="Images\leftpanelbg - Copy.png" />
+    <Content Include="Images\leftpanelbg.png" />
+    <Content Include="Images\madhyapur hospital logo-01.jpg" />
+    <Content Include="Images\manmohanlogo.jpg" />
+    <Content Include="Images\medical_report.jpg" />
+    <Content Include="Images\member1.jpg" />
+    <Content Include="Images\memberdepend.jpg" />
+    <Content Include="Images\memberdiscount.jpg" />
+    <Content Include="Images\membership.jpg" />
+    <Content Include="Images\mmh-logo.png" />
+    <Content Include="Images\mmh-logo1.png" />
+    <Content Include="Images\MMTH_Logo.jpg" />
+    <Content Include="Images\navItemBg.png" />
+    <Content Include="Images\next.png" />
+    <Content Include="Images\opd-img.jpg" />
+    <Content Include="Images\operation2.jpg" />
+    <Content Include="Images\orderedList0.png" />
+    <Content Include="Images\orderedList1.png" />
+    <Content Include="Images\orderedList2.png" />
+    <Content Include="Images\orderedList3.png" />
+    <Content Include="Images\orderedList4.png" />
+    <Content Include="Images\orderedList5.png" />
+    <Content Include="Images\orderedList6.png" />
+    <Content Include="Images\orderedList7.png" />
+    <Content Include="Images\orderedList8.png" />
+    <Content Include="Images\orderedList9.png" />
+    <Content Include="Images\other_discount.jpg" />
+    <Content Include="Images\pathology-img.jpg" />
+    <Content Include="Images\Pathology4.jpg" />
+    <Content Include="Images\Pathology5.jpg" />
+    <Content Include="Images\Pharmacy-img.jpg" />
+    <Content Include="Images\Pre-Registration.png" />
+    <Content Include="Images\prev.png" />
+    <Content Include="Images\relation.jpg" />
+    <Content Include="Images\ReportSetting.jpg" />
+    <Content Include="Images\roomtype.jpg" />
+    <Content Include="Images\scrollbar_vertical_bottompart.png" />
+    <Content Include="Images\scrollbar_vertical_toppart.png" />
+    <Content Include="Images\secutity-img.jpg" />
+    <Content Include="Images\setting.jpg" />
+    <Content Include="Images\setup1.jpg" />
+    <Content Include="Images\setupbank.jpg" />
+    <Content Include="Images\setupdiagnosis.jpg" />
+    <Content Include="Images\setupjv.jpg" />
+    <Content Include="Images\setuppathotest.jpg" />
+    <Content Include="Images\setupsection.jpg" />
+    <Content Include="Images\sidebarSep - Copy.png" />
+    <Content Include="Images\sidebarSep.png" />
+    <Content Include="Images\slider-1.jpg" />
+    <Content Include="Images\stock.jpg" />
+    <Content Include="Images\surgeon.jpg" />
+    <Content Include="Images\top-bac_bg.jpg" />
+    <Content Include="Images\TrialBalance1.jpg" />
+    <Content Include="Images\user-img.jpg" />
+    <Content Include="Images\viewsearch.png" />
+    <Content Include="js\bootstrap.js" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\example.js" />
+    <Content Include="js\images\ndp_bg_wave.png" />
+    <Content Include="js\images\ndp_buttons.png" />
+    <Content Include="js\images\ndp_date_bg.png" />
+    <Content Include="js\jquery-1.3.2.min.js" />
+    <Content Include="js\jquery.js" />
+    <Content Include="js\nepali.datepicker.css" />
+    <Content Include="js\nepali.datepicker.js" />
+    <Content Include="js\vendor\jquery-1.9.1.min.js" />
+    <Content Include="js\vendor\jquery.js" />
+    <Content Include="js\vendor\modernizr-2.6.2.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="EHMS.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EHMS.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="EHMS.edmx.diagram">
+      <DependentUpon>EHMS.edmx</DependentUpon>
+    </Content>
+    <Content Include="App_Code\MyHelpers.cshtml" />
+    <Content Include="Fontaw\fonts\fontawesome-webfont.eot" />
+    <Content Include="Fontaw\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Fontaw\fonts\fontawesome-webfont.woff" />
+    <Content Include="Fontaw\fonts\FontAwesome.otf" />
+    <Content Include="Fontaw\less\bordered-pulled.less" />
+    <Content Include="Fontaw\less\core.less" />
+    <Content Include="Fontaw\less\fixed-width.less" />
+    <Content Include="Fontaw\less\font-awesome.less" />
+    <Content Include="Fontaw\less\icons.less" />
+    <Content Include="Fontaw\less\larger.less" />
+    <Content Include="Fontaw\less\list.less" />
+    <Content Include="Fontaw\less\mixins.less" />
+    <Content Include="Fontaw\less\path.less" />
+    <Content Include="Fontaw\less\rotated-flipped.less" />
+    <Content Include="Fontaw\less\spinning.less" />
+    <Content Include="Fontaw\less\stacked.less" />
+    <Content Include="Fontaw\less\variables.less" />
+    <Content Include="Fontaw\scss\font-awesome.scss" />
+    <Content Include="Fontaw\scss\_bordered-pulled.scss" />
+    <Content Include="Fontaw\scss\_core.scss" />
+    <Content Include="Fontaw\scss\_fixed-width.scss" />
+    <Content Include="Fontaw\scss\_icons.scss" />
+    <Content Include="Fontaw\scss\_larger.scss" />
+    <Content Include="Fontaw\scss\_list.scss" />
+    <Content Include="Fontaw\scss\_mixins.scss" />
+    <Content Include="Fontaw\scss\_path.scss" />
+    <Content Include="Fontaw\scss\_rotated-flipped.scss" />
+    <Content Include="Fontaw\scss\_spinning.scss" />
+    <Content Include="Fontaw\scss\_stacked.scss" />
+    <Content Include="Fontaw\scss\_variables.scss" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.4.min.js" />
+    <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
+    <Content Include="Scripts\jquery.maskedinput.js" />
+    <Content Include="Scripts\jquery.min.js" />
+    <Content Include="Scripts\jquery.mousewheel.js" />
+    <Content Include="Scripts\jquery.slickscroll.js" />
+    <Content Include="Scripts\jquery.tablesorter.js" />
+    <Content Include="Scripts\jquery.tablesorter.pager.js" />
+    <Content Include="Scripts\jquery.timepicker.min.js" />
+    <Content Include="Scripts\jquery.ui.timepicker.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\json.cycle.js" />
+    <Content Include="Scripts\knockout-2.1.0.debug.js" />
+    <Content Include="Scripts\knockout-2.1.0.js" />
+    <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\OrderManagerScript.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Home\_LoginCustom.cshtml" />
+    <Content Include="Views\Home\ShowDashBoard.cshtml" />
+    <Content Include="Views\Shared\_DashBoardLayOut.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\WelCome\Index.cshtml" />
+    <Content Include="Views\Shared\_DashBoardLayoutWithMenu.cshtml" />
+    <Content Include="Views\DepartmentSetup\Main.cshtml" />
+    <Content Include="Views\Shared\_MasterSetupLayout.cshtml" />
+    <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\Employee\Docsetup.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Shared\_SecurityModelLayout.cshtml" />
+    <Content Include="Views\Setting\Index.cshtml" />
+    <Content Include="Views\Setting\DoctorSetup.cshtml" />
+    <Content Include="Views\Setting\CreateDoctorSpecialist.cshtml" />
+    <Content Include="Views\Mis\Main.cshtml" />
+    <Content Include="Views\Shared\_MisLayOutLayout.cshtml" />
+    <Content Include="Views\AboutUs\Index.cshtml" />
+    <Content Include="Views\AboutUs\ShowChart.cshtml" />
+    <Content Include="Views\AboutUs\ShowChartDetails.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\LostPassword.cshtml" />
+    <Content Include="Views\Account\Manage.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
+    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
+    <Content Include="Views\AdmissionDipositFee\Create.cshtml" />
+    <Content Include="Views\AdmissionDipositFee\Edit.cshtml" />
+    <Content Include="Views\AdmissionDipositFee\Index.cshtml" />
+    <Content Include="Views\Allotment\AllotmentDetails.cshtml" />
+    <Content Include="Views\Allotment\AllotmentMaster.cshtml" />
+    <Content Include="Views\Allotment\AllotmentReport.cshtml" />
+    <Content Include="Views\Allotment\Index.cshtml" />
+    <Content Include="Views\Allowance\Create.cshtml" />
+    <Content Include="Views\Allowance\Edit.cshtml" />
+    <Content Include="Views\Allowance\Index.cshtml" />
+    <Content Include="Views\BillCounterNew\Create.cshtml" />
+    <Content Include="Views\BillCounterNew\_AddMoreParticulars.cshtml" />
+    <Content Include="Views\BillingCounter\AddMoreParticulars.cshtml" />
+    <Content Include="Views\BillingCounter\AddParticularList.cshtml" />
+    <Content Include="Views\BillingCounter\AdvancedSearch.cshtml" />
+    <Content Include="Views\BillingCounter\CentrailBillingIndexDetails.cshtml" />
+    <Content Include="Views\BillingCounter\CentralBillingIndex.cshtml" />
+    <Content Include="Views\BillingCounter\Create.cshtml" />
+    <Content Include="Views\BillingCounter\DeleteCBBill.cshtml" />
+    <Content Include="Views\BillingCounter\DeleteCBBillDetials.cshtml" />
+    <Content Include="Views\BillingCounter\DepositRefund.cshtml" />
+    <Content Include="Views\BillingCounter\Index.cshtml" />
+    <Content Include="Views\BillingCounter\IPDPatientDischarge.cshtml" />
+    <Content Include="Views\BillingCounter\PatientDischargeRpt.cshtml" />
+    <Content Include="Views\BillingCounter\PatientDscrgh.cshtml" />
+    <Content Include="Views\BillingCounter\PatientListView.cshtml" />
+    <Content Include="Views\BillingCounter\PaymentDetails.cshtml" />
+    <Content Include="Views\BillingCounter\PrintBillCB.cshtml" />
+    <Content Include="Views\BillingCounter\PrintBillingCounter.cshtml" />
+    <Content Include="Views\BillingCounter\RefundForm.cshtml" />
+    <Content Include="Views\BillingCounter\RefundIndex.cshtml" />
+    <Content Include="Views\BillingCounter\SearchPatient.cshtml" />
+    <Content Include="Views\BillingCounter\ShowRefundReceipt.cshtml" />
+    <Content Include="Views\BillingCounter\ViewUnpaidBillDetail.cshtml" />
+    <Content Include="Views\BillingCounter\_AdvancedSearch.cshtml" />
+    <Content Include="Views\BillingCounter\_DischargeSearch.cshtml" />
+    <Content Include="Views\BillingCounter\_RefundSearch.cshtml" />
+    <Content Include="Views\Billing\BillingDetails.cshtml" />
+    <Content Include="Views\Billing\BillingDischargeSummary.cshtml" />
+    <Content Include="Views\Billing\GetBalanceDeposit.cshtml" />
+    <Content Include="Views\Billing\Main.cshtml" />
+    <Content Include="Views\Billing\PatientTranDetails.cshtml" />
+    <Content Include="Views\Billing\SearchBy.cshtml" />
+    <Content Include="Views\Billing\SearchByCatagory.cshtml" />
+    <Content Include="Views\Billing\SearchByDepartmentID.cshtml" />
+    <Content Include="Views\Billing\SearchByRoomType.cshtml" />
+    <Content Include="Views\Billing\SearchByTodayTransaction.cshtml" />
+    <Content Include="Views\Billing\SearchByUsers.cshtml" />
+    <Content Include="Views\Billing\ShowPatientTranRpts.cshtml" />
+    <Content Include="Views\Billing\_BillDetailsByBillNumber.cshtml" />
+    <Content Include="Views\Billing\_PatientDetails.cshtml" />
+    <Content Include="Views\Billing\_TransactionDetails.cshtml" />
+    <Content Include="Views\BloodDonate\Create.cshtml" />
+    <Content Include="Views\BloodDonate\Edit.cshtml" />
+    <Content Include="Views\BloodDonate\Index.cshtml" />
+    <Content Include="Views\BloodStockManagement\Create.cshtml" />
+    <Content Include="Views\BloodStockManagement\Edit.cshtml" />
+    <Content Include="Views\BloodStockManagement\Index.cshtml" />
+    <Content Include="Views\BloodTransection\Create.cshtml" />
+    <Content Include="Views\BloodTransection\Index.cshtml" />
+    <Content Include="Views\BloodTransection\Main.cshtml" />
+    <Content Include="Views\CommonTest\Create.cshtml" />
+    <Content Include="Views\CommonTest\Edit.cshtml" />
+    <Content Include="Views\CommonTest\Index.cshtml" />
+    <Content Include="Views\ComplainEntry\_EditForComplainEntry.cshtml" />
+    <Content Include="Views\ComplainEntry\_IndexForComplainEntry.cshtml" />
+    <Content Include="Views\ComplainEntry\_ShowDashBoardForEmergency.cshtml" />
+    <Content Include="Views\Consulation\_Create.cshtml" />
+    <Content Include="Views\Consulation\_Edit.cshtml" />
+    <Content Include="Views\Consulation\_Index.cshtml" />
+    <Content Include="Views\CreditPatients\Create.cshtml" />
+    <Content Include="Views\CreditPatients\Edit.cshtml" />
+    <Content Include="Views\CreditPatients\Index.cshtml" />
+    <Content Include="Views\DailyJvDetail\Create.cshtml" />
+    <Content Include="Views\DailyJvDetail\Index.cshtml" />
+    <Content Include="Views\Deduction\Create.cshtml" />
+    <Content Include="Views\Deduction\Edit.cshtml" />
+    <Content Include="Views\Deduction\Index.cshtml" />
+    <Content Include="Views\Demand\Create.cshtml" />
+    <Content Include="Views\Demand\DemandItemList.cshtml" />
+    <Content Include="Views\Demand\DemandReport.cshtml" />
+    <Content Include="Views\Demand\Details.cshtml" />
+    <Content Include="Views\Demand\Edit.cshtml" />
+    <Content Include="Views\Demand\Index.cshtml" />
+    <Content Include="Views\DepartmentSetup\Create.cshtml" />
+    <Content Include="Views\DepartmentSetup\DeptMain.cshtml" />
+    <Content Include="Views\DepartmentSetup\Index.cshtml" />
+    <Content Include="Views\DepartmentSetup\_Edit.cshtml" />
+    <Content Include="Views\DepartmentSetup\_VUC_Add.cshtml" />
+    <Content Include="Views\DepositMaster\Create.cshtml" />
+    <Content Include="Views\DepositMaster\DepositeReceipt.cshtml" />
+    <Content Include="Views\DepositMaster\Edit.cshtml" />
+    <Content Include="Views\DepositMaster\Index.cshtml" />
+    <Content Include="Views\DepositMaster\SearchPatient.cshtml" />
+    <Content Include="Views\DepositMaster\_DepositPatientSearch.cshtml" />
+    <Content Include="Views\DesignationSetup\Create.cshtml" />
+    <Content Include="Views\DesignationSetup\Edit.cshtml" />
+    <Content Include="Views\DesignationSetup\Index.cshtml" />
+    <Content Include="Views\DesignationWiseSalarySetup\Create.cshtml" />
+    <Content Include="Views\DesignationWiseSalarySetup\Edit.cshtml" />
+    <Content Include="Views\DesignationWiseSalarySetup\Index.cshtml" />
+    <Content Include="Views\DietDetp\Main.cshtml" />
+    <Content Include="Views\Discharge\_EditForDischarge.cshtml" />
+    <Content Include="Views\Discharge\_IndexForDischarge.cshtml" />
+    <Content Include="Views\District\Create.cshtml" />
+    <Content Include="Views\District\Edit.cshtml" />
+    <Content Include="Views\District\Index.cshtml" />
+    <Content Include="Views\DoctorFeeSetup\Create.cshtml" />
+    <Content Include="Views\DoctorFeeSetup\Edit.cshtml" />
+    <Content Include="Views\DoctorFeeSetup\Index.cshtml" />
+    <Content Include="Views\DoctorSetup\Create.cshtml" />
+    <Content Include="Views\DoctorSetup\Edit.cshtml" />
+    <Content Include="Views\DoctorSetup\Index.cshtml" />
+    <Content Include="Views\DoctorSetup\VUC_Add.cshtml" />
+    <Content Include="Views\DoctorSetup\_DoctorDetailPartial.cshtml" />
+    <Content Include="Views\DoctorSetup\_test.cshtml" />
+    <Content Include="Views\DoctorTime\AddMoreDoctorTime.cshtml" />
+    <Content Include="Views\DoctorTime\Create.cshtml" />
+    <Content Include="Views\DoctorTime\DoctorTimeSearh.cshtml" />
+    <Content Include="Views\DoctorTime\Edit.cshtml" />
+    <Content Include="Views\DoctorTime\Index.cshtml" />
+    <Content Include="Views\DoctorTime\IndividualDoctorTimeDetails.cshtml" />
+    <Content Include="Views\DoctorTime\ShowAllData.cshtml" />
+    <Content Include="Views\DoctorTime\_DoctorTimeDetails.cshtml" />
+    <Content Include="Views\DoctorTime\_ShowDetails.cshtml" />
+    <Content Include="Views\DoctorTypeSetup\Create.cshtml" />
+    <Content Include="Views\DoctorTypeSetup\Details.cshtml" />
+    <Content Include="Views\DoctorTypeSetup\Edit.cshtml" />
+    <Content Include="Views\DoctorTypeSetup\Index.cshtml" />
+    <Content Include="Views\EmergencyCount\EmergencyCountDetails.cshtml" />
+    <Content Include="Views\EmergencyInvestigationDetail\addInvestigation.cshtml" />
+    <Content Include="Views\EmergencyInvestigationDetail\_CreateEI.cshtml" />
+    <Content Include="Views\EmergencyInvestigationDetail\_EditEI.cshtml" />
+    <Content Include="Views\EmergencyInvestigationDetail\_IndexForEI.cshtml" />
+    <Content Include="Views\EmergencyMaster\BillForm.cshtml" />
+    <Content Include="Views\EmergencyMaster\CensusFormEmergency.cshtml" />
+    <Content Include="Views\EmergencyMaster\CensusFormEmergencyDischarge.cshtml" />
+    <Content Include="Views\EmergencyMaster\Create.cshtml" />
+    <Content Include="Views\EmergencyMaster\DischargePatientList.cshtml" />
+    <Content Include="Views\EmergencyMaster\DischargePatientReport.cshtml" />
+    <Content Include="Views\EmergencyMaster\DischargeReport.cshtml" />
+    <Content Include="Views\EmergencyMaster\Edit.cshtml" />
+    <Content Include="Views\EmergencyMaster\EmergencyDailyCensus.cshtml" />
+    <Content Include="Views\EmergencyMaster\Index.cshtml" />
+    <Content Include="Views\EmergencyMaster\Main.cshtml" />
+    <Content Include="Views\EmergencyMaster\More.cshtml" />
+    <Content Include="Views\EmergencyMaster\Search.cshtml" />
+    <Content Include="Views\EmergencyMaster\VUC_Add.cshtml" />
+    <Content Include="Views\EmergencyMaster\_EditForvitals.cshtml" />
+    <Content Include="Views\EmergencyMaster\_EmergencyDetails.cshtml" />
+    <Content Include="Views\EmergencyMaster\_IndexForVitals.cshtml" />
+    <Content Include="Views\EmergencyMaster\_Viatal.cshtml" />
+    <Content Include="Views\EmergencyMaster\_ViatalForm.cshtml" />
+    <Content Include="Views\EmergencyPoliceCase\BillForm.cshtml" />
+    <Content Include="Views\EmergencyPoliceCase\Create.cshtml" />
+    <Content Include="Views\EmergencyPoliceCase\Edit.cshtml" />
+    <Content Include="Views\EmergencyPoliceCase\Index.cshtml" />
+    <Content Include="Views\EmergencyTreatmentAllergies\_CreateForEmergencyTreatmentAllergies.cshtml" />
+    <Content Include="Views\EmergencyTreatmentAllergies\_EditForEmergencyTreatmentAllergies.cshtml" />
+    <Content Include="Views\EmergencyTreatmentAllergies\_EditForEmergencyTreatmentAllergies1.cshtml" />
+    <Content Include="Views\EmergencyTreatmentAllergies\_IndexForEmergencyTreatmentAllergies.cshtml" />
+    <Content Include="Views\EmergencyTstCarid\AddMoreSectionTest.cshtml" />
+    <Content Include="Views\EmergencyTstCarid\_CreateEmergencyTestCarid.cshtml" />
+    <Content Include="Views\EmergencyTstCarid\_EditForEmergencyTestCarreid.cshtml" />
+    <Content Include="Views\EmergencyTstCarid\_IndexForEmergencyTestCaried.cshtml" />
+    <Content Include="Views\Emp\Index.cshtml" />
+    <Content Include="Views\Emp\showMore.cshtml" />
+    <Content Include="Views\Emp\Test.cshtml" />
+    <Content Include="Views\Emp\TestMultiple.cshtml" />
+    <Content Include="Views\Emp\_Address.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\FiscalYear\Create.cshtml" />
+    <Content Include="Views\FiscalYear\Edit.cshtml" />
+    <Content Include="Views\FiscalYear\Index.cshtml" />
+    <Content Include="Views\GlAccountSubGroup\Create.cshtml" />
+    <Content Include="Views\GlAccountSubGroup\DetailOfCOA.cshtml" />
+    <Content Include="Views\GlAccountSubGroup\Edit.cshtml" />
+    <Content Include="Views\GlAccountSubGroup\GlsubgroupSearch.cshtml" />
+    <Content Include="Views\GlAccountSubGroup\GlsubgroupSearched.cshtml" />
+    <Content Include="Views\GlAccountSubGroup\Index.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\CentralizedBilling.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\NotAuthorized.cshtml" />
+    <Content Include="Views\Home\Payroll.cshtml" />
+    <Content Include="Views\Home\Welcome.cshtml" />
+    <Content Include="Views\Inquery\doctorlist.cshtml" />
+    <Content Include="Views\Inquery\Index.cshtml" />
+    <Content Include="Views\Inquery\IpdSearch.cshtml" />
+    <Content Include="Views\Inquery\SearchDoctorAutocomplete.cshtml" />
+    <Content Include="Views\Inquery\SearchDoctorBYDept.cshtml" />
+    <Content Include="Views\Inquery\SearchPatient.cshtml" />
+    <Content Include="Views\Inquery\SearchPatient1.cshtml" />
+    <Content Include="Views\Inquery\ShowResult.cshtml" />
+    <Content Include="Views\Inquery\_DepositPatientSearch.cshtml" />
+    <Content Include="Views\Inquery\_DocSearchDept.cshtml" />
+    <Content Include="Views\IPDCount\IpdCountElderly.cshtml" />
+    <Content Include="Views\IPDDiet\AddIpdDiet.cshtml" />
+    <Content Include="Views\IPDDiet\DietTypeCreate.cshtml" />
+    <Content Include="Views\IPDDiet\DietTypeEdit.cshtml" />
+    <Content Include="Views\IPDDiet\DietTypeIndex.cshtml" />
+    <Content Include="Views\IPDDiet\MemberTypeDiscount\Create.cshtml" />
+    <Content Include="Views\IPDDiet\MemberTypeDiscount\Edit.cshtml" />
+    <Content Include="Views\IPDDiet\MemberTypeDiscount\Index.cshtml" />
+    <Content Include="Views\IpdMedicalRecord\AddIpdMrMedical.cshtml" />
+    <Content Include="Views\IpdMedicalRecord\AddMoreIpdCommoTest.cshtml" />
+    <Content Include="Views\IpdMedicalRecord\EditIpdMRCommonTest.cshtml" />
+    <Content Include="Views\IpdMedicalRecord\EditMainTest.cshtml" />
+    <Content Include="Views\IpdMedicalRecord\EditMedicalRecord.cshtml" />
+    <Content Include="Views\IpdMedicalRecord\IpdMRCommonTestDetailsByID.cshtml" />
+    <Content Include="Views\IpdMedicalRecord\IpdMrMainTest.cshtml" />
+    <Content Include="Views\IpdMedicalRecord\IpdMrMainTestModel.cshtml" />
+    <Content Include="Views\IpdMedicalRecord\IpdMrTest.cshtml" />
+    <Content Include="Views\IpdMedicalRecord\_CheckBox.cshtml" />
+    <Content Include="Views\IpdMedicalRecord\_MedicineEntry.cshtml" />
+    <Content Include="Views\IPDNurseReport\Index.cshtml" />
+    <Content Include="Views\IPDNurseReport\NurseDailyReport.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\ActionToOT.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\billforIpdforOpd.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\BillForm.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\Change.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\Create.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\CreateNewPatient.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\DailyRortOfIPdResistrationMaster.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\DepositeReceipt.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\Discharge.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\GetAllDischargReport.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\GetDailyIPdReport.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\Index.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\InsertFroCentralizeBillingInIPDResistrationMaster.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\IPdDischargeReport.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\IpdPatientDiagnosisDetails.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\IpdVital.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\IpdWardDetails.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\NurseDailyRecord.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\PaidPatientResistrationIndex.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\PatientSearch.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\ScanfileUploadinFolder.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\Search.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\SearchByName.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\SearchIpdPatientByName.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\ShiftFromIPD.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\_EditVital.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\_GetdataDetails.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\_GetPatientDetails.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\_IpdPdetailsByName.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\_OpdDetailsdata.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\_PatientInfo.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\_SearchByName.cshtml" />
+    <Content Include="Views\IPDRegistrationMaster\_WardDetails.cshtml" />
+    <Content Include="Views\ItemBlockRecord\Create.cshtml" />
+    <Content Include="Views\ItemBlockRecord\Edit.cshtml" />
+    <Content Include="Views\ItemBlockRecord\Index.cshtml" />
+    <Content Include="Views\ItemBlockRecord\SearchItemRecord.cshtml" />
+    <Content Include="Views\ItemBlockRecord\_Details.cshtml" />
+    <Content Include="Views\ItemBlockSetup\Create.cshtml" />
+    <Content Include="Views\ItemBlockSetup\Edit.cshtml" />
+    <Content Include="Views\ItemBlockSetup\Index.cshtml" />
+    <Content Include="Views\JournalVFromat\Create.cshtml" />
+    <Content Include="Views\JournalVFromat\Edit.cshtml" />
+    <Content Include="Views\JournalVFromat\Index.cshtml" />
+    <Content Include="Views\JVMaster\BalanceSheet.cshtml" />
+    <Content Include="Views\JVMaster\BankReconcilation.cshtml" />
+    <Content Include="Views\JVMaster\BSSchedule.cshtml" />
+    <Content Include="Views\JVMaster\Copy of _BankReconcilation.cshtml" />
+    <Content Include="Views\JVMaster\CreateJournalVoucher.cshtml" />
+    <Content Include="Views\JVMaster\CreateNewJV.cshtml" />
+    <Content Include="Views\JVMaster\GetAllTrialBalance.cshtml" />
+    <Content Include="Views\JVMaster\GetBillDetailByDepartment.cshtml" />
+    <Content Include="Views\JVMaster\GetBillDetailByUser.cshtml" />
+    <Content Include="Views\JVMaster\GetCashHandover.cshtml" />
+    <Content Include="Views\JVMaster\GetTrailBalance.cshtml" />
+    <Content Include="Views\JVMaster\HandOverReport.cshtml" />
+    <Content Include="Views\JVMaster\IncomeAndExpenditure.cshtml" />
+    <Content Include="Views\JVMaster\Index.cshtml" />
+    <Content Include="Views\JVMaster\LedgerAccountHeadWise.cshtml" />
+    <Content Include="Views\JVMaster\MainMenu.cshtml" />
+    <Content Include="Views\JVMaster\MakeJournalVoucher.cshtml" />
+    <Content Include="Views\JVMaster\NewTrialBalance.cshtml" />
+    <Content Include="Views\JVMaster\NotifyHandOver.cshtml" />
+    <Content Include="Views\JVMaster\OpeningBalance.cshtml" />
+    <Content Include="Views\JVMaster\PLSchedule.cshtml" />
+    <Content Include="Views\JVMaster\Search.cshtml" />
+    <Content Include="Views\JVMaster\ShowJournalVoucher.cshtml" />
+    <Content Include="Views\JVMaster\ShowLedgerDetail.cshtml" />
+    <Content Include="Views\JVMaster\TrialMainMenu.cshtml" />
+    <Content Include="Views\JVMaster\_AddMoreParticulars.cshtml" />
+    <Content Include="Views\JVMaster\_BalanceSheet.cshtml" />
+    <Content Include="Views\JVMaster\_BankReconcilation.cshtml" />
+    <Content Include="Views\JVMaster\_BankReconcilationPartial.cshtml" />
+    <Content Include="Views\JVMaster\_BSSchedule.cshtml" />
+    <Content Include="Views\JVMaster\_DisplayVoucherLists.cshtml" />
+    <Content Include="Views\JVMaster\_GetAllTrialBalance.cshtml" />
+    <Content Include="Views\JVMaster\_GetBillDetailByDepartment.cshtml" />
+    <Content Include="Views\JVMaster\_GetBillDetailByUser.cshtml" />
+    <Content Include="Views\JVMaster\_GetCashHandover.cshtml" />
+    <Content Include="Views\JVMaster\_GetTrialBalance.cshtml" />
+    <Content Include="Views\JVMaster\_HandOverReport.cshtml" />
+    <Content Include="Views\JVMaster\_IncomeAndExpenditure.cshtml" />
+    <Content Include="Views\JVMaster\_LedgerDetailsAccWise.cshtml" />
+    <Content Include="Views\JVMaster\_NewTrialBalance.cshtml" />
+    <Content Include="Views\JVMaster\_OpeningBalance.cshtml" />
+    <Content Include="Views\JVMaster\_PLSchedule.cshtml" />
+    <Content Include="Views\MedicalTest\AssignPatients.cshtml" />
+    <Content Include="Views\MedicalTest\Create.cshtml" />
+    <Content Include="Views\MedicalTest\DemandItemList.cshtml" />
+    <Content Include="Views\MedicalTest\Index.cshtml" />
+    <Content Include="Views\MedicalTest\PatientList.cshtml" />
+    <Content Include="Views\MemberTypeDiscount\Create.cshtml" />
+    <Content Include="Views\MemberTypeDiscount\Edit.cshtml" />
+    <Content Include="Views\MemberTypeDiscount\Index.cshtml" />
+    <Content Include="Views\MemberTypeSetup\Create.cshtml" />
+    <Content Include="Views\MemberTypeSetup\Edit.cshtml" />
+    <Content Include="Views\MemberTypeSetup\Index.cshtml" />
+    <Content Include="Views\Mis\AdmissionDischarge.cshtml" />
+    <Content Include="Views\Mis\AgeReportIndex.cshtml" />
+    <Content Include="Views\Mis\BillAmountDifference.cshtml" />
+    <Content Include="Views\Mis\CheckBill.cshtml" />
+    <Content Include="Views\Mis\DeptPieChartView.cshtml" />
+    <Content Include="Views\Mis\DoctorCommission.cshtml" />
+    <Content Include="Views\Mis\DoctorReportIndex.cshtml" />
+    <Content Include="Views\Mis\Emergency.cshtml" />
+    <Content Include="Views\Mis\GenderReportIndex.cshtml" />
+    <Content Include="Views\Mis\GeneralAndPayableReport.cshtml" />
+    <Content Include="Views\Mis\GetDistrictReportIndex.cshtml" />
+    <Content Include="Views\Mis\GetOutReferReportIndex.cshtml" />
+    <Content Include="Views\Mis\GetVdcMunReportIndex.cshtml" />
+    <Content Include="Views\Mis\GetZoneReportIndex.cshtml" />
+    <Content Include="Views\Mis\Index.cshtml" />
+    <Content Include="Views\Mis\MedicalRecordIndex.cshtml" />
+    <Content Include="Views\Mis\MRDischarge.cshtml" />
+    <Content Include="Views\Mis\MRMainPage.cshtml" />
+    <Content Include="Views\Mis\OpdDepartmentWiseReport.cshtml" />
+    <Content Include="Views\Mis\OperationStatistics.cshtml" />
+    <Content Include="Views\Mis\OtList.cshtml" />
+    <Content Include="Views\Mis\PathoReportDetails.cshtml" />
+    <Content Include="Views\Mis\PatientAllFlowRecord.cshtml" />
+    <Content Include="Views\Mis\PayablePatientReport.cshtml" />
+    <Content Include="Views\Mis\PayDoctorCommission.cshtml" />
+    <Content Include="Views\Mis\RenderPieChart.cshtml" />
+    <Content Include="Views\Mis\Report.cshtml" />
+    <Content Include="Views\Mis\ShowMRDischargeForm.cshtml" />
+    <Content Include="Views\Mis\Statistics.cshtml" />
+    <Content Include="Views\Mis\ZoneSearchIndex.cshtml" />
+    <Content Include="Views\Mis\_Details1.cshtml" />
+    <Content Include="Views\Mis\_IPsearchValue.cshtml" />
+    <Content Include="Views\OpdMedicalDetail\AddDoctorList.cshtml" />
+    <Content Include="Views\OpdMedicalDetail\AgentTotalDetail.cshtml" />
+    <Content Include="Views\OpdMedicalDetail\BillForm.cshtml" />
+    <Content Include="Views\OpdMedicalDetail\calulateagenttotal.cshtml" />
+    <Content Include="Views\OpdMedicalDetail\Create.cshtml" />
+    <Content Include="Views\OpdMedicalDetail\Edit.cshtml" />
+    <Content Include="Views\OpdMedicalDetail\Index.cshtml" />
+    <Content Include="Views\OpdMedicalRecord\CommontestRecord.cshtml" />
+    <Content Include="Views\OpdMedicalRecord\FormForFurtherTest.cshtml" />
+    <Content Include="Views\OpdMedicalRecord\FormForMedicineRecords.cshtml" />
+    <Content Include="Views\OpdMedicalRecord\Index.cshtml" />
+    <Content Include="Views\OpdMedicalRecord\Main.cshtml" />
+    <Content Include="Views\OpdMedicalRecord\OldPatientMedicalRecords.cshtml" />
+    <Content Include="Views\OpdMedicalRecord\OpdMedicalReportPrint.cshtml" />
+    <Content Include="Views\OpdMedicalRecord\OpdMedicalReportPrintForOld.cshtml" />
+    <Content Include="Views\OpdMedicalRecord\OpdMedRepWithDeptIdNDocId.cshtml" />
+    <Content Include="Views\OpdMedicalRecord\SearchPatient.cshtml" />
+    <Content Include="Views\OpdMedicalRecord\ViewDetails.cshtml" />
+    <Content Include="Views\OpdMedicalRecord\ViewOpdMedicalRecord.cshtml" />
+    <Content Include="Views\OpdMedicalRecord\WriteRecord.cshtml" />
+    <Content Include="Views\OpdMedicalRecord\_AddCommonTest.cshtml" />
+    <Content Include="Views\OpdMedicalRecord\_AddFurtherTest.cshtml" />
+    <Content Include="Views\OpdMedicalRecord\_AddMedicineDoseTest.cshtml" />
+    <Content Include="Views\OpdMedicalRecord\_OldPatientMedicalRecords.cshtml" />
+    <Content Include="Views\OPD\AddDoctorList.cshtml" />
+    <Content Include="Views\OPD\billForm.cshtml" />
+    <Content Include="Views\OPD\Create.cshtml" />
+    <Content Include="Views\OPD\DoctorCommisionReport.cshtml" />
+    <Content Include="Views\OPD\Edit.cshtml" />
+    <Content Include="Views\OPD\HospitalCommision.cshtml" />
+    <Content Include="Views\OPD\Index.cshtml" />
+    <Content Include="Views\OPD\ListTodayValue.cshtml" />
+    <Content Include="Views\OPD\Main.cshtml" />
+    <Content Include="Views\OPD\MultipleBillCase.cshtml" />
+    <Content Include="Views\OPD\OldPatient.cshtml" />
+    <Content Include="Views\OPD\OpdBilling.cshtml" />
+    <Content Include="Views\OPD\OpdMain.cshtml" />
+    <Content Include="Views\OPD\OpdType.cshtml" />
+    <Content Include="Views\OPD\OpdVital.cshtml" />
+    <Content Include="Views\OPD\PreRegistrationData.cshtml" />
+    <Content Include="Views\OPD\Search.cshtml" />
+    <Content Include="Views\OPD\SearchByBloodGroup.cshtml" />
+    <Content Include="Views\OPD\TodayPatient.cshtml" />
+    <Content Include="Views\OPD\ViewOldPatient.cshtml" />
+    <Content Include="Views\OPD\_AddDoctorList.cshtml" />
+    <Content Include="Views\OPD\_BillingDetails.cshtml" />
+    <Content Include="Views\OPD\_BillingDetails123.cshtml" />
+    <Content Include="Views\OPD\_Details.cshtml" />
+    <Content Include="Views\OPD\_Details1.cshtml" />
+    <Content Include="Views\OPD\_doctorComm.cshtml" />
+    <Content Include="Views\OPD\_EditVital.cshtml" />
+    <Content Include="Views\OPD\_ErrorWithPatientId.cshtml" />
+    <Content Include="Views\OPD\_OpdPatientByBloodGroup.cshtml" />
+    <Content Include="Views\OPD\_OpdPatientRecordsWithPatientId.cshtml" />
+    <Content Include="Views\OPD\_OpdSearch.cshtml" />
+    <Content Include="Views\OPD\_SearchOption.cshtml" />
+    <Content Include="Views\OPD\_TransactionDetail.cshtml" />
+    <Content Include="Views\OperationTheatreDetails\Edit.cshtml" />
+    <Content Include="Views\OperationTheatreDetails\Index.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\BillRecords.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\Create.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\Details.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\Edit.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\EidtTheatreDetails.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\GetCommListFromCB.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\GetListFromCB.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\Index.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\Main.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\OperationRecord.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\PersonAllocated.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\PostOT.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\PreOT.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\SearchForOTDetail.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\SurgeryCharge.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\ViewOtCommissionDetails.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\_AddMoreOTCommission.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\_PREPOSTOT.cshtml" />
+    <Content Include="Views\OperationTheatreMaster\_SOTDetails.cshtml" />
+    <Content Include="Views\OperationTheatreRoom\Create.cshtml" />
+    <Content Include="Views\OperationTheatreRoom\Edit.cshtml" />
+    <Content Include="Views\OperationTheatreRoom\Index.cshtml" />
+    <Content Include="Views\Package\AssignPatient.cshtml" />
+    <Content Include="Views\Package\Create.cshtml" />
+    <Content Include="Views\Package\Edit.cshtml" />
+    <Content Include="Views\Package\Index.cshtml" />
+    <Content Include="Views\Package\PackageDetail.cshtml" />
+    <Content Include="Views\Package\PackagePatientList.cshtml" />
+    <Content Include="Views\PatientBill\BillDetail.cshtml" />
+    <Content Include="Views\PatientBill\Index.cshtml" />
+    <Content Include="Views\PatientDischarged\EditDischarged.cshtml" />
+    <Content Include="Views\PatientDischarged\Index.cshtml" />
+    <Content Include="Views\PatientDischarged\PatientBillDetails.cshtml" />
+    <Content Include="Views\PatientTestResult\BoneMarrowRptIndex.cshtml" />
+    <Content Include="Views\PatientTestResult\Create.cshtml" />
+    <Content Include="Views\PatientTestResult\CreateBoneMarrowRpt.cshtml" />
+    <Content Include="Views\PatientTestResult\CreateCytologyRpt.cshtml" />
+    <Content Include="Views\PatientTestResult\CytologyReportIndex.cshtml" />
+    <Content Include="Views\PatientTestResult\OtherTestMenu.cshtml" />
+    <Content Include="Views\PatientTestResult\PatientReport.cshtml" />
+    <Content Include="Views\PatientTestResult\PatientTestResultReport.cshtml" />
+    <Content Include="Views\PatientTestResult\SearchPatient.cshtml" />
+    <Content Include="Views\PatientTestResult\ShowBoneMarrowRpt.cshtml" />
+    <Content Include="Views\PatientTestResult\ShowCytologyReport.cshtml" />
+    <Content Include="Views\PatientTestResult\_CytoReport.cshtml" />
+    <Content Include="Views\PatientTestResult\_OpdPatientRecordsWithPatientId.cshtml" />
+    <Content Include="Views\PatientTest\BillPaidTest.cshtml" />
+    <Content Include="Views\PatientTest\Create.cshtml" />
+    <Content Include="Views\PatientTest\DetailOfBillPaidTest.cshtml" />
+    <Content Include="Views\PatientTest\DisplayCommission.cshtml" />
+    <Content Include="Views\PatientTest\Edit.cshtml" />
+    <Content Include="Views\PatientTest\Index.cshtml" />
+    <Content Include="Views\PatientTest\Main.cshtml" />
+    <Content Include="Views\PatientTest\PatientListView.cshtml" />
+    <Content Include="Views\PatientTest\PatientTestResultReport.cshtml" />
+    <Content Include="Views\PatientTest\PrintPatientTest.cshtml" />
+    <Content Include="Views\PatientTest\SampleCollectedIndex.cshtml" />
+    <Content Include="Views\PatientTest\SearchPatient.cshtml" />
+    <Content Include="Views\PatientTest\ViewCommissionDetails.cshtml" />
+    <Content Include="Views\PatientTest\_AddMoreCommission.cshtml" />
+    <Content Include="Views\PatientTest\_PatientDetails.cshtml" />
+    <Content Include="Views\PatientTest\_PatientTest.cshtml" />
+    <Content Include="Views\Pharmacy\Main.cshtml" />
+    <Content Include="Views\PreRegistration\AddMoreDepartmentDoctors.cshtml" />
+    <Content Include="Views\PreRegistration\CheckAvailibility.cshtml" />
+    <Content Include="Views\PreRegistration\Create.cshtml" />
+    <Content Include="Views\PreRegistration\Delete.cshtml" />
+    <Content Include="Views\PreRegistration\DoctorDisease.cshtml" />
+    <Content Include="Views\PreRegistration\Edit.cshtml" />
+    <Content Include="Views\PreRegistration\Index.cshtml" />
+    <Content Include="Views\PreRegistration\IPN.cshtml" />
+    <Content Include="Views\PreRegistration\Main.cshtml" />
+    <Content Include="Views\PreRegistration\Print.cshtml" />
+    <Content Include="Views\PreRegistration\ReportModel.cshtml" />
+    <Content Include="Views\PreRegistration\ReportPreRegistration.cshtml" />
+    <Content Include="Views\PreRegistration\_AddMoreDepartmentDoctorsFirst.cshtml" />
+    <Content Include="Views\PreRegistration\_Report.cshtml" />
+    <Content Include="Views\Refer\Create.cshtml" />
+    <Content Include="Views\Refer\Edit.cshtml" />
+    <Content Include="Views\Refer\Index.cshtml" />
+    <Content Include="Views\Relationship\Create.cshtml" />
+    <Content Include="Views\Relationship\Edit.cshtml" />
+    <Content Include="Views\Relationship\Index.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\ReturnOut\Create.cshtml" />
+    <Content Include="Views\ReturnOut\Details.cshtml" />
+    <Content Include="Views\ReturnOut\Index.cshtml" />
+    <Content Include="Views\Security\CreateRole.cshtml" />
+    <Content Include="Views\Security\Main.cshtml" />
+    <Content Include="Views\Security\RoleAddToUser.cshtml" />
+    <Content Include="Views\Security\RoleCreate.cshtml" />
+    <Content Include="Views\Setting\DoctorSpecialist.cshtml" />
+    <Content Include="Views\SetupAgent\Create.cshtml" />
+    <Content Include="Views\SetupAgent\Edit.cshtml" />
+    <Content Include="Views\SetupAgent\Index.cshtml" />
+    <Content Include="Views\SetupBank\Create.cshtml" />
+    <Content Include="Views\SetupBank\Edit.cshtml" />
+    <Content Include="Views\SetupBank\Index.cshtml" />
+    <Content Include="Views\SetupBillingType\Create.cshtml" />
+    <Content Include="Views\SetupBillingType\Edit.cshtml" />
+    <Content Include="Views\SetupBillingType\Index.cshtml" />
+    <Content Include="Views\SetupBlock\Create.cshtml" />
+    <Content Include="Views\SetupBlock\Edit.cshtml" />
+    <Content Include="Views\SetupBlock\Index.cshtml" />
+    <Content Include="Views\SetupDiagnosis\Create.cshtml" />
+    <Content Include="Views\SetupDiagnosis\Edit.cshtml" />
+    <Content Include="Views\SetupDiagnosis\Index.cshtml" />
+    <Content Include="Views\SetupEmergencyCase\Create.cshtml" />
+    <Content Include="Views\SetupEmergencyCase\Edit.cshtml" />
+    <Content Include="Views\SetupEmergencyCase\Index.cshtml" />
+    <Content Include="Views\SetUpEmergencyFee\Create.cshtml" />
+    <Content Include="Views\SetUpEmergencyFee\Edit.cshtml" />
+    <Content Include="Views\SetUpEmergencyFee\Index.cshtml" />
+    <Content Include="Views\SetupEmergencyInvestigationMaster\Create.cshtml" />
+    <Content Include="Views\SetupEmergencyInvestigationMaster\Edit.cshtml" />
+    <Content Include="Views\SetupEmergencyInvestigationMaster\Index.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\BankSalaryReport.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\Create.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\Edit.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\EditEmployeePayrollMaster.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\EmployeePayrollMaster.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\FinalisePayroll.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\FundDeductionEdit.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\FundDeductionIndex.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\FundDeductionSetup.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\GenerateBankPay.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\GenerateSalarySheet.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\Index.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\PayrollFinalize.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\ResignationDetail.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\_BankSalaryReport.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\_EmployeeAllowanceSetup.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\_EmployeeDeductionSetup.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\_EmployeeEducationInfo.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\_EmployeeTrainingInfo.cshtml" />
+    <Content Include="Views\SetupEmployeeMaster\_ViewSalarySheet.cshtml" />
+    <Content Include="Views\SetupEmployeeShiftMaster\Create.cshtml" />
+    <Content Include="Views\SetupEmployeeShiftMaster\Edit.cshtml" />
+    <Content Include="Views\SetupEmployeeShiftMaster\Index.cshtml" />
+    <Content Include="Views\SetupEmployeeType\Create.cshtml" />
+    <Content Include="Views\SetupEmployeeType\Edit.cshtml" />
+    <Content Include="Views\SetupEmployeeType\Index.cshtml" />
+    <Content Include="Views\SetupFloor\Create.cshtml" />
+    <Content Include="Views\SetupFloor\Edit.cshtml" />
+    <Content Include="Views\SetupFloor\Index.cshtml" />
+    <Content Include="Views\SetUpHospitalDetail\Create.cshtml" />
+    <Content Include="Views\SetUpHospitalDetail\Delete.cshtml" />
+    <Content Include="Views\SetUpHospitalDetail\Edit.cshtml" />
+    <Content Include="Views\SetUpHospitalDetail\Index.cshtml" />
+    <Content Include="Views\SetUpHospitalDetail\_Details.cshtml" />
+    <Content Include="Views\SetUpHospitalFeeDiscount\Create.cshtml" />
+    <Content Include="Views\SetUpHospitalFeeDiscount\Delete.cshtml" />
+    <Content Include="Views\SetUpHospitalFeeDiscount\Details.cshtml" />
+    <Content Include="Views\SetUpHospitalFeeDiscount\Edit.cshtml" />
+    <Content Include="Views\SetUpHospitalFeeDiscount\Index.cshtml" />
+    <Content Include="Views\SetUpHospitalFee\Create.cshtml" />
+    <Content Include="Views\SetUpHospitalFee\Delete.cshtml" />
+    <Content Include="Views\SetUpHospitalFee\Details.cshtml" />
+    <Content Include="Views\SetUpHospitalFee\Edit.cshtml" />
+    <Content Include="Views\SetUpHospitalFee\Index.cshtml" />
+    <Content Include="Views\SetUpIpdRoom\Create.cshtml" />
+    <Content Include="Views\SetUpIpdRoom\Delete.cshtml" />
+    <Content Include="Views\SetUpIpdRoom\Details.cshtml" />
+    <Content Include="Views\SetUpIpdRoom\Edit.cshtml" />
+    <Content Include="Views\SetUpIpdRoom\Index.cshtml" />
+    <Content Include="Views\SetUpIpdWard\Create.cshtml" />
+    <Content Include="Views\SetUpIpdWard\Delete.cshtml" />
+    <Content Include="Views\SetUpIpdWard\Details.cshtml" />
+    <Content Include="Views\SetUpIpdWard\Edit.cshtml" />
+    <Content Include="Views\SetUpIpdWard\Index.cshtml" />
+    <Content Include="Views\SetupManpower\Create.cshtml" />
+    <Content Include="Views\SetupManpower\Details.cshtml" />
+    <Content Include="Views\SetupManpower\Edit.cshtml" />
+    <Content Include="Views\SetupManpower\Index.cshtml" />
+    <Content Include="Views\SetupMedicalCharge\Create.cshtml" />
+    <Content Include="Views\SetupMedicalCharge\Edit.cshtml" />
+    <Content Include="Views\SetupMedicalCharge\Index.cshtml" />
+    <Content Include="Views\SetupMemberDependent\AddDependentPersion.cshtml" />
+    <Content Include="Views\SetupMemberDependent\Create.cshtml" />
+    <Content Include="Views\SetupMemberDependent\Edit.cshtml" />
+    <Content Include="Views\SetupMemberDependent\Index.cshtml" />
+    <Content Include="Views\SetupMemberDependent\Relations.cshtml" />
+    <Content Include="Views\SetupMemberDependent\RelationsPartial.cshtml" />
+    <Content Include="Views\SetupMemberDependent\_GetLstWithName.cshtml" />
+    <Content Include="Views\SetUpMemberShip\Create.cshtml" />
+    <Content Include="Views\SetUpMemberShip\Details.cshtml" />
+    <Content Include="Views\SetUpMemberShip\Edit.cshtml" />
+    <Content Include="Views\SetUpMemberShip\GetMemberShipList.cshtml" />
+    <Content Include="Views\SetUpMemberShip\Index.cshtml" />
+    <Content Include="Views\SetupOtherDiscount\Create.cshtml" />
+    <Content Include="Views\SetupOtherDiscount\Edit.cshtml" />
+    <Content Include="Views\SetupOtherDiscount\Index.cshtml" />
+    <Content Include="Views\SetupOtherTest\Create.cshtml" />
+    <Content Include="Views\SetupOtherTest\Edit.cshtml" />
+    <Content Include="Views\SetupOtherTest\Index.cshtml" />
+    <Content Include="Views\SetupPathoTest\Create.cshtml" />
+    <Content Include="Views\SetupPathoTest\Edit.cshtml" />
+    <Content Include="Views\SetupPathoTest\Index.cshtml" />
+    <Content Include="Views\SetupRoomType\Create.cshtml" />
+    <Content Include="Views\SetupRoomType\Edit.cshtml" />
+    <Content Include="Views\SetupRoomType\Index.cshtml" />
+    <Content Include="Views\SetUpSection\Create.cshtml" />
+    <Content Include="Views\SetUpSection\Delete.cshtml" />
+    <Content Include="Views\SetUpSection\Details.cshtml" />
+    <Content Include="Views\SetUpSection\Edit.cshtml" />
+    <Content Include="Views\SetUpSection\Index.cshtml" />
+    <Content Include="Views\SetupUnit\Create.cshtml" />
+    <Content Include="Views\SetupUnit\Edit.cshtml" />
+    <Content Include="Views\SetupUnit\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_BillingCounterLayout.cshtml" />
+    <Content Include="Views\Shared\_BillingLayout.cshtml" />
+    <Content Include="Views\Shared\_BloodBankMenuLayout.cshtml" />
+    <Content Include="Views\Shared\_CentralizedBillingShared.cshtml" />
+    <Content Include="Views\Shared\_DashboardDietLayout.cshtml" />
+    <Content Include="Views\Shared\_DashboardInqueryLayout.cshtml" />
+    <Content Include="Views\Shared\_EmergencyLayout.cshtml" />
+    <Content Include="Views\Shared\_EmergencyLeftBlankLayout.cshtml" />
+    <Content Include="Views\Shared\_GlAccountSubGrp.cshtml" />
+    <Content Include="Views\Shared\_IPDLayout.cshtml" />
+    <Content Include="Views\Shared\_LayOutManageForEmp.cshtml" />
+    <Content Include="Views\Shared\_MRecordLayout.cshtml" />
+    <Content Include="Views\Shared\_OpdLayOut.cshtml" />
+    <Content Include="Views\Shared\_OpdMRLayout.cshtml" />
+    <Content Include="Views\Shared\_OperationTheatreLayout.cshtml" />
+    <Content Include="Views\Shared\_PathoAndRadiologyLayout.cshtml" />
+    <Content Include="Views\Shared\_PatientTestLayout.cshtml" />
+    <Content Include="Views\Shared\_PayRollLayout.cshtml" />
+    <Content Include="Views\Shared\_Pre-RegistrationLayout.cshtml" />
+    <Content Include="Views\Shared\_StockLayout.cshtml" />
+    <Content Include="Views\Shared\_StockSetupLayout.cshtml" />
+    <Content Include="Views\StockBreakage\Create.cshtml" />
+    <Content Include="Views\StockBreakage\Details.cshtml" />
+    <Content Include="Views\StockBreakage\Index.cshtml" />
+    <Content Include="Views\StockCategory\Create.cshtml" />
+    <Content Include="Views\StockCategory\Edit.cshtml" />
+    <Content Include="Views\StockCategory\Index.cshtml" />
+    <Content Include="Views\StockItemEntry\Create.cshtml" />
+    <Content Include="Views\StockItemEntry\Edit.cshtml" />
+    <Content Include="Views\StockItemEntry\Index.cshtml" />
+    <Content Include="Views\StockItemPurchase\Create.cshtml" />
+    <Content Include="Views\StockItemPurchase\Details.cshtml" />
+    <Content Include="Views\StockItemPurchase\Edit.cshtml" />
+    <Content Include="Views\StockItemPurchase\Index.cshtml" />
+    <Content Include="Views\StockItemPurchase\PurchaseVoucher.cshtml" />
+    <Content Include="Views\StockItemPurchase\Report.cshtml" />
+    <Content Include="Views\StockItemPurchase\showDD.cshtml" />
+    <Content Include="Views\StockItemPurchase\ShowPurchaseJVDetails.cshtml" />
+    <Content Include="Views\StockItemPurchase\StockItemPurchaseDetail.cshtml" />
+    <Content Include="Views\StockItemPurchase\StockItemPurchaseReport.cshtml" />
+    <Content Include="Views\StockItemPurchase\SupplierWiseReport.cshtml" />
+    <Content Include="Views\StockItem\Create.cshtml" />
+    <Content Include="Views\StockItem\Index.cshtml" />
+    <Content Include="Views\StockPurchaseOrder\Create.cshtml" />
+    <Content Include="Views\StockPurchaseOrder\Details.cshtml" />
+    <Content Include="Views\StockPurchaseOrder\Edit.cshtml" />
+    <Content Include="Views\StockPurchaseOrder\Index.cshtml" />
+    <Content Include="Views\StockPurchaseOrder\OrderReport.cshtml" />
+    <Content Include="Views\StockPurchaseOrder\StockIPurchaseOrderDetail.cshtml" />
+    <Content Include="Views\StockReturnIn\Create.cshtml" />
+    <Content Include="Views\StockReturnIn\Index.cshtml" />
+    <Content Include="Views\StockSubCategory\Create.cshtml" />
+    <Content Include="Views\StockSubCategory\Edit.cshtml" />
+    <Content Include="Views\StockSubCategory\Index.cshtml" />
+    <Content Include="Views\StockSupplier\Create.cshtml" />
+    <Content Include="Views\StockSupplier\Edit.cshtml" />
+    <Content Include="Views\StockSupplier\Index.cshtml" />
+    <Content Include="Views\StockSupplier\Report.cshtml" />
+    <Content Include="Views\StockUnit\Create.cshtml" />
+    <Content Include="Views\StockUnit\Edit.cshtml" />
+    <Content Include="Views\StockUnit\Index.cshtml" />
+    <Content Include="Views\Stock\BreakageReturnReport.cshtml" />
+    <Content Include="Views\Stock\CreateGroupSetup.cshtml" />
+    <Content Include="Views\Stock\CreateLocationSetup.cshtml" />
+    <Content Include="Views\Stock\CreateRackSetup.cshtml" />
+    <Content Include="Views\Stock\DepartmentWiseStockReport.cshtml" />
+    <Content Include="Views\Stock\Details.cshtml" />
+    <Content Include="Views\Stock\Distribute.cshtml" />
+    <Content Include="Views\Stock\EditGroupDetails.cshtml" />
+    <Content Include="Views\Stock\EditRackSetup.cshtml" />
+    <Content Include="Views\Stock\GroupSetup.cshtml" />
+    <Content Include="Views\Stock\Index.cshtml" />
+    <Content Include="Views\Stock\ItemDistribution.cshtml" />
+    <Content Include="Views\Stock\ItemGroupDetailSetup.cshtml" />
+    <Content Include="Views\Stock\ItemGroupSetup.cshtml" />
+    <Content Include="Views\Stock\LocationSetup.cshtml" />
+    <Content Include="Views\Stock\Main.cshtml" />
+    <Content Include="Views\Stock\Print.cshtml" />
+    <Content Include="Views\Stock\RackSetup.cshtml" />
+    <Content Include="Views\Stock\ReportMenu.cshtml" />
+    <Content Include="Views\Stock\ShowGroupingItemDetails.cshtml" />
+    <Content Include="Views\Stock\ShowGroupingItemIndex.cshtml" />
+    <Content Include="Views\Stock\StockItemPurchaseReport.cshtml" />
+    <Content Include="Views\Stock\StockReport.cshtml" />
+    <Content Include="Views\Stock\StockSetupMain.cshtml" />
+    <Content Include="Views\Stock\UdpateLocationDetails.cshtml" />
+    <Content Include="Views\VDCMUN\Create.cshtml" />
+    <Content Include="Views\VDCMUN\Edit.cshtml" />
+    <Content Include="Views\VDCMUN\Index.cshtml" />
+    <Content Include="Views\Viatal\_EditForvitals.cshtml" />
+    <Content Include="Views\Viatal\_IndexForVitals.cshtml" />
+    <Content Include="Views\Viatal\_ViatalForm.cshtml" />
+    <Content Include="Views\WelCome\Create.cshtml" />
+    <Content Include="Views\Zone\Create.cshtml" />
+    <Content Include="Views\Zone\Edit.cshtml" />
+    <Content Include="Views\Zone\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\GlAccountSubGroup\" />
+    <Folder Include="Views\AjaxRequest\" />
+    <Folder Include="Views\IPDDietMedicalRecord\" />
+    <Folder Include="Views\JournalVFormat\" />
+    <Folder Include="Views\SetupBreakage\" />
+    <Folder Include="Views\SetupCategory\" />
+    <Folder Include="Views\TrialAudit\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>63754</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:63754/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

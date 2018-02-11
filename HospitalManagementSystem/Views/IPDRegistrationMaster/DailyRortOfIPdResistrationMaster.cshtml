@@ -1,0 +1,68 @@
+﻿@model Hospital.Models.IpdRegistrationMasterModel
+
+@{
+    ViewBag.Title = "DailyRortOfIPdResistrationMaster";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+
+
+<script type="text/javascript">
+
+
+
+    var j = $.noConflict();
+    j(function () {
+
+        j("#RegistrationDate").datepicker();
+    });
+
+</script>
+
+
+<h2 style="text-align: center;">Daily Reports</h2>
+<div class="contentWrapper">
+
+
+
+    <div id="DailyRecordDisplay">
+    </div>
+
+    @using (Ajax.BeginForm("GetDailyIPdReport", "IpdRegistrationMaster", FormMethod.Post, new AjaxOptions() { UpdateTargetId = "Search" }))
+    {
+        @Html.EditorFor(model => model.RegistrationDate, new { @class = "DateTime", @id = "RegistrationDate" })
+
+        <input type="submit" value="Search" id="btnSearch" />
+    }
+
+
+    <div id="Search">
+    </div>
+
+</div>
+
+
+@*<script type="text/javascript">
+
+    $('#btnSearch1').click(function () {
+
+        var Date = $("#RegistrationDate").val();
+        alert(date);
+       
+
+        $.ajax({
+            url: '/IpdRegistrationMaster/GetDailyIPdReport/',
+            type: 'POST',
+            data: {
+                RegistrationDate: Date,
+               
+            },
+            success: function (data) {
+                $('#SearchByDate').html(data);
+            },
+            errro: function () {
+                alert('Sorry Error Occured');
+            }
+        });
+    });
+    </script>*@

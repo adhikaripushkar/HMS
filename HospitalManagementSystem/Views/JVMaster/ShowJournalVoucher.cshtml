@@ -1,0 +1,262 @@
+﻿@model HospitalManagementSystem.Models.JVMasterModel
+@{
+    ViewBag.Title = "JV";
+    Layout = "~/Views/Shared/_BillingLayout.cshtml";
+    decimal DrTotalAmount = 0;
+    decimal CrTotalAmount = 0;
+}
+
+<h2></h2>
+<style>
+    table#tblnoborder,
+    table#tblnoborder td {
+        border: none !important;
+    }
+
+    .font {
+        font-weight: bold;
+    }
+
+    .small-table td {
+        border: none;
+    }
+
+
+
+    .holder img {
+        max-height: 48px;
+        max-width: 55px;
+        object-fit: cover;
+    }
+
+
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+    }
+</style>
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">Bill <br>');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+</script>
+
+<div class="contentWrapper">
+
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto;">
+
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != null && @HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalManagementSystemLogo/@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() == "")
+        { 
+            
+            <br />
+        
+        }
+        <div style="font: bold; font-size: 22px; text-align: center; height: 135px;">
+            @if (@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != null && @HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != "")
+            {
+                <span>@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName()</span>
+            }
+            <br />
+            @HospitalManagementSystem.Utility.GetHospitalManagementSystemName()<br />
+            <div style="height: 100px;">
+                <p style="font-size: 17px; text-align: center">@HospitalManagementSystem.Utility.HospitalManagementSystemAddress()</p>
+                <p style="font-size: 14px; text-align: center">Website:-@HospitalManagementSystem.Utility.HospitalManagementSystemUrl()</p>
+                <p style="font-size: 14px; text-align: center">Ph:-@HospitalManagementSystem.Utility.HospitalManagementSystemPhone()</p>
+
+            </div>
+
+        </div>
+
+        @*<h4 style="text-align: center;"><u>Account Department</u> </h4>*@
+        <h5 style="text-align: left;">JV Number : @Model.ObjJVDetailsViewModel.JVnumber</h5>
+        <h5 style="text-align: left;">Date : @Model.ObjJVDetailsViewModel.JVDate.ToShortDateString()&nbsp;&nbsp;&nbsp;&nbsp; / @HospitalManagementSystem.Utility.getNepaliDate(Model.ObjJVDetailsViewModel.JVDate.ToShortDateString())</h5>
+        <div>
+
+
+            <table style="width: 880px; border: 1px solid black;">
+
+                <thead>
+                    <tr style="font-size: 15px;">
+                        <th style="border: 1px solid black;">Particulars</th>
+                        <th style="border: 1px solid black;">Debit</th>
+                        <th style="border: 1px solid black;">Credit</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @if (Model.JvType == "JV" || Model.JvType == "CV")
+                    {
+                        foreach (var item in Model.JVDetailsModelList)
+                        {
+                            if (item.DrAmount > 0)
+                            {
+                                DrTotalAmount += item.DrAmount;
+                        <tr style="font-size: 12px;">
+                            <th style="border: 1px solid black; text-align: left;">
+                                @item.FeeTypeName .....Dr
+                            </th>
+
+                            <th style="border: 1px solid black; text-align: left;">
+                                @item.DrAmount
+                            </th>
+
+                            <th style="border: 1px solid black; text-align: left;">0</th>
+
+                        </tr>
+                            }
+                        }
+                        foreach (var item in Model.JVDetailsModelList)
+                        {
+                            if (item.CrAmount > 0)
+                            {
+                                CrTotalAmount += item.CrAmount;
+                        <tr style="font-size: 12px;">
+                            <th style="border: 1px solid black; text-align: left;">To   @item.FeeTypeName
+                            </th>
+
+                            <th style="border: 1px solid black; text-align: left;">0</th>
+
+                            <th style="border: 1px solid black; text-align: left;">
+                                @item.CrAmount
+
+                            </th>
+
+                        </tr>
+                            }
+                        }
+                    }
+                    else if (Model.JvType == "PV" || Model.JvType == "RV")
+                    {
+                        foreach (var item in Model.JVDetailsModelList)
+                        {
+                            if (item.DrAmount > 0)
+                            {
+
+                                DrTotalAmount += item.DrAmount;
+                        <tr style="font-size: 12px;">
+                            <th style="border: 1px solid black; text-align: left;">Account :
+                              <br />
+                                @item.FeeTypeName
+                            </th>
+
+                            <th style="border: 1px solid black; text-align: left;">
+
+                                @item.DrAmount
+
+
+                            </th>
+
+                            <th style="border: 1px solid black; text-align: left;">0</th>
+
+                        </tr>
+                            }
+                        }
+                        foreach (var item in Model.JVDetailsModelList)
+                        {
+                            if (item.CrAmount > 0)
+                            {
+                                CrTotalAmount += item.CrAmount;
+                        <tr style="font-size: 12px;">
+                            <th style="border: 1px solid black; text-align: left;">Through :
+                                <br />
+                                @item.FeeTypeName
+                            </th>
+
+                            <th style="border: 1px solid black; text-align: left;">0</th>
+
+                            <th style="border: 1px solid black; text-align: left;">
+
+                                @item.CrAmount
+
+                            </th>
+
+                        </tr>
+                            }
+                        }
+                    }
+
+
+                    <tr style="font-size: 15px;">
+                        <th style="border: 1px solid black; text-align: center;">Total
+                        </th>
+
+                        <th style="border: 1px solid black; text-align: left;">
+                            @DrTotalAmount
+                        </th>
+
+                        <th style="border: 1px solid black; text-align: left;">
+                            @CrTotalAmount
+                        </th>
+
+                    </tr>
+
+
+
+                </tbody>
+            </table>
+
+        </div>
+        @{HospitalManagementSystem.NumberToEnglish obj = new HospitalManagementSystem.NumberToEnglish();
+          string str = obj.changeNumericToWords(Convert.ToDouble(DrTotalAmount));
+        }
+
+        <h4>Amount In Word :&nbsp;&nbsp;@str <span>&nbsp;Only.</span></h4>
+
+
+        <div id="NarraionDtls" style="margin-top: 20px; width: 880px;">
+            <h4>On Account Of :</h4>
+            @Html.TextAreaFor(model => model.Narration1, new { @style = "width: 873px; height: 37px;" })
+        </div>
+
+        <div id="VeriAppro" style="margin-top: 80px;">
+            <table style="width: 880px; text-align: center;">
+                <tr>
+                    <td>Prepared By</td>
+                    <td>Verified By</td>
+                    <td>Approved By</td>
+                </tr>
+
+            </table>
+
+        </div>
+        <br />
+        <br />
+
+
+
+
+
+    </div>
+
+    <span style="float: right;">
+        <input type="button" id="btnPrint" style="width: 50px;" onclick="print()" value="Print" /></span><br />
+    <p id="linkNewBack">
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+</div>
+

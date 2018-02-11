@@ -1,0 +1,61 @@
+﻿@model HospitalManagementSystem.Models.IpdSearchResults
+
+@{
+    ViewBag.Title = "SearchByName";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+<h2 style="text-align: center;">IPD Department</h2>
+
+<div class="contentWrapper">
+
+
+    @*   @using (Ajax.BeginForm("_SearchByNameData", "IpdRegistrationMaster", FormMethod.Post, new AjaxOptions() { UpdateTargetId = "SearchbyName" }))
+         {
+
+            
+        
+       
+             *@
+    <span>Enter Name:</span><br />
+    <input type="text" name="firstname" id="searchTerm" value="" size="10" maxlength="30" />
+
+    <div id="SearchbyName">
+        @*  @Html.Partial("_SearchByName", Model)*@
+        @*  </div>
+         }*@
+        <div id="SearchByName"></div>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+    <script type="text/javascript">
+
+
+
+        $('#searchTerm').live('keypress', function () {
+
+
+            $.ajax({
+                url: '/IpdRegistrationMaster/_SearchByNameData/',
+                type: 'GET',
+                data: {
+                    firstname: $('#searchTerm').val()
+                },
+                success: function (data) {
+                    $('#SearchByName').html(data);
+                },
+                errro: function () {
+                    alert('Sorry Error Occured');
+                },
+
+            });
+        });
+
+
+
+    </script>
+
+</div>

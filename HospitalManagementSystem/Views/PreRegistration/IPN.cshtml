@@ -1,0 +1,16 @@
+﻿<div id="paypalDiv">@*<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post"></form>*@
+ 
+<form id="paypalForm" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+
+<p class="inline-small-label" style="padding-top: 7px;"><label for="device-id"><span>User ID</span></label></p>
+ 
+<input id="custom" class="full-width" name="custom" value="" type="text"> 
+    <input class="full-width" name="business" value="support@mycompany.com" type="hidden"> 
+    <input name="cmd" value="_xclick" type="hidden"> <input name="item_name" value="credits" type="hidden">
+     <input name="item_number" value="40" type="hidden"> <input name="amount" value="2.95" type="hidden"> 
+    <input name="no_shipping" value="1" type="hidden"> <input name="return" value="http://www.cotega.com/receipt" type="hidden">
+     <input name="notify_url" value="https://www.cotega.com /ipn" type="hidden">
+    <button class="btn btn-primary submit-button" type="submit">Pay with PayPal</button>
+  
+ 
+</form></div>

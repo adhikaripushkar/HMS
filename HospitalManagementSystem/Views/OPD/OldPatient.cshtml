@@ -1,0 +1,138 @@
+﻿@model HospitalManagementSystem.Models.OpdModel
+
+@{
+    ViewBag.Title = "OldPatient";
+    Layout = "~/Views/Shared/_OpdLayOut.cshtml";
+}
+
+<h2 style="text-align: center;">Old Patient@{
+    if (Session["OpdTypeIdInt"] != null)
+    {
+        if ((int)Session["OpdTypeIdInt"] == 1)
+        {
+    @:<span style="color:#8cb4c8;font-size:12px;">(General)</span>
+            }
+        else
+        {
+    @:<span style="color:#8cb4c8;font-size:12px;">(Payable)</span>
+            }
+    }
+
+    else
+    {
+    @:<span style="color:#8cb4c8;font-size:12px;">(General)</span>
+        }
+}
+
+</h2>
+
+
+
+
+<div class="contentWrapper">
+
+    @if (ViewBag.msz != null)
+    {
+            
+        @ViewBag.msz;
+    }
+
+
+    @using (Html.BeginForm("OldPatient", "Opd", FormMethod.Post, new { @class = "bs-docs-example form-inline", @id = "formforSearch" }))
+    {
+
+  
+ 
+@*<span>Search Old Patient</span>*@
+
+        @Html.DropDownList("srchVal", HospitalManagementSystem.Utility.GetOpdSearchDDL(), "Search Options", new { @class = "srchValcls" })
+
+
+@*<span id="change"></span>*@
+        <span>
+            <input type="text" id="blnkid" name="value" />
+
+        </span>
+        <input type="submit" value="Find" id="btnsubmit" />
+            
+
+        
+          
+    }
+
+
+    <br />
+
+    <div id="oldSearchResultid"></div>
+
+</div>
+
+
+
+
+<script>
+
+    $("#btnsubmit").click(function (e) {
+
+        e.preventDefault();
+        //alert("hi");
+        var form = $('#formforSearch');
+        var url = form.attr("action");
+        var formData = form.serialize();
+        $.post(url, formData, function (data) {
+
+            $('#oldSearchResultid').empty();
+
+            $('#oldSearchResultid').html(data);
+
+        });
+    });
+</script>
+
+
+
+<script>
+
+    $('.srchValcls').change(function (e) {
+
+        e.preventDefault();
+        var val = $('.srchValcls').val();
+        if (val == 1) {
+
+            $('#change').text('Enter ' + 'PatientId ');
+            $('#blnkid').val("");
+        }
+
+        if (val == 2) {
+
+            $('#change').text('Enter ' + 'Name ');
+            $('#blnkid').val("");
+        }
+
+        if (val == 3) {
+            $('#change').text('Enter ' + 'Address ');
+            $('#blnkid').val("");
+        }
+        if (val == 4) {
+
+            $('#change').text('Enter ' + 'Phone ');
+            $('#blnkid').val("");
+        }
+        if (val == 5) {
+
+            $('#change').text('Enter ' + 'Age ');
+            $('#blnkid').val("");
+        }
+
+
+
+
+
+
+
+    });
+
+
+
+
+</script>

@@ -1,0 +1,130 @@
+﻿@model HospitalManagementSystem.Models.IpdSearchResults
+
+
+
+<div class="general-box clearfix"></div>
+
+<div class="general-box clearfix"></div>
+
+
+<div class="boxWrapper">
+    <div class="boxHeadingPanel">
+        <h3>Results</h3>
+    </div>
+
+</div>
+@if (Model.IpdSearchResultList != null)
+{
+    <table class="table table-hover tablesorter">
+
+        <thead>
+            <tr>
+                <th>OpdEmrNo.</th>
+                <th>Name</th>
+                <th>Ward Number</th>
+                <th>Room Number</th>
+                <th>Bed Number</th>
+                @*<th>Add Common Test</th>*@
+                <th>Add Main Test</th>
+                <th>Add Medical Record</th>
+                <th>Add Diet Record</th>
+
+
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model.IpdSearchResultList)
+            {
+         
+       
+                @Html.HiddenFor(modelItem => item.IpdRegistrationNumber)
+                <tr>
+                    <td>@item.OpdEmrNumber</td>
+                    <td>@item.FullName</td>
+                    <td>@item.WardNo</td>
+                    <td>@item.RoomNo</td>
+                    <td>@item.BedNo</td>
+
+
+                    @*<td>
+          @Html.ActionLink(linkText:"Add",actionName:"IpdMRCommonTestDetailsByID",controllerName:"IpdMedicalRecord",routeValues:new{id=item.IpdRegistrationNumber,opdid=item.OpdEmrNumber},htmlAttributes:null)
+        </td>*@
+
+                    <td>
+                        @Html.ActionLink(linkText: "Add", actionName: "IpdMrMainTest", controllerName: "IpdMedicalRecord", routeValues: new { id = item.OpdEmrNumber, ipdid = item.IpdRegistrationNumber }, htmlAttributes: null)
+                    </td>
+                    <td>
+                        @Html.ActionLink(linkText: "Add", actionName: "AddIpdMrMedical", controllerName: "IpdMedicalRecord", routeValues: new { id = item.OpdEmrNumber, ipdid = item.IpdRegistrationNumber }, htmlAttributes: null)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink(linkText: "Add", actionName: "AddIpdDiet", controllerName: "IPDDiet", routeValues: new { id = item.OpdEmrNumber, ipdid = item.IpdRegistrationNumber }, htmlAttributes: null)
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>   
+    
+
+
+}
+
+
+
+else
+{
+    <div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    $('#btnClick').click(function () {
+
+        var ipdRegistrationId = $('#IpdRegistrationNumber').val();
+        alert(ipdRegistrationId);
+        $.ajax({
+            url: '/IpdMedicalRecord/AddIpdMRCommonTest/',
+            type: 'GET',
+            data: {
+                id: ipdRegistrationId,
+            },
+            //success: function (data) {
+            //    $('#SearchById').html(data);
+            //},
+            //errro: function () {
+            //    alert('Sorry Error Occured');
+            //}
+        });
+    });
+</script>
+<script type="text/javascript">
+    function AddIpdMrMedical() {
+        $('#btnmedicalClick').click(function () {
+
+            var ipdRegistrationId = $('#IpdRegistrationNumber').val();
+            alert(ipdRegistrationId);
+            $.ajax({
+                url: '/IpdMedicalRecord/AddIpdMrMedical/',
+                type: 'GET',
+                data: {
+                    id: ipdRegistrationId,
+                },
+                //success: function (data) {
+                //    $('#SearchById').html(data);
+                //},
+                //errro: function () {
+                //    alert('Sorry Error Occured');
+                //}
+            });
+        });
+    }
+</script>
+

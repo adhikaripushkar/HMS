@@ -1,0 +1,79 @@
+﻿@model Hospital.Models.SetupEmployeeMasterModel
+
+@{
+    ViewBag.Title = "BankSalaryReport";
+    Layout = "~/Views/Shared/_PayRollLayout.cshtml";
+}
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.maskedinput.js"></script>
+
+
+<script>
+    var j = $.noConflict(); 
+    j(document).ready(function (e) {
+
+        j("#StartDate").datepicker();
+        j("#EndDate").datepicker();
+
+    });
+
+
+</script>d
+<h2 style="text-align: center;">Salary Detail For Bank</h2>
+
+<div class="contentWrapper">
+
+    <div class="bs-docs-example form-inline">
+        @using (Ajax.BeginForm("BankSalaryReport", "SetupEmployeeMaster", new AjaxOptions { UpdateTargetId = "DivLedgerDetails" }))
+        {
+        
+            <div class="row-fluid singleline">     
+                 <label>
+                    <span>Year</span>
+                    @Html.DropDownListFor(model => model.YearId, Hospital.Utility.GetNepaliYearList())
+                </label>
+
+                <label>
+                    <span>Month</span>
+                    @Html.DropDownListFor(model => model.MonthId, Hospital.Utility.GetNepaliMonthList())
+                </label>
+                
+                 <label>
+                    <span>User</span>
+                    @Html.DropDownListFor(model => model.EmployeeMasterId, Hospital.Utility.GetAllEmployeeList())
+                </label>
+                   
+            </div>            
+            <div class="row-fluid singleline">
+                <label>
+                    <input type="submit" value="Search" /></label>
+            </div>
+        }
+    </div>
+
+    <br />
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+
+                <div id="DivLedgerDetails"></div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    @section Scripts 
+    {
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/jqueryui")
+    }
+
+</div>
+

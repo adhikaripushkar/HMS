@@ -1,0 +1,280 @@
+﻿@model HospitalManagementSystem.Models.IpdPatientDeischarged
+
+@{
+    ViewBag.Title = "PatientBillDetails";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+    decimal GrandTotalAmount = Convert.ToDecimal(0);
+}
+
+<h2>IPD Patient Bill Details</h2>
+@using (Html.BeginForm("PatientBillDetails", "PatientDischarged", FormMethod.Post, new { @class = "", @style = "", @id = "" }))
+{
+    @Html.HiddenFor(model => model.OpdID)
+    @Html.HiddenFor(model => model.IpdRegistrationID)
+    @Html.HiddenFor(model=>model.ObjPatientBillDetailsViewModelNew.AccsubgroupHeadId)
+    <div id="patientInf" style="margin-top: 20px;">
+        <table>
+            <tr>
+                <th>User Name</th>
+                <th>IPD ID</th>
+                <th>OPD ID</th>
+                <th>Age</th>
+                <th>Sex</th>
+
+            </tr>
+            <tr>
+                <td>@HospitalManagementSystem.Utility.GetPatientNameWithIdFromEmergency(Model.OpdID)</td>
+                <td>@Model.IpdRegistrationID</td>
+                <td>@Model.OpdID</td>
+                <td>@HospitalManagementSystem.Utility.GetPatientCurrentAgeFromId(Model.OpdID)</td>
+                <td>@HospitalManagementSystem.Utility.GetPatientSexTypeFromPatiendId(Model.OpdID)</td>
+
+            </tr>
+
+        </table>
+    </div>
+    <hr />
+    <div id="depoDetails">
+        <h4>Patient Deposited Amount: 
+            @Html.TextBoxFor(model => model.ObjPatientBillDetailsViewModelNew.BalanceDeposit, new { @readonly = "readonly", @id = "BalanceDepoID" })</h4>
+    </div>
+    <div id="BillDetails" style="margin-top: 40px;">
+        <p>Patient Bed Details</p>
+        <table style="width: 80%">
+            <tr>
+                <th>Admitd Date</th>
+                <th>Discharged / Change </th>
+                @* <th>Room Type</th>
+            <th>Room Name</th>*@
+                <th>Bed No</th>
+                <th>Days</th>
+                <th>Bed Charge</th>
+                <th>Total Amount</th>
+                <th>Tax</th>
+                <th>Grand Total</th>
+            </tr>
+            @foreach (var item in Model.PatientBillDetailsViewModelNewList)
+            {
+                <tr>
+                    <td>@item.RegistrationDate.ToShortDateString()</td>
+                    <td>@item.DischargedDate.ToShortDateString()</td>
+                    @*<td>General</td>
+            <td>19</td>*@
+                    <td>@item.BedNo</td>
+                    <td>@HospitalManagementSystem.Utility.GetTotalDaysFromDates(item.RegistrationDate, item.DischargedDate)</td>
+                    <td>@item.TotalAmount</td>
+                    
+                    
+                    @{
+                      decimal GrandTotal = Convert.ToDecimal(0);
+                      decimal FinalTotalAmount = Convert.ToDecimal(0);
+                      int TotalDays = HospitalManagementSystem.Utility.GetTotalDaysFromDates(item.RegistrationDate, item.DischargedDate);
+                      GrandTotal = TotalDays * item.TotalAmount;
+                     
+                       
+                    }
+                    @Html.HiddenFor(m=>m.ObjPatientBillDetailsViewModelNew.AmountWithOutTax, new{@Value=@GrandTotal})
+
+                    <td>@GrandTotal</td>
+                    <td>@{decimal TaxAmount = Convert.ToDecimal(0);
+                          TaxAmount = GrandTotal *Convert.ToDecimal(0.05);
+                          FinalTotalAmount = GrandTotal + TaxAmount;}
+                        @TaxAmount
+                        @Html.HiddenFor(m => m.ObjPatientBillDetailsViewModelNew.TaxAmountOnly, new { @Value=@TaxAmount})
+                    </td>
+                    <td>@FinalTotalAmount</td>
+                    
+                </tr>
+                      GrandTotalAmount += FinalTotalAmount;
+            }
+
+
+        </table>
+
+    </div>
+    <hr />
+    <h4>Total Amount</h4>
+    @Html.TextBoxFor(model => model.ObjPatientBillDetailsViewModelNew.TotalAmount, new { @Value = @GrandTotalAmount, @readonly = "readonly", @id = "TotalAmountDivID" })
+    <div id="calcuPart" style="margin-top: 20px;">
+        <table style="width: 50%;">
+
+            @*<tr>
+            <td>Total Price:</td>
+            <td>@Html.TextBoxFor(m => Model.ObjPatientBillDetailsViewModel.TotalAmount, new { @id = "TotalAmountDiv", @Value = total, @readonly = "true" })</td>
+        </tr>*@
+
+            <tr>
+
+                <td>Payment Mode</td>
+                <td>@Html.DropDownListFor(model => model.ObjPatientBillDetailsViewModelNew.PaymentMode, HospitalManagementSystem.Utility.GetPaymentMode(), new { @class = "PmodeClass", @id = "PaymentMode" })</td>
+
+            </tr>
+
+
+            <tr id="rowTenderAmtId" style="">
+                <td>Tender Amount</td>
+                @*<td>@Html.TextBox("TenderAmountId", null, new { @onkeyup = "ExecuteTenderAmount();" })</td>*@
+                <td>@Html.TextBoxFor(m => Model.ObjPatientBillDetailsViewModelNew.TenderAmount, null, new { @id = "TenderAmountId", @onkeyup = "ExecuteTenderAmount();" })</td>
+
+            </tr>
+
+
+            <tr id="rowReturnAmountId">
+                <td>Return Amount</td>
+                <td>@Html.TextBoxFor(m => m.ObjPatientBillDetailsViewModelNew.ReturnedAmount, null, new { @readonly = "true", @id = "returnid" })</td>
+
+            </tr>
+
+            <tr>
+                @*@Html.HiddenFor(mod => mod.BillingCounterPatientInformationModel.AccountHeadId)*@
+            </tr>
+
+
+        </table>
+        <div id="BtnSaveDivId" style="margin-top: 55px;">
+            <i class="fa fa-floppy-o fa-3x">
+                <input type="Button" value="Save & Print" style="" id="btnidsubmit" /></i>
+        </div>
+
+    </div>
+}
+
+
+<script>
+    function ExecuteTenderAmount() {
+
+        var TotalAmountDiv = $("#TotalAmountDivID").val();
+        var TenderAmountVal = $("#TenderAmountId").val();
+
+        if (TenderAmountVal == "") {
+            TenderAmountVal = 0;
+        }
+        if (!isNaN(TenderAmountVal)) {
+            //TenderAmountVal = 0;
+        }
+        var Totalreturn = parseFloat(TenderAmountVal) - parseFloat(TotalAmountDiv);
+
+        $("#returnid").val(parseFloat(Totalreturn.toFixed(2)));
+
+    };
+</script>
+
+<script>
+    var Counter = 0;
+    var CounterDepo = 0;
+    $('#btnidsubmit').on("click", function () {
+        var depositAmt = parseFloat($('#BalanceDepoID').val());
+        var totalAmt = parseFloat($('#TotalAmountDivID').val());
+        var TenderAmount = parseFloat($('#TenderAmountId').val());
+        var ReturnAmount = parseFloat($('#returnid').val());
+        if ($('#PaymentMode').val() != 315) {
+            if (isNaN(TenderAmount))
+                TenderAmount = 0;
+
+            if (TenderAmount < totalAmt) {
+
+                alert("Tender amount is less than Total amount ! ");
+                $("#TenderAmountId").focus();
+
+                $("form").submit(function (e) {
+                    e.preventDefault();
+                });
+            }
+            else {
+                //alert('3');
+                if (Counter < 1) {
+                    Counter = 1;
+                    $('form').unbind('submit').submit();
+                    return false;
+
+                } else {
+                    $("form").submit(function (e) {
+                        e.preventDefault();
+                    });
+                }
+
+
+            }
+        }
+
+        else {
+
+            if ($('#PaymentMode').val() == 315) {
+
+                //if (isNaN(AddMoreDepoAmount))
+                //    AddMoreDepoAmount = 0;
+                //depositAmt = depositAmt + AddMoreDepoAmount;
+
+                if (depositAmt < totalAmt) {
+
+                    callAlertFunction();
+                    //alert("Deposit has not enough Banance for Credit ! ");
+                    $("form").submit(function (e) {
+                        e.preventDefault();
+                    });
+                    //alert('9');
+                }
+                else {
+                    //alert('7');
+                    //alert("hi");
+                    if (CounterDepo < 1) {
+                        CounterDepo = 1;
+                        $('form').unbind('submit').submit();
+                        return false;
+
+                    }
+                    else {
+                        $("form").submit(function (e) {
+                            e.preventDefault();
+                        });
+                    }
+
+                }
+
+            }
+
+        }
+        $("form").submit(function (e) {
+            e.preventDefault();
+            return false;
+        });
+
+
+    });
+
+    function callAlertFunction() {
+        $('<div></div>').appendTo('body')
+     .html('<div><h6>Deposit amount is less than billing amount. Add Deposit?</h6></div>')
+     .dialog({
+         modal: true,
+         title: 'Delete message',
+         zIndex: 10000,
+         autoOpen: true,
+         width: 'auto',
+         resizable: false,
+         buttons: {
+             Yes: function () {
+                 // $(obj).removeAttr('onclick');                                
+                 // $(obj).parents('.Parent').remove();
+
+                 //$("#AddMoreDepo").show();
+                 //$("#AddMoreDepoID").focus();
+                 //$(this).dialog("close");
+                 $(this).dialog("close");
+             },
+             No: function () {
+                 $(this).dialog("close");
+             }
+         },
+         close: function (event, ui) {
+             $(this).remove();
+         }
+     });
+    };
+
+
+
+
+
+
+</script>

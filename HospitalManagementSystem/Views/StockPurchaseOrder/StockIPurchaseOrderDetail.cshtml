@@ -1,0 +1,72 @@
+﻿@using Hospital.Helpers
+@model Hospital.Models.StockPurchaseItemEntry
+<script src="~/Scripts/OrderManagerScript.js"></script>
+<script src="~/Scripts/json.cycle.js"></script>
+
+@using (Html.BeginCollectionItem("StockPurchaseItemEntryList"))
+{
+    @Html.ValidationSummary(true)
+    <style>
+        .CategoryId {
+            width:150px;
+        }
+        .SubCategoryId {
+            width:150px;
+        }
+        .ItemEntryId {
+            width:150px;
+        }
+       
+
+        
+       
+    </style>
+    
+  
+    <div class="row" style="margin-left: 26px;">
+
+        @Html.DropDownListFor(model => model.StockCategoryId, Hospital.Utility.GetCategory(), new { @class = "CategoryId" })
+        @Html.ValidationMessageFor(model => model.StockCategoryId)
+
+
+        @try
+        {
+             @Html.DropDownListFor(model => model.StockSubCategoryId, Hospital.Utility.GetSubCategory(Model.StockCategoryId), new { @class = "SubCategoryId" })
+        @Html.ValidationMessageFor(model => model.StockSubCategoryId)
+        }
+        catch
+        {
+        @Html.DropDownListFor(model => model.StockSubCategoryId, Hospital.Utility.GetSubCategory(), new { @class = "SubCategoryId" })
+        @Html.ValidationMessageFor(model => model.StockSubCategoryId)
+        }
+
+        @try
+        {
+            @Html.DropDownListFor(model => model.StockItemEntryId, Hospital.Utility.GetItemNameEdit(Model.StockSubCategoryId), new { @class = "ItemEntryId" })
+        @Html.ValidationMessageFor(model => model.StockItemEntryId)
+        }
+        catch
+        {
+        @Html.DropDownListFor(model => model.StockItemEntryId, Hospital.Utility.GetItemName(), new { @class = "ItemEntryId" })
+        @Html.ValidationMessageFor(model => model.StockItemEntryId)
+        }
+        
+        @Html.TextBoxFor(model => model.Quantity, new { @class = "Quantity" ,@required="required",style="width:120px"})
+
+        @Html.TextBoxFor(model => model.QuatationPrice, new { @class = "QuotationPrice" ,@required="required",style="width:100px",@Value=""})
+        @Html.TextBoxFor(model => model.VatAmount, new { @class = "VatAmount" ,@required="required",style="width:50px",@Value="0"})
+
+       
+
+       
+           
+        <input type="button" class="row-button btn btn-warning" value="Cancel" />
+
+    </div>
+        
+   
+}
+
+
+
+

@@ -1,0 +1,231 @@
+﻿@model HospitalManagementSystem.Models.EmergecyMasterModel
+@using Humanizer;
+@{
+    ViewBag.Title = "Emergency";
+    Layout = "~/Views/Shared/_EmergencyLayout.cshtml";
+}
+
+<h2></h2>
+<style>
+    table#tblnoborder,
+    table#tblnoborder td {
+        border: none !important;
+    }
+
+    .font {
+        font-weight: bold;
+    }
+
+    .small-table td {
+        border: none;
+    }
+</style>
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+    window.onload = print;
+</script>
+
+@if (TempData["success"] == "Record Created Successfully !")
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Record Creation Failed !")
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Serial Number or Emergency Number Already Exist !")
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Record Updated Successfully !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == "Record Updation Failed !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == "Record Deleted Successfully !")
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == "Record Deletion Failed !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+@if (TempData["success"] == "Patient is Discharged !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+
+
+<div class="contentWrapper">
+
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto;">
+
+        @MyHelpers.DesingForLogo()
+        <hr />
+
+
+        <h3 style="text-align: center;"><u>Emergency Department</u> </h3>
+
+        <br />
+
+
+
+
+
+        <table width="660" border="0" cellspacing="0" cellpadding="5" align="center">
+            <tr>
+                <td colspan="2" style="border: none;"><b>Fiscal Year:</b> @HospitalManagementSystem.Utility.CurrentFisicalYear()</td>
+            </tr>
+
+            <tr>
+                <td width="314"><span class="font">ER Id / Patient Id:-</span> @Model.OpdEmergencyViewModel.EmergencyId / @Model.OpdEmergencyViewModel.PatientId</td>
+                <td width="326"><span class="font">Date:-</span> @HospitalManagementSystem.Utility.GetDateOnly(Model.OpdEmergencyViewModel.RegistrationDate.ToString()) AD / @HospitalManagementSystem.Utility.getNepaliDate(Model.OpdEmergencyViewModel.RegistrationDate.ToShortDateString()) BS</td>
+
+            </tr>
+            <tr>
+                <td width="314"><span class="font">Name:-</span>  @Model.OpdEmergencyViewModel.Firstname @Model.OpdEmergencyViewModel.MiddleName @Model.OpdEmergencyViewModel.LastName</td>
+                <td width="326"><span class="font">Age:-</span> @Model.OpdEmergencyViewModel.AgeYear</td>
+            </tr>
+            <tr>
+                <td><span class="font">Address:-</span> @Model.OpdEmergencyViewModel.Address</td>
+                <td><span class="font">Sex:-</span> @Model.OpdEmergencyViewModel.Gender</td>
+
+            </tr>
+            <tr></tr>
+        </table>
+        
+            <div style="padding-left: 520px;">
+
+                <table width="320px;" id="mytbl">
+                    <tr>
+                        <td width="150"><b>Registration Fee:-</b></td>
+                        @*<td width="550"><b>404</b></td>*@
+                        <td><b>@HospitalManagementSystem.Utility.GetEmergencyFeeRegistration(Model.OpdEmergencyViewModel.EmergencyId, Model.Date)</b></td>
+                    </tr>
+                    <tr>
+                        <td><b>Tax (%):-</b></td>
+                        <td><b> 5 </b></td>
+                    </tr>
+                    <tr>
+                        <td><b>Total Fee:-</b></td>
+                        <td><b>@HospitalManagementSystem.Utility.GetEmergencyFee(Model.OpdEmergencyViewModel.EmergencyId, Model.Date)</b></td>
+                    </tr>
+                    <tr>
+                        <td><b>In Word:-</b></td>
+                        <td><b>
+                             @{
+                                HospitalManagementSystem.NumberToEnglish obj = new HospitalManagementSystem.NumberToEnglish();
+
+                                string str = obj.changeNumericToWords(Convert.ToDouble(HospitalManagementSystem.Utility.GetEmergencyFee(Model.OpdEmergencyViewModel.EmergencyId, Model.Date)));
+                            }
+                (NRS)&nbsp;@str <span>&nbsp;only.</span>
+                            </b></td>
+                    </tr>
+                </table>
+            </div>
+            @*<tr>
+                <td><b>Emergency Registration Fee:- 404 </b></td>
+                <td><b>Tax (%):- 5 </b></td>
+                <td>
+                <p style="text-align: center; font: bold;"><b>Fee:- @HospitalManagementSystem.Utility.GetEmergencyFee(Model.OpdEmergencyViewModel.EmergencyId, Model.Date)</b></p>
+                </td>
+            </tr>*@
+
+       @* <br />
+        <p style="text-align: center; font: bold;">
+            <b>In Word:- 
+
+             @{
+                 HospitalManagementSystem.NumberToEnglish obj = new HospitalManagementSystem.NumberToEnglish();
+
+                 string str = obj.changeNumericToWords(Convert.ToDouble(HospitalManagementSystem.Utility.GetEmergencyFee(Model.OpdEmergencyViewModel.EmergencyId, Model.Date)));
+
+           
+             }
+
+
+                (NRS)&nbsp;@str <span>&nbsp;only.</span>
+
+            </b>
+        </p>*@
+        <br />
+
+
+        <div style="margin-left: 82px;">
+            <span>E.& O.E.</span>&nbsp;&nbsp;&nbsp;<span>User:- @HospitalManagementSystem.Utility.GetEmployeeNameFromEmpID(Model.OpdEmergencyViewModel.CreatedBy)</span>
+
+        </div>
+
+
+    </div>
+
+    <span>
+        <input type="button" id="btnPrint" style="width: 50px; float: right;" onclick="print()" value="Print" />
+
+    </span>
+    <p id="linkNewBack">
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+
+</div>
+
+
+

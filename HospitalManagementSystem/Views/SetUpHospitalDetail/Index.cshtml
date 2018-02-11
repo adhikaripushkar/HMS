@@ -1,0 +1,226 @@
+﻿@model Hospital.Models.SetUpHospitalDetailModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+    int SN = 1;
+}
+
+
+@*<style>
+
+    #linkNewBack {
+
+        font-size:18px;
+    }
+
+</style>*@
+
+
+<h2 style="text-align: center;">Hospital Setup</h2>
+
+@if (TempData["success"] == "Record Created Successfully !")
+{ 
+
+    <div class="alert alert-success">@TempData["success"]</div>
+    
+}
+
+@if (TempData["success"] == "Record Insertion Failed !")
+{ 
+
+    <div class="alert alert-error">@TempData["success"]</div>
+
+}
+
+@if (TempData["success"] == "Record Updated Successfully !")
+{
+    
+    <div class="alert">@TempData["success"]</div>
+}
+
+@if (TempData["fail"] == "Record Insertion failed !")
+{ 
+    
+    <div class="alert alert-error">@TempData["success"]</div>
+
+}
+
+@if (TempData["success"] == "Records Deleted Successfully !")
+{
+    <div class="alert alert-info">@TempData["success"]</div>
+}
+
+<div id="DetailsId"></div>
+
+<div class="contentWrapper">
+
+    @if(Model.SetUpHospitalDetailList.Count<=0)
+    {
+    <p>
+        @Html.ActionLink("Create New", "Create", null, new { @id = "linkNewBack" })
+    </p>
+    }
+    <div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Hospitals</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+
+                        <tr>
+                            <th>S.N.
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.HospitalName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Address)
+                            </th>
+
+                            @*<th>
+                                @Html.DisplayNameFor(model => model.Country)
+                            </th>*@
+                            <th>
+                                @Html.DisplayNameFor(model => model.City)
+                            </th>
+                          @*  <th>
+                                @Html.DisplayNameFor(model => model.PostBox)
+                            </th>*@
+                            <th>
+                                @Html.DisplayNameFor(model => model.TelPhone)
+                            </th>
+                            <th>Action</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.SetUpHospitalDetailList)
+                        {
+                            <tr>
+                                <td>
+                                    @SN
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HospitalName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Address)
+                                </td>
+                               @* <td>
+                                    @Html.DisplayFor(modelItem => item.Country)
+                                </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.City)
+                                </td>
+                               @* <td>
+                                    @Html.DisplayFor(modelItem => item.PostBox)
+                                </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TelPhone)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.DetailsId }) |
+                                    @Html.ActionLink("Details", "Details",null,new {id=item.DetailsId,@class="linkDetail" }) |
+
+                                    @*@Html.ActionLink("Edit", "Edit", "RecordsFilter", new { id = item.studentId, aid = Model.AcademicId }, new { @class = "openDialogAnthr", data_dialog_id = "emailDialog", data_dialog_title = "Edit" })*@
+                                    @*@Html.ActionLink("Details", "Details","SetUpHospitalDetail", new { id=item.DetailsId },new {@class = "openDialog", data_dialog_id = "emailDialog", data_dialog_title = "Details"}) |*@
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.DetailsId }, new { onclick = "return confirm('Are you sure you wish to delete this Details?');" })
+                                </td>
+                            </tr>
+                            SN++;
+                        }
+                    </tbody>
+
+                </table>
+
+
+
+            </div>
+
+            @*for sorting *@
+
+            <div class="boxFooter">
+
+                <div id="pager" style="">
+                    <form>
+                        <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                        <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                        <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                        <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                        <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                        <select class="pagesize valid" style="width: 70px; height: 30px;">
+                            <option selected="selected" value="10">10</option>
+                            <option value="5">5</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                        </select>
+                    </form>
+                </div>
+
+            </div>
+
+            @*---------------*@
+
+
+        </div>
+
+    </div>
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<script>
+
+    
+
+    var dlg = $.noConflict();
+
+    
+    dlg(".linkDetail").click(function (e) {
+        e.preventDefault();
+
+        
+        dlg.get('/SetUpHospitalDetail/Details/' + this.id,
+                   function (data) {
+
+                       dlg('#DetailsId').html(data);
+
+                       dlg(function () {
+                           dlg("#DetailsId").dialog({
+
+                               position: [490, 190],
+                               resizable: true,
+                               minWidth: 500,
+                               maxWidth: 500,
+                               height: 400
+                               //title: "Doctor Details"
+                      
+
+
+                               
+                               //close: function () { $(this).remove() },
+                               //modal: true
+
+                           });
+                           
+                       });
+
+                   }
+         );
+
+
+
+
+    });
+
+    </script>

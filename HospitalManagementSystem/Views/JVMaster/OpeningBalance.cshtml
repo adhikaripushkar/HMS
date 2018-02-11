@@ -1,0 +1,119 @@
+﻿@model HospitalManagementSystem.Models.JVMasterModel
+
+@{
+    ViewBag.Title = "OpeningBalance";
+    Layout = "~/Views/Shared/_BillingLayout.cshtml";
+}
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.maskedinput.js"></script>
+
+
+<script>
+    var j = $.noConflict();
+    j(document).ready(function (e) {
+
+        j("#StartDate").datepicker();
+        j("#EndDate").datepicker();
+
+    });
+
+
+</script>
+<h2 style="text-align: center;">Transaction Detail</h2>
+
+<div class="contentWrapper">
+
+    <div class="bs-docs-example form-inline">
+        @using (Ajax.BeginForm("OpeningBalance", "JVMaster", new AjaxOptions { UpdateTargetId = "DivLedgerDetails" }))
+        {  
+            <div class="row-fluid singleline">
+               
+                <label>
+                    <span>User</span>
+                    @Html.DropDownListFor(model => model.objOpeningBalanceModelView.MainAccountHeadId, HospitalManagementSystem.Utility.GetCOA1stHeadList())
+                </label>
+            </div>
+             decimal DiffAmt=HospitalManagementSystem.Utility.GetOpeningDifference();
+            if (DiffAmt != 0)
+            {
+                <div class="row-fluid singleline">
+                    <label >
+                     <input id="btn" type="button" value=" Difference in  Opening Balance of Assest And Liability !!!" />
+                    </label>
+                </div>   
+            }
+            <div class="row-fluid singleline">
+                <label>
+                    <input type="submit" value="Search" /></label>
+            </div>          
+        }
+    </div>
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+
+                <div id="DivLedgerDetails"></div>
+
+            </div>
+        </div>
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+            @Scripts.Render("~/bundles/jqueryui")
+        }
+
+    </div>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $("#FromNepaliDate").mask("9999/99/99");
+        });
+    </script>
+
+    <script type="text/javascript">
+        function ChangeNepalidateFrom(selvalue, targetElm, url) {
+
+
+            $.ajax({
+                async: false,
+                type: "get",
+                url: url,
+                data: { NepaliDate: selvalue },
+                contentType: "text/json",
+                beforeSend: function () {
+                    // $("#" + targetElm).attr('disabled', 'disabled');
+                    // $("#" + targetElm).addClass('ac_loading');
+                },
+                success: function (jsonResult) {
+                    $("#StartDate").val(jsonResult);
+                }
+            });
+        };
+
+        function ChangeEnglishdateFrom(selvalue, targetElm, url) {
+
+
+            $.ajax({
+                async: false,
+                type: "get",
+                url: url,
+                data: { EnglishDate: selvalue },
+                contentType: "text/json",
+
+
+                beforeSend: function () {
+                    // $("#" + targetElm).attr('disabled', 'disabled');
+                    // $("#" + targetElm).addClass('ac_loading');
+                },
+                success: function (jsonResult) {
+                    $("#FromNepaliDate").val(jsonResult);
+                }
+            });
+        };
+
+    </script>
+

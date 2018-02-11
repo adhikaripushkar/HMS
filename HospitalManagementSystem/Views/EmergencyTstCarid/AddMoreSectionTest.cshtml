@@ -1,0 +1,35 @@
+﻿@using HospitalManagementSystem.Helpers
+@model HospitalManagementSystem.Models.EmergencyTstCaridModel
+
+<style>
+    select {
+        width: 170px;
+        height: 27px;
+    }
+
+   .textsize {
+         width: 150px;
+
+    }
+  
+</style>
+<script src="~/Scripts/json.cycle.js"></script>
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+
+
+@using (Html.BeginCollectionItem("ListEmergencyTstCaridModel"))
+{
+     <div class="row" style="margin-left:5px;">
+       @Html.DropDownListFor(model => model.SectionId, HospitalManagementSystem.Utility.GetSectionList(), new { @class="SectionId" })
+       @Html.DropDownListFor(model => model.TestId, HospitalManagementSystem.Utility.GetTestName(), new {@class="TestId"})
+       @Html.TextBoxFor(model => model.ShortDecs, new {@style="width:175px;"})
+       @Html.TextBoxFor(model => model.LongDesc, new {@style="width:175px;"})
+       @Html.TextBoxFor(model => model.Remarks, new {@style="width:175px;"})
+
+     <input type="button" class="row-button btn btn-warning" value="Remove" />
+         </div>
+}
+
+
+
+

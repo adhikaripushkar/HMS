@@ -1,0 +1,106 @@
+﻿@model Hospital.Models.PreRegistrationModel
+
+@{
+   
+    Layout = "~/Views/Shared/_Pre-RegistrationLayout.cshtml";
+}
+
+<script type="text/javascript">
+ function print(strid) {
+            if (confirm("Do you want to print?")) {
+                //	    var values = document.getElementById('printDiv').innerHTML.toString();
+                var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+                printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">Preregistration Card<br>');
+                printing.document.write('<div style="font-size:small;">');
+                printing.document.write(document.getElementById('printDiv').innerHTML.toString());
+                printing.document.close();
+                printing.focus();
+                printing.print();
+                printing.close();
+            }
+ }
+      </script>
+
+
+
+
+<style>
+
+table#tblnoborder,
+table#tblnoborder td
+{
+    border: none !important;
+}
+
+    </style>
+
+
+
+<div class="contentWrapper">
+
+    <div id="printDiv">
+
+    <div style="border-style:solid; border-color:#999; width:auto;">
+
+<p style=" font:bold; font-size:25px; text-align:center"><br />
+@Hospital.Utility.GetHospitalName()<br/>
+<p style="font-size:20px; text-align:center">@Hospital.Utility.HospitalAddress()</p>
+</p>
+
+<h3 style="text-align:center;"> <u>Pre-Registration</u> </h3>
+
+<br />
+        
+       <table width="660" cellspacing="0" cellpadding="5" align="center" id="tblnoborder">
+            <tr>
+    <td width="314"><b>Pre-RegistrationId:</b>-@Html.DisplayFor(model => model.PreRegistrationID) </td>
+   
+  </tr>
+           </table>
+        
+
+<table width="660" border="0" cellspacing="0" cellpadding="5" align="center" >
+  <tr>
+    <td width="314"><b>Name:-</b> @Hospital.Utility.GetFullName(Model.PreRegistrationID)</td>
+    <td width="326"><b>Sex:-</b>@Html.DisplayFor(model => model.Sex)</td>
+  </tr>
+  <tr>
+    <td><b>MobileNo:-</b>@Html.DisplayFor(model => model.MobileNumber)</td>
+    <td><b>ContactNo:-</b>@Html.DisplayFor(model => model.ContactNumber)</td>
+    <td><b>RegistrationDate:-</b>@Hospital.Utility.GetDateOnly(Model.RegistrationDate.ToString())</td>
+
+  </tr>
+  <tr></tr>
+</table>
+
+<br />
+
+
+<table width="660" align="center">
+    
+<tr><td width="320"><b>Department:-</b>  @Hospital.Utility.DepartmentName(Model.PreregistrationPreferDetailsModel.DepartmentID)</td>
+<td width="331"><b>Doctor:-</b>@Hospital.Utility.DoctorName(Model.PreregistrationPreferDetailsModel.DoctorID)</td>
+    <td width="331"><b>PreferDate:-</b>@Html.DisplayFor(model => model.PreregistrationPreferDetailsModel.PreferDate)</td>
+    <td width="331"><b>PreferTime:-</b>@Html.DisplayFor(model => model.PreregistrationPreferDetailsModel.PreferTime)</td>
+</tr>
+
+</table>
+        <br />
+
+</div>
+
+
+
+
+</div>
+   
+
+
+<p>
+            <input type ="button" ID="btnPrint" onclick="return print('nepal')"  style="width:50px;" value="Print"/>
+    </p>
+
+     </div>

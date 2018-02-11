@@ -1,0 +1,72 @@
+﻿@model Hospital.Models.SetupRoomTypeModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 style="text-align: center;">Setup Room Type </h2>
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+
+    
+    
+        <div class="bs-docs-example form-inline">
+            <fieldset>
+
+                <legend>Create</legend>
+
+
+                <div class="row-fluid singleline">
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.RoomTypeName)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.RoomTypeName)
+                        </div>
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.RoomTypeName)
+
+                        </div>
+                    </label>
+
+
+                    <label>
+
+                        <div class="size">@Html.ValidationMessageFor(model => model.Status)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Status)
+                        </div>
+                        <div class="editor-field">
+                            &nbsp;&nbsp;  @Html.EditorFor(model => model.Status)
+
+                        </div>
+                    </label>
+
+                </div>
+
+                <p>
+                    <input type="submit" value="Create" />
+                </p>
+            </fieldset>
+        </div>
+    }
+
+    <div>
+
+        @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+    </div>
+
+
+
+
+
+
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

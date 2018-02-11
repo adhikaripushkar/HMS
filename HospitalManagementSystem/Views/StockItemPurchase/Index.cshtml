@@ -1,0 +1,222 @@
+﻿@model Hospital.Models.StockItemPurchaseModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+<script>
+    $(document).ready(function () {
+
+
+        var v = @ViewBag.rowid
+
+    //$('tbody tr').each(function () {
+        $('#' + v).css('background-color', "#f89406");
+        //});
+
+    });
+</script>
+
+@if (TempData["message"] != null || TempData["message"] != "")
+{ 
+    <p>
+        @TempData["message"]
+    </p>
+}
+
+
+<h2 style="text-align: center;">Stock Item Purchase Setup</h2>
+
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+@if (TempData["success"] == Hospital.UtilityMessage.savefailed)
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == Hospital.UtilityMessage.edit)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.editfailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.delete)
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.deletefailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+<div class="contentWrapper">
+
+    <p id="linkNewBack">
+        @Html.ActionLink("View Supplier wise purchase report", "SupplierWiseReport")
+    </p>
+
+
+    <div class="general-box clearfix">
+        <div class="general-box clearfix">
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Stock Item Purchase</h1>
+                </div>
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.ItemOrderId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ItemBillNo)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.StockSupplierId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Narration)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Amount)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Discount)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.VatAmount)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TotalAmount)
+                            </th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{int i = 0;}
+                        @foreach (var item in Model.ItemPurchaseList)
+                        {
+                            <tr id="@i">
+
+                                <td id="td1_@i">
+                                    @Html.DisplayFor(modelItem => item.ItemOrderId)
+                                </td>
+                                <td id="td2_@i">
+                                    @Html.DisplayFor(modelItem => item.ItemBillNo)
+                                </td>
+                                <td id="td3_@i">
+                                    @Hospital.Utility.GetSupplierName(item.StockSupplierId)
+                                </td>
+                                <td id="td4_@i">
+                                    @Html.DisplayFor(modelItem => item.Narration)
+                                </td>
+
+                                <td id="td5_@i">
+                                    @Html.DisplayFor(modelItem => item.Amount)
+                                </td>
+                                <td id="td6_@i">
+                                    @Html.DisplayFor(modelItem => item.Discount)
+                                </td>
+                                <td id="td7_@i">
+                                    @Html.DisplayFor(modelItem => item.VatAmount)
+                                </td>
+                                <td id="td8_@i">
+                                    @Html.DisplayFor(modelItem => item.TotalAmount)
+                                </td>
+                                <td id="td9_@i">
+
+                                    @Html.ActionLink("Details", "Details", new { id = item.ItemPurchaseId, rowid = i }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ItemPurchaseId }, new { onclick = "return confirm('Do you want to delete?')" }) |
+            @Html.ActionLink("Report", "Report", new { id = item.ItemPurchaseId, rowid = i })|
+                                    @Html.ActionLink("Voucher", "PurchaseVoucher", new { id = item.ItemPurchaseId})
+                                </td>
+                            </tr>
+                            i++;
+                        }
+
+                    </tbody>
+                </table>
+
+                <div class="boxFooter">
+
+                    <div id="pager" style="">
+                        <form>
+                            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                            <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                            <select class="pagesize valid" style="width: 70px; height: 30px;">
+                                <option selected="selected" value="10">10</option>
+                                <option value="5">5</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+                            </select>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<
+
+<script>
+
+    $("tbody tr").click(function () {
+
+        var id = this.id;
+
+        //var s = id.substring(4);
+
+        $(this).css('background-color', "#f89406");
+        $('tbody tr').each(function () {
+            if (this.id != id) $(this).css('background-color', "#fff");
+        });
+
+        @*var url = '@Url.Action("TrackId","StockItemPurchase")';
+                $.post(url + "/" + id, function (data) {
+                    
+                });*@
+
+    });
+
+</script>

@@ -1,0 +1,169 @@
+﻿@model Hospital.Models.StockBreakageModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+
+<style>
+
+    table#tabledesign td {
+
+        border:none !important;
+    }
+
+
+</style>
+
+<h2 style="text-align:center;">Stock Breakage</h2>
+<div class="contentWrapper">
+    <div class="bs-docs-example form-inline">
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Create</legend>
+
+        <table id="tabledesign">
+            <tr>
+            <td>
+        <div class="editor-label">
+            Category
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.CategoryId,Hospital.Utility.GetCategory() , new { @class="category"})
+            @Html.ValidationMessageFor(model => model.CategoryId)
+        </div>
+                </td>
+            <td>
+        <div class="editor-label">
+            Sub Category
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.SubCategoryId,Hospital.Utility.GetSubCategory(Model.CategoryId))
+            @Html.ValidationMessageFor(model => model.SubCategoryId)
+        </div>
+                </td>
+            <td>
+        <p style="padding-top:20px;">
+            <input type="submit" value="Search" name="search" />
+        </p>
+                </td>
+                </tr>
+        </table>
+        <br /><br />
+        @if (Model.BreakageModelList != null && Model.BreakageModelList.Count > 0)
+        {
+        <table>
+            <tr>
+                <th>
+                    Item
+                </th>
+                <th>
+                    Current Stock
+                </th>
+                <th>
+                    Breakage Quantity
+                </th>
+            </tr>
+            @for (int i = 0; i < Model.BreakageModelList.Count;i++ )
+            {
+            <tr>
+                <td>
+                    @Hospital.Utility.GetItemNameFromStockItemEntry(Model.BreakageModelList[i].ItemId)
+                    @Html.HiddenFor(model=>model.BreakageModelList[i].ItemId)
+                </td>
+                <td>
+                    @Model.BreakageModelList[i].TotalQuantity
+                     @Html.HiddenFor(model=>model.BreakageModelList[i].TotalQuantity)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model=>model.BreakageModelList[i].BreakageQuantity)
+                </td>
+            </tr>
+            }
+        </table>
+        }
+        else if (Model.BreakageModelList != null && Model.BreakageModelList.Count == 0)
+        {
+            <span>Data not Available!!</span>
+        }
+        <br /><br />
+
+        <table id="tabledesign">
+            <tr>
+                <td>
+        <div class="editor-label">
+            Entry Date
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.BreakageEntryDate)
+            @Html.ValidationMessageFor(model => model.BreakageEntryDate)
+        </div>
+                    </td>
+
+       
+
+        
+<td>
+        <div class="editor-label">
+            Remarks
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Remarks)
+            @Html.ValidationMessageFor(model => model.Remarks)
+        </div>
+    </td>
+       </tr>
+            <tr>
+<td>
+        <p>
+            <input type="submit" value="save" />
+        </p>
+
+</td>
+</tr>
+        </table>
+    </fieldset>
+}
+
+        </div>
+<div id="linkNewBack">
+    @Html.ActionLink("Back to List", "Index")
+</div>
+    </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+<script>
+    $(".category").change(function () {
+        var id = this.id;
+
+        //id = id.replace("__CategoryId", "__SubCategoryId");
+        //$('#' + id).val('');
+
+        //alert();
+        $.get('/AjaxRequest/GetSubCategory/' + this.value,
+              function (data) {
+                  $('#SubCategoryId').find('option').remove()
+                  $(data).each(
+                      function (index, item) {
+                          $('#SubCategoryId').append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                      });
+              }
+    );
+    });
+</script>
+<script>
+    var j = $.noConflict();
+    j(function () {
+        j("#BreakageEntryDate").datepicker();
+       
+
+    });
+</script>

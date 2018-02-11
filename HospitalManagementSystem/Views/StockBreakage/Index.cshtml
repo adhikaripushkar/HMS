@@ -1,0 +1,112 @@
+﻿@model Hospital.Models.StockItemEntryModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+<h2 style="text-align:center">Stock Breakage</h2>
+
+<p id="linkNewBack">
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="contentWrapper">
+
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+
+    <div class="boxHeadingPanel"><h1>Stock Breakage</h1></div>
+<table class="table table-hover tablesorter">
+    <thead>
+    <tr>
+       
+       
+        <th>
+            Item
+        </th>
+       
+      
+      
+       
+        <th>Actions</th>
+    </tr>
+        </thead>
+    <tbody>
+@foreach (var item in Model.StockItemEntryList) {
+    <tr>
+
+        
+        <td>
+            @Hospital.Utility.GetItemNameFromStockItemEntry(item.StockItemEntryId)
+        </td>
+      
+       
+        
+        
+        <td>
+           
+            @Html.ActionLink("Details", "Details", new { id=item.StockItemEntryId})
+                    </td>
+    </tr>
+}
+</tbody>
+</table>
+                </div></div></div>
+    <div class="boxFooter">
+                   
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+
+               </div> 
+    </div>
+@*<script>
+    $(".edit").click(function () {
+        //alert();
+        var id = this.id;
+        var ids = id.split("_");
+        $("#bqnt_" + ids[1]).show();
+        $("#bqnt_" + ids[1]).keyup(function () {
+            $("#" + id).hide();
+            $("#sp_" + ids[1]).show();
+        })
+        $("#can_" + ids[1]).click(function () {
+            $("#" + id).show();
+            $("#bqnt_" + ids[1]).hide();
+            $("#sp_" + ids[1]).hide();
+        })
+        $("#save_" + ids[1]).click(function (e) {
+            e.preventDefault();
+            var va = $("#tb_" + ids[1]).val();
+            //alert(ids[1]);
+            $.ajax({
+                url: "/StockBreakage/Edit",
+                type: "Get",
+                dataType: "json",
+                data: { id: ids[1], newValue: va },
+                success: function (data) {
+                    alert(data);
+                    window.location.reload();
+
+                }
+            })
+        })
+    })
+</script>*@

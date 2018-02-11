@@ -1,0 +1,63 @@
+﻿@model Hospital.Models.DoctorTypeSetupModel
+
+@{
+    ViewBag.Title = "CreateDoctorSpecialist";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2>CreateDoctorSpecialist</h2>
+<div class="contentWrapper">
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <div class="bs-docs-example form-inline">
+                <legend>Create</legend>
+
+
+
+                <div class="row-fluid singleline">
+
+
+                    <label>
+                        <div class="editor-label">
+                            Doctor
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.ObjDoctorSpecialistViewModel.DoctorID, Hospital.Utility.GetDoctors())
+                            @Html.ValidationMessageFor(model => model.ObjDoctorSpecialistViewModel.DoctorID)
+                        </div>
+                    </label>
+                    <label>
+
+                        <div class="editor-label">
+                            Diseases
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.ObjDoctorSpecialistViewModel.DiseaseID, Hospital.Utility.GetDoctorDiseaseList())
+                            @Html.ValidationMessageFor(model => model.ObjDoctorSpecialistViewModel.DiseaseID)
+                        </div>
+                    </label>
+                </div>
+
+                <p>
+                    <input type="submit" value="Create" />
+                </p>
+
+            </div>
+        </fieldset>
+    }
+
+    <div id="linkNewBack">
+        @Html.ActionLink("Back to List", "DoctorSpecialist")
+    </div>
+
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

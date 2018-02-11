@@ -1,0 +1,185 @@
+﻿@model Hospital.Models.IpdDischargeModel
+
+@{
+    ViewBag.Title = "Report";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+
+
+@if (TempData["sucess"] != null)
+{
+    <p style="color: red; font-size: large;">
+        @TempData["sucess"]
+    </p>
+}
+
+
+
+<style>
+    #size {
+        border: none;
+        background: transparent;
+        width: 500px;
+    }
+
+    #resize {
+        resize: none;
+    }
+
+    .table-size {
+        width: 693px;
+    }
+
+    .head-size {
+        width: 161px;
+    }
+
+    .testAreacls {
+        width: 98%;
+        height: 105px;
+        resize: none;
+    }
+
+    table#tblmy td {
+        border: none !important;
+    }
+</style>
+
+<script type="text/javascript">
+
+
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=530,toolbar=0,scrollbars=0,sta­tus=0');
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);"> <br>');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+</script>
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+   
+
+
+
+
+    <div class="contentWrapper" id="printdiv">
+
+        <div id="printdiv" style="border-style: solid; border-color: #999; width: 100%; grid-row-align: center;">
+            <h4 align="center">NEHCO</h4>
+            <h4 align="center">@Hospital.Utility.GetHospitalName()</h4>
+            <h4 align="center">@Hospital.Utility.HospitalAddress()</h4>
+            <h2 align="center">IPD Record</h2>
+
+
+
+
+            @{
+    
+    Html.RenderAction("PatientForInfo", "IpdRegistrationMaster", new { id = @Model.refOfIpdRegistrationMasterModel.OpdNoEmergencyNo, ipdregid = @Model.ipdResistrationID, romid = @Model.IpdPatientRoomDetailId });
+
+    
+    
+            }
+
+            @Html.HiddenFor(mod => mod.refOfIpdRegistrationMasterModel.OpdNoEmergencyNo)
+
+            <table style="width: 100%;">
+                <tr>
+                    <td>Diagnosis:-<span>&nbsp;&nbsp;&nbsp;</span>@Model.Diagnosis
+                        @Html.HiddenFor(model => model.DignosisID)
+                        @Html.HiddenFor(model => model.IpdDischargeID)
+                        @Html.HiddenFor(model => model.IpdPatientBedDetailId)
+                        @Html.HiddenFor(model => model.IpdPatientRoomDetailId)
+                    </td>
+                </tr>
+            </table>
+
+
+            <table style="width: 100%;" id="tblmy">
+
+
+                <tr>
+
+                    @Html.HiddenFor(model => model.ipdResistrationID)
+
+
+
+                    <td>
+
+                        <span>Brief History</span><br />
+                        @Html.TextAreaFor(modelitem => modelitem.BriefHistory, new { @class = "testAreacls" })
+                    </td>
+                    <td>
+                        <span>Clinical Findings</span><br />
+                        @Html.TextAreaFor(modelitem => modelitem.ClinicalFindings, new { @class = "testAreacls" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <span>Investigation</span><br />
+                        @Html.TextAreaFor(modelitem => modelitem.Investigation, new { @class = "testAreacls" })
+                    </td>
+                    <td>
+                        <span><span>Treatment Given in the Hospital</span><br />
+                        </span>
+                        @Html.TextAreaFor(modelitem => modelitem.Medicinetreatment, new { @class = "testAreacls" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span><span>Further treatment and advice</span><br />
+                        </span>
+                        @Html.TextAreaFor(modelitem => modelitem.FurtherTreatment, new { @class = "testAreacls" })
+                    </td>
+                    <td>
+                        <span><span>Follow Up</span><br />
+                        </span>
+                        @Html.TextAreaFor(modelitem => modelitem.FoloowUp, new { @class = "testAreacls" })
+                    </td>
+                </tr>
+
+
+            </table>
+
+
+            <br />
+
+
+        </div>
+        <br />
+
+        <div style="float: right;">
+            <span>
+                <input type="submit" value="Edit" />&nbsp;&nbsp;&nbsp;</span>@*<span><input type ="button" ID="btnPrint"  onclick="print()" value="Print"/></span>*@
+        </div>
+
+        <div style="float: right;">
+            <span>
+                <input type="submit" id="btnPrint" onclick="print()" value="Print" /></span>
+        </div>
+
+        <div>@Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })</div>
+        <br />
+
+    </div>
+    
+   
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

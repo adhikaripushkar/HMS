@@ -1,0 +1,67 @@
+﻿@model Hospital.Models.SetupEmergencyInvestigationMasterModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 style="text-align:center;">Emergency Investigation Setup</h2>
+<div class="contentWrapper">
+
+@using (Html.BeginForm("Create", "SetupEmergencyInvestigationMaster", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Create</legend>
+
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.EInvId)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.EInvId)
+            @Html.ValidationMessageFor(model => model.EInvId)
+        </div>
+         <div class="row-fluid singleline">
+             <label>
+      <span class="size">  @Html.ValidationMessageFor(model => model.TestName)</span>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TestName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TestName)
+          
+        </div>
+          </label>
+                  <label>
+      <span class="size">    @Html.ValidationMessageFor(model => model.Remarks)</span>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Remarks)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Remarks)
+        
+        </div>
+                      </label>
+        </div>
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.Status)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.Status)
+            @Html.ValidationMessageFor(model => model.Status)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

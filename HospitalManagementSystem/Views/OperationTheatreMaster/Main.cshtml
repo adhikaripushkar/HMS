@@ -1,0 +1,85 @@
+﻿@model HospitalManagementSystem.Models.OpdModel
+
+@{
+    ViewBag.Title = "Main";
+    Layout = "~/Views/Shared/_OperationTheatreLayout.cshtml";
+}
+
+<div class="contentWrapper">
+
+    @using (@Html.BeginForm("Main", "OperationTheatreMaster", FormMethod.Post))
+    {
+        
+        <fieldset>
+
+            <legend>Search Patient
+            </legend>
+            <table>
+                <tr>
+                    <td>
+                        @Html.Label("Patient Id:-")
+                    </td>
+                    <td>
+                        @Html.TextBox("PatientId")
+                    </td>
+                    <td>
+                        <input type="submit" value="Result" />
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        
+        
+
+
+    }
+
+
+
+
+
+
+    <div>
+
+        @if (Model.OpdModelList.Count > 0)
+        {
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient Id</th>
+                        <th>Patient Full Name</th>
+                        <th>Gender</th>
+                        <th>Age</th>
+                        <th>Blood Group</th>
+                        <th>Registration Source</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.OpdModelList)
+                    { 
+                        <tr>
+                            <td>@item.OpdID</td>
+                            <td>@item.FirstName<span>&nbsp;</span>@item.MiddleName<span>&nbsp;</span>@item.LastName</td>
+                            <td>@item.Sex</td>
+                            <td>@item.AgeYear</td>
+                            <td>@HospitalManagementSystem.Utility.GetBloodGroupNameWithId(@Convert.ToInt16(item.BloodGroup))</td>
+                            <td>@item.RegistrationSource</td>
+                            <td>@Html.ActionLink("Admit", "Create", new { id = item.OpdID, Billno = 0 })</td>
+                        </tr>
+            
+            
+            
+                    }
+
+                </tbody>
+
+            </table>
+    
+        }
+
+    </div>
+
+</div>

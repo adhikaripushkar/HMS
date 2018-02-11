@@ -1,0 +1,182 @@
+﻿@model Hospital.Models.SetUpIpdRoomModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 style="text-align: center;">Room Setup</h2>
+
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("Edit", "SetUpIpdRoom", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+
+            <legend>SetUpIpdRoomModel</legend>
+
+            @Html.HiddenFor(model => model.IpdRoomId)
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.RoomType)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.RoomType)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.RoomType, Hospital.Utility.GetRoomTypeList())
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.RoomNo)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.RoomNo)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.RoomNo)
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.StartBed)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.StartBed)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.StartBed)
+
+                    </div>
+                </label>
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.EndBed)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.EndBed)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.EndBed)
+
+                    </div>
+                </label>
+            </div>
+
+            <div class="row-fluid singleline">
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.RoomPrefix)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.RoomPrefix)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.RoomPrefix)
+
+                    </div>
+                </label>
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.RoomSufix)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.RoomSufix)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.RoomSufix)
+
+                    </div>
+                </label>
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.BedPrefix)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.BedPrefix)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.BedPrefix)
+
+                    </div>
+                </label>
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.BedSufix)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.BedSufix)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.BedSufix)
+
+                    </div>
+                </label>
+
+
+            </div>
+            <div class="row-fluid singleline">
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.BedAmount)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.BedAmount)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.BedAmount)
+
+                    </div>
+                </label>
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.TaxAmount)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.TaxAmount)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.TaxAmount)
+
+                    </div>
+                </label>
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.TotalAmount)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.TotalAmount)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.TotalAmount)
+
+                    </div>
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.Status)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Status)
+                    </div>
+                    <div class="editor-field">
+                        &nbsp&nbsp;@Html.CheckBoxFor(model => model.Status)
+
+                    </div>
+
+                </label>
+            </div>
+
+            <p>
+                <input type="submit" value="Edit" />
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+    </div>
+
+</div>

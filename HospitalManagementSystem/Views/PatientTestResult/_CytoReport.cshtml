@@ -1,0 +1,178 @@
+﻿@model Hospital.Models.PatientTestResultModel
+
+<link href="~/Content/themes/bootstrap.min.css" rel="stylesheet" />
+
+<div id="printdiv" style="border-style: solid; border-color: #999; width: auto;">
+
+    <img src="~/Images/mmh-logo1.png" style="position: absolute; margin-left: 27%; margin-top: 10%;" />
+
+    <div>
+
+        @MyHelpers.DesingForLogo()
+        <hr />
+
+        <h5 style="text-align: center;"><u>Pathology Department</u> </h5>
+        <h5 style="text-align: center;"><u>CYTOLOGY REPORT</u> </h5>
+        <div>
+            <div class="row" style="font-weight: bold;">
+                <div class="col-md-2">Cytopath No.</div>
+                <div class="col-md-5">C2345/1090</div>
+                <div class="col-md-2">Refering Doctor</div>
+                <div class="col-md-3">Dr. Manmohan Kumar Yadav</div>
+            </div>
+
+            <div class="row" style="font-weight: bold; margin-bottom: 10px;">
+                <div class="col-md-2">Reg No.</div>
+                <div class="col-md-2">C2345/1090</div>
+                <div class="col-md-2">Date Of Receipt</div>
+                <div class="col-md-2">2014-10-20</div>
+                <div class="col-md-2">Date Of Dispatch</div>
+                <div class="col-md-2">2014-10-20</div>
+            </div>
+
+            <div class="row" style="font-weight: bold; margin-bottom: 10px;">
+                <div class="col-md-2">Name</div>
+                <div class="col-md-4">Ram hari kumar Achayra</div>
+                <div class="col-md-2">Ward/Opd</div>
+                <div class="col-md-2">Pathology Dept</div>
+
+            </div>
+
+            <div class="row" style="font-weight: bold; margin-bottom: 10px;">
+                <div class="col-md-1">Gender</div>
+                <div class="col-md-1">Female</div>
+                <div class="col-md-1">Age</div>
+                <div class="col-md-2">36 Years</div>
+
+            </div>
+            <div class="row" style="font-weight: bold; margin-bottom: 10px;">
+                <div class="col-md-2">Clinical Features</div>
+                <div class="col-md-8">@Html.TextArea("asdf")</div>
+
+
+            </div>
+            <div class="row" style="font-weight: bold; margin-bottom: 10px;">
+                <div class="col-md-2">Procedure Note</div>
+                <div class="col-md-8">@Html.TextArea("asdfs")
+
+                </div>
+            </div>
+            <div class="row" style="font-weight: bold; margin-bottom: 10px;">
+                <div class="col-md-2">Microsopic Description</div>
+                <div class="col-md-8">@Html.TextArea("asdfs")
+
+                </div>
+            </div>
+
+            <div class="row" style="font-weight: bold; margin-bottom: 10px;">
+                <div class="col-md-2">Diagnosis</div>
+                <div class="col-md-8">@Html.TextArea("asdfs")
+
+                </div>
+            </div>
+            <div class="row" style="font-weight: bold; margin-bottom: 10px;">
+                <div class="col-md-2">Comment</div>
+                <div class="col-md-8">@Html.TextArea("asdfs")
+
+                </div>
+            </div>
+
+            <table class="mytbl" id="mytbl" style="display: none;">
+                <tr>
+                    <td>Cytopath No
+                    </td>
+                    <td>c2222/1909
+                    </td>
+                    <td>Refering Doctor
+                    </td>
+                    <td>Dr. Ambrish prasdhas laamichanee
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cytopath No
+                    </td>
+                    <td>c2222/1909
+                    </td>
+                    <td>Refering Doctor
+                    </td>
+                    <td>Dr. Ambrish prasdhas laamichanee
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cytopath No
+                    </td>
+                    <td>c2222/1909
+                    </td>
+                    <td>Refering Doctor
+                    </td>
+                    <td>Dr. Ambrish prasdhas laamichanee
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cytopath No
+                    </td>
+                    <td>c2222/1909
+                    </td>
+                    <td>Refering Doctor
+                    </td>
+                    <td>Dr. Ambrish prasdhas laamichanee
+                    </td>
+                </tr>
+
+            </table>
+
+
+        </div>
+
+
+    </div>
+</div>
+<div>
+    <span style="float: right;">
+        <input type="button" id="btnPrint" style="width: 50px;" onclick="print()" value="Print" /></span>
+</div>
+<br />
+
+<script>
+    $('#btnPrint').click(function (e) {
+
+        e.preventDefault();
+        var msg = 'Do You Want To Print?';
+        var div = hh("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+                        window.print();
+
+                        printing.document.write('<div style="width: 100%;  font-size: x-large; font-weight: 700; background:url(../../Images/mmh-logo.png) no-repeat center; background-size:35%;">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+                        printing.document.wi
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+
+    });
+
+
+</script>
+

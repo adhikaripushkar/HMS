@@ -1,0 +1,84 @@
+﻿@model HospitalManagementSystem.Models.CreditPatientDetailsModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="block-header">
+    <h2 class="block-title", style="text-align:center">Create New Credit Patients Note</h2>
+</div>
+
+ @using (Html.BeginForm("Create", "CreditPatients", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+         <div class="row-fluid singleline">
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.CreditPatientName)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.CreditPatientName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.CreditPatientName)
+                    </div>
+                </label>
+        </div>
+     <div class="row-fluid singleline">
+         <label>
+             <span class="size">@Html.ValidationMessageFor(model => model.CreditPatientCase)</span>
+             <div class="editor-label">
+                 @Html.LabelFor(model => model.CreditPatientCase)
+             </div>
+             <div class="editor-field">
+                 @Html.TextBoxFor(model=>model.CreditPatientCase)
+             </div>
+         </label>
+     </div>
+     <div class="row-fluid singleline">
+         <label>
+             <span class="size">@Html.ValidationMessageFor(model => model.CreditPatientRefer)</span>
+             <div class="editor-label">
+                 @Html.LabelFor(model => model.CreditPatientRefer)
+             </div>
+             <div class="editor-field">
+                 @Html.TextBoxFor(model => model.CreditPatientRefer)
+             </div>
+         </label>
+     </div>
+     <div class="row-fluid singleline">
+         <label>
+             <span class="size">@Html.ValidationMessageFor(model => model.CreditpatientTest)</span>
+             <div class="editor-label">
+                 @Html.LabelFor(model => model.CreditpatientTest)
+             </div>
+             <div class="editor-field">
+                 @Html.TextBoxFor(model => model.CreditpatientTest)
+             </div>
+         </label>
+     </div>
+     <div class="row-fluid singleline">
+         <label>
+             <span class="size">@Html.ValidationMessageFor(model => model.CreditPatientRepresentative)</span>
+             <div class="editor-label">
+                 @Html.LabelFor(model => model.CreditPatientRepresentative)
+             </div>
+             <div class="editor-field">
+                 @Html.TextBoxFor(model => model.CreditPatientRepresentative)
+             </div>
+         </label>
+     </div>
+     <div class="row-fluid singleline">
+         <label>
+             <span class="size">@Html.ValidationMessageFor(model => model.CreditPatientBroughtBy)</span>
+             <div class="editor-label">
+                 @Html.LabelFor(model=>model.CreditPatientBroughtBy)
+             </div>
+             <div class="editor-field">
+                 @Html.TextBoxFor(model => model.CreditPatientBroughtBy)
+             </div>
+         </label>
+     </div>
+     
+     <div class="bottom_btn">
+                    <a href="@Url.Action("Index","CreditPatients")" class="btn btn-sm btn-warning"><i class="fa fa-undo"></i>Go Back</a>
+                    <button type="submit" id="" name="" class="btn btn-success"><i class="fa fa-save"></i>Create</button>
+                    </div>
+ }

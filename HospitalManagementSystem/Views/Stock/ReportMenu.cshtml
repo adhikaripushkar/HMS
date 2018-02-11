@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "ReportMenu";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+<div class="contentWrapper">
+    <div class="row-fluid">
+
+        <div class="container accessBox">
+
+            <ul class="dashboard-actions clearfix">
+
+                <li>
+                    <a href="~/Stock/StockItemPurchaseReport" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Stock purchase Report </h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="~/Stock/StockReport" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Stock Report </h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/Stock/BreakageReturnReport" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Breakage & Return Report </h5>
+                        </div>
+                    </a>
+                </li>
+                <li style="width: auto !important;">
+                    <a href="~/Stock/DepartmentWiseStockReport" data-toggle="n-tooltip">
+                        <div class="dashboard-action" style="padding: 0 6px !important;">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Department wise Stock Report </h5>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

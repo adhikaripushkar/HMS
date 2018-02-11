@@ -1,0 +1,49 @@
+﻿@model HospitalManagementSystem.Models.IpdRegistrationMasterModel
+
+
+
+@if (TempData["NullData"] == "0")
+{
+    <script type="text/javascript">
+        alert("Your Request Not Found!!");
+    </script>
+}
+
+
+@if (ViewBag.DetailsData != null)
+{
+    <table>
+
+        <thead>
+            <tr>
+                <th>FirstName</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in ViewBag.DetailsData)
+            {
+                <tr>
+                    <td>@item.FirstName</td>
+                    <td>@item.MiddleName</td>
+                    <td>@item.LastName</td>
+
+                </tr>
+            }
+
+        </tbody>
+
+
+    </table>
+}
+else
+{
+    <div>
+        Data Not Found!!
+    </div>
+}
+

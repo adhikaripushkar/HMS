@@ -1,0 +1,112 @@
+﻿@model Hospital.Models.VDCMUNModel
+@{
+    ViewBag.Title = "VDCMUN";
+    int i = 1;
+}
+
+<h2>Village Development Committe/Municipality List</h2>
+
+<script type="text/javascript">
+    var j = jQuery.noConflict();
+
+    j(document).ready(function () {
+
+        j('.message').delay(5000).fadeOut();
+
+
+    });
+
+</script>
+
+
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-success message" onload="startTimer()">
+        <button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>
+        <strong><i class="ace-icon fa fa-envelope"></i></strong>@TempData["Msg"]<br>
+    </div>
+
+}
+@if (TempData["MsgError"] != null)
+{
+    <div class="alert alert-success message" onload="startTimer()">
+        <button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button>
+        <strong><i class=" fa fa-exclamation-triangle"></i></strong>Oops error,Something went wrong(check required value): @TempData["MsgError"]<br>
+    </div>
+
+}
+
+
+@*<div class="block-header">
+    <h4 class="block-title">Index</h4>
+</div>*@
+<div class="well" style="border-radius: 0;">
+    <div class="side-by-side clearfix">
+
+        <div class="bottom_btn marginBottom">
+
+            <a href="@Url.Action("Create", "VDCMUN")"  class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i>Add New</a>
+
+        </div>
+
+        <div class="clearfix"></div>
+        <div id="divTableDataHolder" class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th class="width30">S.N.</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DistrictID)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.VdcMunNameEng)
+                        </th>
+
+
+                        <th class="width130">Action</th>
+
+                    </tr>
+                </thead>
+
+                @foreach (var item in Model.VdcMunModelList)
+                {
+    
+                    <tr>
+                        <td>@i</td>
+                        <td>
+                            @Hospital.Utility.GetDistricttitleById(item.DistrictID)
+                            @*@Hospital.Utility.GetDistrictList(item.DistrictID)*@
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.VdcMunNameEng)
+                        </td>
+
+
+                        <td class="text-center">
+                            <div class="btn btn-success btn-xs btn-edit">
+                                <i class="fa fa-pencil-square-o"></i>@Html.ActionLink("Edit", "Edit", new { id = item.VdcMunID })
+                            </div>
+                            <div class="btn btn-danger btn-xs btn-delete">
+                                <i class="fa fa-trash"></i>
+                                @Html.ActionLink("Delete", "Delete", new { id = item.VdcMunID }, new { onclick = "return confirm('Do you want to delete?')" })
+                            </div>
+
+                        </td>
+
+
+
+                    </tr>
+
+                    i++;
+                }
+
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+

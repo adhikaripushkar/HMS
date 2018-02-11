@@ -1,0 +1,231 @@
+﻿@model Hospital.Models.CytologyReportsModel
+
+@{
+    ViewBag.Title = "CreateCytologyRpt";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+}
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+        j("#DateOfReceipt").datepicker();
+        j("#DateOfDispatch").datepicker();
+
+    });
+
+</script>
+<div class="contentWrapper">
+    @*<link href="~/Content/themes/bootstrap.min.css" rel="stylesheet" />
+    <div class="clearfix"></div>
+
+    <div class="row" style="font-weight: bold;">
+        <div class="col-md-1" style="width: 74px;">Cytopath No.</div>
+        <div class="col-md-1">@Model.CytopathNo</div>
+        <div class="col-md-2" style="width: 102px;">Refering Doctor</div>
+        <div class="col-md-3">Dr. Manmohan Kumar Yadav</div>
+    </div>*@
+
+
+
+    @using (Html.BeginForm("CreateCytologyRpt", "PatientTestResult", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+       
+        @Html.HiddenFor(model => model.PatientId)
+        <fieldset>
+            <legend>Create</legend>
+
+            @if (TempData["message"] != null)
+            {
+                <div class="alert alert-error">
+                    @TempData["message"]
+                </div>
+            }
+
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.CytopathNo)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.CytopathNo)
+                        @Html.ValidationMessageFor(model => model.CytopathNo)
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.RefDocId)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.RefDocId, Hospital.Utility.GetDoctors())
+                        @Html.ValidationMessageFor(model => model.RefDocId)
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.RegId)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.RegId)
+                        @Html.ValidationMessageFor(model => model.RegId)
+                    </div>
+
+                </label>
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.WardOrOpd)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.WardOrOpd)
+                        @Html.ValidationMessageFor(model => model.WardOrOpd)
+                    </div>
+
+                </label>
+
+            </div>
+
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.DateOfReceipt)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.DateOfReceipt, new { @Value = DateTime.Now.ToShortDateString() })
+                        @Html.ValidationMessageFor(model => model.DateOfReceipt)
+                    </div>
+
+                </label>
+
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.DateOfDispatch)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.DateOfDispatch, new { @Value = DateTime.Now.ToShortDateString() })
+                        @Html.ValidationMessageFor(model => model.DateOfDispatch)
+                    </div>
+
+                </label>
+            </div>
+
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ClinicalFeatures)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(model => model.ClinicalFeatures, new { @style = "width: 874px; height: 57px;" })
+                        @Html.ValidationMessageFor(model => model.ClinicalFeatures)
+                    </div>
+
+                </label>
+
+            </div>
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Speciman)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(model => model.Speciman, new { @style = "width: 351px; height: 60px;" })
+                        @Html.ValidationMessageFor(model => model.Speciman)
+                    </div>
+
+                </label>
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Site)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(model => model.Site, new { @style = "width: 351px; height: 60px;" })
+                        @Html.ValidationMessageFor(model => model.Site)
+                    </div>
+
+                </label>
+
+            </div>
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ProcedureNote)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(model => model.ProcedureNote, new { @style = "width: 874px; height: 57px;" })
+                        @Html.ValidationMessageFor(model => model.ProcedureNote)
+                    </div>
+
+                </label>
+            </div>
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MiicroDescription)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(model => model.MiicroDescription, new { @style = "width: 874px; height: 57px;" })
+                        @Html.ValidationMessageFor(model => model.MiicroDescription)
+                    </div>
+
+                </label>
+            </div>
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Diagnosis)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(model => model.Diagnosis, new { @style = "width: 874px; height: 57px;" })
+                        @Html.ValidationMessageFor(model => model.Diagnosis)
+                    </div>
+
+                </label>
+            </div>
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Comments)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(model => model.Comments, new { @style = "width: 874px; height: 57px;" })
+                        @Html.ValidationMessageFor(model => model.Comments)
+                    </div>
+
+                </label>
+            </div>
+
+            <br />
+            <p>
+                <input type="submit" value="Create" />
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+    </div>
+
+</div>
+
+
+

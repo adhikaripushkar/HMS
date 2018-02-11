@@ -1,0 +1,127 @@
+﻿@model Hospital.Models.BreakageReturnReportModel
+@{
+    ViewBag.Title = "BreakageReturnReport";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+    int i = 1;
+}
+<script type="text/javascript">
+    function prints(divName) {
+
+        //Get the HTML of div
+        var divElements = document.getElementById(divName).innerHTML;
+        //Get the HTML of whole page
+        var oldPage = document.body.innerHTML;
+
+        //Reset the page's HTML with div's HTML only
+        document.body.innerHTML = "<html><head><title></title></head><body>" + divElements + "</body>";
+
+        //Print Page
+        window.print();
+
+        //Restore orignal HTML
+        document.body.innerHTML = oldPage;
+
+        //disable postback on print button
+        return false;
+
+    }
+</script>
+<h2>Breakage & Return Report</h2>
+<div class="contentWrapper">
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: 100%; grid-row-align: center;">
+        @if (@Hospital.Utility.GetPathOfHospitalLogo() != null && @Hospital.Utility.GetPathOfHospitalLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalLogo/@Hospital.Utility.GetPathOfHospitalLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@Hospital.Utility.GetPathOfHospitalLogo() == "")
+        { 
+            
+            <br />
+        
+        }
+        <div style="font: bold; font-size: 18px; text-align: center; height: 100px;">
+            @if (@Hospital.Utility.GetHospitalTitleName() != null && @Hospital.Utility.GetHospitalTitleName() != "")
+            {
+                <span>@Hospital.Utility.GetHospitalTitleName()</span>
+            }
+            <br />
+            @Hospital.Utility.GetHospitalName()<br />
+            <div style="height: 80px;">
+                <span style="font-size: 15px; text-align: center">@Hospital.Utility.HospitalAddress()</span><br />
+                <span style="font-size: 14px; text-align: center">Website:-@Hospital.Utility.HospitalUrl()</span><br />
+                <span style="font-size: 14px; text-align: center">Ph:-@Hospital.Utility.HospitalPhone()</span>
+
+            </div>
+
+        </div>
+        <br />
+        <table class="table">
+            <tr>
+                <th>S.No.
+                </th>
+                <th>Item
+                </th>
+                <th>Opening Stock
+                </th>
+                <th>Purchase
+                </th>
+                <th>Expense
+                </th>
+                <th>Breakage
+                </th>
+                <th>Return In
+                </th>
+                <th>Return Out
+                </th>
+                <th>Balance
+                </th>
+            </tr>
+            @foreach (var item in Model.BrkRetReportList)
+            {
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @Hospital.Utility.GetItemNameFromStockItemEntry(item.StockItemEntryId)
+                    </td>
+                    <td>
+                        @item.OpeningStock
+                    </td>
+                    <td>
+                        @((int)item.prcqty)
+                    </td>
+                    <td>
+                        @((int)item.altqty)
+                    </td>
+                    <td>
+                        @item.brqty
+                    </td>
+                    <td>
+                        @((int)item.riqty)
+                    </td>
+                    <td>
+                        @((int)item.roqty)
+                    </td>
+                    <td>
+                        @{
+                var sum = item.OpeningStock + item.prcqty + item.riqty - item.altqty - item.brqty - item.roqty;
+                                          
+                        }
+                        @((int)sum)
+                    </td>
+
+                </tr>
+                i++;
+            }
+        </table>
+    </div>
+    <p id="linkNewBack">
+        <input type="button" value="Print" onclick="prints('printdiv')" />
+        <span> @Html.ActionLink("Back", "ReportMenu")</span>
+    </p>
+</div>

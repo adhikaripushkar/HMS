@@ -1,0 +1,253 @@
+﻿@model HospitalManagementSystem.Models.DemandMasterModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+<style>
+    .custom-table td {
+        border: none;
+    }
+    .txt {
+        width:90px;
+    }
+</style>
+
+<script src="~/Scripts/jquery.ui.datepicker.js"></script>
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+        j("#datefrom").datepicker();
+        j("#dateto").datepicker();
+        j("#AllotmentDate").datepicker();
+    });
+</script>
+
+<h2 style="text-align: center;">Allotment</h2>
+
+<div class="contentWrapper">
+   @* <p id="linkNewBack">
+        @Html.ActionLink("View Allotment Details", "AllotmentMaster")
+    </p>*@
+
+    <div class="bs-docs-example form-inline">
+    @using (Html.BeginForm())
+    {
+        @Html.Hidden("DemandId")
+
+        
+        @Html.ValidationSummary(true)
+      
+
+        if (Model.DemandDetailList.Count > 0)
+        {
+            
+        <table>
+            <thead>
+            <tr>
+
+                <th>Demand No.
+                </th>
+                <th>Item
+                </th>
+                <th>Available Stock
+                </th>
+                <th>Quantity
+                </th>
+                <th>Dispatch Status
+                </th>
+                <th>Quantity Issued
+                </th>
+                <th>Source
+                </th>
+                <th>Cancellation Status
+                </th>
+                <th>Remarks
+                </th>
+                @*<th>
+                   Redirect to Purchase Order
+                </th>*@
+            </tr>
+                </thead><tbody>
+            @for (int i = 0; i < Model.DemandDetailList.Count; i++)
+            {
+               
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(m => m.ItemDemandNo)
+                        @Html.HiddenFor(m => Model.DemandDetailList[i].ItemDemandID, new { @Value = Model.DemandDetailList[i].ItemDemandID })
+                        @Html.HiddenFor(m => Model.DemandDetailList[i].ItemDemandDetailId, new { @Value = Model.DemandDetailList[i].ItemDemandDetailId })
+                        @Html.HiddenFor(m => m.ItemDemandNo)
+                    </td>
+                    <td>
+                        @HospitalManagementSystem.Utility.GetDemandItemName(Model.DemandDetailList[i].ItemID)
+                        @Html.HiddenFor(m => Model.DemandDetailList[i].ItemID, new { @Value = Model.DemandDetailList[i].ItemID })
+                    </td>
+                    <td>
+                        @((int)HospitalManagementSystem.Utility.GetAvailableStock(Model.DemandDetailList[i].ItemID))
+                    </td>
+                    <td>
+                        @((int) Model.DemandDetailList[i].QuantityDemand)
+                        @Html.HiddenFor(m => Model.DemandDetailList[i].QuantityDemand, new { @Value = Model.DemandDetailList[i].QuantityDemand })
+                    </td>
+                    <td style="text-align:center;">
+                        @Html.DisplayFor(m => Model.DemandDetailList[i].DispatchStatus)
+                        @Html.HiddenFor(m => Model.DemandDetailList[i].DispatchStatus, new { @Value = Model.DemandDetailList[i].DispatchStatus })
+                    </td>
+                    <td class="qnt"  id="q_@i">
+                        @Html.TextBoxFor(m => Model.DemandDetailList[i].QuantityIssued, new { @id = i,@style="width:95px;" }) 
+                    </td>
+                    <td>
+                        @Html.DropDownListFor((m => Model.DemandDetailList[i].SourceFrom), HospitalManagementSystem.Utility.GetSource(), new {@style="width:150px;"  })
+                    </td>
+                    <td style="text-align:center;">
+                        @Html.CheckBoxFor(m => Model.DemandDetailList[i].CancellationStatus)
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => Model.DemandDetailList[i].Remarks, new {@style="width:95px;" })
+                    </td>
+                    @*<td style="text-align:center;">
+                       @Html.CheckBoxFor(m=>Model.DemandDetailList[i].isSelected)
+                    </td>*@
+                </tr>
+            }
+                    </tbody>
+
+            @if (TempData["message"] != null || TempData["message"] != "")
+            { 
+                <tr>
+                    @TempData["message"]
+                </tr>
+            }
+        </table>
+        
+        <br />
+        <table class="custom-table">
+            <tr>
+                
+                <td>
+                    Allotment Number<br />
+                    @Html.TextBoxFor(model => model.ItemAllotmentNo, new { @readonly="readonly"})
+
+                </td>
+               
+                <td>
+                    Date<br />
+                    @Html.EditorFor(model => model.AllotmentDate)
+                </td>
+                
+                <td>
+                    Officer<br />
+                    @Html.EditorFor(model => model.Orderer)
+                </td>
+               
+                <td>
+                    Post<br />
+                    @Html.EditorFor(model => model.OrdererPost)
+                </td>
+            </tr>
+        </table>
+        <div>
+            <br />
+     @*<table> 
+         
+         <tr>
+             <td>Redirect to Purchase Order</td>
+             <td>@Html.CheckBoxFor(model=>model.isSelected)</td>
+            
+             </tr>
+         </table>*@
+            <br />
+            <input type="submit" name="saveDetails" value="Save" id="save" />
+        
+            </div>
+        <br /><br /><br />    
+        <div>
+        
+            
+      
+
+        </div>
+        }
+
+    }
+</div>
+     <span id="linkNewBack">
+            @Html.ActionLink("Back", "Index", "Demand")
+        </span>
+</div>
+
+<script>
+    $(".findDetails").click(function () {
+        $("#DemandId").val(this.id)
+
+    });
+
+    $("#sbmid").click(function () {
+        $("#DemandId").val("")
+    });
+
+    $("#save").click(function () {
+        if ($("#AllotmentDate").val() == "") {
+            //alert("Enter date and orderer name.");
+            $("#AllotmentDate").focus();
+            return false;
+        }
+        if ($("#Orderer").val() == "") {
+            $("#Orderer").focus();
+            return false;
+        }
+
+
+    });
+
+
+
+</script>
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //alert();
+
+
+        $("#demandno").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Allotment/AutocompleteDemandNo",
+                    type: "GET",
+                    dataType: "json",
+                    data: { s: request.term },
+                    success: function (data) {
+
+                        response($.map(data, function (item) {
+
+                            return { label: item, value: item };
+
+                        }))
+
+                    },
+                 
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    });
+</script>
+
+    }
+<script>
+    $(".checkbox").click(function () {
+
+    })
+</script>

@@ -1,0 +1,234 @@
+﻿@model Hospital.Models.SetupOtherTestModel
+
+@{
+    ViewBag.Title = "OtherTest";
+    Layout = "~/Views/Shared/_PathoAndRadiologyLayout.cshtml";
+}
+
+<h2 style="text-align: center;">Other Test Details</h2>
+
+
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+@if (TempData["success"] == Hospital.UtilityMessage.savefailed)
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == Hospital.UtilityMessage.edit)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.editfailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.delete)
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.deletefailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+<div class="general-box clearfix">
+    <div style="font-weight: bold;">
+        @using (Html.BeginForm("SearchIndex", "SetupOtherTest", FormMethod.Get))
+        {
+            <p>
+                <span style="font-size: 14px; font-weight: bold;">Patient Name:&nbsp;&nbsp;</span>@Html.TextBoxFor(m => m.OtherTestName)
+                @Html.HiddenFor(m=>m.TestTypeID)
+                <input type="submit" value="Search" />
+            </p>
+        }
+    </div>
+
+
+</div>
+
+
+<div class="contentWrapper">
+    <div id="DetailsId"></div>
+
+    <p>
+        @Html.ActionLink("Create New", "Create", null, new { @id = Model.TestTypeID }, null)
+    </p>
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Other Test Details</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px;">
+
+                                @Html.DisplayNameFor(model => model.SetupOtherTestId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OtherTestName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TestNameRemarks1)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TestNameRemarks2)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TestAmount)
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.SetupOtherTestModelList)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SetupOtherTestId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OtherTestName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TestNameRemarks1)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TestNameRemarks2)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalAmount)
+                                </td>
+
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.SetupOtherTestId }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.SetupOtherTestId })
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            @*for sorting *@
+
+            <div class="boxFooter">
+
+                <div id="pager" style="">
+                    <form>
+                        <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                        <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                        <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                        <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                        <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                        <select class="pagesize valid" style="width: 70px; height: 30px;">
+                            <option selected="selected" value="10">10</option>
+                            <option value="5">5</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                        </select>
+                    </form>
+                </div>
+
+            </div>
+
+            @*---------------*@
+
+        </div>
+    </div>
+
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+
+
+
+
+    var dlg = $.noConflict();
+
+    dlg(".linkDetail").click(function (e) {
+        e.preventDefault();
+
+
+        dlg.get('/Opd/Details/' + this.id,
+                   function (data) {
+
+                       dlg('#DetailsId').html(data);
+
+                       dlg(function () {
+                           dlg("#DetailsId").dialog({
+
+                               position: [490, 190],
+                               resizable: true,
+                               minWidth: 550,
+                               maxWidth: 550,
+                               height: 400
+                               //title: "Doctor Details"
+
+
+
+
+                               //close: function () { $(this).remove() },
+                               //modal: true
+
+                           });
+
+                       });
+
+                   }
+         );
+
+
+
+
+    });
+
+</script>
+
+

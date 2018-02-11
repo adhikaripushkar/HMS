@@ -1,0 +1,229 @@
+﻿@model HospitalManagementSystem.Models.IpdMrMainTestModel
+@{
+    ViewBag.Title = "IpdMrMainTest";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+
+<style>
+    .mytable tr td:first-child {
+        /*border: 1px solid black;*/
+        background-color: #C5B971;
+        font-weight: bold;
+    }
+</style>
+<script src="~/Scripts/OrderManagerScript.js"></script>
+<script>
+    var j = $.noConflict();
+    j(function () {
+        j("#InsertedDate").datepicker();
+
+    });
+
+</script>
+
+
+<h2 style="text-align: center;">IPD Main Test</h2>
+
+<div class="contentWrapper">
+
+    <h4>Patient Information</h4>
+
+
+
+
+    <table class="mytable">
+
+
+        @foreach (var item in Model.IpdMedicalRecordList)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.ResistrationDate)
+
+                </td>
+
+                <td>
+                    @Convert.ToDateTime(item.RegistrationDate).ToShortDateString()
+                </td>
+
+
+
+            </tr>
+    
+            <tr>
+
+                <td>@Html.DisplayNameFor(model => model.WardNo)</td>
+                <td>@item.WardNo</td>
+
+
+            </tr>
+            <tr>
+
+
+                <td>@Html.DisplayNameFor(model => model.RoomNo)</td>
+                <td>@item.RoomNo</td>
+            </tr>
+    
+            <tr>
+
+                <td>@Html.DisplayNameFor(model => model.BedNo)</td>
+                <td>@item.BedNo</td>
+            </tr>
+    
+        }
+    </table>
+
+    <hr />
+    <h4>Test Details</h4>
+
+
+    <div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Details</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <tr>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.SectionName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TestName)
+                        </th>
+
+                        <th>Action</th>
+
+
+
+                    </tr>
+
+                    @foreach (var item in Model.IpdMrMainTestModelList)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SectionName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TestName)
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Edit", "EditMainTest", new { id = item.IpdMrMainTestID, opd = item.PatientID, ipd = item.IpdRegistrationID }) |
+            
+            @Html.ActionLink("Delete", "DeleteMainTest", new { id = item.IpdMrMainTestID, opd = item.PatientID, ipd = item.IpdRegistrationID })
+                            </td>
+
+                        </tr>
+                    }
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+
+    <h3>AddTest </h3>
+    <div class="well well-small" id="Add-Item">
+        @using (Html.BeginForm())
+        {
+        
+            @Html.ValidationSummary(true)
+            @Html.Label("Test Date")
+            @Html.EditorFor(model => model.InsertedDate)
+
+  
+            foreach (var item in Model.SectionTestCheckBoxList.GroupBy(x => x.SectionId).Select(y => y.FirstOrDefault()))
+            {
+            <div class="heading" style="width:1000px;background:#C5B971;" onmouseover="this.style.background='#C5B971';" onmouseout="this.style.background='#C5B971'; " id="headingOne" onclick="showHideDiv('@item.SectionId')">
+                <h4>@HospitalManagementSystem.Utility.GetSectionNameById(item.SectionId)</h4>
+            </div>
+              
+                   
+            <div style="height: auto;">
+                <div id="con_@item.SectionId" style="padding:0px; height:380px;display:none;">
+
+
+                    @for (int i = 0; i < Model.SectionTestCheckBoxList.Count; i++)
+                    {
+                        <div style="float: left; margin-left: 0px; margin-right: 0px; margin-top: 15px;">
+
+                            @if (item.SectionId == Model.SectionTestCheckBoxList[i].SectionId)
+                            {
+                                <div style="width: 200px; height: 50px; font-size: 14px">
+                                    @Html.CheckBoxFor(model => model.SectionTestCheckBoxList[i].isSelected)
+                                    @Html.DisplayFor(model => model.SectionTestCheckBoxList[i].TestName)
+                                </div>
+    
+                                @Html.HiddenFor(model => model.SectionTestCheckBoxList[i].TestID)
+                                @Html.HiddenFor(model => model.SectionTestCheckBoxList[i].SectionId)
+   
+    
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+            }
+            <hr />
+            @Html.HiddenFor(model => model.PatientID)
+            @Html.HiddenFor(model => model.IpdRegistrationID)
+            <div>
+                @Html.DisplayNameFor(model => model.ShortDescription)
+                @Html.TextBoxFor(model => model.ShortDescription)
+
+            </div>
+            <div>
+                @Html.DisplayNameFor(model => model.LongDescription)
+                @Html.TextAreaFor(model => model.LongDescription)
+            </div>
+            
+    
+
+            <p>
+                <input type="submit" value="Save" />
+            </p>
+   
+     
+        }
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+    $("#Add-Item").on('click', '.row-button', function () {
+        $(this).closest("div.row").remove();
+    });
+
+</script>
+
+<script type="text/javascript">
+
+    function showHideDiv(divId) {
+        $("#con_" + divId).slideToggle("slow");
+    };
+</script>
+
+

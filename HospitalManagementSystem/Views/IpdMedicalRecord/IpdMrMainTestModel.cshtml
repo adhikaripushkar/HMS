@@ -1,0 +1,139 @@
+﻿@model HospitalManagementSystem.Models.IpdMrMainTestModel
+
+@{
+    ViewBag.Title = "IpdMrMainTestModel";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+<h2>Ipd MainTestModel</h2>
+<h2>Patient Details</h2>
+
+
+
+<table>
+    <tr>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.RegistrationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WardNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoomNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BedNo)
+        </th>
+       
+        
+    </tr>
+
+@foreach (var item in Model.IpdMedicalRecordList) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.RegistrationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WardNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoomNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BedNo)
+        </td>
+       
+  
+      
+        
+        
+    </tr>
+}
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>IpdMrMainTestModel</legend>
+
+      
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PatientID)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.PatientID)
+            @Html.ValidationMessageFor(model => model.PatientID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SectionID)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.SectionID,HospitalManagementSystem.Utility.GetSectionList())
+            @Html.ValidationMessageFor(model => model.SectionID)
+        </div>
+
+      <div class="well well-small" id="Add-Item">
+
+            @Html.ActionLink("Add More", "AddMoreDepartmentDoctors", null, new { @class = "addProductItem btn btn-primary" })
+            <table id="mytbl">
+                  <tr>
+                      <td>Department</td>
+                      <td>Doctor</td>
+                      <td>Prefer Time</td>
+                      <td>Prefer Date</td>
+                </tr>
+                  
+                      @foreach (var item in Model.PreRegistrationPreferModelList)
+                      {
+                   
+                        <tr>
+                        @Html.Partial("AddMoreDepartmentDoctors", item)
+                        </tr>  
+                          
+                      }        
+            
+            </table>
+        </div>
+       
+      
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ShortDescription)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ShortDescription)
+            @Html.ValidationMessageFor(model => model.ShortDescription)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LongDescription)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LongDescription)
+            @Html.ValidationMessageFor(model => model.LongDescription)
+        </div>
+
+        
+        
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

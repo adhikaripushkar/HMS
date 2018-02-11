@@ -1,0 +1,283 @@
+﻿@model Hospital.Models.CytologyReportsModel
+
+@{
+    ViewBag.Title = "ShowCytologyReport";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+}
+
+<h2></h2>
+<style>
+    table#tblnoborder,
+    table#tblnoborder td {
+        border: none !important;
+    }
+
+    .font {
+        font-weight: bold;
+    }
+
+    .small-table td {
+        border: none;
+    }
+
+
+
+    .holder img {
+        max-height: 48px;
+        max-width: 55px;
+        object-fit: cover;
+    }
+
+
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+    }
+
+    .ui-dialog {
+        background-color: #B0E0E6;
+    }
+</style>
+
+
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        //var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        //printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        //printing.document.write('<div style="font-size:small;">');
+        //printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        //printing.document.close();
+        //printing.focus();
+        //printing.print();
+        //printing.close();
+
+    }
+</script>
+
+<div class="myDiv">
+
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto;">
+        <link href="~/Content/themes/bootstrap.min.css" rel="stylesheet" />
+        <img src="~/Images/mmh-logo1.png" style="position: absolute; margin-left: 27%; margin-top: 10%;" />
+
+        <div>
+
+            @MyHelpers.DesingForLogo()
+
+
+            <h4 style="text-align: center;"><u>Department Of Pathology</u> </h4>
+            <h5 style="text-align: center;"><u>CYTOLOGY REPORT</u> </h5>
+            <table style="width: 100%;">
+                <tr>
+                    <td>
+                        <strong>Name : @Hospital.Utility.GetPatientNameWithIdFromOpd(Model.PatientId)</strong>
+                        <p>Date of Dispatch : @Model.DateOfDispatch.ToShortDateString()</p>
+
+                    </td>
+
+                    <td><strong>Age/Sex : @Hospital.Utility.GetPatientCurrentAgeFromId(Model.PatientId) /@Hospital.Utility.GetPatientSexTypeFromPatiendId(Model.PatientId)</strong>
+                        <p>Registerd Date : @Model.DateOfReceipt.ToShortDateString()</p>
+                        <p>Cytopath No. : @Model.CytopathNo</p>
+                    </td>
+
+                    <td><strong>/Ward : @Model.RegId / @Model.WardOrOpd</strong>
+                        <p>
+                            Refering Doctor : @Hospital.Utility.GetDoctorName(Model.RefDocId)
+                        </p>
+
+                    </td>
+
+
+                </tr>
+
+
+
+            </table>
+
+
+            <div style="margin-top: 20px;">
+                @*<div class="row" style="font-weight: bold;">
+                    <div class="col-md-1" style="width: 74px;">Cytopath No.</div>
+                    <div class="col-md-1">@Model.CytopathNo</div>
+                    <div class="col-md-2" style="width: 102px;">Refering Doctor</div>
+                    <div class="col-md-3">Dr. Manmohan Kumar Yadav</div>
+                </div>*@
+
+                @*<div class="row" style="font-weight: bold; margin-bottom: 10px;">
+                    <div class="col-md-2" style="width: 74px;">Reg No.</div>
+                    <div class="col-md-1">@Model.RegId</div>
+                    <div class="col-md-1">Date Of Receipt</div>
+                    <div class="col-md-1">@Model.DateOfReceipt.ToShortDateString()</div>
+                    <div class="col-md-2">Date Of Dispatch</div>
+                    <div class="col-md-2">@Model.DateOfDispatch</div>
+                </div>*@
+
+                @*<div class="row" style="font-weight: bold; margin-bottom: 10px;">
+                    <div class="col-md-1">Name</div>
+                    <div class="col-md-3">@Hospital.Utility.GetPatientNameWithIdFromEmergency(Model.PatientId)</div>
+                    <div class="col-md-1">Ward/Opd</div>
+                    <div class="col-md-2">@Model.WardOrOpd</div>
+
+                </div>*@
+
+                @*<div class="row" style="font-weight: bold; margin-bottom: 10px;">
+                    <div class="col-md-1">Gender</div>
+                    <div class="col-md-1">@Hospital.Utility.GetPatientSexType(Model.PatientId)
+                    </div>
+                    <div class="col-md-1">Age</div>
+                    <div class="col-md-2">@Hospital.Utility.GetPatientCurrentAgeFromId(Model.PatientId)</div>
+
+                </div>*@
+                <table>
+                    <tr>
+                        <td>Clinical Features</td>
+                        <td>@Html.TextAreaFor(model => model.ClinicalFeatures, new { @style = " width: 500px; height: 72px;", @readonly = "readonly" })</td>
+                    </tr>
+                    <tr>
+                        <td>Speciman</td>
+                        <td>@Html.TextAreaFor(model => model.Speciman, new { @style = " width: 500px; height: 72px;", @readonly = "readonly" })</td>
+                    </tr>
+                    <tr>
+                        <td>Site</td>
+                        <td>@Html.TextAreaFor(model => model.Site, new { @style = " width: 500px; height: 72px;", @readonly = "readonly" })</td>
+                    </tr>
+
+
+                    <tr>
+                        <td>Procedure Note</td>
+                        <td>@Html.TextAreaFor(model => model.ProcedureNote, new { @style = " width: 500px; height: 72px;", @readonly = "readonly" })</td>
+                    </tr>
+                    <tr>
+                        <td>Microsopic Description</td>
+                        <td>@Html.TextAreaFor(model => model.MiicroDescription, new { @style = " width: 500px; height: 72px;", @readonly = "readonly" })</td>
+                    </tr>
+                    <tr>
+                        <td>Diagnosis</td>
+                        <td>@Html.TextAreaFor(model => model.Diagnosis, new { @style = " width: 500px; height: 72px;", @readonly = "readonly" })</td>
+                    </tr>
+                    <tr>
+                        <td>Comment</td>
+                        <td>@Html.TextAreaFor(model => model.Comments, new { @style = " width: 500px; height: 72px;", @readonly = "readonly" })
+
+                        </td>
+                    </tr>
+
+                </table>
+                <div style="margin-top: 40px;">
+                    <span style="border-top: 1px solid #333; padding: 5px 10px; float: left; display: block;">Pathologist
+                    </span>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+
+            <table class="mytbl" id="mytbl" style="display: none;">
+                <tr>
+                    <td>Cytopath No
+                    </td>
+                    <td>c2222/1909
+                    </td>
+                    <td>Refering Doctor
+                    </td>
+                    <td>Dr. Ambrish prasdhas laamichanee
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cytopath No
+                    </td>
+                    <td>c2222/1909
+                    </td>
+                    <td>Refering Doctor
+                    </td>
+                    <td>Dr. Ambrish prasdhas laamichanee
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cytopath No
+                    </td>
+                    <td>c2222/1909
+                    </td>
+                    <td>Refering Doctor
+                    </td>
+                    <td>Dr. Ambrish prasdhas laamichanee
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cytopath No
+                    </td>
+                    <td>c2222/1909
+                    </td>
+                    <td>Refering Doctor
+                    </td>
+                    <td>Dr. Ambrish prasdhas laamichanee
+                    </td>
+                </tr>
+
+            </table>
+
+
+        </div>
+
+
+    </div>
+</div>
+<div>
+    <span style="float: right;">
+
+        <input type="button" id="btnPrint" style="width: 50px;" onclick="print()" value="Print" /></span>
+</div>
+<br />
+</div>
+<script>
+
+    var hh = $.noConflict();
+    hh('#btnPrint').click(function (e) {
+
+        e.preventDefault();
+        var msg = 'Do You Want To Print?';
+        var div = hh("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+                        window.print();
+
+                        printing.document.write('<div style="width: 100%;  font-size: x-large; font-weight: 700; background:url(../../Images/mmh-logo.png) no-repeat center; background-size:35%;">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+                        printing.document.wi
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+
+    });
+
+
+</script>
+

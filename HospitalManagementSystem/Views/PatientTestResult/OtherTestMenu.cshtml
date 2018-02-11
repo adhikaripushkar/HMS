@@ -1,0 +1,50 @@
+﻿@model Hospital.Models.CytologyReportsModel
+
+@{
+    ViewBag.Title = "OtherTestMenu";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+}
+
+<div class="contentWrapper mainWrapper">
+
+    <div class="row-fluid">
+
+        <div class="container accessBox">
+
+            <ul class="dashboard-actions clearfix wrap clear">
+
+
+                <li>
+                    <a href='~/PatientTestResult/SearchPatient' data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setupsection.jpg" alt="" class="">
+                            <h5>Search patient</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="~/PatientTestResult/CytologyReportIndex" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setupsection.jpg" alt="" class="">
+                            <h5>Cytology Report</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="~/PatientTestResult/BoneMarrowRptIndex" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setupsection.jpg" alt="" class="">
+                            <h5>Bone Marrow</h5>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+

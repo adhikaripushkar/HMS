@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>EHMS</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="~/fontaw/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width" />
+
+    <style>
+        select {
+            width: 208px;
+            height: 27px;
+        }
+    </style>
+
+    @Styles.Render("~/Content/css")
+
+
+    @*for designs*@
+
+    <link href="~/css/layout.css" rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
+    <link href="~/css/menu_assets/styles.css" rel="stylesheet" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+
+
+    @*for validation or many more*@
+
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.8.20.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    @*<script src="~/Scripts/jquery.ui.datepicker.js"></script>*@
+
+    @*for talble sorter*@
+
+    <link href="~/Content/TableSort.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.4.4.min.js"></script>
+    <script src="~/Scripts/jquery.tablesorter.js"></script>
+    <script src="~/Scripts/jquery.tablesorter.pager.js"></script>
+
+
+
+    <script type="text/javascript">
+        var j = $.noConflict();
+        j(function () {
+            //j("table.tablesorter").tablesorter({ widthFixed: true, sortList: [[0, 0]] })
+            //.tablesorterPager({ container: j("#pager"), size: j(".pagesize option:selected").val() });
+        });
+    </script>
+
+
+</head>
+
+
+<body>
+
+<div>
+    @Html.Partial("_Header")
+
+
+    <div class="leftMenu" style="margin-left: -10px; padding-top: 20px">
+        <div class="left-s-heading">
+            <h1><a href='~/Opd/Index' title=""><span style="color: white;">Opd Modules</span></a></h1>
+
+        </div>
+        <ul id="menu" class="nav">
+            <li class="tables" style="text-align: left;"><a href='~/Opd/OpdType' title=""><span style="font-size: 13px;">OPD Type</span></a> </li>
+            <li class="tables" style="text-align: left;"><a href='~/Opd/Index' title=""><span style="font-size: 13px;">OPD</span></a> </li>
+            <li class="tables" style="text-align: left;"><a href='~/Opd/OldPatient' title=""><span style="font-size: 13px;">Old Patient</span></a> </li>
+            <li class="tables" style="text-align: left;"><a href='~/Opd/ListTodayValue' title=""><span style="font-size: 13px;">PreRegistration</span></a> </li>
+            <li class="tables" style="text-align: left;"><a href='~/OpdMedicalDetail/Index' title=""><span style="font-size: 13px;">Medical Test</span></a> </li>
+            @*<li class="tables" style="text-align: left;"><a href='~/Opd/OpdVitalIndex' title=""><span style="font-size: 13px;">Vital</span></a> </li>*@
+
+            <li class="tables" style="text-align: left;"><a href='~/OpdMedicalRecord/Index' title=""><span style="font-size: 13px;">Patient Medical Records</span></a> </li>
+            @*<li class="tables" style="text-align: left;"><a href='~/OpdMedicalRecord/OldPatientMedicalRecords' title=""><span style="font-size: 13px;">Old Patient Medical Records</span></a> </li>*@
+            <li class="tables" style="text-align: left;"><a href='~/Opd/Search' title=""><span style="font-size: 13px;">Search Patient</span></a> </li>
+            @*<li class="tables" style="text-align:left;"><a href='~/Opd/SearchByBloodGroup' title=""><span style="font-size:12px;">Search Patient by Blood Group</span></a> </li>*@
+
+            <li class="tables" style="text-align: left;"><a href='~/Opd/OpdBilling/1' title=""><span style="font-size: 13px;">Today Transaction </span></a></li>
+            @*<li class="tables" style="text-align: left;"><a href='~/OpdMedicalDetail/calulateagenttotal' title=""><span style="font-size: 13px;">Agent Total Commision</span></a> </li>*@
+            @*<li class="tables" style="text-align: left;"><a href='~/Opd/DoctorCommisionReport/1' title=""><span style="font-size: 13px;">Doctor Commision </span></a></li>
+            <li class="tables" style="text-align: left;"><a href='~/Opd/HospitalManagementSystemCommision/1' title=""><span style="font-size: 13px;">HospitalManagementSystem Commision </span></a></li>*@
+            <li class="tables" style="text-align: left;"><a href='~/CreditPatients/Index' title=""><span style="font-size: 13px;">Credit Notes</span></a></li>
+
+
+        </ul>
+    </div>
+
+    <div id="body">
+        @RenderSection("featured", required: false)
+        <section class="">
+            @RenderBody()
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="footer">
+
+            <div class="footer-left"><span>© 2017. HospitalManagementSystem Management System. All Rights Reserved.</span> </div>
+            <div class="footer-right"><span>Designed and Developed by: Pushkar Adhikari</span> </div>
+        </div>
+    </footer>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+<script>
+    $(document).ready(function () {
+        $('#menu a').on('click', function () {
+            $('#menu a').removeClass('active');
+            $(this).addClass('active');
+
+        });
+    });
+
+
+
+
+</script>

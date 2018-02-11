@@ -1,0 +1,89 @@
+﻿@model HospitalManagementSystem.Models.DoctorTimeModel
+
+@{
+    ViewBag.Title = "DoctorTimeSearh";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 style="text-align:center;">Doctor Time Setup</h2>
+
+<div class="contentWrapper">
+
+@using (Ajax.BeginForm("_DoctorTimeDetails", "DoctorTime", FormMethod.Post, new AjaxOptions() { UpdateTargetId = "SerchDoctorTimeDetails" }, new {@class = "bs-docs-example form-inline"}))
+{
+
+@Html.DropDownListFor(model => model.DepartmentID, HospitalManagementSystem.Utility.GetDepartmentList(), "--Select Department--", new { @required = "@required", @onchange = "JqueryAjaxLoadSelectOption(this.value,'DoctorID','/AjaxRequest/GetDoctorNameList/')" })
+@Html.DropDownListFor(model => model.DoctorID, HospitalManagementSystem.Utility.GetDoctorList(1), "--Select Department First--")
+@Html.DropDownListFor(model => model.DoctorDays, HospitalManagementSystem.Utility.GetDayOfWeek(), "All")
+
+    <input type="submit" id="btnSummit" value="Search" />
+   
+
+}
+    
+
+ <div id="SerchDoctorTimeDetails">
+     
+    </div>
+
+    </div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script src="~/Scripts/json.cycle.js"></script>
+
+<script type="text/javascript">
+        function JqueryAjaxLoadSelectOption(selValue, targetElm, url) {
+
+            $.ajax({
+                async: false,
+                type: "GET",
+                url: url + selValue,
+                contentType: "text/json",
+                data: ({ id: selValue }),
+                beforeSend: function () {
+                    $("#" + targetElm).attr('disabled', 'disabled');
+                    $("#" + targetElm).addClass('ac_loading');
+                },
+
+                success: function (jsonResult) {
+                    var evlResult = JSON.retrocycle(jsonResult);
+                    var selOption = "";
+                    selOption = ParseJsonResultForSelectOptions(evlResult);
+                    tempTargetElm = targetElm.split(',');
+                    for (var i = 0; i < tempTargetElm.length; i++) {
+                        // alert(tempTargetElm.length + " : " + tempTargetElm[i]);
+                        $("#" + tempTargetElm[i]).empty().append(selOption);
+                        $("#" + tempTargetElm[i]).removeClass('ac_loading');
+                        $("#" + tempTargetElm[i]).removeAttr('disabled');
+                    }
+
+
+                },
+                error: function (jsonResult) {
+                }
+            });
+
+            function ParseJsonResultForSelectOptions(evlResult) {
+                var selOption = "";
+                $.each(evlResult, function (key, item) {
+                    var isSelected = (item['Selected'] == "true") ? "Selected='Selected'" : "";
+                    //var otherAttrib = (item['Attribs']!=undefined)? item['Attribs']:"";
+                    var otherAttrib = "";
+                    $.each(item, function (name, value) {
+                        if (name != 'Selected' && name != 'Value' && name != 'Text') {
+                            otherAttrib += " " + name + '="' + value + '" ';
+                        }
+                    });
+                    selOption += "<option value='" + item['Value'] + "' " + isSelected + " " + otherAttrib + " >"
+                    + evlResult[key].Text + "</option>";
+                });
+
+                return selOption;
+            }
+
+        }
+    </script>

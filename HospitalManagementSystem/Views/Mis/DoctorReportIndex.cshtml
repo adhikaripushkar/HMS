@@ -1,0 +1,191 @@
+﻿@model HospitalManagementSystem.Models.EmergecyMasterModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MisLayOutLayout.cshtml";
+}
+
+
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+
+
+
+}
+<script>
+    //$(document).ready
+    var j = $.noConflict();
+    j(function () {
+        j(".fromdate").datepicker();
+        j(".todate").datepicker();
+    });
+
+</script>
+
+<style>
+    .customtable td {
+        border: none;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+
+        var id = $('.doctorlist').val();
+        
+    });
+
+
+</script>
+
+
+<h2>Search Patient On The Doctor Base</h2>
+<div class="contentWrapper">
+    @using (Html.BeginForm())
+    {
+        <table class="customtable">
+
+            <tr>
+                <td>Date From
+                </td>
+                <td>
+
+                    @if (ViewBag.fromdate != null)
+                    {
+                        <input type="text" name="FromDate" class="fromdate" value="@ViewBag.fromdate" required/>
+                    }
+                    else
+                    {
+
+                        <input type="text" name="FromDate" class="fromdate" value="@DateTime.Now.ToShortDateString()" required/>
+                    }
+
+
+                </td>
+
+
+                <td>Date To
+                </td>
+                <td>
+                    @if (ViewBag.todate != null)
+                    {
+                        <input type="text" name="ToDate" class="todate" value="@ViewBag.todate" required/>
+                    }
+                    else
+                    {
+                     
+                        <input type="text" name="ToDate" class="todate" value="@DateTime.Now.ToShortDateString()" required/>
+                    }
+                </td>
+                <td>Report</td>
+                <td> 
+                    @Html.DropDownList("doctorlist", HospitalManagementSystem.Utility.GetDoctors(), new { @class = "DoctorID" }) 
+                </td>
+                @*<td>
+                    @Html.DropDownList("departmentlist", HospitalManagementSystem.Providers.MisPorvider.GetDepartment(), new { @class = "deptlist" })
+                </td>*@
+                
+            </tr>
+        </table>
+
+                    //@Html.DropDownList("doctorlist", HospitalManagementSystem.Utility.GetDoctors(), new { @class = "DoctorID" }) 
+                    //@Html.DropDownListFor(model => model.ReferDoctorID, HospitalManagementSystem.Utility.GetDoctors(), new { @class = "DoctorID" }) 
+
+
+                    //@Html.DropDownList("gendertypelist", HospitalManagementSystem.Utility.GetGenderType(), new { @class = "genderlist"})
+               <input type="submit" value="Show Report" id="btnsubmit" />
+        
+        <div id="stat"></div>
+        
+                    {
+        <table id="opd" class="table">
+            <tr>
+                <th>Opd Id
+                </th>
+                <th>Name
+                </th>
+                <th>Sex
+                </th>
+                <th>Registration Date
+                </th>
+
+                <th>Amount
+                </th>
+            </tr>
+
+            @try
+            {
+                int i = 0;
+                foreach (var item in ViewBag.List)
+                {
+                    i++;
+                <tr>
+                    <td>
+                        @item.OpdId
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Sex
+                    </td>
+                    <td>
+                        @*// @item.RegistrationDate*@
+
+                        @Convert.ToDateTime(@item.RegistrationDate).ToShortDateString()
+                    </td>
+
+                    <td>
+                        @item.Amount
+                    </td>
+                </tr>
+                }
+
+                if (i == 0)
+                {
+                    TempData["message"] = "No Results Found.";
+                <tr>
+                    @TempData["message"]
+                </tr>
+                }
+
+            }
+
+            catch (Exception e)
+            {
+
+            }
+
+        </table>
+    
+                    }
+
+    }
+   
+    <div id="msg" title="Message!!!" style="display: none;">An error occured!!!</div>
+</div>
+<script type="text/javascript">
+
+    //var jq = $.noConflict();
+
+    @*$('.patientname').keyup(function () {
+        //alert(this.value);
+        //alert("second");
+        var id = this.value;
+        var url = '@Url.Action("SearchPatient","Mis")';
+        $.post(url + "/" + id, function (data) {
+            $(data).each(function (i) {
+                //alert(data[i]);
+
+            });
+            
+            
+        });
+    
+    });*@
+
+    
+
+</script>

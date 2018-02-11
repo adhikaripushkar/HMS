@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Master Setup";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+
+<style>
+    .dashboard-action {
+        /* border: 1px solid #CCCCCC;
+    border-radius: 2px;
+    height: 110px;
+    margin-bottom: 20px;
+    padding: 10px 10px 11px;
+    position: relative;
+    text-align: center;*/
+        transition: all 0.4s ease-in-out 0s;
+    }
+</style>
+
+
+
+
+
+
+
+<div class="contentWrapper mainWrapper">
+
+    <div class="row-fluid">
+
+        <div class="container accessBox">
+
+            <ul class="dashboard-actions clearfix wrap clear">
+
+
+                <li>
+                    <a href='~/SetupEmployeeType/Index' data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/emptype.jpg" alt="" class="">
+                            <h5>Employee Type Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="~/SetupEmployeeMaster/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/empmaster.jpg" alt="" class="">
+                            <h5>Employee Master Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="~/SetupEmployeeShiftMaster/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/empshift.jpg" alt="" class="">
+                            <h5>Employee Shift Setup</h5>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

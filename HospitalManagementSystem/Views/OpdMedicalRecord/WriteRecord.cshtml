@@ -1,0 +1,531 @@
+﻿@model HospitalManagementSystem.Models.OpdMedicalRecordModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_OpdMRLayout.cshtml";
+}
+
+
+<style>
+    table#tblmy,
+    table#tblmy td, th {
+        border: none !important;
+    }
+
+
+    /*table#tblborder,
+    table#tblborder th {
+        border:1px solid black;
+    }*/
+</style>
+<h2 style="text-align: center;">Medical Record</h2>
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.savefailed)
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.edit)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.editfailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.delete)
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.deletefailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("WriteRecord", "OpdMedicalRecord", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+        <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/Scripts/json.cycle.js"></script>
+        <script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+                AddClickEvents();
+            });
+        </script>
+        
+  
+
+        <fieldset>
+            <legend>Write Medical Record</legend>
+
+            @Html.HiddenFor(model => model.PatientDoctorDetailID)
+            <table style="width: 40%;" id="tblmy">
+                <thead>
+                    <tr>
+                        <th>Department Name</th>
+                        <th>Doctor Name</th>
+                        <th>Patient Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: center;">
+                            @{
+        string str = "";
+        str = HospitalManagementSystem.Utility.DepartmentName(Convert.ToInt32(Model.TodayListViewModel.DepartmentId));
+                            }
+                            @str
+                        </td>
+                        <td style="text-align: center;">
+
+                            @{
+        string docName = "";
+        docName = HospitalManagementSystem.Utility.DoctorName(Convert.ToInt32(Model.TodayListViewModel.DoctorId));
+                                
+                            }
+                            @docName
+                        </td>
+
+                        <td style="text-align: center;">
+                            @Model.TodayListViewModel.PatientName
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.TodayListViewModel.DepartmentId)</span>
+                    <div class="editor-label">
+                        @Html.HiddenFor(model => model.TodayListViewModel.DepartmentId)
+                    </div>
+                    <div class="editor-field">
+                        @Html.HiddenFor(model => model.TodayListViewModel.DepartmentId, new { @readonly = "true" })
+                    </div>
+
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.TodayListViewModel.DoctorId)</span>
+                    <div class="editor-label">
+                        @Html.HiddenFor(model => model.TodayListViewModel.DoctorId)
+                    </div>
+                    <div class="editor-field">
+                        @Html.HiddenFor(model => model.TodayListViewModel.DoctorId, new { @readonly = "true" })
+                    </div>
+
+                </label>
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.TodayListViewModel.PatinetId)</span>
+                    <div class="editor-label">
+                        @Html.HiddenFor(model => model.TodayListViewModel.PatinetId)
+                    </div>
+                    <div class="editor-field">
+                        @Html.HiddenFor(model => model.TodayListViewModel.PatinetId, new { @readonly = "true" })
+                    </div>
+
+                </label>
+
+                <h4>Vital Info:- </h4>
+
+                <table id="tblborder" class="table">
+                    <tr>
+
+                        <td>
+                            <b>@Html.DisplayNameFor(model => model.refOfVitalForOthersModel.OpdId)</b>
+                            @Html.HiddenFor(model => model.refOfVitalForOthersModel.OpdId)
+                        </td>
+                        <td>
+                            <b>@Html.DisplayNameFor(model => model.refOfVitalForOthersModel.AVPU)</b>
+                        </td>
+                        <td>
+                            <b>@Html.DisplayNameFor(model => model.refOfVitalForOthersModel.Pulse)</b>
+                        </td>
+                        <td>
+                            <b>@Html.DisplayNameFor(model => model.refOfVitalForOthersModel.BP)</b>
+                        </td>
+                        <td>
+                            <b>@Html.DisplayNameFor(model => model.refOfVitalForOthersModel.RR)</b>
+                        </td>
+                        <td>
+                            <b>@Html.DisplayNameFor(model => model.refOfVitalForOthersModel.SPO2)</b>
+                        </td>
+                        <td>
+                            <b>@Html.DisplayNameFor(model => model.refOfVitalForOthersModel.TPR)</b>
+                        </td>
+                        <td>
+                            <b>@Html.DisplayNameFor(model => model.refOfVitalForOthersModel.Wt)</b>
+                        </td>
+                        <td>
+                            <b>@Html.DisplayNameFor(model => model.refOfVitalForOthersModel.Date)</b>
+                        </td>
+                        <td>
+                            <b>@Html.DisplayNameFor(model => model.refOfVitalForOthersModel.VTime)</b>
+                        </td>
+                        <td>
+                            <b>@Html.DisplayNameFor(model => model.refOfVitalForOthersModel.Staff)</b>
+                        </td>
+
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(model => model.refOfVitalForOthersModel.OpdId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.refOfVitalForOthersModel.AVPU)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.refOfVitalForOthersModel.Pulse)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.refOfVitalForOthersModel.BP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.refOfVitalForOthersModel.RR)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.refOfVitalForOthersModel.SPO2)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.refOfVitalForOthersModel.TPR)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.refOfVitalForOthersModel.Wt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.refOfVitalForOthersModel.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.refOfVitalForOthersModel.VTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.refOfVitalForOthersModel.Staff)
+
+                        </td>
+
+
+                    </tr>
+
+
+                </table>
+                <br />
+
+
+
+            </div>
+            <div class="row-fluid singleline">
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.PreviousCase)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PreviousCase)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(model => model.PreviousCase, new { @style = "width:315px;" })
+                    </div>
+
+                </label>
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.CurrentCase)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.CurrentCase)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(model => model.CurrentCase, new { @style = "width:315px;" })
+                    </div>
+
+                </label>
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.ProvisionalDiagnosis)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ProvisionalDiagnosis)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(model => model.ProvisionalDiagnosis, new { @style = "width:315px;" })
+                    </div>
+
+
+                </label>
+
+            </div>
+
+
+
+
+
+
+
+            <br />
+
+
+            <div style="clear: both;"></div>
+
+
+            <div class="well well-small" id="Add-Item" style="width: 970px;">
+                <div style="font-size: 16px; color: blue;">Common Test</div>@Html.ActionLink("Add More", "AddPatientCommonTest", null, new { @class = "addProductItem btn btn-primary", @style = "float:right;" })
+                <div class="row-fluid singleline">
+                    <label>
+                        <div>@Html.LabelFor(model => model.CommonTestModel.ShortDesc)</div>
+                        <div>
+                            @Html.TextBoxFor(model => model.CommonTestModel.ShortDesc)
+                            @Html.ValidationMessageFor(model => model.CommonTestModel.ShortDesc)
+                        </div>
+                    </label>
+                    <label>
+
+                        <div>@Html.LabelFor(model => model.CommonTestModel.Details)</div>
+                        <div>
+
+                            @Html.TextBoxFor(model => model.CommonTestModel.Details)
+                            @Html.ValidationMessageFor(model => model.CommonTestModel.Details)
+                        </div>
+                    </label>
+
+                </div>
+
+
+
+                <table id="tblmy">
+                    <tr>
+                        @*<td class="span5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            Common Test Name</td>
+                        <td class="span5">Remarks</td>*@
+
+                    </tr>
+
+                    @foreach (var item in Model.PatientCommonTestList)
+                    {
+                        <tr>
+                            @Html.Partial("_AddCommonTest", item)
+                        </tr>
+                    }
+
+                </table>
+            </div>
+
+            <div class="well well-small" id="Add-Item1" style="width: 970px;">
+                <div style="font-size: 16px; color: blue;">Further Test</div>@Html.ActionLink("Add More", "AddPatientFurtherTest", null, new { @class = "addProductItem btn btn-primary", @style = "float:right;" })
+                <div class="row-fluid singleline">
+                    <label>
+
+                        <span class="size">@Html.ValidationMessageFor(model => model.FurtherTestModel.TestName)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.FurtherTestModel.TestName)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.FurtherTestModel.TestName, new { @id = "FurtherTestId" })
+                        </div>
+
+                    </label>
+
+                </div>
+
+
+
+
+                <table id="tblmy">
+                    <tr style="float: right;">
+                        @*<td style="width:150px;">Test Name</td>*@
+                    </tr>
+                    @foreach (var item in Model.PatientCommonTestList)
+                    {
+                        <tr>
+                            @Html.Partial("_AddFurtherTest", item)
+                        </tr>
+                    }
+
+                </table>
+            </div>
+
+            <div class="well well-small" id="Add-Item2" style="width: 970px;">
+                <div style="font-size: 16px; color: blue;">Medical Name</div>@Html.ActionLink("Add More", "AddPatientMedicineDose", null, new { @class = "addProductItem btn btn-primary", @style = "float:right;" })
+                <div class="row-fluid singleline">
+                    <label>
+
+                        <span class="size">@Html.ValidationMessageFor(model => model.MedicineReferModel.MedicineName)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.MedicineReferModel.MedicineName)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.MedicineReferModel.MedicineName)
+                        </div>
+
+                    </label>
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.MedicineReferModel.Doses)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.MedicineReferModel.Doses)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.MedicineReferModel.Doses)
+                        </div>
+
+                    </label>
+                    <label>
+
+                        <span class="size">@Html.ValidationMessageFor(model => model.MedicineReferModel.DosesTime)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.MedicineReferModel.DosesTime)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.MedicineReferModel.DosesTime)
+                        </div>
+
+                    </label>
+
+                    <label>
+
+                        <span class="size">@Html.ValidationMessageFor(model => model.MedicineReferModel.DosesDay)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.MedicineReferModel.DosesDay)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.MedicineReferModel.DosesDay)
+                        </div>
+
+                    </label>
+
+                </div>
+
+
+
+                <table id="tblmy">
+                    <tr>
+                        @*  <td style="width:213px;">Medicine Namae</td>
+                        <td style="width:212px;">Doses</td>
+                        <td style="width:210px;">Doses Times</td>
+                        <td style="width:200px;">Doses Day</td>*@
+
+                    </tr>
+                    @foreach (var item in Model.PatientCommonTestList)
+                    {
+                        <tr>
+                            @Html.Partial("_AddMedicineDoseTest", item)
+                        </tr>
+                    }
+
+                </table>
+            </div>
+
+
+            <div class="well well-small">
+                <div class="row-fluid singleline">
+                    <label>
+
+                        <span class="size">@Html.ValidationMessageFor(model => model.Remarks)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Remarks)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.Remarks)
+                        </div>
+
+                    </label>
+                </div>
+            </div>
+
+
+
+        </fieldset>
+        <br />
+        <input type="submit" value="Save" class="btn btn-primary btn-large" />
+        
+        <script type="text/javascript">
+            $("#Add-Item").on('click', '.row-button', function () {
+                $(this).closest("div.row").remove();
+            });
+
+        </script>
+        
+        
+        <script type="text/javascript">
+            $("#Add-Item1").on('click', '.row-button', function () {
+                $(this).closest("div.row").remove();
+            });
+
+        </script>
+        <script type="text/javascript">
+            $("#Add-Item2").on('click', '.row-button', function () {
+                $(this).closest("div.row").remove();
+            });
+
+        </script>
+    }
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#FurtherTestId").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/PatientTest/SearchTestName",
+                    type: "POST",
+                    dataType: "json",
+                    data: { s: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            //alert(item);
+                            return { label: item, value: item };
+                        }))
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+</script>

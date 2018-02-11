@@ -1,0 +1,216 @@
+﻿@model HospitalManagementSystem.OperationTheatreMaster
+
+@{
+    ViewBag.Title = "PreOT";
+    Layout = "~/Views/Shared/_OperationTheatreLayout.cshtml";
+}
+<script>
+    function ShowNepaliDate(date) {
+
+    }
+
+</script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.maskedinput.js"></script>
+
+
+<script>
+
+    var k = $.noConflict();
+    k(function () {
+        k("#Sdate").datepicker();
+        k("#Edate").datepicker();
+    });
+</script>
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+    //window.onload = print;
+</script>
+<div class="contentWrapper">
+
+    @using (Ajax.BeginForm("_SearchPreOTDetails", "OperationTheatreMaster", FormMethod.Get, new AjaxOptions { UpdateTargetId = "SearchPostOTDetails" }))
+    {
+        
+        <div class="bs-docs-example form-inline">
+            <div class="row-fluid singleline">
+                <label>
+                    <label style="width: 125px">From Date (Nepali)</label>
+                    @Html.TextBox("FromNepaliDate", null, new { @onblur = "ChangeNepalidateFrom(this.value,'DobId','/AjaxRequest/GetEnglishDate/')" })
+                </label>
+
+                <label>
+                    <label style="width: 125px">To Date (Nepali)</label>
+                    @Html.TextBox("ToNepaliDate", null, new { @onblur = "ChangeNepalidateTo(this.value,'DobId','/AjaxRequest/GetEnglishDate/')" })
+                </label>
+            </div>
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <label>From Date (English)</label>
+                    @Html.TextBox("Sdate", null, new { @Value = DateTime.Now.ToShortDateString(), @onchange = "ChangeEnglishdateFrom(this.value,'txtNepalidate','/AjaxRequest/getNepaliDate/')" })
+                </label>
+
+                <label>
+                    <label style="width: 125px">To Date (English)</label>
+                    @Html.TextBox("Edate", null, new { @Value = DateTime.Now.ToShortDateString(), @onchange = "ChangeEnglishdateTo(this.value,'txtNepalidate','/AjaxRequest/getNepaliDate/')" })
+                </label>
+
+            </div>
+
+           @* <div class="row-fluid singleline">
+                <label>
+                    <label style="width: 125px">Name</label>
+                    @Html.DropDownList("DocId", HospitalManagementSystem.Utility.GetDoctors())
+                </label>
+            </div>*@
+
+
+            <div class="row-fluid singleline">
+                @*<label>
+                    <label style="width: 125px">Name</label>
+                    <input type="text" name="patientName" />
+                </label>
+                <label>
+                    <label style="width: 125px">Opd Number</label>
+                    @Html.TextBoxFor(model => model.id)
+                </label>*@
+                <label>
+                    <input type="submit" value="Search" />
+                </label>
+
+            </div>
+
+
+
+
+        </div>
+
+        <div id="SearchPostOTDetails">
+
+             @Html.Partial("_PREPOSTOT", Model)
+    
+
+        </div>
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+
+</div>
+
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("#FromNepaliDate").mask("9999/99/99");
+        $("#ToNepaliDate").mask("9999/99/99");
+
+    });
+</script>
+
+<script type="text/javascript">
+    function ChangeNepalidateFrom(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { NepaliDate: selvalue },
+            contentType: "text/json",
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#Sdate").val(jsonResult);
+            }
+        });
+    };
+
+    function ChangeNepalidateTo(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { NepaliDate: selvalue },
+            contentType: "text/json",
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#Edate").val(jsonResult);
+            }
+        });
+    };
+
+
+
+    function ChangeEnglishdateFrom(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { EnglishDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#FromNepaliDate").val(jsonResult);
+            }
+        });
+    };
+
+    function ChangeEnglishdateTo(selvalue, targetElm, url) {
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { EnglishDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#ToNepaliDate").val(jsonResult);
+            }
+        });
+    }
+
+</script>
+
+@*<h2>PreOT</h2>*@
+@*<h2>................UNDER CONSTRUCTION...................</h2>*@
+

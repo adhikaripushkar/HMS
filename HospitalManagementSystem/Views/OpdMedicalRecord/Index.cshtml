@@ -1,0 +1,233 @@
+﻿@model HospitalManagementSystem.Models.TodayListViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_OpdLayout.cshtml";
+}
+
+
+
+<script>
+    var y = $.noConflict();
+    y(function () {
+        //y(".PreferDateId").datepicker();
+
+        y("#dateid").datepicker();
+    });
+
+</script>
+
+<h2 style="text-align: center;">Today Patient List</h2>
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.savefailed)
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.edit)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.editfailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.delete)
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.deletefailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+<div class="contentWrapper">
+    @*<p>
+        @Html.ActionLink("Create New", "Create", null, new { @id = "linkNewBack" })
+    </p>*@
+    <div id="searchCase">
+        @using (Html.BeginForm("Index", "OpdMedicalRecord", FormMethod.Post))
+        {
+            <p>
+                Department: @Html.DropDownList("DepartmentId", HospitalManagementSystem.Utility.GetDepartmentList(), "All", new { @onchange = "LoadDoctorListDropDown('DefaultDoc')",@class="DepartmentID" })
+                Doctor:@Html.DropDownList("DoctorId", HospitalManagementSystem.Utility.GetDoctors(), "---Select---", new {@id="DoctorID" })
+                Date:@Html.TextBox("date", DateTime.Now.ToShortDateString(), new {@id="dateid" })
+                <input type="submit" value="Generate List" id="GenerateListbtnId" />
+            </p>
+        }
+
+
+
+    </div>
+
+    <div id="datashow">
+
+    <div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Patient List</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PatinetId)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.PatientName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Age)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Address)
+                        </th>
+                        <th>Action</th>
+                    </tr>
+
+                    @foreach (var item in Model.todayList)
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PatinetId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PatientName)
+
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Age)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+                             <td>
+                                @if(item.count<=0)
+                                {
+                                @Html.ActionLink("write Report", "WriteRecord", new { id = item.PatinetId,date=DateTime.Now.ToShortDateString() })
+                                }
+                                @if(item.count>0)
+                                {
+
+                                @Html.ActionLink("Edit Or View Medical Report", "ViewOpdMedicalRecord", new { id = item.PatinetId,docid=item.DoctorId,deptid=item.DepartmentId,patientLogId=item.PatientlogId,OpdmedRecmasid=item.OpdMedicalRecordMasterId })
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+
+            </div>
+        </div>
+        @*for sorting *@
+
+        <div class="boxFooter">
+
+            <div id="pager" style="">
+                <form>
+                    <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                    <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                    <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                    <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                    <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                    <select class="pagesize valid" style="width: 70px; height: 30px;">
+                        <option selected="selected" value="10">10</option>
+                        <option value="5">5</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                    </select>
+                </form>
+            </div>
+
+        </div>
+
+        @*---------------*@
+    </div>
+
+        </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(".DepartmentID").on('change', function (e) {
+        e.preventDefault();
+        
+        $.get('/AjaxRequest/GetDoctorNameList/' + this.value,
+              function (data) {
+                  $('#DoctorID').find('option').remove()
+                  $(data).each(
+                      function (index, item) {
+                          $('#DoctorID').append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                         
+                      });
+              }
+    );
+    });
+
+</script>
+
+
+
+<script>
+
+    var mrd = $.noConflict();
+    mrd("#GenerateListbtnId").on("click", function (e) {
+        e.preventDefault();
+        var url = "/OpdMedicalRecord/OpdMedRepWithDeptIdNDocId/";
+        var DepartmentId = $(".DepartmentID").val();
+        var DocId = $("#DoctorID").val();
+        isNaN(DepartmentId)
+        DepartmentId = 0;
+        isNaN(DocId)
+        DocId = 0;
+
+
+        $("#datashow").empty();
+        //mrd.get("/OpdMedicalRecord/OpdMedRepWithDeptIdNDocId/", { deptid: $(".DepartmentID").val(), docid: $("#DoctorID").val(), date: $('#dateid').val() }, function (res) {
+            mrd.get("/OpdMedicalRecord/OpdMedRepWithDeptIdNDocId/", { deptid: DepartmentId, docid: DocId, date: $('#dateid').val() }, function (res) {
+
+            $("#datashow").empty();
+            $("#datashow").html(res);
+
+        });
+    });
+</script>
+
+
+

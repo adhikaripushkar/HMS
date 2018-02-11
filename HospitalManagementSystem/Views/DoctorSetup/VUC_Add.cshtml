@@ -1,0 +1,243 @@
+﻿@model HospitalManagementSystem.Models.DoctorSetupModel
+
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm())
+    {
+ @Html.ValidationSummary(true)
+  
+
+
+        <fieldset>
+            @Html.HiddenFor(model => model.DoctorID)
+            <legend>DoctorSetupModel</legend>
+
+            <div class="row-fluid singleline">
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.Title)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Title)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Title, new { @Value = "Dr" })
+                    </div>
+
+                </label>
+
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.FirstName)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FirstName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.FirstName)
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.MiddleName)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MiddleName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.MiddleName)
+
+                    </div>
+                </label>
+                &nbsp;
+       
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.LastName)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.LastName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.LastName)
+
+                    </div>
+                </label>
+
+
+            </div>
+
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.Sex)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Sex)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.Sex, HospitalManagementSystem.Utility.GetGenderList(), new { id = "mngsize" })
+
+                    </div>
+                </label>
+
+
+
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.DOB)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.DOB)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.DOB)
+
+                    </div>
+                </label>
+
+                <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.JoiningDate)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.JoiningDate)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.JoiningDate)
+
+                    </div>
+                </label>
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.Email)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Email)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Email)
+
+                    </div>
+
+                </label>
+
+
+
+
+
+            </div>
+
+
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.MobileNumber)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MobileNumber)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.MobileNumber)
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PhoneNumber)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.PhoneNumber)
+                        @Html.ValidationMessageFor(model => model.PhoneNumber)
+                    </div>
+                </label>
+
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Address)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Address)
+                        @Html.ValidationMessageFor(model => model.Address)
+                    </div>
+
+                </label>
+
+                <label>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Status)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Status)
+                        @Html.ValidationMessageFor(model => model.Status)
+                    </div>
+
+
+                </label>
+                <br />
+                <br />
+
+                <label>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Remarks)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Remarks)
+                        @Html.ValidationMessageFor(model => model.Remarks)
+                    </div>
+                </label>
+                <br />
+
+
+
+            </div>
+
+
+
+        </fieldset>
+   
+
+
+
+
+        <fieldset>
+            <legend style="font-size: small; color: blue;">Select Department</legend>
+
+            <table>
+                <tr>
+                    @for (int i = 0; i < Model.checkBoxlistModel.Count; i++)
+                    {
+
+                        <td>
+                            @Html.CheckBoxFor(m => Model.checkBoxlistModel[i].isSelected)
+                            @Html.DisplayFor(m => Model.checkBoxlistModel[i].DeptName)
+                        </td>
+             
+   
+                 
+ @Html.HiddenFor(m => Model.checkBoxlistModel[i].DeptID)
+ @Html.HiddenFor(m => Model.checkBoxlistModel[i].DeptName)
+   
+                    }
+                </tr>
+            </table>
+        </fieldset>
+
+             
+
+
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+   
+    }
+</div>
+

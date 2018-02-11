@@ -1,0 +1,51 @@
+﻿@model HospitalManagementSystem.Models.JVMasterModel
+
+@{
+    ViewBag.Title = "TrialMainMenu";
+    Layout = "~/Views/Shared/_BillingLayout.cshtml";
+}
+
+<h2>Trial Balance</h2>
+
+<div class="contentWrapper mainWrapper">
+
+    <div class="row-fluid">
+
+        <div class="container accessBox">
+
+            <ul class="dashboard-actions clearfix wrap clear">
+
+
+                <li>
+                    <a href='~/JVMaster/GetTrailBalance' data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/TrialBalance1.jpg" alt="" class="">
+                            <h5>Trial Balance 1</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="~/JVMaster/NewTrialBalance" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/TrialBalance1.jpg" alt="" class="">
+                            <h5>Trial Balance 2</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="~/JVMaster/GetAllTrialBalance" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/TrialBalance1.jpg" alt="" class="">
+                            <h5>Trial Balance 3</h5>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+

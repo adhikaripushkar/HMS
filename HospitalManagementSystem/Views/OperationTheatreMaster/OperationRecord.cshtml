@@ -1,0 +1,294 @@
+﻿@*@model HospitalManagementSystem.Models.OperationRecordModel
+
+@{
+    ViewBag.Title = "OperationRecord";
+    Layout = "~/Views/Shared/_OperationTheatreLayout.cshtml";
+}
+
+<style>
+    #size
+    {
+        border:none;
+        background:transparent;
+        width:500px;
+    }
+    #resize
+    {
+        resize:none;
+    }
+    .table-size
+    {
+        width:95%;
+    }
+    .head-size
+    {
+        width:161px;
+    }
+</style>
+
+<script type="text/javascript">
+ function print() {
+            
+                //	    var values = document.getElementById('printDiv').innerHTML.toString();
+                var printing = window.open('', '', 'left=0,top=0,width=720,height=530,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+                printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);"> <br>');
+                printing.document.write('<div style="font-size:small;">');
+                printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+                printing.document.close();
+                printing.focus();
+                printing.print();
+                printing.close();
+            
+ }
+      </script>
+
+
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model=>model.OperationTheatreMasterId)
+    @Html.HiddenFor(model=>model.OpdId)
+    if(TempData["message"]!=null || TempData["message"]!=""){
+    <p>
+        @TempData["message"]
+    </p>
+}
+
+<h2 style="text-align:center;">Operation Records</h2>
+
+
+    <div class="contentWrapper">
+        <center>
+    <div id="printdiv" style="border-style:solid; border-color:#999; width:100%; grid-row-align:center;">
+         @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != null && @HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalManagementSystemLogo/@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() == "")
+        { 
+            
+            <br />
+        
+        }
+        <div style="font: bold; font-size: 18px; text-align: center; height: 115px;">
+            @if (@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != null && @HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != "")
+            {
+                <span>@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName()</span>
+            }
+            <br />
+            @HospitalManagementSystem.Utility.GetHospitalManagementSystemName()<br />
+            <div style="height: 80px;">
+                <span style="font-size: 15px; text-align: center">@HospitalManagementSystem.Utility.HospitalManagementSystemAddress()</span><br />
+                <span style="font-size: 14px; text-align: center">Website:-@HospitalManagementSystem.Utility.HospitalManagementSystemUrl()</span><br />
+                <span style="font-size: 14px; text-align: center">Ph:-@HospitalManagementSystem.Utility.HospitalManagementSystemPhone()</span>
+
+            </div>
+
+        </div>
+        <h2 align="center">Operation Record</h2>
+        <table class="table-size">
+            <tr>
+                <th class="head-size">
+                    Patient's Name
+                </th>
+                <th>
+                    Age
+                </th>
+                <th>
+                    Sex
+                </th>
+                <th>
+                    Ward
+                </th>
+                <th>
+                    Bed
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Operation Start Time
+                </th>
+                <th>
+                    Operation End Time
+                </th>
+                <th>
+                    Inpatient Number
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    @Model.OpdMaster.FirstName @Model.OpdMaster.MiddleName @Model.OpdMaster.LastName
+                </td>
+                <td>
+                    @Model.OpdMaster.AgeYear
+                </td>
+                <td>
+                    @Model.OpdMaster.Sex
+                </td>
+                <td></td>
+                <td></td>
+                <td>
+                    @Model.OperationDate.ToShortDateString()
+                </td>
+                <td>
+                    @Model.OperationStartTime
+                </td>
+                 <td>
+                    @Model.OperationEndTime
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    <table class="table-size">
+        
+        
+        <tr>
+        <td>
+            @Html.LabelFor(model => model.PreOperativeDiagnosis)
+        </td>
+        <td>
+            @Html.TextBoxFor(model => model.PreOperativeDiagnosis, new {@id="size"})
+            @Html.ValidationMessageFor(model => model.PreOperativeDiagnosis)
+        </td>
+        </tr><tr>
+        <td>
+            @Html.LabelFor(model => model.PostOperativeDiagnosis)
+        </td>
+        <td>
+            @Html.TextBoxFor(model => model.PostOperativeDiagnosis, new {@id="size"})
+            @Html.ValidationMessageFor(model => model.PostOperativeDiagnosis)
+        </td>
+            </tr><tr>
+        <td>
+            @Html.LabelFor(model => model.OperativeProcedure)
+        </td>
+        <td>
+            @Html.TextBoxFor(model => model.OperativeProcedure, new {@id="size"})
+            @Html.ValidationMessageFor(model => model.OperativeProcedure)
+        </td>
+        </tr>
+        
+
+        
+            
+       
+    </table>
+        <table class="table-size">
+            <tr>
+                <td>
+                    Surgeon
+                </td>
+                
+                <td>
+                    @try
+                    {
+                    @Model.OperationTheatreDetailsList.Where(x => x.PersonAllocatedTypeID == 1).SingleOrDefault().PersonAllocatedID
+                    }
+                    catch { }
+                </td>
+                <td>
+                    Asst. 1
+                </td>
+                <td>
+                    @try
+                    {
+                    @Model.OperationTheatreDetailsList.Where(x => x.PersonAllocatedTypeID == 2).SingleOrDefault().PersonAllocatedID
+                    }
+                    catch { }
+                </td>
+                <td>
+                    Asst. 2
+                </td>
+                <td>
+                    @try
+                    {
+                    @Model.OperationTheatreDetailsList.Where(x => x.PersonAllocatedTypeID == 1).SingleOrDefault().PersonAllocatedID
+                    }
+                    catch { }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Anaesthesiologist
+                </td>
+                <td>
+                    @try
+                    {
+                     @Model.OperationTheatreDetailsList.Where(x => x.PersonAllocatedTypeID == 2).SingleOrDefault().PersonAllocatedID
+                    }
+                    catch { }
+                </td>
+                <td>
+                    Anaesthesia
+                </td>
+                <td></td>
+                <td>
+                    Nurse
+                </td>
+                <td>
+                    @try
+                    {
+                     @Model.OperationTheatreDetailsList.Where(x => x.PersonAllocatedTypeID == 1).SingleOrDefault().PersonAllocatedID
+                    }
+                    catch { }
+                </td>
+            </tr>
+        </table>
+    <table class="table-size">
+        <tr>
+            <td>
+                Description of Operation
+            </td>
+            <td>
+                Finding Procedure
+            </td>
+            <td>
+                Conditions
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.TextAreaFor(model => model.DescriptionOfOperation, new { @id="resize"})
+            </td>
+            <td>
+                @Html.TextAreaFor(model=>model.FindingProcedure, new { @id="resize"})
+            </td>
+            <td>
+                @Html.TextAreaFor(model=>model.Conditions, new { @id="resize"})
+            </td>
+        </tr>
+    </table>
+        <p>
+            O.T.Charge: @Model.TotalCharge
+            </p><p>
+            Category:
+        </p>
+        </div>
+
+
+            
+        <br />
+        <div>
+    <span><input  type="submit" value="Save" />&nbsp;&nbsp;&nbsp;</span><span><input type ="button" ID="btnPrint"  onclick="print()" value="Print"/></span>
+</div>
+        <div></div>
+        <div>@Html.ActionLink("Back to List", "Index", null, new { @id="linkNewBack"})</div>
+</center>
+        </div>
+    
+   
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

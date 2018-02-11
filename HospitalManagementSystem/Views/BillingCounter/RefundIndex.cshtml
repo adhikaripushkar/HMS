@@ -1,0 +1,222 @@
+﻿@model HospitalManagementSystem.Models.BillingCounterModel
+
+@{
+    ViewBag.Title = "RefundIndex";
+    
+    //Layout = "~/Views/Shared/_BillingCounterLayout.cshtml";
+    Layout = "~/Views/Shared/_MisLayOutLayout.cshtml";
+    
+    decimal GrandTotalDepositRefund = Convert.ToDecimal(0);
+    int i = 1;
+}
+
+<script>
+    var j = $.noConflict();
+    j(document).ready(function (e) {
+
+        $('#FromDateString').val("");
+        $('#TodateString').val("");
+
+        $("#FromDateString").attr("value", "@DateTime.Now.ToShortDateString()");
+        $("#TodateString").attr("value", "@DateTime.Now.ToShortDateString()");
+
+
+        j("#FromDateString").datepicker();
+        j("#TodateString").datepicker();
+
+    });
+
+
+</script>
+
+
+<h3 style="text-align: center;">Deposit Refund Details</h3>
+
+@if (TempData["success"] == "Record Created Successfully !")
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Record Creation Failed !")
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Record Updated Successfully !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == "Record Updation Failed !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == "Record Deleted Successfully !")
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == "Record Deletion Failed !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+<div class="contentWrapper">
+
+
+
+
+    @*<p>
+        @Html.ActionLink("Create New", "SearchPatient", null, new { @id = "linkNewBack" })
+    </p>*@
+
+    @*<p>
+    @if(TempData["message"]!=null)
+    {
+        
+        @TempData["message"]
+    }
+</p>*@
+
+    <div class="general-box clearfix">
+        <div style="display: none;">
+            @using (Html.BeginForm("Index", "DepositMaster", FormMethod.Get))
+            {
+                <p>
+                    <span style="font-size: 14px; font-weight: bold;">From:&nbsp;&nbsp;</span>@Html.TextBox("FromDateString")
+                    <span style="font-size: 14px; font-weight: bold;">To:&nbsp;</span>@Html.TextBox("TodateString")
+                    <input type="submit" value="Search" />
+                </p>
+            }
+        </div>
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Deposit Refund</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+
+                            <th>S.N.</th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.ObjDepositRefundViewModel.PatientId)
+                            </th>
+                            <th>Patient Name
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.ObjDepositRefundViewModel.RefundDate)
+                            </th>
+
+                            <th>User
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ObjDepositRefundViewModel.RefundAmount)
+                            </th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.DepositRefundViewModelList)
+                        {
+    
+            
+                            <tr>
+
+                                <td>@i</td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PatientId)
+                                </td>
+                                <td>
+                                    @HospitalManagementSystem.Utility.GetPatientNameWithIdFromEmergency(item.PatientId)
+                                </td>
+                                <td>
+                                    @item.RefundDate.ToShortDateString()
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RefundBy)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RefundAmount)
+                                </td>
+
+                                <td>
+                                    @*@Html.ActionLink("Edit", "EditRefund", new { id = item.DepositRefundId }) |*@
+                                    @Html.ActionLink("Receipt", "ShowRefundReceipt", new { id = item.DepositRefundId })
+
+                                </td>
+
+                            </tr>
+                            i++;
+                            GrandTotalDepositRefund += item.RefundAmount;
+                        }
+
+                    </tbody>
+                    <tr style="font-weight: bold;">
+                        <td colspan="5">Total :</td>
+
+                        <td colspan="2">@GrandTotalDepositRefund</td>
+
+                    </tr>
+                </table>
+            </div>
+
+            @*for sorting *@
+
+            @*<div class="boxFooter">
+
+                <div id="pager" style="">
+                    <form>
+                        <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                        <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                        <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                        <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                        <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                        <select class="pagesize valid" style="width: 70px; height: 30px;">
+                            <option selected="selected" value="10">10</option>
+                            <option value="5">5</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                        </select>
+                    </form>
+                </div>
+
+            </div>*@
+
+            @*---------------*@
+
+        </div>
+    </div>
+</div>
+
+

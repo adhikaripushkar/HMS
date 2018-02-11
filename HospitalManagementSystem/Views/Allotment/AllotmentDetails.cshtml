@@ -1,0 +1,130 @@
+﻿@model HospitalManagementSystem.Models.AllotementDetailModel
+
+@{
+    ViewBag.Title = "AllotmentDetails";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+
+
+<div class="contentWrapper">
+
+    
+
+   @using (Html.BeginForm())
+   {
+
+       if (TempData["message"] != null || TempData["message"] != "")
+       {
+          <p>
+             @TempData["message"]
+          </p>
+       }
+       
+       <div class="boxHeadingPanel"><h1>Allotment Details</h1></div>
+<table class="table table-hover tablesorter">
+    <thead>
+    <tr>
+       
+        
+        <th>
+           Item
+        </th>
+        <th>
+            Quantity Issued
+        </th>
+        <th>
+           Quantity Remained
+        </th>
+        
+       
+        <th>
+            Remarks
+        </th>
+       
+        <th>Department</th>
+    </tr>
+        </thead><tbody>
+@for (int i = 0; i < Model.AllotmentDetailList.Count; i++)
+{
+    //if(Model.AllotmentDetailList[i].CancellationStatus==false){
+    <tr>
+       
+      
+        <td>
+            @HospitalManagementSystem.Utility.GetDemandItemName(Model.AllotmentDetailList[i].ItemID)
+            @Html.HiddenFor(m => Model.AllotmentDetailList[i].ItemID, new { @Value = Model.AllotmentDetailList[i].ItemID })
+            @Html.HiddenFor(m => Model.AllotmentDetailList[i].ItemAllotmentDetailID, new { @Value = Model.AllotmentDetailList[i].ItemAllotmentDetailID })
+        </td>
+        <td class="test" id="t_@i">
+            @((int)Model.AllotmentDetailList[i].QuantityIssued )
+            @if (Model.AllotmentDetailList[i].QuantityRemained > 0)
+            {
+               <span> / Enter more
+                @Html.TextBoxFor(m => Model.AllotmentDetailList[i].QuantityIssued, new { @id = i, @Value = "0" })</span>
+            }
+            
+        </td>
+        <td>
+            @((int)Model.AllotmentDetailList[i].QuantityRemained)
+            @Html.HiddenFor(m => Model.AllotmentDetailList[i].QuantityRemained, new { @Value = Model.AllotmentDetailList[i].QuantityRemained })
+        </td>
+       
+       
+        <td>
+            @Html.DisplayFor(m => Model.AllotmentDetailList[i].Remarks)
+             @Html.HiddenFor(m => Model.AllotmentDetailList[i].Remarks, new { @Value = Model.AllotmentDetailList[i].Remarks })
+        </td>
+        
+        <td>
+          @HospitalManagementSystem.Utility.GetDepartmentFromAllotment(Model.AllotmentDetailList[i].ItemAllotmentMasterID)
+            @Html.HiddenFor(m => Model.AllotmentDetailList[i].ItemAllotmentMasterID, new { @Value = Model.AllotmentDetailList[i].ItemAllotmentMasterID })
+        </td>
+    </tr>
+@*}*@
+}
+</tbody>
+</table>
+    <div class="boxFooter">
+
+        <div id="pager" style="">
+            <div>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </div>
+        </div>
+
+    </div>
+
+<br />
+<p>
+    
+    <input type="submit" style="display:none"  value="Save Changes" id="qnt"/>
+    <span id="linkNewBack">@Html.ActionLink("Back to List", "AllotmentMaster")</span>
+</p>
+      
+   }
+
+    
+</div>
+
+<script>
+    $(".test").click(function () {
+
+        var i = this.id;
+        i = i.substring(2);
+        $('#' + i).keyup(function () {
+            $("#qnt").show();
+        });
+    });
+</script>

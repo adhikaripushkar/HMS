@@ -1,0 +1,359 @@
+﻿@model HospitalManagementSystem.Models.BloodDonateModel
+
+@{
+    
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_BloodBankMenuLayout.cshtml";
+}
+
+
+<style>
+
+    #mngsize
+    {
+        width:208px;
+        height: 28px;
+
+    }
+
+
+</style>
+
+<h2 style="text-align:center;">Blood Donation</h2>
+
+<div class="contentWrapper">
+
+@using (Html.BeginForm("Edit","BloodDonate", FormMethod.Post, new { @class="bs-docs-example form-inline"}))
+{
+    @Html.ValidationSummary(true)
+  
+
+    <fieldset>
+        <legend>Edit</legend>
+        @Html.HiddenFor(model=>model.BloodDonateId)
+        <div class="row-fluid singleline">
+
+         <label>
+            <span class="size">@Html.ValidationMessageFor(model => model.Gender)</span>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Gender)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.Gender, HospitalManagementSystem.Utility.GetGenderListFromDB())
+            </div>
+
+          </label>
+          <label>
+            <span class="size">@Html.ValidationMessageFor(model => model.Age)</span>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Age)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Age)
+            </div>
+
+          </label>
+          <label>
+                <span class="size">@Html.ValidationMessageFor(model => model.BloodGroup)</span>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.BloodGroup)
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownListFor(model => model.BloodGroup, HospitalManagementSystem.Utility.GetBloodGroupList())
+                </div>
+
+            </label>
+            <label>
+        
+                <span class="size">@Html.ValidationMessageFor(model => model.DonateDate)</span>
+                <div class="editor-label">
+                @Html.LabelFor(model => model.DonateDate, new{@Value=@DateTime.Now.ToShortDateString()})
+                </div>
+                <div class="editor-field">
+                @Html.TextBoxFor(model => model.DonateDate, new{@Value=@DateTime.Now.ToShortDateString()})
+                </div>
+
+            </label>
+
+
+
+        </div>
+        <div class="row-fluid singleline">
+
+            <label>
+                <span class="size">@Html.ValidationMessageFor(model => model.FirstName)</span>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.FirstName)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.FirstName)
+            
+                </div>
+
+          </label>
+
+            <label>
+        
+                <span class="size">@Html.ValidationMessageFor(model => model.MiddleName)</span>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.MiddleName)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.MiddleName)
+                </div>
+
+            </label>
+
+
+            <label>
+                <span class="size">@Html.ValidationMessageFor(model => model.LastName)</span>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.LastName)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.LastName)
+            
+                </div>
+
+          </label>
+            <label>
+        
+                <span class="size">@Html.ValidationMessageFor(model => model.Email)</span>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Email)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.Email)
+                </div>
+
+            </label>
+
+
+
+        </div>
+
+        <div class="row-fluid singleline">
+          
+                   
+     
+        </div>
+
+
+        <div class="row-fluid singleline">
+
+            
+                  
+           
+            <label>
+        
+                <span class="size">@Html.ValidationMessageFor(model => model.Country)</span>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Country)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.Country)
+                </div>
+
+            </label>
+
+            
+
+            <label>
+        
+                <span class="size">@Html.ValidationMessageFor(model => model.Zone)</span>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Zone)
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownListFor(model => model.Zone, HospitalManagementSystem.Utility.GetZoneList(), new { @required = "@required", @onchange = "JqueryAjaxLoadSelectOption(this.value,'District','/AjaxRequest/GetDistrictList/')" })
+            
+                </div>
+
+            </label>
+
+            <label>
+        
+                <span class="size">@Html.ValidationMessageFor(model => model.District)</span>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.District)
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownListFor(model => model.District, HospitalManagementSystem.Utility.GetDistrictList(Model.Zone), new { @required = "@required" })
+            
+                </div>
+
+            </label>
+
+
+
+
+
+         </div>
+
+
+
+        <div class="row-fluid singleline">
+
+        <label>
+        
+            <span class="size">@Html.ValidationMessageFor(model => model.Vdc)</span>
+            <div class="editor-label">
+            @Html.LabelFor(model => model.Vdc)
+            </div>
+            <div class="editor-field">
+            @Html.TextBoxFor(model => model.Vdc)
+            </div>
+
+        </label>
+        <label>
+        
+            <span class="size">@Html.ValidationMessageFor(model => model.Address)</span>
+            <div class="editor-label">
+            @Html.LabelFor(model => model.Address)
+            </div>
+            <div class="editor-field">
+            @Html.TextBoxFor(model => model.Address)
+            </div>
+
+        </label>
+        <label>
+        
+            <span class="size">@Html.ValidationMessageFor(model => model.Phone)</span>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Phone)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Phone)
+            </div>
+
+        </label> 
+
+        
+
+           
+         </div>
+
+
+        <div class="row-fluid singleline">
+
+            <label>
+        
+            <span class="size">@Html.ValidationMessageFor(model => model.Quantity)</span>
+            <div class="editor-label">
+            @Html.LabelFor(model => model.Quantity)
+            </div>
+            <div class="editor-field">
+            @Html.TextBoxFor(model => model.Quantity)
+            </div>
+
+        </label>
+        <label>
+        
+            <span class="size">@Html.ValidationMessageFor(model => model.QuantityML)</span>
+            <div class="editor-label">
+            @Html.LabelFor(model => model.QuantityML)
+            </div>
+            <div class="editor-field">
+            @Html.TextBoxFor(model => model.QuantityML)
+            </div>
+
+        </label>
+
+        <label>
+        
+            <span class="size">@Html.ValidationMessageFor(model => model.PouchNumber)</span>
+            <div class="editor-label">
+            @Html.LabelFor(model => model.PouchNumber)
+            </div>
+            <div class="editor-field">
+            @Html.TextBoxFor(model => model.PouchNumber)
+            </div>
+
+        </label>
+        
+         <label>
+        
+            <span class="size">@Html.ValidationMessageFor(model => model.ExpiryDate)</span>
+            <div class="editor-label">
+            @Html.LabelFor(model => model.ExpiryDate, new{@Value=@DateTime.Now.ToShortDateString()})
+            </div>
+            <div class="editor-field">
+            @Html.TextBoxFor(model => model.ExpiryDate, new{@Value=@DateTime.Now.ToShortDateString()})
+            </div>
+
+        </label>
+
+
+        </div>
+
+
+    
+    </fieldset>
+<br />
+<p>
+    <input type="submit" value="Edit" />
+</p>
+    
+}
+
+
+    <div>   @Html.ActionLink("Back to List", "Index", null, new { @id="linkNewBack" })</div>
+
+</div>
+<script src="~/Scripts/json.cycle.js"></script>
+<script src="~/Scripts/OrderManagerScript.js"></script>
+
+<script type="text/javascript">
+    function JqueryAjaxLoadSelectOption(selValue, targetElm, url) {
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: url + selValue,
+            contentType: "text/json",
+            data: ({ id: selValue }),
+            beforeSend: function () {
+                $("#" + targetElm).attr('disabled', 'disabled');
+                $("#" + targetElm).addClass('ac_loading');
+            },
+
+            success: function (jsonResult) {
+                //alert(jsonResult);
+                var evlResult = JSON.retrocycle(jsonResult);
+                var selOption = "";
+                selOption = ParseJsonResultForSelectOptions(evlResult);
+                tempTargetElm = targetElm.split(',');
+                for (var i = 0; i < tempTargetElm.length; i++) {
+                    // alert(tempTargetElm.length + " : " + tempTargetElm[i]);
+                    $("#" + tempTargetElm[i]).empty().append(selOption);
+                    $("#" + tempTargetElm[i]).removeClass('ac_loading');
+                    $("#" + tempTargetElm[i]).removeAttr('disabled');
+                }
+
+
+            },
+            error: function (jsonResult) {
+            }
+        });
+
+        function ParseJsonResultForSelectOptions(evlResult) {
+            var selOption = "";
+            $.each(evlResult, function (key, item) {
+                var isSelected = (item['Selected'] == "true") ? "Selected='Selected'" : "";
+                //var otherAttrib = (item['Attribs']!=undefined)? item['Attribs']:"";
+                var otherAttrib = "";
+                $.each(item, function (name, value) {
+                    if (name != 'Selected' && name != 'Value' && name != 'Text') {
+                        otherAttrib += " " + name + '="' + value + '" ';
+                    }
+                });
+                selOption += "<option value='" + item['Value'] + "' " + isSelected + " " + otherAttrib + " >"
+                + evlResult[key].Text + "</option>";
+            });
+            return selOption;
+        }
+
+    }
+
+    
+
+</script>

@@ -1,0 +1,124 @@
+﻿@model HospitalManagementSystem.Models.BillingCounterModel
+
+@{
+    ViewBag.Title = "PatientDischargeRpt";
+    Layout = "~/Views/Shared/_BillingCounterLayout.cshtml";
+}
+
+<h2>Search Patient To Discharge</h2>
+
+<div class="contentWrapper">
+
+
+
+    @using (Html.BeginForm("PatientDischargeRpt", "BillingCounter", FormMethod.Post, new { @id = "myform" }))
+    {
+        <span style="display: none; color: red;" id="error">Please Select Options First</span><br />
+ 
+        <select name="selectOptions" class="srchoptn">
+
+            <option value="0">Search Option</option>
+            <option value="1">Patient Id</option>
+            <option value="2">Patient Name</option>
+
+        </select>
+     
+        <span id="txtid"></span> @Html.TextBox("value", null, new { @id = "value", @placeholder = "Value Here" })
+        @Html.Hidden("ReportOrRefund", null, new { @Value = "Report" })
+
+        <input type="submit" value="show" class="btnsub" />
+    }
+
+    <div id="showResult">
+    </div>
+
+
+    <br />
+
+
+    <script type="text/javascript">
+
+        var nonn = $.noConflict();
+        nonn(".srchoptn").on("change", function (e) {
+
+            e.preventDefault();
+            var v = this.value;
+
+            if (this.value == 2) {
+                nonn(document).ready(function () {
+
+                    nonn("#value").autocomplete({
+                        source: function (request, response) {
+                            nonn.ajax({
+                                url: "/AjaxRequest/SearchPatienName",
+                                type: "POST",
+                                dataType: "json",
+                                data: { s: request.term },
+                                success: function (data) {
+                                    response(nonn.map(data, function (item) {
+                                        //alert(item);
+                                        return { label: item, value: item };
+                                    }))
+                                }
+                            })
+                        },
+                        messages: {
+                            noResults: "", results: ""
+                        }
+                    });
+                })
+            }
+
+
+            if (this.value == 3) {
+
+
+                nonn('#bloodid').show();
+                nonn('#value').hide();
+
+
+            }
+
+            else {
+
+                nonn('#bloodid').hide();
+                nonn('#value').val("");
+                nonn('#value').show();
+
+            }
+
+
+        });
+
+
+
+
+
+        nonn('.btnsub').on('click', function (e) {
+            e.preventDefault();
+
+
+            var optVal = nonn('.srchoptn').val();
+            if (optVal == 0) {
+                nonn(".srchoptn").focus();
+                nonn('#showResult').empty();
+
+
+            }
+            else {
+
+
+                var form = nonn('#myform');
+                var url = form.attr("action");
+                var formData = form.serialize();
+                nonn.post(url, formData, function (data) {
+
+                    nonn('#showResult').empty();
+                    nonn('#showResult').html(data);
+
+                });
+            }
+
+        });
+
+    </script>

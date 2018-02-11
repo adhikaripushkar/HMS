@@ -1,0 +1,129 @@
+﻿@model HospitalManagementSystem.Models.ItemBlockRecordsModel
+
+@*<fieldset>*@
+
+    <table>
+        <tr>
+            <td<div class="display-label">
+         @Html.DisplayNameFor(model => model.Particular)
+    </div></td>
+            <td> <div class="display-field">
+        @Html.DisplayFor(model => model.Particular)
+    </div></td>
+        </tr>
+
+        <tr>
+            <td> <div class="display-label">
+         @Html.DisplayNameFor(model => model.SerialNo)
+    </div></td>
+            <td> <div class="display-field">
+        @Html.DisplayFor(model => model.SerialNo)
+    </div></td>
+        </tr>
+<tr>
+            <td>  <div class="display-label">
+         @Html.DisplayNameFor(model => model.ItemName)
+    </div></td>
+            <td><div class="display-field">
+        @Html.DisplayFor(model => model.ItemName)
+    </div></td>
+        </tr>
+<tr>
+            <td> <div class="display-label">
+         @Html.DisplayNameFor(model => model.DepId)
+    </div></td>
+            <td><div class="display-field">
+        @Html.DisplayFor(model => model.DepId)
+    </div></td>
+        </tr>
+<tr>
+            <td> <div class="display-label">
+         @Html.DisplayNameFor(model => model.Condition)
+    </div></td>
+            <td><div class="display-field">
+        @Html.DisplayFor(model => model.Condition)
+    </div></td>
+        </tr>
+<tr>
+            <td><div class="display-label">
+         @Html.DisplayNameFor(model => model.RoomNo)
+    </div></td>
+            <td>   <div class="display-field">
+        @Html.DisplayFor(model => model.RoomNo)
+    </div></td>
+        </tr>
+<tr>
+            <td><div class="display-label">
+         @Html.DisplayNameFor(model => model.SupplierId)
+    </div></td>
+            <td><div class="display-field">
+        @Html.DisplayFor(model => model.SupplierId)
+    </div></td>
+        </tr>
+        <tr>
+            <td><div class="display-label">
+         @Html.DisplayNameFor(model => model.DeliveryDate)
+    </div></td>
+            <td><div class="display-field">
+        @Html.DisplayFor(model => model.DeliveryDate)
+    </div></td>
+        </tr>
+        <tr>
+            <td><div class="display-label">
+         @Html.DisplayNameFor(model => model.Remarks)
+    </div></td>
+            <td><div class="display-field">
+        @Html.DisplayFor(model => model.Remarks)
+    </div></td>
+        </tr>
+        <tr>
+            <td><div class="display-label">
+         @Html.DisplayNameFor(model => model.Status)
+    </div></td>
+            <td><div class="display-field">
+        @Html.DisplayFor(model => model.Status)
+    </div></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+
+    </table>
+
+    
+   
+
+   
+   
+
+  
+    
+
+   
+    
+
+   
+    
+
+    
+ 
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+   
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ItemBlcokRecID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

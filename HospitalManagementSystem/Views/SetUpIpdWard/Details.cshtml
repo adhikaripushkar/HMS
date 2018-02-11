@@ -1,0 +1,68 @@
+﻿@model Hospital.Models.SetUpIpdWardModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 align="center">IPD Wards</h2>
+
+
+@*<table>
+
+    <tr>
+        <td>
+             @Html.DisplayNameFor(model => model.IpdWardId)
+        </td>
+        <td>
+             @Html.DisplayFor(model => model.IpdWardId)
+        </td>
+        
+    </tr>
+
+
+
+</table>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<fieldset class="bs-docs-example form-inline">
+
+    <legend>Details</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.IpdWardId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IpdWardId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.WardName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.WardName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Status)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Status)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.IpdWardId}) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

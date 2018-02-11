@@ -1,0 +1,170 @@
+﻿@model HospitalManagementSystem.Models.BillingCounterModel
+
+@{
+    ViewBag.Title = "EHMS";
+    Layout = "~/Views/Shared/_MisLayOutLayout.cshtml";
+    decimal SumTotalDeposit = Convert.ToDecimal(0);
+    decimal SumTotalByCash = Convert.ToDecimal(0);
+    decimal SumTotalByDeposit = Convert.ToDecimal(0);
+    decimal SumTotalTaxAmt = Convert.ToDecimal(0);
+}
+
+<link href="~/Content/themes/bootstrap.min.css" rel="stylesheet" />
+<h2>Patient Transaction Details</h2>
+<div class="contentWrapper">
+    <div class="general-box clearfix">
+        <div class="containerBoots">
+            <div class="row" style="font-size: 14px; font-weight: bold;">
+                <div class="col-sm-1" style="width: 74px;">Patient Id :</div>
+                <div class="col-md-2">@Model.ObjPatientDischageBillDetailsViewModel.PatientId</div>
+                <div class="col-md-1" style="width: 66px;">Name :</div>
+                <div class="col-md-4">@HospitalManagementSystem.Utility.GetPatientNameWithIdFromEmergency(Model.ObjPatientDischageBillDetailsViewModel.PatientId)</div>
+            </div>
+            <div class="row" style="font-size: 14px; font-weight: bold; margin-top: 4px;">
+                <div class="col-sm-1" style="width: 74px;">Age/Sex :</div>
+                <div class="col-md-2">@Model.ObjPatientDischageBillDetailsViewModel.Age</div>
+                <div class="col-md-1" style="width: 66px;">Address :</div>
+                <div class="col-md-4">@Model.ObjPatientDischageBillDetailsViewModel.Address</div>
+            </div>
+
+            <div class="row" style="margin-top: 10px;">
+                <h3>Deposit Detail</h3>
+            </div>
+
+
+            <div class="table-responsive" style="font-size: 13px;">
+                <table class="table" style="width: 50%;">
+                    <tr>
+                        <th class="active">Date</th>
+                        <th class="warning">By</th>
+                        <th class="active">Amount</th>
+
+                    </tr>
+                    @foreach (var item in Model.PatientDischageBillDetailsListDeposit)
+                    {
+                        <tr>
+
+                            <td class="info">@item.BillDate.ToShortDateString()</td>
+                            <td class="info">@item.FirstName</td>
+                            <td class="info">@item.DepositAmount</td>
+
+                        </tr>
+                        SumTotalDeposit += item.DepositAmount;
+                    }
+                    <tr style="font-weight: bold;">
+                        <td>Total</td>
+                        <td></td>
+                        <td>
+                            @SumTotalDeposit
+
+                        </td>
+                    </tr>
+
+
+                </table>
+
+            </div>
+            @*<div>Total Deposit : @SumTotalDeposit</div>*@
+            <div class="row" style="margin-top: 10px;">
+                <h3>Transaction By Cash</h3>
+            </div>
+            <div class="table-responsive" style="font-size: 13px;">
+                <table class="table" style="width: 50%;">
+                    <tr>
+                        <th class="active">Date</th>
+                        <th class="warning">Particulars</th>
+                        <th class="active">Amount</th>
+
+
+                    </tr>
+                    @foreach (var item in Model.PatientDischageBillDetailsListByCash)
+                    {
+                        <tr>
+
+                            <td class="info">@item.BillDate.ToShortDateString()</td>
+                            <td class="info">@item.Particulars</td>
+                            <td class="info">@item.BillAmount</td>
+
+                        </tr>
+                        SumTotalByCash += item.BillAmount;
+                    }
+                    <tr style="font-weight: bold;">
+                        <td>Total :
+                        </td>
+                        <td></td>
+                        <td>
+                            @SumTotalByCash
+                        </td>
+                    </tr>
+
+
+                </table>
+
+            </div>
+            @* <div>Total Transaction By Cash : @SumTotalByCash</div>
+           
+                <div>Grand Total : @SumTotalByCash</div>*@
+            <div class="row" style="margin-top: 10px;">
+                <h3>Transaction By Deposit</h3>
+            </div>
+            <div class="table-responsive" style="font-size: 13px;">
+                <table class="table" style="width: 50%;">
+                    <tr>
+                        <th class="active">Date</th>
+                        <th class="warning">Particulars</th>
+                        <th class="active">Amount</th>
+
+                    </tr>
+
+                    @foreach (var item in Model.PatientDischageBillDetailsByDepoViewModelList)
+                    {
+                        <tr>
+
+                            <td class="info">@item.DepoBillDate.ToShortDateString()</td>
+                            <td class="info">@item.DepoParticulars</td>
+                            <td class="info">@item.DepoBillAmount</td>
+
+
+                        </tr>
+                        SumTotalByDeposit += item.DepoBillAmount;
+
+                    }
+                    <tr style="font-weight:bold;">
+                        <td>
+                            Total :
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            @SumTotalByDeposit
+                        </td>
+                    </tr>
+
+
+                </table>
+                @*<span>Total Transaction By Deposit</span>@SumTotalByDeposit*@
+
+            </div>
+
+            <div class="row" style="margin-top: 10px;">
+
+                <h3>Balance Deposit</h3>
+                @{var totalDepo = Convert.ToDecimal(0);
+                  if (SumTotalDeposit > 0)
+                  {
+                      totalDepo = SumTotalDeposit - SumTotalByDeposit;
+                  }
+                  
+                }
+
+                <h4>Total Balance Deposit : &nbsp;@Model.ObjDepositRefundViewModel.RemainingAmount</h4>
+            </div>
+            @*<div>
+                @Html.ActionLink("Refund", "DepositRefund", new { @id = Model.ObjPatientDischageBillDetailsViewModel.PatientId }, null)
+            </div>*@
+
+        </div>
+    </div>
+
+</div>

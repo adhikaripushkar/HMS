@@ -1,0 +1,62 @@
+﻿@model HospitalManagementSystem.Models.BillingModel
+
+<div class="general-box clearfix">
+
+    <div class="general-box clearfix">
+
+        <div class="boxWrapper">
+            @if (Model.GetBillDetailByBillNoViewModelList != null)
+            {
+                <table class="table table-hover tablesorter">
+
+                    <div class="boxHeadingPanel">
+                        <h1>Transaction Details</h1>
+                    </div>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Amount</th>
+                            
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @{decimal TotalAmount = 0;}
+                        @foreach (var item in Model.GetBillDetailByBillNoViewModelList)
+                        {
+                            <tr>
+                                
+                                <td>@item.AccountHeadName</td>
+                                <td>@item.TotalAmount</td>
+                                
+                                
+
+                            </tr>
+                            
+                            
+                        }
+
+
+                    </tbody>
+                </table>
+                
+            }
+            else
+            {
+                <div>
+                </div>
+            }
+
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+

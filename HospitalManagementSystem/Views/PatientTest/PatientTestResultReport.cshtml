@@ -1,0 +1,140 @@
+﻿@model Hospital.Models.PatientTestResultModel
+
+@{
+    ViewBag.Title = "Patient Test Result Report";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+}
+
+
+
+<style>
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+        font-size: 15px;
+    }
+
+
+    table#tstDsply {
+        border-style: solid;
+        border-width: 8px;
+    }
+
+        table#tstDsply thead {
+            background-color: #EBEBEB;
+        }
+
+        table#tstDsply th:hover {
+            color: black;
+        }
+
+    table#tbmdsplyamnt,
+    table#tbmdsplyamnt td {
+        border: none !important;
+    }
+</style>
+
+<h2 style="text-align: center;">Patient Test Result Report</h2>
+
+<div class="contentWrapper">
+
+    <script type="text/javascript">
+        function print() {
+
+            //	    var values = document.getElementById('printDiv').innerHTML.toString();
+            var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+            printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);"> PATIENT TEST RECIEPT <br>');
+            printing.document.write('<div style="font-size:small;">');
+            printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+            printing.document.close();
+            printing.focus();
+            printing.print();
+            printing.close();
+        }
+        window.onload = print;
+    </script>
+
+    <div id="printdiv">
+
+        <p style="font: bold; font-size: 25px; text-align: center">
+            <br />
+            @Hospital.Utility.GetHospitalName()<br />
+            <p style="font-size: 20px; text-align: center">@Hospital.Utility.HospitalAddress()</p>
+        </p>
+
+        <hr />
+        <br />
+        <div id="PatientDetails" style="font-size: 14px; font-weight: bold;">
+            @foreach (var item2 in Model.PopulatePatientTestResultReportModelList.Take(1))
+            {
+                <span>Name : @Html.DisplayFor(m => item2.PatientName)</span><br />
+                <span>ID: @Html.DisplayFor(m => item2.PatientID)</span><br />
+                <span>Gender : @Html.DisplayFor(m => item2.Sex)</span><br />
+                <span>Age : @Html.DisplayFor(m => item2.Age)</span><br />
+                <span>Doctor : @Html.DisplayFor(m => item2.DoctorName)</span><br />
+                
+            }
+        </div>
+
+
+        <table style="border: 1px solid gray; width: 650px; margin-left: 0px; margin-top: 20px;" id="tstDsply">
+            @{int i = 1;}
+
+            <tr style="border: 1px solid gray">
+                <th>Sn.No.</th>
+                <th>Test Name
+                </th>
+                <th>Value 1
+                </th>
+                <th>Value 2
+                </th>
+                <th>Unit
+                </th>
+                <th>Reference Range
+                </th>
+                <th>Conv. Factor</th>
+            </tr>
+
+
+            <tbody>
+                @foreach (var item in Model.PopulatePatientTestResultReportModelList)
+                {
+              
+                    <tr style="border: 1px solid gray">
+
+                        <td>@i</td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TestName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Value1)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Value2)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UnitName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RefRange)
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.ConvFactor)</td>
+
+
+                    </tr>               
+
+                    i++;
+                }
+
+            </tbody>
+
+        </table>
+
+
+        <br />
+    </div>
+</div>
+
+

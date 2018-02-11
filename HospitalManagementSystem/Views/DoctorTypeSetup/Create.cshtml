@@ -1,0 +1,65 @@
+﻿@model HospitalManagementSystem.Models.DoctorTypeSetupModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 style="text-align:center;">Dotor Type Setup</h2>
+
+
+
+<div class="contentWrapper">
+
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <div class="bs-docs-example form-inline">
+        <legend>Create</legend>
+        
+
+    
+            <div class="row-fluid singleline">
+
+
+                <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DoctorTypeName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DoctorTypeName)
+            @Html.ValidationMessageFor(model => model.DoctorTypeName)
+        </div>
+                    </label>
+                <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Status)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Status)
+            @Html.ValidationMessageFor(model => model.Status)
+        </div>
+                    </label>
+                </div>
+            
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+
+</div>
+    </fieldset>
+}
+
+<div id="linkNewBack">
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+    </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

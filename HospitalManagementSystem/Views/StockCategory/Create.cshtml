@@ -1,0 +1,101 @@
+﻿@model Hospital.Models.StockCategoryModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_StockSetupLayout.cshtml";
+}
+
+<h2 style="text-align: center;">Stock Category Setup</h2>
+
+<div class="contentWrapper">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+
+        <div class="bs-docs-example form-inline">
+
+            <fieldset>
+                <legend>Create</legend>
+
+                <div class="row-fluid singleline">
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.StockCategoryName)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.StockCategoryName)
+                        </div>
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.StockCategoryName)
+
+                        </div>
+                    </label>
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.AccountHeadId)</div>
+                        <div class="editor-label">
+                            Account Head
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.AccountHeadId, Hospital.Utility.GetCOAOfStock())
+
+                        </div>
+                    </label>
+
+
+                </div>
+                <br />
+                <p>
+                    <input type="submit" value="Create" />
+                </p>
+            </fieldset>
+        </div>
+    }
+
+    <div id="linkNewBack">
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section Scripts
+{
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/jqueryui")
+
+
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+                //alert();
+
+
+                $("#StockCategoryName").autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: "/StockCategory/AutocompleteCategory",
+                            type: "GET",
+                            dataType: "json",
+                            data: { s: request.term },
+                            success: function (data) {
+
+                                response($.map(data, function (item) {
+
+                                    return { label: item, value: "" };
+
+
+                                }))
+
+                            },
+                            //error:function(data){
+                            //    response($.map(data, function (item) {
+
+                            //        return { label: item.StockUnitName, Value: item.StockUnitName };
+                            //    }))
+                            //}
+                        })
+                    },
+                    messages: {
+                        noResults: "", results: ""
+                    }
+                });
+            });
+        </script>
+
+    }
+</div>

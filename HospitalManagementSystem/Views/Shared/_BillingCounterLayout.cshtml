@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - EHMS</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+
+
+    @Styles.Render("~/Content/css")
+
+
+    @*for designs*@
+
+    <link href="~/css/layout.css" rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
+    <link href="~/css/menu_assets/styles.css" rel="stylesheet" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+
+    @*for validation or many more*@
+
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.8.20.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+    @*<script type="text/javascript">
+        var cnb = $.noConflict();
+        cnb(function () {
+            cnb("table.tablesorter").tablesorter({ widthFixed: true, sortList: [[0, 0]] })
+            .tablesorterPager({ container: cnb("#pager"), size: cnb(".pagesize option:selected").val() });
+        });
+    </script>*@
+
+
+</head>
+
+
+<body>
+
+
+    @Html.Partial("_Header")
+
+
+            <div class="leftMenu" style="margin-left: -10px; padding-top: 20px">
+                <div class="left-s-heading">
+                    <h1><a href='~/Home/CentralizedBilling' title=""><span style="color: white;">Billing Counter</span></a></h1>
+                </div>
+                <ul id="menu" class="nav">
+
+                    <li class="tables" style="text-align: left;"><a href='~/BillingCounter/Create' title=""><span style="font-size: 12px;">Create</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/BillingCounter/CentralBillingIndex' title=""><span style="font-size: 12px;">Central Billing</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/DepositMaster/Index' title=""><span style="font-size: 12px;">Patient Deposit</span></a> </li>
+
+                    <li class="tables" style="text-align: left;"><a href='~/JVMaster/GetBillDetailByUser/1' title=""><span style="font-size: 12px;">Transaction Detail</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/JVMaster/GetCashHandover' title=""><span style="font-size: 12px;">Cash HandOver</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/JVMaster/HandOverReport' title=""><span style="font-size: 12px;">HandOver Report</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/BillingCounter/AdvancedSearch' title=""><span style="font-size: 12px;">Search Patient</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/BillingCounter/PatientDischargeRpt' title=""><span style="font-size: 12px;">Discharge (Bill Details)</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/BillingCounter/IPDPatientDischarge' title=""><span style="font-size: 12px;">IPD Discharge</span></a> </li>
+                    <li class="tables" style="text-align: left;"><a href='~/BillingCounter/DepositRefund' title=""><span style="font-size: 12px;">Deposit Refund</span></a> </li>
+
+
+                </ul>
+            </div>
+
+
+        </nav>
+
+    </header>
+
+
+
+    <div id="body">
+        @RenderSection("featured", required: false)
+        <section class="">
+            @RenderBody()
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="footer">
+
+            <div class="footer-left"><span>© 2017. HospitalManagementSystem Management System. All Rights Reserved.</span> </div>
+            <div class="footer-right"><span>Designed and Developed by: Pushkar Adhikari</span> </div>
+        </div>
+    </footer>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+<script>
+
+
+
+
+    $(document).ready(function () {
+        $('#menu a').on('click', function () {
+            $('#menu a').removeClass('active');
+            $(this).addClass('active');
+
+
+        });
+    });
+
+
+
+
+</script>

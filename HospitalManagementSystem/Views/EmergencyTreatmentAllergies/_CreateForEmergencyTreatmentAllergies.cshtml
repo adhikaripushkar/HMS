@@ -1,0 +1,187 @@
+﻿@model HospitalManagementSystem.Models.EmergecyMasterModel
+@using HospitalManagementSystem
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.ui.timepicker.js"></script>
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery.ui.timepicker.css" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+<script src="~/Scripts/json.cycle.js"></script>
+
+<script type="text/javascript">
+    var nojqr = $.noConflict();
+    nojqr(document).ready(function () {
+        nojqr(function () {
+
+            //nojqr(".DateId").datepicker();
+            nojqr(".TreatmentTimeId").timepicker();
+        });
+        nojqr(".staffEAMid").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/EmergencyTreatmentAllergies/SearchStaffName",
+                    type: "POST",
+                    dataType: "json",
+                    data: { s: request.term },
+                    success: function (data) {
+                        response(nojqr.map(data, function (item) {
+                            return { label: item, value: item };
+                        }))
+                    },
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    });
+
+
+</script>
+
+@using (Html.BeginForm("CreateForEmergencyTreatmentAllergies", "EmergencyTreatmentAllergies", FormMethod.Post, new { @id = "CreateForEmergencyTreatmentAllergiesId", @class = "bs-docs-example form-inline" }))
+{
+
+    
+
+
+
+    <fieldset>
+        <legend></legend>
+
+        @*<div class="editor-label">
+            @Html.LabelFor(model => model.EmergencyMasterId)
+        </div>*@
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.EmergencyMasterId, new { id="EmergencyMasterId"})
+            @Html.ValidationMessageFor(model => model.EmergencyMasterId)
+        </div>
+
+        <div class="row-fluid singleline">
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.EmergencyTreatmentAllergiesModel.TreatmentText)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EmergencyTreatmentAllergiesModel.TreatmentText)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EmergencyTreatmentAllergiesModel.TreatmentText)
+            
+        </div>
+
+                </label>
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.EmergencyTreatmentAllergiesModel.AllergiesText)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EmergencyTreatmentAllergiesModel.AllergiesText)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EmergencyTreatmentAllergiesModel.AllergiesText)
+            
+        </div>
+                </label>
+
+            <label>
+<div class="size">  @Html.ValidationMessageFor(model => model.EmergencyTreatmentAllergiesModel.ProcedureText)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EmergencyTreatmentAllergiesModel.ProcedureText)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EmergencyTreatmentAllergiesModel.ProcedureText)
+          
+        </div>
+                </label>
+
+           
+                 </div>
+            <div class="row-fluid singleline">
+                 <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.EmergencyTreatmentAllergiesModel.TreatmentTime)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EmergencyTreatmentAllergiesModel.TreatmentTime)
+        </div>
+
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.EmergencyTreatmentAllergiesModel.TreatmentTime, new { @class="TreatmentTimeId",@Value = DateTime.Now.ToString("hh:mm")})
+            
+        </div>
+
+                </label>
+
+          <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EmergencyTreatmentAllergiesModel.DrugsName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EmergencyTreatmentAllergiesModel.DrugsName)
+            @Html.ValidationMessageFor(model => model.EmergencyTreatmentAllergiesModel.DrugsName)
+        </div>
+                </label>
+            <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EmergencyTreatmentAllergiesModel.DoseAndRoute)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EmergencyTreatmentAllergiesModel.DoseAndRoute)
+            @Html.ValidationMessageFor(model => model.EmergencyTreatmentAllergiesModel.DoseAndRoute)
+        </div>
+</label>
+</div>
+        <div class="row-fluid singleline">
+          
+
+            <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EmergencyTreatmentAllergiesModel.DoctorId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.EmergencyTreatmentAllergiesModel.DoctorId,HospitalManagementSystem.Utility.GetDoctors(),new { id="DoctorId"})
+            @Html.ValidationMessageFor(model => model.EmergencyTreatmentAllergiesModel.DoctorId)
+        </div>
+                </label>
+             <label>
+
+                            <div class="editor-label">
+                                @Html.Label("Staff")
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.EmergencyTreatmentAllergiesModel.Staff, new {@class="staffEAMid" , style = "width:13.5em;" })
+                        
+                            </div>
+                        </label>
+            </div>
+          
+
+   
+        <p>
+            <input type="submit" value="Create" id="btnid" />
+        </p>
+
+    </fieldset>
+    
+
+
+}
+
+
+<script>
+
+
+  
+</script>
+<script>
+    $("#btnid").on("click", function (e) {
+        e.preventDefault();
+        var form = $('#CreateForEmergencyTreatmentAllergiesId');
+        var url = form.attr("action");
+        var formData = form.serialize();
+        $.post(url, formData, function (data) {
+            $('#EmergencyTreatmentAllergieslistId').empty();
+            $('#EmergencyTreatmentAllergieslistId').html(data);
+            $('#CreateForEmergencyTreatmentAllergiesId').remove();
+        });
+    });
+    </script>

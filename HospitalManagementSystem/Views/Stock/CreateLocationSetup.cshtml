@@ -1,0 +1,73 @@
+﻿@model Hospital.Models.StockItemModel
+
+@{
+    ViewBag.Title = "CreateGroupSetup";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("CreateLocationSetup", "Stock", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+       
+        <fieldset>
+            <legend>Create Location Setup</legend>
+
+            @if (TempData["message"] != null)
+            {
+                <div class="alert alert-error">
+                    @TempData["message"]
+                </div>
+
+            }
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.ObjStockItemLocationViewModel.LocatonName)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjStockItemLocationViewModel.LocatonName)<br />
+
+                        @Html.TextBoxFor(model => model.ObjStockItemLocationViewModel.LocatonName)
+
+                    </div>
+                </label>
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.ObjStockItemLocationViewModel.DepartmentId)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjStockItemLocationViewModel.DepartmentId)<br />
+
+                        @Html.DropDownListFor(model => model.ObjStockItemLocationViewModel.DepartmentId, Hospital.Utility.GetDepartmentList())
+
+                    </div>
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.ObjStockItemLocationViewModel.WardID)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjStockItemLocationViewModel.WardID)<br />
+
+                        @Html.DropDownListFor(model => model.ObjStockItemLocationViewModel.WardID, Hospital.Utility.GetIpdWardName())
+
+                    </div>
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.ObjStockItemLocationViewModel.BlockId)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjStockItemLocationViewModel.BlockId)<br />
+
+                        @Html.DropDownListFor(model => model.ObjStockItemLocationViewModel.BlockId, Hospital.Utility.GetBlockList())
+
+                    </div>
+                </label>
+                <div style="margin-top:20px;">
+                    <p>
+                        <input type="submit" value="Create" />
+                    </p>
+                </div>
+        </fieldset>
+    }
+</div>

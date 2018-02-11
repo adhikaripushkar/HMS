@@ -1,0 +1,43 @@
+﻿@model HospitalManagementSystem.Models.OperationTheatreDetailsModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 align="center">Operation Theatre Details</h2>
+<div class="contentWrapper">
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model=>model.OperationTheatreDetailsID)
+    <fieldset>
+        <legend>Edit</legend>
+
+        
+
+        
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PersonAllocatedID)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model=>model.PersonAllocatedID,HospitalManagementSystem.Utility.GetDoctors())
+            @Html.ValidationMessageFor(model => model.PersonAllocatedID)
+        </div>
+
+        
+
+        <p>
+            <input type="submit" value="Edit" />
+        </p>
+    </fieldset>
+}
+
+<div>
+      @Html.ActionLink("Back to List", "Index", null, new { @id="linkNewBack" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+</div>

@@ -1,0 +1,390 @@
+﻿@model HospitalManagementSystem.Models.JVMasterModel
+
+@{
+    decimal LedgerAmountDR = 0, LedgerAmountCR = 0;
+}
+<style>
+    table#tblnoborder,
+    table#tblnoborder td
+    {
+        border: none !important;
+    }
+
+    .font
+    {
+        font-weight: bold;
+    }
+
+    .small-table td
+    {
+        border: none;
+    }
+
+    .holder img
+    {
+        max-height: 48px;
+        max-width: 55px;
+        object-fit: cover;
+    }
+
+
+    table#mytbl,
+    table#mytbl td
+    {
+        width: 880px;
+        border: none !important;
+    }
+</style>
+
+<style>
+    table, th, td
+    {
+        border: 1px solid black;
+        text-align: center;
+        font-size: 13px;
+    }
+</style>
+<style>
+    @@media print
+    {
+        .ReconcileClass
+        {
+            display: none !important;
+        }
+    }
+</style>
+
+
+
+<div class="contentWrapper">
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto; padding: 5px;">
+
+
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != null && @HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalManagementSystemLogo/@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() == "")
+        { 
+            <br />        
+        }
+        <div style="font: bold; font-size: 18px; text-align: center; height: 115px;">
+            @if (@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != null && @HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != "")
+            {
+                <span>@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName()</span>
+            }
+            <br />
+            @HospitalManagementSystem.Utility.GetHospitalManagementSystemName()<br />
+            <div style="height: 80px;">
+                <span style="font-size: 15px; text-align: center">@HospitalManagementSystem.Utility.HospitalManagementSystemAddress()</span><br />
+                <span style="font-size: 14px; text-align: center">Website:-@HospitalManagementSystem.Utility.HospitalManagementSystemUrl()</span><br />
+                <span style="font-size: 14px; text-align: center">Ph:-@HospitalManagementSystem.Utility.HospitalManagementSystemPhone()</span>
+
+            </div>
+
+        </div>
+
+        @using (Html.BeginForm("_BankReconcilation", "JvMaster", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+        {
+            <h2 style="text-align: center;">Bank Reconcilation</h2>
+            <h2 style="text-align: center;">@HospitalManagementSystem.Utility.GetFeeTypeNameFromId(@Model.objGetBankReconcilationModelView.BankID)</h2>       
+            <h2 style="text-align: center;">@HospitalManagementSystem.Utility.GetFeeTypeNameFromId(@Model.objGetBankReconcilationModelView.BankSubID)</h2>
+            <table border="0" style="width: 500px; margin-top: 20px;" align="center">
+                <tr>
+                    <td>From Date :&nbsp;@Model.objGetBankReconcilationModelView.StartDate.ToShortDateString() (@HospitalManagementSystem.Utility.getNepaliDate(@Model.objGetBankReconcilationModelView.StartDate.ToShortDateString()))
+                    </td>
+                    <td>To Date :&nbsp;@Model.objGetBankReconcilationModelView.EndDate.ToShortDateString() (@HospitalManagementSystem.Utility.getNepaliDate(@Model.objGetBankReconcilationModelView.EndDate.ToShortDateString()))
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <br />
+
+            <table class="table">
+                <tr>
+                    <th>
+                        <h3 style="text-align: center;">Date</h3>
+                    </th>
+                    <th>
+                        <h3 style="text-align: center;">Narration</h3>
+                    </th>
+                    <th>
+                        <h3 style="text-align: center;">Debit Amount</h3>
+                    </th>
+                    <th>
+                        <h3 style="text-align: center;">Credit Amount</h3>
+                    </th>
+                    <th>
+                        <h3 style="text-align: center;">Bank Date</h3>
+                    </th>
+                </tr>
+                @{HospitalManagementSystem.Providers.JVMasterProvider pro = new HospitalManagementSystem.Providers.JVMasterProvider();
+                  Model.objGetBankReconcilationModelView.objGetBankReconcilationModelViewList = pro.GetBankReconcilation(Model);
+                }
+                @foreach (var item in Model.objGetBankReconcilationModelView.objGetBankReconcilationModelViewList)
+                {
+                    Html.RenderPartial("_BankReconcilationPartial", item);
+
+                }
+                <tr>
+                    @{
+                if (HospitalManagementSystem.Utility.GetBankLedgerAmount(Model.objGetBankReconcilationModelView) > 0)
+                {
+                    LedgerAmountDR = HospitalManagementSystem.Utility.GetBankLedgerAmount(Model.objGetBankReconcilationModelView);
+                }
+                else
+                {
+                    LedgerAmountCR = HospitalManagementSystem.Utility.GetBankLedgerAmount(Model.objGetBankReconcilationModelView);
+                }
+                    }
+                    <td></td>
+                    <td>
+                        <h3 style="text-align: right;">Balance As Per Company Books :</h3>
+                    </td>
+                    <td>
+                        <div>
+                            <h3 style="text-align: right;"><span id="">@LedgerAmountDR</span></h3>
+                            @Html.HiddenFor(m => m.objGetBankReconcilationModelView.BalancePerCompanyDr, new { Value = LedgerAmountDR })
+                        </div>
+                    </td>
+                    <td>
+                        <div id="LedgerCr">
+                            <h3 style="text-align: right;">@LedgerAmountCR</h3>
+                        </div>
+                        @Html.HiddenFor(m => m.objGetBankReconcilationModelView.BalancePerCompanyCr, new { Value = LedgerAmountCR })
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <h3 style="text-align: right;">Amounts not reflected in Bank :</h3>
+                    </td>
+                    <td>
+                        <h3 style="text-align: right;">
+                            <div id="DrDivv"></div>
+                        </h3>
+                    </td>
+                    <td>
+                        <h3 style="text-align: right;">
+                            <div id="CrDivv"></div>
+                        </h3>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <h3 style="text-align: right;">Balance As Per Bank :</h3>
+                    </td>
+                    <td>
+                        <h3 style="text-align: right;">
+                            <div id="BankdrDiv"></div>
+                        </h3>
+                    </td>
+                    <td>
+                        <h3 style="text-align: right;">
+                            <div id="BankcrDiv"></div>
+                        </h3>
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+            @Html.HiddenFor(model => model.objGetBankReconcilationModelView.BankID, new { @id = "BankID" })
+            @Html.HiddenFor(model => model.objGetBankReconcilationModelView.BankSubID, new { @id = "BankSubID" })
+            @Html.HiddenFor(model => model.objGetBankReconcilationModelView.StartDate, new { @id = "StartDate" })
+            @Html.HiddenFor(model => model.objGetBankReconcilationModelView.EndDate, new { @id = "EndDate" })       
+    
+            
+            <div style="float: right;">
+                <input type="submit" value="Create" id="Savebtn" />
+                <input type="button" class="btn-btn-primary" id="export" style="width: 50px;" onclick="tableToExcel('printdiv', '')" value="Export" />
+                <input type="button" class="btn-btn-primary" id="btnPrintDeposite" style="width: 50px;" value="Print" />
+            </div>
+            
+        }
+    </div>
+
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/jqueryval")
+
+    }
+
+    <script type="text/javascript">
+
+
+
+        var tableToExcel = (function () {
+            var uri = 'data:application/vnd.ms-excel;base64,'
+              , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+              , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+              , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+            return function (table, name) {
+                if (!table.nodeType) table = document.getElementById(table)
+                var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+                window.location.href = uri + base64(format(template, ctx))
+            }
+        })()
+    </script>
+
+
+    <script>
+        var dk = $.noConflict();
+
+        dk(".ReconcileClass").live("blur", function (e) {
+            e.preventDefault();
+            var tr = dk(this).closest("tr");
+            var ReconcilStatus = tr.find(".ReconcileClass").val();
+            var TotalDrClassR = tr.find(".TotalDRClass").val();
+            var TotalCrclassR = tr.find(".TotalCredidAmtcls").val();
+            var JvDate = tr.find(".JvDate").val();
+
+            var allDrSectors = dk('.TotalDRClass'); //gets all elements that have class name as 'SectorFare'
+            var allCrSectors = dk('.TotalCredidAmtcls');
+            var AllReconStatus = dk('.ReconcileClass');
+            //Compare Date           
+            if (ReconcilStatus != "") {
+                var Message;                
+                dk.post('@Url.Action("CompareDateofBRS")', { JvDate: JvDate, BRSDate: ReconcilStatus }, function (result) {
+                    Message = (result.Message);
+                    if (Message == "Wrong") {
+                        alert("Bank Date is not valid. Please Check !!");
+                        tr.find(".ReconcileClass").focus();
+                        return;
+                    }
+                    else {
+                        tr.find(".ReconcileClass").val(result.ReconcileValue);
+                    }
+                })
+            }
+
+            //// Calculate Debit 
+            var totalDrAmt = 0;
+            var sectorDrCount = 0;
+            sectorDrCount = dk(allDrSectors).length;
+            //// Calculate credit
+            var totalCrAmt = 0;
+            var sectorCrCount = 0;
+            sectorCrCount = dk(allCrSectors).length;
+            for (var i = 0; i <= sectorDrCount - 1; i++) {
+                if (isNaN(parseFloat(dk(allDrSectors[i]).val())))
+                    dk(allDrSectors[i]).val('0');
+
+                if (dk(AllReconStatus[i]).val() == '') {
+                    totalDrAmt += parseFloat(dk(allDrSectors[i]).val());
+                }
+            }
+
+            for (var i = 0; i <= sectorCrCount - 1; i++) {
+                if (isNaN(parseFloat(dk(allCrSectors[i]).val())))
+                    dk(allCrSectors[i]).val('0');
+                if (dk(AllReconStatus[i]).val() == '') {
+                    totalCrAmt += parseFloat(dk(allCrSectors[i]).val());
+                }
+            }
+            dk("#CrDivv").html(totalCrAmt);
+            dk("#DrDivv").html(totalDrAmt);
+            dk("#HCrDivv").html(totalCrAmt);
+            dk("#HDrDivv").html(totalDrAmt);
+
+            var LedgerAmountDr = 0;
+            var LedgerAmountCr = 0;
+            var Amount = 0;
+            LedgerAmountDr =@LedgerAmountDR
+            LedgerAmountCr =@LedgerAmountCR
+            Amount = LedgerAmountDr - LedgerAmountCr - totalDrAmt + totalCrAmt;
+            if (Amount > 0) {
+                dk("#BankdrDiv").html(Amount);
+                dk("#BankcrDiv").html(0);
+                dk("#HBankdrDiv").html(Amount);
+                dk("#HBankcrDiv").html(0);
+            }
+            else {
+                dk("#BankdrDiv").html(0);
+                dk("#BankcrDiv").html(Amount * -1);
+                dk("#HBankdrDiv").html(0);
+                dk("#HBankcrDiv").html(Amount * -1);
+            }
+        });
+
+        dk(document).ready(function () {
+            var tr = dk(this).closest("tr");
+            var ReconcilStatus = tr.find(".ReconcileClass").val();
+            var TotalDrClassR = tr.find(".TotalDRClass").val();
+            var TotalCrclassR = tr.find(".TotalCredidAmtcls").val();
+            var JvDate = tr.find(".JvDate").val();
+
+            var allDrSectors = dk('.TotalDRClass'); //gets all elements that have class name as 'SectorFare'
+            var allCrSectors = dk('.TotalCredidAmtcls');
+            var AllReconStatus = dk('.ReconcileClass');
+            //// Calculate Debit 
+            var totalDrAmt = 0;
+            var sectorDrCount = 0;
+            sectorDrCount = dk(allDrSectors).length;
+            //// Calculate credit
+            var totalCrAmt = 0;
+            var sectorCrCount = 0;
+            sectorCrCount = dk(allCrSectors).length;
+            for (var i = 0; i <= sectorDrCount - 1; i++) {
+                if (isNaN(parseFloat(dk(allDrSectors[i]).val())))
+                    dk(allDrSectors[i]).val('0');
+
+                if (dk(AllReconStatus[i]).val() == '') {
+                    totalDrAmt += parseFloat(dk(allDrSectors[i]).val());
+                }
+            }
+
+            for (var i = 0; i <= sectorCrCount - 1; i++) {
+                if (isNaN(parseFloat(dk(allCrSectors[i]).val())))
+                    dk(allCrSectors[i]).val('0');
+                if (dk(AllReconStatus[i]).val() == '') {
+                    totalCrAmt += parseFloat(dk(allCrSectors[i]).val());
+                }
+            }
+            dk("#CrDivv").html(totalCrAmt);
+            dk("#DrDivv").html(totalDrAmt);
+
+            var LedgerAmountDr = 0;
+            var LedgerAmountCr = 0;
+            var Amount = 0;
+            LedgerAmountDr =@LedgerAmountDR
+            LedgerAmountCr =@LedgerAmountCR
+            Amount = LedgerAmountDr - LedgerAmountCr - totalDrAmt + totalCrAmt;
+            if (Amount > 0) {
+                dk("#BankdrDiv").html(Amount);
+                dk("#BankcrDiv").html(0);
+            }
+            else {
+                dk("#BankdrDiv").html(0);
+                dk("#BankcrDiv").html(Amount * -1);
+            }
+            //getcount();
+        });
+
+        function getcount() {
+            var BankID = dk("#BankID").val();
+            var BankSubID = dk("#BankSubID").val();
+            var StartDate = dk("#StartDate").val();
+            dk.post('@Url.Action("GetBrsCount")', { BankID: BankID, BankSubID: BankSubID, BRSDate: StartDate }, function (result) {
+                var count = result.count;
+                if (count == 0) {
+                    dk('#Savebtn').removeAttr("disabled");
+
+                }
+                else {
+                    dk('#Savebtn').attr('disabled', 'disabled');
+
+                }
+            });
+        };
+
+    </script>

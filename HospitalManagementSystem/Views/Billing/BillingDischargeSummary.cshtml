@@ -1,0 +1,51 @@
+﻿@model HospitalManagementSystem.Models.BillingModel
+
+@{
+    ViewBag.Title = "BillingDischargeSummary";
+    Layout = "~/Views/Shared/_BillingLayout.cshtml";
+}
+
+<div class="contentWrapper">
+
+    <div class="bs-docs-example form-inline">
+        @using (Ajax.BeginForm("BillingDischargeSummary", "BillingModel", new AjaxOptions { UpdateTargetId = "DivDischargeBillSummary" }))
+        {
+            <div class="row-fluid singleline">
+                <label>
+                    <label style="width: 125px;">PatientId</label>
+                    <label>@Html.TextBoxFor(model => model.PatientLogId)</label>
+                </label>
+
+                <label>
+                    <input type="submit" value="Show" />
+
+                </label>
+            </div>
+        }
+    </div>
+
+
+    <br />
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+
+                <div id="DivDischargeBillSummary"></div>
+
+            </div>
+        </div>
+
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+</div>
+
+
+
+
+

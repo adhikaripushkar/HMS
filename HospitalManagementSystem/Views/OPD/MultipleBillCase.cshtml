@@ -1,0 +1,39 @@
+﻿@model HospitalManagementSystem.Models.OpdModel
+
+@{
+    ViewBag.Title = "MultipleBillCase";
+    Layout = "~/Views/Shared/_OpdLayOut.cshtml";
+}
+
+<h2 style="text-align: center;">Choose Date</h2>
+
+<div class="contentWrapper">
+
+    <table class="table">
+        <tr>
+            <td>English Date
+            </td>
+            <td>Nepali Date
+            </td>
+            <td>Action
+            </td>
+
+        </tr>
+        @foreach (var item in Model.OpdFeeDetailsModelList)
+        {
+            <tr>
+                <td>
+                    @item.FeeDate.ToShortDateString()
+                </td>
+                <td>
+                    @HospitalManagementSystem.Utility.getNepaliDate(item.FeeDate.ToShortDateString())
+                </td>
+                <td>
+                    <a href="/Opd/PrintMultipleBill/@item.OpdFeeDetailsID?PatientId=@item.OpdID" title="Print"><i class="fa fa-print" style="color: blue; font-size: 16px;"></i></a>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>

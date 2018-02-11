@@ -1,0 +1,46 @@
+﻿@model HospitalManagementSystem.Models.DoctorSetupModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginForm("TestToCheck", "DoctorSetup", FormMethod.Post, new { id = "section1-form", name = "section-form" }))
+{
+    <label>
+        <span class="size">@Html.ValidationMessageFor(model => model.FirstName)</span>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FirstName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FirstName)
+
+        </div>
+
+    </label>
+
+    <label>
+        <span class="size">@Html.ValidationMessageFor(model => model.LastName)</span>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastName)
+
+        </div>
+
+    </label>
+
+
+    <label>
+        <span class="size">@Html.ValidationMessageFor(model => model.Address)</span>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Address)
+
+        </div>
+
+    </label>
+    <input type="submit" value="submit" />
+}

@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "GlsubgroupSearch";
+    Layout = "~/Views/Shared/_GlAccountSubGrp.cshtml";
+}
+
+
+<h2 style="text-align: center;">Search</h2>
+
+
+
+<div class="contentWrapper">
+
+
+    @using (Html.BeginForm("GlsubgroupSearched", "GlAccountSubGroup", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <div class="bs-docs-example form-inline">
+                <legend></legend>
+
+
+
+                <div class="row-fluid singleline">
+
+
+                    <label>
+                        <div class="editor-label">
+                            Account Head Name
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownList("AccSubGruupID", HospitalManagementSystem.Utility.GetgLsubGRPName())
+                        </div>
+                    </label>
+
+                </div>
+
+                <p>
+                    <input type="submit" value="Search" />
+                </p>
+
+            </div>
+
+        </fieldset>
+    }
+
+    <div id="linkNewBack">
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

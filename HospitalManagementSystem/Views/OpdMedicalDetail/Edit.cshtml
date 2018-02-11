@@ -1,0 +1,526 @@
+﻿@model HospitalManagementSystem.Models.OpdModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_OpdLayOut.cshtml";
+}
+
+<style>
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+    }
+</style>
+
+
+
+<script src="~/Scripts/OrderManagerScript.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        AddClickEvents();
+    });
+
+</script>
+
+
+
+<h2 style="text-align: center;">OPD Department</h2>
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("Edit", "OpdMedicalDetail", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.OpdID)
+   
+    
+        <fieldset>
+            <legend>Edit</legend>
+
+            <div class="row-fluid singleline">
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.FirstName)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FirstName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.FirstName)
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.MiddleName)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MiddleName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.MiddleName)
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.LastName)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.LastName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.LastName)
+
+                    </div>
+
+                </label>
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.Sex)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Sex)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.Sex, HospitalManagementSystem.Utility.GetGenderList())
+
+                    </div>
+
+                </label>
+            </div>
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.ContactName)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ContactName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.ContactName)
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.MobileNumber)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MobileNumber)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.MobileNumber)
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.RegistrationDate)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.RegistrationDate)
+                    </div>
+                    <div class="editor-field">
+                        @* @Html.TextBoxFor(model =>model.RegistrationDate, new { @readonly=true,type="Date"})*@
+
+
+
+                        @Html.TextBoxFor(model => model.RegistrationDate, @Model.RegistrationDate.ToShortDateString(), new { @readonly = true })
+
+
+
+                    </div>
+                </label>
+
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.RegistrationMode)</span>
+                    <div class="editor-label">
+                        @Html.HiddenFor(model => model.RegistrationMode)
+                    </div>
+                    <div class="editor-field">
+                        @Html.HiddenFor(model => model.RegistrationMode, HospitalManagementSystem.Utility.RegistrationModeList())
+
+                    </div>
+
+                </label>
+
+            </div>
+
+            <div class="row-fluid singleline">
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.Email)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Email)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Email)
+
+                    </div>
+
+                </label>
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.AgeYear)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.AgeYear)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.AgeYear)
+
+                    </div>
+                </label>
+
+                @*<label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.AgeMonth)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.AgeMonth)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.AgeMonth)
+
+                    </div>
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.AgeDay)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.AgeDay)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.AgeDay)
+
+                    </div>
+
+                </label>*@
+
+            </div>
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.MaritalStatus)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MaritalStatus)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.MaritalStatus, HospitalManagementSystem.Utility.MatitalStatusList())
+
+                    </div>
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.BloodGroup)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.BloodGroup)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.BloodGroup, HospitalManagementSystem.Utility.BloodGroupList(), "select")
+
+                    </div>
+                </label>
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.MemberTypeID)</span>
+                    <div class="editor-label">
+                        @Html.HiddenFor(model => model.MemberTypeID)
+                    </div>
+                    <div class="editor-field">
+                         @Html.DropDownListFor(model => model.MemberTypeID, HospitalManagementSystem.Utility.GetAllMemberType(), "select")
+
+                    </div>
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.Status)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Status)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Status)
+
+                    </div>
+                </label>
+
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.Address)</span>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Address)
+                    </div>
+
+                    <div class="editor-field">
+
+                        @Html.TextBoxFor(mod => mod.Address)
+
+                    </div>
+                </label>
+
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Doctor Selection</legend>
+            <div class="well well-small" id="Add-Item">
+
+               @* @Html.ActionLink("Add More", "AddDoctorList", null, new { @class = "addProductItem btn btn-primary" })*@
+                <table id="mytbl">
+                    <tr>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;Department</td>
+                        <td>Doctor</td>
+                        <td>Prefer Date</td>
+                        <td>Prefer Time</td>
+                    </tr>
+                </table>
+                <table>
+                    @foreach (var item in Model.OpdDoctorList)
+                    {
+                        <tr>
+                            @Html.Partial("AddDoctorList", item)
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </fieldset>
+      <fieldset>
+            <legend></legend>
+             <div class="row-fluid singleline">
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.OpdMedicalDetailModel.ManPowerId)</span>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OpdMedicalDetailModel.ManPowerId)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.OpdMedicalDetailModel.ManPowerId, HospitalManagementSystem.Utility.GetManpowerNameListaa())
+
+                    </div>
+                    </label>
+                 <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.OpdMedicalDetailModel.PreHolo)</span>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OpdMedicalDetailModel.PreHolo)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.OpdMedicalDetailModel.PreHolo,HospitalManagementSystem.Utility.OPDMedicalType())
+
+                    </div>
+                
+                </label>
+                    <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.OpdMedicalDetailModel.AgentId)</span>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OpdMedicalDetailModel.AgentId)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.OpdMedicalDetailModel.AgentId, HospitalManagementSystem.Utility.GetAgentListaa())
+
+                    </div>
+                
+                </label>
+                   <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.OpdMedicalDetailModel.Amount)</span>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OpdMedicalDetailModel.Amount)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.OpdMedicalDetailModel.Amount, new { @readonly = "readonly" })
+
+                    </div>
+                
+                </label>
+                  <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.OpdMedicalDetailModel.Discount)</span>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OpdMedicalDetailModel.Discount)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.OpdMedicalDetailModel.Discount)
+
+                    </div>
+
+                </label>
+                  <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.OpdMedicalDetailModel.Commission)</span>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.OpdMedicalDetailModel.Commission)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.OpdMedicalDetailModel.Commission, new { @readonly = "readonly" })
+
+                    </div>
+                
+                </label>
+               </div>
+
+        </fieldset>
+        <div>
+            <p>
+                <input type="submit" value="Edit" />
+            </p>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+    </div>
+
+
+
+
+
+
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+    <script type="text/javascript">
+        $("#Add-Item").on('click', '.row-button', function () {
+            $(this).closest("div.rowr").remove();
+        });
+
+    </script>
+
+    <script type="text/javascript">
+
+        $("#Add-Item").on('change', '.DepartmentID', function () {
+            var id = this.id;
+
+            id = id.replace("__DepartmentID", "__DoctorID");
+            $('#' + id).val('');
+
+
+            $.get('/AjaxRequest/GetDoctorNameList/' + this.value,
+                  function (data) {
+                      $('#' + id).find('option').remove()
+                      $(data).each(
+                          function (index, item) {
+                              $('#' + id).append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                          });
+                  }
+        );
+        });
+
+    </script>
+
+    <script type="text/javascript">
+        function JqueryAjaxLoadSelectOption(selValue, targetElm, url) {
+
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: url + selValue,
+                contentType: "text/json",
+                data: ({ id: selValue }),
+                beforeSend: function () {
+                    $("#" + targetElm).attr('disabled', 'disabled');
+                    $("#" + targetElm).addClass('ac_loading');
+                },
+
+                success: function (jsonResult) {
+                    var evlResult = JSON.retrocycle(jsonResult);
+                    var selOption = "";
+                    selOption = ParseJsonResultForSelectOptions(evlResult);
+                    tempTargetElm = targetElm.split(',');
+                    for (var i = 0; i < tempTargetElm.length; i++) {
+                        // alert(tempTargetElm.length + " : " + tempTargetElm[i]);
+                        $("#" + tempTargetElm[i]).empty().append(selOption);
+                        $("#" + tempTargetElm[i]).removeClass('ac_loading');
+                        $("#" + tempTargetElm[i]).removeAttr('disabled');
+                    }
+
+
+                },
+                error: function (jsonResult) {
+                }
+            });
+
+            function ParseJsonResultForSelectOptions(evlResult) {
+                var selOption = "";
+                $.each(evlResult, function (key, item) {
+                    var isSelected = (item['Selected'] == "true") ? "Selected='Selected'" : "";
+                    //var otherAttrib = (item['Attribs']!=undefined)? item['Attribs']:"";
+                    var otherAttrib = "";
+                    $.each(item, function (name, value) {
+                        if (name != 'Selected' && name != 'Value' && name != 'Text') {
+                            otherAttrib += " " + name + '="' + value + '" ';
+                        }
+                    });
+                    selOption += "<option value='" + item['Value'] + "' " + isSelected + " " + otherAttrib + " >"
+                    + evlResult[key].Text + "</option>";
+                });
+                return selOption;
+            }
+
+        }
+    </script>
+    <script type="text/javascript">
+
+        function onchangeevent() {
+            //$('#txtMiddleName').val($('#txtid').val + 3);
+            //var b = $("#textbox2").val();
+            //if ($("#txtMiddleName").is(":checked")) {
+            //}
+            // $("#txtMiddleName").hide();
+            // $("#txtMiddleName").show();
+            //var a = $("#txtid").val();
+            //var a = $("#txtid").val();
+            //var total = parseInt(a) + 2;
+            //$("#txtMiddleName").val(total);
+
+            var vartxtRegistrationFee = $("#txtRegistrationFee").val();
+            var vartxtDoctorFee = $("#txtDoctorFee").val();
+            var vartxtMemberDiscountAmount = $("#txtMemberDiscountAmount").val();
+            var vartxtOtherDiscountAmount = $("#txtOtherDiscountAmount").val();
+            var varTotal = 0;
+            var varDiscount = 0;
+
+            if (vartxtRegistrationFee == '') {
+                vartxtRegistrationFee = 0;
+            }
+            if (vartxtDoctorFee == '') {
+                vartxtDoctorFee = 0;
+            }
+            if (vartxtMemberDiscountAmount == '') {
+                vartxtMemberDiscountAmount = 0;
+            }
+            if (vartxtOtherDiscountAmount == '') {
+                vartxtOtherDiscountAmount = 0;
+            }
+            if (vartxtOtherDiscountAmount == '') {
+                vartxtOtherDiscountAmount = 0;
+            }
+            varTotal = parseInt(vartxtRegistrationFee) + parseInt(vartxtDoctorFee);
+            varDiscount = parseInt(vartxtMemberDiscountAmount) + parseInt(vartxtOtherDiscountAmount);
+            var varTotalAmount = parseInt(varTotal) - parseInt(varDiscount);
+            // alert(vartxtRegistrationFee);
+            $("#txtTotalAmount").val(varTotalAmount);
+        }
+    </script>
+
+
+
+</div>

@@ -1,0 +1,380 @@
+﻿@model HospitalManagementSystem.Models.OpdModel
+
+@{
+    ViewBag.Title = "billForm";
+    Layout = "~/Views/Shared/_OpdLayOut.cshtml";
+    string DepartmentName = string.Empty;
+}
+
+<h2></h2>
+<style>
+    table#tblnoborder,
+    table#tblnoborder td {
+        border: none !important;
+    }
+
+    .font {
+        font-weight: bold;
+    }
+
+    .small-table td {
+        border: none;
+    }
+
+
+
+    .holder img {
+        max-height: 48px;
+        max-width: 55px;
+        object-fit: cover;
+    }
+
+
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+    }
+
+    .ui-dialog {
+        background-color: #B0E0E6;
+    }
+</style>
+
+
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        //var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        //printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        //printing.document.write('<div style="font-size:small;">');
+        //printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        //printing.document.close();
+        //printing.focus();
+        //printing.print();
+        //printing.close();
+
+    }
+
+    function printTicket() {
+
+
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        //  alert("do u want to cont..");
+        //var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0','alert("hi");');
+2
+        //printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        //printing.document.write('<div style="font-size:small;">');
+        //printing.document.write(document.getElementById('divPrintTicket').innerHTML.toString());
+
+        //printing.document.close();
+        //printing.focus();
+        //printing.print();
+        //printing.close();
+
+    }
+
+
+
+
+</script>
+@if(Model.OpdFeeDetailsModel.FeeDate.ToShortDateString()!="1/1/0001")
+{
+<div class="contentWrapper">
+
+
+    @*<div id="printdiv" style="background:url(../../Images/mmh-logo.png) no-repeat center; background-size:35%; border-style: solid; border-color: #999; width: auto;" >*@
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto;">
+        <img src="~/Images/madhyapur%20HospitalManagementSystem%20logo-01.jpg" style="position: absolute;  z-index:-1; opacity:.2; margin-top: 7%;"/>
+      
+
+        <div>
+
+            @MyHelpers.DesingForLogo()
+            <hr />
+
+            <h4 style="text-align: center;"><u>OPD Department(Bill)</u> </h4>
+
+
+
+            <table width="660" cellspacing="0" cellpadding="5" align="center" id="tblnoborder">
+                @*<tr>
+
+                    <td class="font"><span style="">@HospitalManagementSystem.Utility.GetBillNumber(Model.OpdID)</span></td>
+
+                </tr>*@
+                <tr>
+                    <td class="font" width="500px;"><span style="">Fiscal Year:@HospitalManagementSystem.Utility.CurrentFisicalYear()</span></td>
+
+                    <td class="font" width="540px;"><span style="float: right;">Date:- @HospitalManagementSystem.Utility.GetDateOnly(Model.OpdFeeDetailsModel.FeeDate.ToString()) AD / @HospitalManagementSystem.Utility.getNepaliDate(Model.OpdFeeDetailsModel.FeeDate.ToShortDateString()) BS</span></td>
+                    <td class="font" width="260px;"><span style="float: right;">Time:@DateTime.Now.ToShortTimeString()</span></td>
+
+
+
+                    @*<td class="font" width="496">Date (Nepali):- @HospitalManagementSystem.Utility.getNepaliDate(Model.RegistrationDate.ToShortDateString())</td>*@
+                </tr>
+            </table>
+
+
+            <table width="660" border="0" cellspacing="0" cellpadding="5" align="center">
+                <tr>
+                    <td class="font" width="326px;">@HospitalManagementSystem.Utility.GetBillNumber(Model.OpdID)</td>
+                    <td class="font" width="314px;">OPD No:- @Model.OpdID</td>
+
+                </tr>
+                <tr>
+                    <td width="314"><span class="font">Name:-</span>  @HospitalManagementSystem.Utility.GetFirstLetterCapitalize(Model.FirstName) @HospitalManagementSystem.Utility.GetFirstLetterCapitalize(Model.MiddleName) @HospitalManagementSystem.Utility.GetFirstLetterCapitalize(Model.LastName)</td>
+                    <td width="326"><span class="font">Age:-</span> @Model.AgeYear<span>&nbsp; @HospitalManagementSystem.Utility.GetAgeTypeByItsId(Convert.ToInt32(Model.AgeMonth))</span></td>
+                </tr>
+                <tr>
+                    <td><span class="font">Address:-</span>@HospitalManagementSystem.Utility.GetFirstLetterCapitalize(HospitalManagementSystem.Utility.GetOpdAddress(Model.OpdID))</td>
+                    <td><span class="font">Sex:-</span> @Model.Sex</td>
+
+                </tr>
+                <tr>
+                    <td><span class="font">Phone:-</span> @Model.ContactName</td>
+                    <td><span class="font">Mobile:-</span> @Model.MobileNumber</td>
+                </tr>
+            </table>
+
+            <table width="660" align="center" style="border: 1px; border-style: solid;">
+                <tr>
+                    <td width="320"><span class="font"><u>Departments:</u></span>
+                        <table class="small-table">
+
+
+                            @foreach (var item in Model.PatientDoctorList.Take(1))
+                            { 
+                            
+                                <tr>
+                                    <td>
+                                        @{DepartmentName = HospitalManagementSystem.Utility.GetDepartmentName(item.DepartmentID);}
+                                        @HospitalManagementSystem.Utility.GetDepartmentName(item.DepartmentID)
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </td>
+                    <td width="331"><span class="font"><u>Doctors:</u></span>
+                        <table class="small-table">
+                            @foreach (var item in Model.PatientDoctorList.Take(1))
+                            { 
+                                <tr>
+                                    <td>
+                                       @if (item.DoctorID > 1500)
+                                       {
+                                           @HospitalManagementSystem.Utility.GetAccountHeadName(item.DoctorID)
+                                       }
+                                       else
+                                       {
+                                            @HospitalManagementSystem.Utility.GetDoctorName(item.DoctorID)   
+                                       }
+                                        
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+            <div style="padding-left: 520px;">
+
+                <table width="300px;" id="mytbl">
+                    <tr>
+                        <td width="286">Registration Fee:-</td>
+                        <td width="511">@string.Format("{0:0.00}", Model.OpdFeeDetailsModel.RegistrationFee)</td>
+                    </tr>
+                    @*added by pushkar*@
+                    <tr>
+                        
+                        <td width="286">Discount Amount:-</td>
+                        <td width="511">@string.Format("{0:0.00}", Model.OpdFeeDetailsModel.OtherDiscountAmount)</td>
+
+                    </tr>
+                    <tr>
+                        <td>Tax (%):-</td>
+                        @*<td>@string.Format("{0:0.00}", Model.OpdFeeDetailsModel.TaxAmount)</td>*@
+                        <td> 5 </td>
+                    </tr>
+                    @*<tr>*@
+                        @*<td>Doctor Fee:-</td>*@
+                        @*<td>@string.Format("{0:0.00}", HospitalManagementSystem.Utility.GetDoctorFee(Convert.ToInt16(Model.OpdID)))</td>*@
+                        @*<td>@string.Format("{0:0.00}", Model.OpdFeeDetailsModel.DoctorFee)</td>*@
+                    @*</tr>*@
+                    <tr>
+                        <td><b>Total Fee:-</b></td>
+                        @*<td><b>@HospitalManagementSystem.Utility.GetOpdFee(Model.OpdID, Model.RegistrationDate)</b></td>*@
+                        <td><b>@Model.OpdFeeDetailsModel.TotalAmount</b></td>
+                    </tr>
+
+
+
+                    <tr>
+
+                        <td>
+                            @{
+                                HospitalManagementSystem.NumberToEnglish obj = new HospitalManagementSystem.NumberToEnglish();
+                                string str = obj.changeNumericToWords(@Convert.ToDouble(Model.OpdFeeDetailsModel.TotalAmount));
+                            }
+
+
+                            <b><span>Amount in Word<span>&nbsp;</span> :-</span><span>&nbsp;&nbsp;</span>(NRS)&nbsp;@str<span> Only.</span></b>
+                            
+
+
+                        </td>
+                        
+
+                    </tr>
+                    <tr>
+                        <td>
+                            E.& O.E.
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <span style="font-weight: bold; margin-left: 20px;">User:- @HospitalManagementSystem.Utility.GetEmployeeNameFromEmpID(Model.CreatedBy)</span>
+
+        </div>
+    </div>
+    <div>
+        <span style="float: right;">
+            <input type="button" id="btnPrint" style="width: 50px;" onclick="print()" value="Print" /></span>
+    </div>
+    <br />
+    <div>Ticket</div>
+    <div id="divPrintTicket" style="border-style: solid; border-color: #999; width: 450px; font-size: 8px;">
+
+        <table style="width: 400px; height:50px; font-size:8px;" id="mytbl34">
+            <tr>
+                <td><b>OPD/ER</b></td>
+                <td><b>Date:</b>@HospitalManagementSystem.Utility.GetDateOnly(Model.RegistrationDate.ToString()) AD / @HospitalManagementSystem.Utility.getNepaliDate(Model.RegistrationDate.ToShortDateString()) BS </td>
+                <td><b>Time:</b>@DateTime.Now.ToShortTimeString()</td>
+            </tr>
+
+            <tr>
+                <td>Patient Id:-</td>
+                <td><b>@Model.OpdID</b></td>
+                <td>Department:@DepartmentName</td>
+
+            </tr>
+
+            <tr>
+                <td>Name:-</td>
+                <td><b>@HospitalManagementSystem.Utility.GetFirstLetterCapitalize(Model.FirstName) @HospitalManagementSystem.Utility.GetFirstLetterCapitalize(Model.MiddleName) @HospitalManagementSystem.Utility.GetFirstLetterCapitalize(Model.LastName)</b></td>
+            </tr>
+
+            <tr>
+                <td>Age:-</td>
+                <td>@Model.AgeYear<span>&nbsp; @HospitalManagementSystem.Utility.GetAgeTypeByItsId(Convert.ToInt32(Model.AgeMonth))</span><span>/ @Model.Sex</span></td>
+                <td>Contact :@Model.MobileNumber</td>
+                
+            </tr>
+            <tr>
+                <td>Address:-</td>
+                <td>@HospitalManagementSystem.Utility.GetOpdAddress(Model.OpdID)</td>
+                <td>User:@HospitalManagementSystem.Utility.GetEmployeeNameFromEmpID(Model.CreatedBy)</td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+    <div style="width: 715px; margin-top: 20px;">
+        <input type="button" id="btnPrintTicket" style="width: 60px; float: right; margin-right: 110px;" onclick="printTicket()" value="Print" />
+
+    </div>
+
+    <br />
+    <p id="linkNewBack">
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+</div>
+}
+else
+{
+    <h1>Opd Ticket not available for this patient id</h1>
+}
+
+<script>
+    var hh = $.noConflict();
+    hh('#btnPrintTicket').click(function (e) {
+        e.preventDefault();
+        var msg = 'Do You Want To Print Ticket?';
+        var div = hh("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            resizable: false,
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=400,height=180,toolbar=0,scrollbars=0,sta­tus=0', 'alert("hi");');
+                        printing.document.write('<div style="width: 80%; color: rgb(255, 255, 255); font-size: 7px; background-color: rgb(102, 102, 102); ">');
+                        printing.document.write('<div style="font-size:6px;">');
+                        printing.document.write(document.getElementById('divPrintTicket').innerHTML.toString());
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+
+    });
+    hh('#btnPrint').click(function (e) {
+        e.preventDefault();
+        var msg = 'Do You Want To Print?';
+        var div = hh("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+                        window.print();
+                        printing.document.write('<div style="width: 100%;  font-size: x-large; font-weight: 700; background:url(../../Images/mmh-logo.png) no-repeat center; background-size:35%;">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+                        printing.document.wi
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+
+    });
+
+
+</script>

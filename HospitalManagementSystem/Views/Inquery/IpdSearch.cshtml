@@ -1,0 +1,116 @@
+﻿@model HospitalManagementSystem.Models.IpdRegistrationMasterModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_DashboardInqueryLayout.cshtml";
+}
+
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+
+        j(".datetime").datepicker();
+    });
+</script>
+
+<h2>Ipd Search Details</h2>
+
+
+<span>Search Patient</span>
+@Html.DropDownList("srchVal", HospitalManagementSystem.Utility.GetIpdColumnNameList(), "Search Options", new { @class = "srchValcls", @style = "width: 150px" })
+<span id="change1"></span>
+<input type="text" id="blnkid" placeholder="" />
+<input type="text" id="registradate" placeholder="Select Date" class="datetime" />
+@Html.DropDownListFor(model => model.IpdPatientroomDetailsModel.RoomType, HospitalManagementSystem.Utility.GetRoomType(), new { @id = "roomtypeid" })
+
+<input type="submit" id="btnSearch" value="Search" />
+<br/>
+<br/>
+<br/>
+<span id="ShowOclumnIdDetails"></span>
+
+
+<script>
+    $('#btnSearch').click(function (e) {
+        e.preventDefault();
+
+        var Columnid = $('.srchValcls').val();
+        var txtValue = "";
+        if (Columnid == "1" || Columnid == "2" || Columnid == "4" || Columnid == "5" || Columnid == "6") {
+            txtValue = $('#blnkid').val();
+        }
+        else if (Columnid == "3") {
+            txtValue = $('#registradate').val();
+
+        }
+        else if (Columnid == "7") {
+            txtValue = $('#roomtypeid').val();
+        }
+       // alert(Columnid);
+        //alert(txtValue);
+
+        $.ajax({
+            url: '@Url.Action("ShowResult", "Inquery")',
+            type: "POST",
+            data: { sEarchVal: Columnid, iNputVal: txtValue },
+           success: function (result) {
+
+                $('#ShowOclumnIdDetails').empty();
+                $('#ShowOclumnIdDetails').html(result);
+
+            },
+
+        });
+
+    });
+
+
+
+</script>
+<script>
+
+
+    $(document).ready(function () {
+        $('#blnkid').show();
+        $('#registradate').hide();
+        $('#roomtypeid').hide();
+    });
+
+
+
+    $('.srchValcls').change(function (e) {
+        e.preventDefault();
+        var trackid = $('.srchValcls').val();
+
+        if (trackid == "1" || trackid == "2" || trackid == "4" || trackid == "5" || trackid == "6") {
+
+            $('#blnkid').show();
+            $('#registradate').hide();
+            $('#roomtypeid').hide();
+        }
+
+        if (trackid == "3") {
+            $('#registradate').show();
+            $('#blnkid').hide();
+            $("#roomtypeid").hide();
+
+        }
+        if (trackid == "7") {
+            $('#roomtypeid').show();
+            $('#registradates').hide();
+            $('#blnkid').hide();
+
+        }
+
+
+    });
+
+
+
+</script>
+
+
+
+
+

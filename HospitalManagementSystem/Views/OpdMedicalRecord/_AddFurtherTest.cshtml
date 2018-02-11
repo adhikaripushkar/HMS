@@ -1,0 +1,60 @@
+﻿
+@using HospitalManagementSystem.Helpers
+@model HospitalManagementSystem.Models.OpdMedicalRecordFurtherTestModel
+
+
+<style>
+    .txtone {
+        background-color: #FEFFB0;
+        font-weight: bold;
+        text-align: right;
+    }
+</style>
+
+
+@using (Html.BeginCollectionItem("PatientFurtherTestList"))
+{
+   
+    <div class="row row-fluid singleline" style="margin-left:0.2px; margin-top:-15px;">
+        <label>
+        @Html.TextBoxFor(model => model.TestName, new {@class="FurtherTestIdClass" })
+        @Html.ValidationMessageFor(model => model.TestName)
+            </label>
+
+        <input type="button" class="row-button btn btn-warning" value="Remove" />
+    </div>
+    
+   
+   
+}
+
+
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".FurtherTestIdClass").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/PatientTest/SearchTestName",
+                        type: "POST",
+                        dataType: "json",
+                        data: { s: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                //alert(item);
+                                return { label: item, value: item };
+                            }))
+                        }
+                    })
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+        })
+    </script>

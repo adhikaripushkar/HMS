@@ -1,0 +1,160 @@
+﻿@model HospitalManagementSystem.Models.EmergecyMasterModel
+@if (TempData["success"] == "Record Created Successfully !")
+{ 
+    <div class="alert alert-success">
+@TempData["success"]
+        </div>
+
+}
+
+@if (TempData["success"] == "Record Creation Failed !")
+{ 
+    <div class="alert alert-error">
+@TempData["success"]
+        </div>
+
+}
+@if (TempData["success"] == "Required Data Missing !")
+{ 
+    <div class="alert alert-error">
+@TempData["success"]
+        </div>
+
+}
+
+@if (TempData["success"] == "Record Updated Successfully !")
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}
+
+
+@if (TempData["success"] == "Record Updation Failed !")
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}
+
+ 
+
+@if (TempData["success"] == "Record Deleted Successfully !")
+{ 
+    <div class="alert alert-info">
+@TempData["success"]
+        </div>
+
+}
+
+
+@if (TempData["success"] == "Record Deletion Failed !")
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}      
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+     @Html.HiddenFor(model => model.EmergencyMasterId, new { @id = "EmergencyMID" })
+  <div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+       <div class="boxWrapper" id="EmTCId">
+    <div class="boxHeadingPanel"><h1>Test Details</h1></div>
+
+<table class="table table-hover tablesorter">
+
+ <thead>
+
+
+    <tr>    
+        <th>
+              @Html.DisplayNameFor(model => model.EmergencyTstCaridModel.SectionId)
+        </th>
+        <th>
+              @Html.DisplayNameFor(model => model.EmergencyTstCaridModel.TestId)
+        </th>
+        <th>
+              @Html.DisplayNameFor(model => model.EmergencyTstCaridModel.ShortDecs)
+        </th>
+        <th>
+              @Html.DisplayNameFor(model => model.EmergencyTstCaridModel.LongDesc)
+        </th>
+        <th>
+              @Html.DisplayNameFor(model => model.EmergencyTstCaridModel.Remarks)
+        </th>
+        <th>Edit</th>
+     </tr>
+     
+ </thead>
+ <tbody>
+      @if (Model.ListEmergencyTstCaridModel != null)
+    {
+        foreach (var item in Model.ListEmergencyTstCaridModel)
+        {
+    <tr>  
+         @Html.HiddenFor(modelItem => item.EmTestd, new { @id = "EmergencyTestId" })
+        @Html.HiddenFor(modelItem =>item.TestId)
+        <td>
+            
+             @HospitalManagementSystem.Utility.GetSectionNameById(item.SectionId)
+        </td>
+         <td>
+             @* @Html.DisplayFor(modelItem => item.TestId)*@
+             
+             @HospitalManagementSystem.Utility.GetTestNameById(item.TestId)
+        </td>
+        <td>
+              @Html.DisplayFor(modelItem => item.ShortDecs)
+        </td>
+        <td>
+              @Html.DisplayFor(modelItem => item.LongDesc)
+        </td>
+        <td>
+              @Html.DisplayFor(modelItem => item.Remarks)
+        </td>
+         <td>
+         <a href='~/EmergencyTstCarid/EditForEmergencyTestCarreid?id=@item.TestId' title="" class="updtlink"><span>Edit</span></a> 
+       </td>
+    </tr>
+      }
+      }
+ </tbody>
+
+</table>
+ <p>
+<a href='~/EmergencyTstCarid/CreateEmergencyTestCarid?id=@Model.EmergencyMasterId' title="" class="crtlink"  id="linkNewBack"><span>Create new</span></a> 
+
+</p>
+           </div></div></div>
+<div id="carttt"></div>
+<div id="udpemergencytstcarried"></div>
+<script>
+    $(".crtlink").click(function (e) {
+        e.preventDefault();
+        var data = $('#EmergencyMasterId').val();
+    
+        var url = this.href;
+
+        $.get(url, { id: data }, function (res) {
+
+            $("#carttt").html(res);
+
+        });
+    });
+</script>
+<script>
+    $(".updtlink").click(function (e) {
+        e.preventDefault();
+        var url = this.href;
+        $.get(url, function (res) {
+            $("#udpemergencytstcarried").html(res);
+
+        });
+    });
+</script>

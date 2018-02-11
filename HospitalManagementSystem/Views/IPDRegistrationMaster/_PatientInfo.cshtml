@@ -1,0 +1,73 @@
+﻿@model HospitalManagementSystem.Models.IpdSearchResults
+
+
+
+ 
+
+
+@if(Model.IpdSearchResultList!=null)
+{
+    
+
+    
+        
+     <hr />
+      
+
+      <table style="width:100%;">
+
+     @foreach (var item in Model.IpdSearchResultList)
+     {
+         
+         var departmentname=HospitalManagementSystem.Utility.GetDepartmentName(@item.DepartmentId);
+         var roomtype = HospitalManagementSystem.Utility.GetRoomTypeName(@item.RoomType);
+     
+         <tr>
+         <td><span>Name:-</span>@item.FullName</td>
+         <td><span>Sex:-</span>@item.sex</td>
+         <td><span>Age:-</span>@item.Age</td>
+         <td><span>Address:-</span>@item.Address</td>
+             </tr>
+         <tr>
+         @*<td><span>Department:-</span>departmentname</td>*@
+             <td><span>Ward:-</span>
+             @HospitalManagementSystem.Utility.GetIpdWardName().Where(x=>x.Value==@Convert.ToString(item.WardNo)).SingleOrDefault().Text.ToString()
+         </td>
+         <td><span>Room Type:-</span>@roomtype</td>
+         
+         <td><span>Room:-</span>@item.RoomNo</td>
+         <td><span>Bed:-</span>@item.BedNo</td>
+
+             </tr>
+         <tr>
+         <td><span>Admission Date:-</span>@Convert.ToDateTime(item.RegistrationDate).ToShortDateString()</td>
+             <td >Date Of Discharge:-@DateTime.Now.ToShortDateString()
+                
+
+             </td>
+             <td colspan="2"> <span>Condition at the time of discharge:-</span></td>
+                 
+         </tr>
+            
+     }
+ </table>
+
+
+
+}
+
+    
+      
+else
+{
+    <div>
+
+
+    </div>
+}
+           
+
+
+
+              
+        

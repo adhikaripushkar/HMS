@@ -1,0 +1,51 @@
+﻿@model Hospital.Models.PreRegistrationDoctorTime
+
+
+@if (Model.PreRegistrationDoctorTimeList.Count != 0)
+{
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTime)
+            </th>
+
+        </tr>
+
+
+
+        @foreach (var item in Model.PreRegistrationDoctorTimeList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+
+            </tr>
+        }
+
+
+
+    </table>
+}
+else
+{
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Error)
+            </th>
+        </tr>
+
+
+    </table>
+
+}
+
+
+

@@ -1,0 +1,430 @@
+﻿@model HospitalManagementSystem.Models.JVMasterModel
+
+<style>
+    table#tblnoborder,
+    table#tblnoborder td {
+        border: none !important;
+    }
+
+    .font {
+        font-weight: bold;
+    }
+
+    .small-table td {
+        border: none;
+    }
+
+
+
+    .holder img {
+        max-height: 48px;
+        max-width: 55px;
+        object-fit: cover;
+    }
+
+
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+    }
+</style>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        text-align: center;
+        font-size: 13px;
+    }
+</style>
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+</script>
+
+<div class="contentWrapper">
+    @using (Html.BeginForm("_GetCashHandover", "JvMaster", FormMethod.Post, new { @class = "", @style = "", @id = "" }))
+    {
+        @Html.HiddenFor(model => model.objGetCashHandoverDetailModelView.HandoverDateTo)
+        @Html.HiddenFor(model => model.objGetCashHandoverDetailModelView.HandoverDateFrom)
+        @Html.HiddenFor(model => model.objGetCashHandoverDetailModelView.Amount, new { @id = "TotalCash" })
+
+        <label>
+            <span>HandOver To</span>
+            @Html.DropDownListFor(model => model.objGetCashHandoverDetailModelView.HandoverTo, HospitalManagementSystem.Utility.GetUserForHandOver())
+        </label>
+        <br />  
+        if (Model.objGetCashHandoverDetailModelViewList.Count > 0)
+        {
+
+            foreach (var item in Model.objGetCashHandoverDetailModelViewList)
+            {
+                if (item.id == 1)
+                {
+        <h4 style="text-align: left;"><b>Cash In Hand Amount: @item.Amount</b></h4>                   
+                }
+                if (item.id == 2)
+                {
+        <h4 style="text-align: left;"><b>Handover Amount From Another User: @item.Amount</b></h4>                   
+                }
+            }
+        }
+        else
+        {
+        <h4 style="text-align: left;"><b>Cash In Hand Amount: 0 </b></h4>
+        <h4 style="text-align: left;"><b>Handover Amount From Another User: 0 </b></h4>
+        }
+        <div>
+            <h4 style="text-align: left;"><b>Total Bank Deposit : </b></h4>
+            @Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.TotalBankDeposit, null, new { @id = "TotalBankDeposit", @onkeyup = "OnchangeTotal();" })
+        </div>
+        <div>
+            <h4 style="text-align: left;"><b>Total Expenses : </b></h4>
+            @Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.TotalExpenses, null, new { @id = "TotalExpenses", @onkeyup = "OnchangeTotal();" })
+        </div>
+        <div>
+            <h4 style="text-align: left;"><b>HandOver Amount : </b></h4>
+            @*@Html.HiddenFor(model => model.objGetCashHandoverDetailModelView.Amount, new { @id = "TotalCollectedAmount" })                   *@
+            @Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Amount, new { @id = "TotalCollectedAmount", @Value = "" })
+        </div>
+       
+            
+        <div class="row-fluid singleline">
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th>Amount
+                        </th>
+                        <th></th>
+                        <th>Number
+                        </th>
+                        <th></th>
+                        <th>Total
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>Rs.1000
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Rs1000, new { @onkeyup = "onchangeevent(1000, this.value);" })
+                        </td>
+                        <td>=
+                        </td>
+                        <td>
+                            @Html.TextBox("DisplayTotalAmount_1000", null, new { @readonly = "readonly", @class = "TotalNumberAndAmount" })
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>Rs.500
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Rs500, new { @onkeyup = "onchangeevent(500, this.value);" })
+                        </td>
+                        <td>=
+                        </td>
+                        <td>
+                            @Html.TextBox("DisplayTotalAmount_500", null, new { @readonly = "readonly", @class = "TotalNumberAndAmount" })
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>Rs.100
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Rs100, new { @onkeyup = "onchangeevent(100, this.value);" })
+                        </td>
+                        <td>=
+                        </td>
+                        <td>
+                            @Html.TextBox("DisplayTotalAmount_100", null, new { @readonly = "readonly", @class = "TotalNumberAndAmount" })
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>Rs.50
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Rs50, new { @onkeyup = "onchangeevent(50, this.value);" })
+                        </td>
+                        <td>=
+                        </td>
+                        <td>
+                            @Html.TextBox("DisplayTotalAmount_50", null, new { @readonly = "readonly", @class = "TotalNumberAndAmount" })
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>Rs.20
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Rs20, new { @onkeyup = "onchangeevent(20, this.value);" })
+                        </td>
+                        <td>=
+                        </td>
+                        <td>
+                            @Html.TextBox("DisplayTotalAmount_20", null, new { @readonly = "readonly", @class = "TotalNumberAndAmount" })
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>Rs.10
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Rs10, new { @onkeyup = "onchangeevent(10, this.value);" })
+                        </td>
+                        <td>=
+                        </td>
+                        <td>
+                            @Html.TextBox("DisplayTotalAmount_10", null, new { @readonly = "readonly", @class = "TotalNumberAndAmount" })
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>Rs.5
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Rs5, new { @onkeyup = "onchangeevent(5, this.value);" })
+                        </td>
+                        <td>=
+                        </td>
+                        <td>
+                            @Html.TextBox("DisplayTotalAmount_5", null, new { @readonly = "readonly", @class = "TotalNumberAndAmount" })
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>Rs.2
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Rs2, new { @onkeyup = "onchangeevent(2, this.value);" })
+                        </td>
+                        <td>=
+                        </td>
+                        <td>
+                            @Html.TextBox("DisplayTotalAmount_2", null, new { @readonly = "readonly", @class = "TotalNumberAndAmount" })
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>Rs.1
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Rs1, new { @onkeyup = "onchangeevent(1, this.value);" })
+                        </td>
+                        <td>=
+                        </td>
+                        <td>
+                            @Html.TextBox("DisplayTotalAmount_1", null, new { @readonly = "readonly", @class = "TotalNumberAndAmount" })
+                        </td>
+
+                    </tr>
+                    @*<tr>
+                        <td>Paisa
+                        </td>
+                        <td>*
+                        </td>
+                        <td>
+                           
+                        </td>
+                        <td>=
+                        </td>
+                        <td>
+                             @Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Paisa, new {@class="PaisaAmountClass" })
+                        </td>
+
+                    </tr>*@
+
+
+                </table>
+            </div>
+
+            <table style="display: none;">
+                <tr>
+                    <td>Rs.1000</td>
+                    <td>Rs.500</td>
+                    <td>Rs.100</td>
+                </tr>
+                <tr>
+                    <td>@Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Rs1000, new { @class = "HandOverAmountClass" })</td>
+                    <td>@Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Rs500, new { @class = "HandOverAmountClass" })</td>
+                    <td>@Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Rs100, new { @class = "HandOverAmountClass" })</td>
+                </tr>
+                <tr>
+                    <td>Rs.50</td>
+                    <td>Rs.20</td>
+                    <td>Rs.10</td>
+                </tr>
+                <tr>
+                    <td>@Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Rs50)</td>
+                    <td>@Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Rs20)</td>
+                    <td>@Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Rs10)</td>
+                </tr>
+                <tr>
+
+                    <td>Rs.5</td>
+                    <td>Rs.2</td>
+                    <td>Rs.1</td>
+                </tr>
+                <tr>
+                    <td>@Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Rs5)</td>
+                    <td>@Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Rs2)</td>
+                    <td>@Html.TextBoxFor(model => model.objGetCashHandoverDetailModelView.Rs1)</td>
+                </tr>
+            </table>
+
+            <div style="margin-top: 10px;">
+                <span>Total Amount :</span>@Html.TextBox("DisplayTotalAmountFinal", null, new { @readonly = "readonly", @id = "DisplayTotalAmountFinal" })
+                <span>Remarks : </span><span>@Html.TextAreaFor(model => model.objGetCashHandoverDetailModelView.Remarks)</span>
+            </div>
+
+            @if (Model.objGetCashHandoverDetailModelViewList.Count > 0)
+            {
+                <div class="row-fluid singleline">
+                    <label>
+                        <input type="button" value="HandOver" id="btnidsubmitHandOver" />
+                    </label>
+                </div>              
+            }
+
+        </div>
+    }
+</div>
+<script>
+    $(document).ready(function () {
+        var totalCashAmt = $("#TotalCash").val();
+        $("#TotalCollectedAmount").val(totalCashAmt);
+    });
+</script>
+
+<script type="text/javascript">
+    $('#btnidsubmitHandOver').on("focus", function () {
+        var HandoverAmount = parseFloat($('#DisplayTotalAmountFinal').val());
+        HandoverAmount = Math.round(HandoverAmount);
+        var CollectedAmount = parseFloat($('#TotalCollectedAmount').val());
+        CollectedAmount = Math.round(CollectedAmount);
+
+        //alert(HandoverAmount + ' ' + CollectedAmount);
+
+        if (HandoverAmount != CollectedAmount) {
+            alert("Handover amount is not equal to collected Amount ! ");
+            $("form").submit(function (e) {
+                e.preventDefault();
+            });
+        }
+        else {
+            $('form').unbind('submit').submit();
+        }
+
+    });
+
+    //$('#TotalCollectedAmount').on("focus", function () {
+    //    var TotalAmount = parseFloat($('#TotalCash').val());
+    //    TotalAmount = Math.round(TotalAmount);
+    //    var BankDepositAmount = parseFloat($('#TotalBankDeposit').val());
+    //    BankDepositAmount = Math.round(BankDepositAmount);
+    //    var ExpensesAmount = parseFloat($('#TotalExpenses').val());
+    //    ExpensesAmount = Math.round(ExpensesAmount);
+    //    var TotalHandOver = TotalAmount - BankDeposite - ExpensesAmount;
+    //    TotalHandOver = Math.round(TotalHandOver);
+    //    $('#TotalCollectedAmount').val(TotalHandOver);
+    //});
+
+
+    $(".HandOverAmountClass").live("keyup", function () {
+
+        //CalculateHandOverTotal();
+    });
+
+
+    function CalculateHandOverTotal() {
+        //alert('hello');
+        var allNumberFromHandover = $('.TotalNumberAndAmount');
+        var TotalAmount = 0;
+        var sectorAmountCount = 0;
+        sectorAmountCount = $(allNumberFromHandover).length;
+
+        ///////////////////////////////////////////////////
+        for (var i = 0; i <= sectorAmountCount - 1; i++) {
+            if (isNaN(parseFloat($(allNumberFromHandover[i]).val())))
+                $(allNumberFromHandover[i]).val('0');
+            TotalAmount += parseFloat($(allNumberFromHandover[i]).val());
+        }
+
+        $('#DisplayTotalAmountFinal').val(TotalAmount);
+
+
+    };
+
+    function onchangeevent(Rsamount, valNumber) {
+        //var rsAmount = parseFloat(Rsamount);
+        //var valnumber = parseFloat(valnumber);
+        var TotalAmount = parseFloat(Rsamount * valNumber);
+        //alert(TotalAmount);
+
+        $("#DisplayTotalAmount_" + Rsamount).val(TotalAmount);
+        CalculateHandOverTotal();
+
+    };
+
+    function OnchangeTotal() {
+        var TotalAmount = parseFloat($('#TotalCash').val());
+        var BankDeposit = $("#TotalBankDeposit").val();
+        var ExpenseTotal = $("#TotalExpenses").val();
+
+        if (BankDeposit != isNaN) {
+
+            //alert("1");
+        }
+        else {
+            BankDeposit = 0;
+            //alert("2");
+        }
+        if (ExpenseTotal != isNaN) {
+
+            //alert("3");
+        } else {
+            ExpenseTotal = 0;
+            //alert("4");
+        }
+        var TotalExpense = parseFloat(BankDeposit) + parseFloat(ExpenseTotal);
+        var SumTotal = parseFloat(TotalAmount) - parseFloat(TotalExpense);
+        $("#TotalCollectedAmount").val(SumTotal)
+        //alert(SumTotal);
+    };
+
+</script>
+

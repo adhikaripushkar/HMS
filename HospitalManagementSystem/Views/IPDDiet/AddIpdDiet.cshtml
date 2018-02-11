@@ -1,0 +1,274 @@
+﻿@model HospitalManagementSystem.Models.DietIPDModel
+
+@{
+    ViewBag.Title = "AddIpdDiet";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+    int i = 1;
+}
+@*<script src="~/Scripts/jquery.timepicker.min.js"></script>
+<link href="~/Content/jquery.timepicker.css" rel="stylesheet" />*@
+
+
+<style>
+    .mytable tr td:first-child {
+        /*border: 1px solid black;*/
+        background-color: #C5B971;
+        font-weight: bold;
+    }
+</style>
+<script src="~/Scripts/OrderManagerScript.js"></script>
+<script>
+
+
+    var dateP = $.noConflict();
+    dateP(function () {
+        dateP("#DietDateId").attr("value", "@DateTime.Now.ToShortDateString()");
+        dateP("#DietDateId").datepicker();
+
+    });
+
+
+</script>
+
+
+<h2 style="text-align: center;">IPD Diet Details</h2>
+
+<div class="contentWrapper">
+
+    <h4>Patient Information</h4>
+
+    <table class="mytable">
+        @foreach (var item in Model.PatientInformationDetailsViewModeList)
+        {
+            <tr>
+
+                <td>Full Name
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+
+            </tr>
+
+            <tr>
+                <td>Registration Date
+
+                </td>
+
+                <td>
+                    @Convert.ToDateTime(item.RegistrationDate).ToShortDateString()
+                </td>
+
+
+
+            </tr>
+    
+            <tr>
+
+                <td>Ward No
+
+                </td>
+                <td>@item.WardNo</td>
+
+
+            </tr>
+            <tr>
+
+
+                <td>Room No
+
+                </td>
+                <td>@item.RoomNo</td>
+            </tr>
+    
+            <tr>
+
+                <td>Bed No
+
+                </td>
+                <td>@item.BedNo</td>
+            </tr>
+    
+        }
+
+    </table>
+
+
+    <hr />
+    <h4>Diet Details</h4>
+
+    <div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Details</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <tr>
+                        <th>SN</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ObjPatientDietDetailsViewModel.DietTypeId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ObjPatientDietDetailsViewModel.Diet)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ObjPatientDietDetailsViewModel.DietDate)
+                        </th>
+                        @*<th>
+                            @Html.DisplayNameFor(model => model.ObjPatientDietDetailsViewModel.DietTime)
+                        </th>*@
+                        <th>Action</th>
+
+                    </tr>
+
+                    @foreach (var item in Model.PatientDietDetailsViewModelList)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>
+                                @HospitalManagementSystem.Utility.GetDietTypeNameById(item.DietTypeId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Diet)
+                            </td>
+                            <td>
+                                @item.DietDate.ToShortDateString()
+                            </td>
+                            @*<td>
+                                @Html.DisplayFor(modelItem => item.DietTime)
+                            </td>*@
+                            <td></td>
+
+                        </tr>
+                        i++;
+                    }
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+
+    <h3>Add Diet </h3>
+    <div class="well well-small" id="Add-Item">
+        @using (Html.BeginForm("AddIpdDiet", "IPDDiet", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+        {
+        
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.ObjPatientDietDetailsViewModel.OPDId)
+            @Html.HiddenFor(model => model.ObjPatientDietDetailsViewModel.IPDRegistrationId)
+
+            
+            @Html.Label("Diet Date")
+            @Html.TextBoxFor(model => model.ObjPatientDietDetailsViewModel.DietDate, new { @id = "DietDateId" })
+
+             
+        
+@*<span class="size">@Html.ValidationMessageFor(model => model.ObjPatientDietDetailsViewModel.DietTime)</span>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ObjPatientDietDetailsViewModel.DietTime)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.ObjPatientDietDetailsViewModel.DietTime, new { @id="DietTimeIn",@class="DietTimePicker",@onclick="CallTimePickerFunction()"})
+                </div>*@
+
+            
+                
+            
+            <hr />
+           
+            <div class="row-fluid singleline">
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.ObjPatientDietDetailsViewModel.DietTypeId)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjPatientDietDetailsViewModel.DietTypeId)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.ObjPatientDietDetailsViewModel.DietTypeId, HospitalManagementSystem.Utility.GetDietType(), new { @class = "ddpsize" })
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.ObjPatientDietDetailsViewModel.NurseInChargeId)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjPatientDietDetailsViewModel.NurseInChargeId)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.ObjPatientDietDetailsViewModel.NurseInChargeId, HospitalManagementSystem.Utility.GetEmployeeList(), new { @class = "ddpsize" })
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.ObjPatientDietDetailsViewModel.NurseName)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjPatientDietDetailsViewModel.NurseName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.ObjPatientDietDetailsViewModel.NurseName, new { @class = "ddpsize" })
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.ObjPatientDietDetailsViewModel.Diet)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjPatientDietDetailsViewModel.Diet)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.ObjPatientDietDetailsViewModel.Diet, new { @class = "ddpsize" })
+
+                    </div>
+
+                </label>
+
+
+            </div>
+
+            <p>
+                <input type="submit" value="Save" />
+            </p>
+   
+     
+        }
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+
+<script type="text/javascript">
+    $("#Add-Item").on('click', '.row-button', function () {
+        $(this).closest("div.row").remove();
+    });
+
+</script>
+
+<script type="text/javascript">
+
+    function showHideDiv(divId) {
+        $("#con_" + divId).slideToggle("slow");
+    };
+
+    var TT = $.noConflict();
+    function CallTimePickerFunction() {
+        //TT('.DietTimePicker').timepicker();
+    }
+</script>
+
+
+

@@ -1,0 +1,114 @@
+﻿@model HospitalManagementSystem.Models.DailyJvDetailModel
+@{
+    ViewBag.Title = "JvDetail Create";
+    Layout = "~/Views/Shared/_BillingLayout.cshtml";
+    decimal total = 0;
+}
+<style>
+    .customtable {
+        font-size: 16px;
+    }
+
+        .customtable td {
+            border: none;
+        }
+
+    #resize {
+        resize: none;
+    }
+    .BackClass {
+        font-size:16px;
+    }
+</style>
+@*<h2 style="text-align:center">@Model.HospitalDetail.HospitalName</h2>
+<h2 style="text-align:center">@Model.HospitalDetail.Address</h2>
+<span>JV Number:- @Model.VoucherNumber.VoucherNo</span> <span>Date: @Model.Date.ToShortDateString()</span>*@
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.JvNo)
+    @Html.HiddenFor(model => model.Date)
+    <div class="contentWrapper">
+        <div style="font-size: 16px; text-align: center; margin-bottom: 30px;">
+            <div>
+                @Model.HospitalDetail.HospitalName
+            </div>
+            <div>
+                @Model.HospitalDetail.Address
+            </div>
+
+
+        </div>
+        <table class="customtable">
+            <tr>
+                <td>JV Number:-
+                </td>
+                <td>
+                    @Model.JvNo
+                </td>
+                <td>Date:
+                </td>
+                <td>
+                    @Model.Date.ToShortDateString()
+                </td>
+            </tr>
+            <tr>
+                <td>Bank or Cash
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.DrAmount)
+                    @Html.ValidationMessageFor(model => model.DrAmount)
+                </td>
+            </tr>
+            @for (int i = 0; i < Model.JvDetailList.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Model.JvDetailList[i].AccountHead
+                        @Html.HiddenFor(model => model.JvDetailList[i].AccountHead)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => model.JvDetailList[i].CrAmount)
+                        @Html.HiddenFor(model => model.JvDetailList[i].CrAmount)
+                        @{
+                total = total + Model.JvDetailList[i].CrAmount;
+                        }
+                    </td>
+                </tr>
+            }
+
+            <tr>
+                <td>Total
+                </td>
+                <td>
+                    @total
+                </td>
+            </tr>
+            <tr>
+                <td>Narration
+                </td>
+                <td>
+                    @Html.TextAreaFor(model => model.Narration, new { @id = "resize" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @*@Html.ActionLink("Back", "Index")*@
+                </td>
+                <td>
+                    <input type="submit" value="Verify" />
+                </td>
+                <td></td>
+                <td>
+                    
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.ActionLink("Back", "Index", null, new { @class="BackClass"})
+                </td>
+            </tr>
+        </table>
+
+    </div>
+}

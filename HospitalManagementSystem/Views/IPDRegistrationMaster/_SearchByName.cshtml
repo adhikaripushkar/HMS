@@ -1,0 +1,99 @@
+﻿@model HospitalManagementSystem.Models.IpdSearchResults
+
+
+
+  <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            
+       <div class="boxWrapper">
+    <div class="boxHeadingPanel"><h1>Patient Info:</h1></div>
+
+
+@if(Model.IpdSearchResultList!=null)
+{
+    <table class="table table-hover tablesorter">
+
+    <thead>
+        <tr>
+        <th>Name</th>
+
+        <th>Department</th>
+        <th>Room Type</th>
+        <th>Ward Number</th>
+        <th>Room Number</th>
+        <th>Bed Number</th>
+        <th>Registration Date</th>
+       
+        </tr>
+
+    </thead>
+   
+   <tbody>
+
+     @foreach (var item in Model.IpdSearchResultList)
+     {
+         
+         var departmentname=HospitalManagementSystem.Utility.GetDepartmentName(@item.DepartmentId);
+         var roomtype = HospitalManagementSystem.Utility.GetRoomTypeName(@item.RoomType);
+         <tr>
+         <td>@item.FullName</td>
+         <td>@departmentname</td>
+         <td>@roomtype</td>
+         <td>
+             @HospitalManagementSystem.Utility.GetIpdWardName().Where(x=>x.Value==@Convert.ToString(item.WardNo)).SingleOrDefault().Text.ToString()
+         </td>
+         <td>@item.RoomNo</td>
+         <td>@item.BedNo</td>
+         <td>@Convert.ToDateTime(item.RegistrationDate).ToShortDateString()</td>
+                 
+         </tr>
+     }
+
+   </tbody>
+    
+</table>   
+    
+
+
+}
+
+    
+      
+else
+{
+    <div>
+
+
+    </div>
+}
+           </div>
+
+
+
+              <div class="boxFooter">
+                   
+                  @* <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+
+               </div> *@
+
+        @*---------------*@
+
+            </div>
+        </div></div>

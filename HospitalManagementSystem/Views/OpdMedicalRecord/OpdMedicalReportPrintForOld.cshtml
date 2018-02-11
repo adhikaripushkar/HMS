@@ -1,0 +1,440 @@
+﻿@model HospitalManagementSystem.Models.OpdMedicalRecordModel
+
+@{
+    ViewBag.Title = "ViewOpdMedicalRecord";
+    
+}
+
+<style>
+
+    table.tblid td {
+        border:none !important;
+    }
+       table.tblid th {
+        border:none !important;
+    }
+
+
+.ui-dialog,.ui-dialog,.ui-widget, .ui-widget-content, .ui-corner-all, .foo, .ui-draggable, .ui-resizable {background:#F0F0F0 !important}
+
+   .case {
+        width:644px;
+        height:71px;
+       resize:none;
+
+    }
+ 
+
+
+</style>
+<script type="text/javascript">
+    //function print() {
+
+    //    //	    var values = document.getElementById('printDiv').innerHTML.toString();
+    //    var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+    //    printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+    //    printing.document.write('<div style="font-size:small;">');
+    //    printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+    //    printing.document.close();
+    //    printing.focus();
+    //    printing.print();
+    //    printing.close();
+
+    //}
+
+   // window.onload = print;
+</script>
+
+<h2 style="text-align:center;">OPD Medical Records</h2>
+
+<div class="contentWrapper">
+  
+    
+     <div id="printdiv" style="border-style: solid; border-color: #999; width:auto; padding-left:10px; padding-right:5px; padding-bottom:5px;">
+         @* @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != null && @HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalManagementSystemLogo/@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() == "")
+        { 
+            
+            <br />
+        
+        }
+        <div style="font: bold; font-size: 18px; text-align: center; height: 90px;">
+            @if (@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != null && @HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != "")
+            {
+                <span>@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName()</span>
+            }
+            <br />
+            @HospitalManagementSystem.Utility.GetHospitalManagementSystemName()<br />
+            <div style="">
+                <span style="font-size: 15px; text-align: center">@HospitalManagementSystem.Utility.HospitalManagementSystemAddress()</span><br />
+                <span style="font-size: 14px; text-align: center">Website:-@HospitalManagementSystem.Utility.HospitalManagementSystemUrl()</span><br />
+                <span style="font-size: 14px; text-align: center">Ph:-@HospitalManagementSystem.Utility.HospitalManagementSystemPhone()</span>
+
+            </div>
+
+        </div>*@
+      <center> <div style="width:75%; text-align:center;">  <hr /></div></center>
+         <h4 style="text-align:center;">OPD Medical Records</h4>
+    
+    <table class="tblid" style="width:100%; margin-top:2.3%;">
+
+        @*<td style="background-color:white;" colspan="2">Patient Information:-</td>*@
+        <thead>
+        <tr>
+            <th style="text-align:left;">Department Name</th>
+            <th style="text-align:left;">Doctor Name</th>
+            <th style="text-align:left;">Patient Name</th>
+
+            </tr>
+
+            </thead>
+        <tbody>
+         
+         <tr>
+            <td style="text-align:left;">@HospitalManagementSystem.Utility.GetDepartmentName(Model.DepartmentId)</td>
+            
+            <td style="text-align:left;">@HospitalManagementSystem.Utility.GetDoctorName(Model.DoctorId)</td>
+            
+            <td style="text-align:left;">@HospitalManagementSystem.Utility.OpdPatientName(Model.PatientId)</td>
+    
+        </tr>
+        @*<tr>
+            <td style="background-color:white; font-weight:100;" colspan="2"><span>Department Id:-<span id="deptid">@Model.DepartmentId</span></span>||<span>Patient Id:-<span id="patientid">@Model.PatientId</span></span>||<span>Doctor Id:-<span id="docid">@Model.DoctorId</span></span>||<span>MedicalRecordMasterid:-<span id="masterid">@Model.OpdMedicalRecordMastetId</span></span></td>
+        </tr>*@
+             </tbody>
+
+        <br />
+        <h5>Vital Info:-</h5>
+     <table style="width:100%;">
+    <tr>
+        
+        <td>
+           <b> @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.OpdId)</b>
+        </td>
+        <td>
+           <b> @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.AVPU)</b>
+        </td>
+        <td>
+           <b> @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.Pulse)</b>
+        </td>
+        <td>
+           <b> @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.BP)</b>
+        </td>
+        <td>
+           <b> @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.RR)</b>
+        </td>
+        <td>
+           <b> @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.SPO2)</b>
+        </td>
+        <td>
+          <b>  @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.TPR)</b>
+        </td>
+        <td>
+           <b> @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.Wt)</b>
+        </td>
+        <td>
+          <b>  @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.Date)</b>
+        </td>
+        <td>
+           <b> @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.VTime)</b>
+        </td>
+        <td>
+          <b>  @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.Staff)</b>
+        </td>
+        
+        
+    </tr>
+
+
+    <tr>
+        
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.OpdId)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.AVPU)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.Pulse)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.BP)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.RR)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.SPO2)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.TPR)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.Wt)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.VTime)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.Staff)
+        </td>
+        
+        
+    </tr>
+
+
+</table>
+
+
+
+
+    </table>
+         <hr />
+         <table class="tblid">
+             <tr>
+                 <td style="text-align:left;">
+                    <b>PreviousCase:-</b>
+                 </tr>
+             <tr>
+                 <td>
+                @Html.DisplayFor(model=>model.PreviousCase,new {@class="",disabled="disabled",@id="PreviousCaseId"})
+                 </td> 
+                 </tr> 
+        
+             <tr>
+         <td style="text-align:left;">
+            <b> Current Case:-</b>
+             </td>
+                 <tr>
+                     <tr>
+                 <td>
+              @Html.DisplayFor(model => model.CurrentCase, new {@class="",disabled="disabled",@id="CurrentCaseId"})
+            </td>
+                 </tr>
+
+             <tr>
+                 <td><b>Provisional Diagnosis</b></td>
+             </tr>
+             <tr><td>@Html.DisplayFor(model => model.ProvisionalDiagnosis, new {@class="",disabled="disabled",@id="CurrentCaseId"})</td></tr>
+             </table>
+    <hr />
+
+    <h4 style=""><u>Common Test List</u></h4>
+    <table class="tblid" style="width:700px;">
+                    <tr>
+                        @*<th>
+                            OpdMRCommonTestId
+                        </th>*@
+
+                        <th style="text-align:left;">
+                            Short Description
+                        </th>
+                        <th style="text-align:left;">
+                            Details
+                        </th>
+                        
+                        
+                    </tr>
+
+                    @foreach (var item in Model.PatientCommonTestList)
+                    {
+                        <tr>
+
+                        
+                                @Html.HiddenFor(modelItem => item.OpdMRCommonTestId, new {@class="OpdMRCommonTestId"})
+                                
+                            
+                            <td style="text-align:left;">
+                               <span class="valueidSd"> @Html.DisplayFor(modelItem => item.ShortDesc)</span>
+                                
+                           
+                            </td>
+
+                            <td style="text-align:left;">
+                                <span class="valueidDet"> @Html.DisplayFor(modelItem => item.Details)</span>
+                                
+                                
+                            </td>
+                            
+                           
+                            
+                        </tr>
+                    }
+   
+         @if (Model.PatientCommonTestList.Count == 0)
+            { 
+                <tr>
+                    <td style="text-align:center;">No Records.</td>
+
+                </tr>
+            
+            
+            }
+      
+                </table>
+  <br />
+                
+   
+    
+
+   
+    
+    
+    <br /><hr />
+
+
+    <h4 style=""><u>Further Test List</u></h4>
+     <table class="tblid" style="width:700px;">
+
+          
+                    <tr>
+                   
+
+                        <th style="text-align:left;">
+                            TestName
+                        </th>
+                      
+                        
+                        
+                    </tr>
+
+                    @foreach (var item in Model.PatientFurtherTestList)
+                    {
+                        <tr>
+
+                            
+                             @Html.HiddenFor(modelItem => item.OpdMRFurtherTestId, new{@class="OpdMRFurtherTestIdcls" })
+                            <td style="text-align:left;">
+                                 <span class="ftestNameIdCls"> @Html.DisplayFor(modelItem => item.TestName)</span>
+                                
+                            </td>
+
+                           
+                            
+                         
+                            
+                        </tr>
+                    }
+                    
+           @if (Model.PatientFurtherTestList.Count == 0)
+            { 
+                <tr>
+                    <td style="text-align:center;">No Records.</td>
+
+                </tr>
+            
+            
+            }
+        
+
+                </table>
+    
+        
+    
+        
+    
+
+    
+    <hr />
+
+
+    <h4 style=""><u>Medicine Refered</u></h4>
+
+    <table class="tblid" style="width:700px;">
+                    <tr>
+                        @*<th>
+                            OpdMRMedicineReferId
+                        </th>*@
+
+                        <th style="text-align:left;">
+                            MedicineName
+                        </th>
+                      <th style="text-align:left;">
+                          Doses
+                          </th>
+                            <th style="text-align:left;">
+                                DosesTime
+
+                            </th>
+                           <th style="text-align:left;">
+                               DosesDay
+
+                           </th>
+                        
+                      
+                    </tr>
+
+                    @foreach (var item in Model.PatientMedicineDosesList)
+                    {
+                        <tr>
+
+                            @*<td>
+                                @Html.DisplayFor(modelItem => item.OpdMRMedicineReferId)
+
+                            </td>*@
+
+                           @Html.HiddenFor(modelItem => item.OpdMRMedicineReferId, new{@class="OpdMrMedRefCls" })
+
+
+                            <td style="text-align:left;">
+                               <span class="MedicineNameclsspan"> @Html.DisplayFor(modelItem => item.MedicineName)</span>
+                                
+                            </td>
+                            <td style="text-align:left;">
+                                <span class="Dosesclsspan">@Html.DisplayFor(modelItem => item.Doses)</span>
+                                
+                            </td>
+                            <td style="text-align:left;">
+                                <span class="DosesTimeclsspan">@Html.DisplayFor(modelItem => item.DosesTime)</span>
+                                
+                            </td>
+                           <td style="text-align:left;">
+                               <span class="DosesDayclsspan">@Html.DisplayFor(modelItem => item.DosesDay)</span>
+                               
+                           </td>
+                            
+                          
+                            
+                        </tr>
+                    }
+
+           @if (Model.PatientMedicineDosesList.Count == 0)
+            { 
+                <tr>
+                    <td style="text-align:center;">No Records.</td>
+
+                </tr>
+            
+            
+            }
+
+
+                </table>
+
+    
+                            
+
+    </div>
+
+    
+    </div>
+
+
+
+
+
+
+

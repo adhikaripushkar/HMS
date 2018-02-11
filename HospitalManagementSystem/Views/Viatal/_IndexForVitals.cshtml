@@ -1,0 +1,205 @@
+﻿@model Hospital.Models.VitalsModel
+
+
+
+
+            
+
+@if (TempData["success"] == "Record Created Successfully !")
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Record Creation Failed !")
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Record Updated Successfully !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == "Record Updation Failed !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == "Record Deleted Successfully !")
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == "Record Deletion Failed !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+     
+       
+  @Html.HiddenFor(model => model.EmergencyMasterId, new {@id = "EmergencyMID" })
+
+  <div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+       <div class="boxWrapper" id="vltlistId">
+    <div class="boxHeadingPanel" style="text-align:center"><h1>Viatal Details</h1></div>
+
+<table class="table table-hover tablesorter">
+
+    <thead>
+
+
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EmergencyVitalId)
+        </th>    
+        <th>
+            @Html.DisplayNameFor(model => model.AVPU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pulse)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SPO2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TPR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Wt)
+        </th>
+          <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+          <th>
+            @Html.DisplayNameFor(model => model.VTime)
+        </th>
+         <th>
+            @Html.DisplayNameFor(model => model.Staff)
+        </th>
+       <th>Edit</th>
+    </tr>
+
+    </thead>
+   @foreach (var item in Model.ListVitalModels)
+      {
+    <tr>  <td>
+           @Html.DisplayFor(modelItem => item.EmergencyVitalId)
+           </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AVPU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pulse)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SPO2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TPR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Wt)
+        </td>
+          <td>
+            @*@Html.DisplayFor(modelItem => item.Date)*@
+
+              @Convert.ToDateTime(item.Date).ToShortDateString()
+        </td>
+          <td>
+            @Html.DisplayFor(modelItem => item.VTime)
+        </td>
+         <td>
+       @*    @Html.DisplayFor(modelItem => item.Staff)*@
+             @Hospital.Utility.GetStaffNameForVital(item.Staff)
+        </td>
+       <td>
+         <a href='~/Viatal/EditForvitals?id=@item.EmergencyVitalId' title="" class="updtlink" ><span>Edit</span></a> 
+       </td>
+    </tr>
+    
+   }
+
+</table>
+
+
+@*@if(Model.ListVitalModels.Count <1 )
+{
+    *@<p>
+<a href='~/Viatal/ViatalForm?id=@Model.EmergencyMasterId' title="" class="crtlink" id="linkNewBack"><span>Create new</span></a> 
+
+</p>
+@*}*@
+
+    </div></div></div>
+<div id="cart"></div>
+<div id="udpvitals"></div>
+<script>
+    $(".crtlink").click(function (e) {
+        e.preventDefault();
+        var data = $('#EmergencyMasterId').val();
+    
+        var url = this.href;
+
+        $.get(url, { id: data }, function (res) {
+
+            $("#cart").html(res);
+
+        });
+    });
+</script>
+<script>
+    $(".updtlink").click(function (e) {
+        e.preventDefault();
+      //var data = $('#EmergencyMasterId').val();
+  
+        var url = this.href;
+      
+        $.get(url, function (res) {
+
+            $("#udpvitals").html(res);
+
+        });
+    });
+</script>
+
+
+
+
+
+
+  

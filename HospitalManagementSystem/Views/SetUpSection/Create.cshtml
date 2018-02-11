@@ -1,0 +1,81 @@
+﻿@model Hospital.Models.SetUpSectionModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 align="Center">Test Section Setup</h2>
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("Create", "SetUpSection", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Create</legend>
+
+            <div class="row-fluid singleline">
+
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.Name)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Name)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Name)
+
+                    </div>
+                </label>
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.SectionCode)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.SectionCode)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.SectionCode)
+
+                    </div>
+                </label>
+
+
+
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.DepartmentId)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.DepartmentId)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.DepartmentId, Hospital.Utility.GetDepartmentList())
+
+                    </div>
+
+                </label>
+
+
+
+            </div>
+
+            <p>
+                <input type="submit" value="Create" />
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+</div>

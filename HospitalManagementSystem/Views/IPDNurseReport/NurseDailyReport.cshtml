@@ -1,0 +1,206 @@
+﻿@model HospitalManagementSystem.Models.IpdSearchResults
+
+<style>
+    .ui-dialog {
+        background-color: #B0E0E6;
+    }
+</style>
+
+
+<div id="printdiv" style="border-style: solid; border-color: #999; width: auto; padding: 5px;">
+
+    @MyHelpers.DesingForLogo()
+
+    <h5 style="text-align: center;"><u>Nurse Daily Records</u> </h5>
+
+    <div id="PatienInfo">
+        <h3>Patient Information</h3>
+        <table>
+            <tr>
+                <th>
+                    Patient Name
+                </th>
+                <th>
+                    IP NO
+                </th>
+                <th>
+                    OPD NO
+                </th>
+                <th>
+                    Address
+                </th>
+                <th>
+                    Age
+                </th>
+                <th>
+                    Ward
+                </th>
+                <th>
+                    Bed No
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    @HospitalManagementSystem.Utility.GetPatientNameWithIdFromEmergency(Model.OpdId)
+                </td>
+                <td>
+                    @Model.IpdRegistrationNumber
+                </td>
+                <td>
+                    @Model.OpdId
+                </td>
+                <td>
+                    @HospitalManagementSystem.Utility.GetOpdAddress(Model.OpdId)
+                </td>
+                <td>
+                    @HospitalManagementSystem.Utility.GetPatientCurrentAgeFromId(Model.OpdId)
+                </td>
+                <td>
+
+                </td>
+                <td>
+
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+
+    @*
+<h4>
+
+Common Test Details
+</h4>
+
+<table class="table">
+    <tr>
+
+       <th>Common Test Name</th>
+        <th>Details</th>
+        <th>Date</th>
+
+    </tr>
+    @foreach (var item in Model.IpdMRCommontestList)
+    {
+        <tr>
+            <td>@item.CommonTestName</td>
+            <td>@item.Details</td>
+          <td>@item.IpdMRcCommonTesDate</td>
+        </tr>
+        
+    }
+
+
+
+</table>
+*@
+
+    <br />
+    <br />
+
+
+    <h2>Main Test
+    </h2>
+
+    <table class="table">
+        <tr>
+
+            <th>Section</th>
+            <th>Test</th>
+            <th>Short Description</th>
+            <th>Long Description</th>
+
+        </tr>
+        @foreach (var item in Model.IpdMrMainTestList)
+        {
+            <tr>
+                <td>@HospitalManagementSystem.Utility.GetSectionNameById(item.SectionId)</td>
+                <td>@HospitalManagementSystem.Utility.GetTestNameById(item.TestID)</td>
+                <td>@item.ShortDescription</td>
+                <td>@item.LongDescription</td>
+            </tr>
+        
+        }
+
+    </table>
+
+    <br />
+    <br />
+    <h2>Medical Records
+    </h2>
+
+    <table class="table">
+        <tr>
+
+            <th>Medicine Name</th>
+            <th>Dose</th>
+            <th>Dose Time</th>
+            <th>Remarks</th>
+
+        </tr>
+        @foreach (var item in Model.IpdMedecalRecordList)
+        {
+            <tr>
+                <td>@item.MedicineName</td>
+                <td>@item.Doses</td>
+                <td>@item.DosesTimes</td>
+                <td>@item.DosesTotalDays</td>
+            </tr>
+        
+        }
+
+    </table>
+
+
+</div>
+
+
+<input type="button" id="btnPrint" style="width: 50px; float: right;" onclick="printTicket()" value="Print" />
+
+
+
+<script>
+
+      var hh = $.noConflict();
+      hh('#btnPrint').click(function (e) {
+
+          e.preventDefault();
+          var msg = 'Do You Want To Print?';
+          var div = hh("<div>" + msg + "</div>");
+          div.dialog({
+              title: "Print ",
+              resizable: false,
+              buttons: [
+                  {
+                      text: "Yes",
+                      click: function () {
+                          var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0', 'alert("hi");');
+
+                          printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+                          printing.document.write('<div style="font-size:small;">');
+                          printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+
+                          printing.document.close();
+                          printing.focus();
+                          printing.print();
+                          printing.close();
+                          div.dialog("close");
+                      }
+
+                  },
+                  {
+                      text: "No",
+                      click: function () {
+                          div.dialog("close");
+                      }
+                  }
+              ]
+          });
+
+      });
+
+
+
+
+      </script>

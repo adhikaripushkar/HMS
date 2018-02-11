@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "TodayPatient";
+    Layout = "~/Views/Shared/_OpdLayOut.cshtml";
+}
+
+<h2>TodayPatient@{
+    if (Session["OpdTypeIdInt"] != null)
+    {
+        if ((int)Session["OpdTypeIdInt"] == 1)
+        {
+    @:<span style="color:#8cb4c8;font-size:12px;">(General)</span>
+            }
+        else
+        {
+    @:<span style="color:#8cb4c8;font-size:12px;">(Payable)</span>
+            }
+    }
+
+    else
+    {
+    @:<span style="color:#8cb4c8;font-size:12px;">(General)</span>
+        }
+}
+
+</h2>
+
+
+<span>@ViewBag.count</span>

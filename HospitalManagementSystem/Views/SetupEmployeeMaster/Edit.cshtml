@@ -1,0 +1,756 @@
+﻿@model Hospital.Models.SetupEmployeeMasterModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_PayRollLayout.cshtml";
+}
+
+<style>
+    select {
+        width: 208px;
+        height: 27px;
+    }
+</style>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.maskedinput.js"></script>
+<script src="~/Scripts/json.cycle.js"></script>
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        AddClickEvents();
+    });
+</script>
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+        j(".DOB").datepicker();
+        j(".JoinDate").datepicker();
+        j(".RetiredDate").datepicker();
+        j(".ReleaseDate").datepicker();
+    });
+</script>
+<h2 style="text-align: center;">Employee Setup</h2>
+
+<div class="contentWrapper">
+
+    <div class="bs-docs-example form-inline">
+
+        @using (Html.BeginForm("Edit", "SetupEmployeeMaster", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+        {
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                <legend style="width: 1000px;">Edit</legend>
+                <div>
+                     <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.EmployeeMasterId)</span>
+                        <div class="editor-label">
+                            @Html.HiddenFor(model => model.EmployeeMasterId)
+                        </div>
+                        <div class="editor-field">
+                            @Html.HiddenFor(model => model.EmployeeMasterId)
+
+                        </div>
+                    </label>
+
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.EmployeeCode)</span>
+                        <div class="editor-label">
+                            @Html.HiddenFor(model => model.EmployeeCode)
+                        </div>
+                        <div class="editor-field">
+                            @Html.HiddenFor(model => model.EmployeeCode)
+
+                        </div>
+                    </label>
+                </div>
+
+                <div class="row-fluid singleline">                  
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.EmployeeTypeId)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.EmployeeTypeId)
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.EmployeeTypeId, Hospital.Utility.GetEmployeeTypeList())
+
+                        </div>
+                    </label>
+                                     
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.LoginDepartmentIdnt)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.LoginDepartmentIdnt)
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.LoginDepartmentIdnt, Hospital.Utility.GetDepartmentList())
+
+                        </div>
+                    </label>
+
+                    
+                    <label>
+                        <div class="editor-label">
+                            @Html.Label("Employee Type")
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.TypeOfEmployee, Hospital.Providers.SetupEmployeeMasterProviders.GetEmployeeType())
+                        </div>
+                    </label>
+
+                </div>      
+                
+                <div class="row-fluid singleline">                 
+                   
+                     <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.EmployeeFullName)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.EmployeeFullName)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.EmployeeFullName)
+
+                        </div>
+                    </label>
+
+                    <label>
+                        <div class="editor-label">
+                            @Html.Label("Designation")
+                        </div>
+                        <div class="editor-field">
+                             @Html.DropDownListFor(model => model.DesignationID, Hospital.Utility.GetAllDesigination())
+                        </div>
+                    </label>
+
+                     <label>
+                        <div class="editor-label">
+                            @Html.Label("Gender")
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.GenderID, Hospital.Utility.GetGenderList())
+                        </div>
+                    </label>
+
+                </div>
+                         
+                <div class="row-fluid singleline">
+                    <label>
+                        <div class="editor-label">
+                            @Html.Label("DOB(Nepali)")
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBox("txtNepalidate", null, new { @onblur = "ChangeNepalidate(this.value,'DobId','/AjaxRequest/GetEnglishDate/')" })
+                        </div>
+                    </label>
+
+                    <label>
+
+                        <span class="size">@Html.ValidationMessageFor(model => model.EmployeeDOB)</span>
+                        <div class="editor-label">
+                            <span>&nbsp;</span>   @Html.LabelFor(model => model.EmployeeDOB)
+                        </div>
+                        <div class="editor-field">
+                            <span>&nbsp;</span> @Html.TextBoxFor(model => model.EmployeeDOB, new { @class = "DOB", @onchange = "ChangeEnglishdate(this.value,'txtNepalidate','/AjaxRequest/getNepaliDate/')" })
+
+                        </div>
+                    </label>
+
+                       <label>
+                        <div class="editor-label">
+                            @Html.Label("Citizenship Number")
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.CitizenshipNo)
+
+                        </div>
+                    </label>
+
+                     <label>
+                        <div class="editor-label">
+                            @Html.Label("Release District")
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.ReleaseDistrict, Hospital.Utility.GetAllDistrictList())
+
+                        </div>
+                    </label>
+                    
+                    </div>
+
+                <div class="row-fluid singleline">
+                    <label>
+
+                        <div class="editor-label">
+                            @Html.Label("Join Date(Nepali)")
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBox("txtNepaliJoiningdate", null, new { @onblur = "ChangeNepaliJoiningdate(this.value,'JoiningDateId','/AjaxRequest/GetEnglishDate/')" })
+
+                        </div>
+                    </label>                   
+
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.EmployeeJoinDate)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.EmployeeJoinDate)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.EmployeeJoinDate, new { @class = "JoinDate", @onchange = "ChangeEnglishJoiningdate(this.value,'txtNepaliJoiningdate','/AjaxRequest/getNepaliDate/')" })
+
+                        </div>
+                    </label>
+
+                     <label>
+
+                        <div class="editor-label">
+                            @Html.Label("Retired Date(Nepali)")
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBox("txtRetiredDate", null, new { @onblur = "ChangeNepaliRetireddate(this.value,'RetiredDateId','/AjaxRequest/GetEnglishDate/')" })
+
+                        </div>
+                    </label>
+
+                     <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.DateOfRetirement)</span>
+                        <div class="editor-label">
+                            @Html.Label("Retired Date")
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.DateOfRetirement, new { @class = "RetiredDate", @onchange = "ChangeEnglishRetireddate(this.value,'txtRetiredDate','/AjaxRequest/getNepaliDate/')" })
+
+                        </div>
+                    </label>
+
+                   
+
+                </div>
+
+                <div class="row-fluid singleline">
+
+                     <label>
+                        <div class="editor-label">
+                            @Html.Label("Maritial Status")
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.MaritialStatus, Hospital.Utility.MatitalStatusList())
+                        </div>
+                    </label>
+
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.EmployeePhone)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.EmployeePhone)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.EmployeePhone)
+                        </div>
+                    </label>
+
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.EmployeeMobile)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.EmployeeMobile)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.EmployeeMobile)
+                        </div>
+                    </label>
+
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.EmployeeEmail)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.EmployeeEmail)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.EmployeeEmail)
+
+                        </div>
+                    </label>
+
+                </div>
+
+                <div class="row-fluid singleline">
+                    <div class="editor-label">
+                        @Html.HiddenFor(model => model.CreatedDate)
+                    </div>
+                    <div class="editor-field">
+                        @Html.HiddenFor(model => model.CreatedDate)
+                        @Html.ValidationMessageFor(model => model.CreatedDate)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.HiddenFor(model => model.CreatedBy)
+                    </div>
+                    <div class="editor-field">
+                        @Html.HiddenFor(model => model.CreatedBy)
+                        @Html.ValidationMessageFor(model => model.CreatedBy)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.HiddenFor(model => model.Status)
+                    </div>
+                    <div class="editor-field">
+                        @Html.HiddenFor(model => model.Status)
+                        @Html.ValidationMessageFor(model => model.Status)
+                    </div>
+                </div>
+                <br />
+                <fieldset>
+                 <legend style="font-size: medium; color: #1C5183; width: 1000px;">Add More Information</legend>
+                  <div style="height: 275px; border: solid 1px #1C5183; position: relative; width: 1000px;">
+                    <div id="AddMoreInfo">
+
+                       <div class="row-fluid singleline">
+                        <label>
+                            <div class="editor-label">
+                                @Html.Label("Insurance No")
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.InsuranceNo)
+                            </div>
+                        </label>
+
+                         <label>
+                            <div class="editor-label">
+                                @Html.Label("PAN No")
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.PanNo)
+                            </div>
+                        </label>
+
+                         <label>
+                            <div class="editor-label">
+                                @Html.Label("Blood Group")
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.BloodGroup)
+                            </div>
+                        </label>
+
+                    </div>
+
+                       <div class="row-fluid singleline">
+
+                            <label>
+                            <div class="editor-label">
+                                @Html.Label("Country")
+                            </div>
+                            <div class="editor-field">
+                                 @Html.TextBoxFor(model => model.CountryID)
+                            </div>
+                        </label>
+
+                         <label>
+                            <div class="editor-label">
+                                @Html.Label("City")
+                            </div>
+                            <div class="editor-field">
+                                 @Html.TextBoxFor(model => model.CityName)
+                            </div>
+                        </label>
+
+                         <label>
+                            <span class="size">@Html.ValidationMessageFor(model => model.PermanentAddress)</span>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.PermanentAddress)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.PermanentAddress)
+                            </div>
+                        </label>
+
+                         <label>
+                            <div class="editor-label">
+                                @Html.Label("Temporary Address")
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.TemporaryAddress)
+                            </div>
+                        </label>
+                    </div>                   
+
+                       <div class="row-fluid singleline">
+                         <label>
+                            <div class="editor-label">
+                                @Html.Label("Father Name")
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.FatherName)
+                            </div>
+                        </label>
+
+                         <label>
+                            <div class="editor-label">
+                                @Html.Label("Mother Name")
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.MotherName)
+                            </div>
+                        </label>
+
+                         <label>
+                            <div class="editor-label">
+                                @Html.Label("GrandFather Name")
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.GrandFatherName)
+                            </div>
+                        </label>
+
+                            <label>
+                            <div class="editor-label">
+                                @Html.Label("Wife/Husband Name")
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.WifeHusbandName)
+                            </div>
+                        </label>
+
+                    </div>
+
+                       <div class="row-fluid singleline">
+                     <label>
+                        <div class="editor-label">
+                            @Html.Label("Nominee Name")
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.NomineeName)
+                        </div>
+                    </label>
+
+                     <label>
+                        <div class="editor-label">
+                            @Html.Label("Nominee Relation")
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.NomineeRelation, Hospital.Utility.GetRelationTypeDD())
+                        </div>
+                    </label>
+
+                     <label>
+                        <div class="editor-label">
+                            @Html.Label("Nominee Address")
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.NomineeAddress)
+                        </div>
+                    </label>
+
+                        <label>
+                        <div class="editor-label">
+                            @Html.Label("Nominee PhoneNo")
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.NomineePhoneNo)
+                        </div>
+                    </label>
+                </div>
+                           
+                    </div>
+                  </div>
+                </fieldset>
+                <br />
+                <fieldset>
+                <legend style="font-size: medium; color: #1C5183; width: 1000px;">Add/Remove Department</legend>
+                <div style="height: 360px; border: solid 1px #1C5183; position: relative; width: 1000px;">
+
+                    <div id="AddRemoveDept">
+                        @foreach (var item in Model.GetDepatmentList())
+                        {
+                            string isChecked = "";
+                            int DepartmentId = int.Parse(item.Value);
+
+                            if (Hospital.Utility.isExitDepartment(DepartmentId, Model.EmployeeMasterId))
+                            {
+                                isChecked = "checked";
+                            }
+            
+                            <div style="float: left; margin-left: 18px; margin-right: 18px; margin-top: 15px;">
+
+                                <div style="width: 130px; height: 35px; font-size: 14px;">
+                                    <input type="checkbox" id="@item.Value" value="@item.Value" name="SelectedDepartmentIDs" @isChecked />
+                                    @item.Text
+                                </div>
+                            </div>
+                            
+                        }
+                    </div>
+                </div>
+            </fieldset>
+                <br />
+                <fieldset>
+                <legend style="font-size: medium; color: #1C5183; width: 1000px;">Add/Remove Shift</legend>
+                <div style="height: 100px; border: solid 1px #1C5183; position: relative; width: 1000px;">
+
+
+
+                    @foreach (var itemm in Model.GetsfttList())
+                    {
+                        string isChecked = "";
+                        int ShiftId = int.Parse(itemm.Value);
+
+                        if (Hospital.Utility.isExitShift(ShiftId, Model.EmployeeMasterId))
+                        {
+                            isChecked = "checked";
+                        }
+         
+                        <div style="float: left; margin-left: 20px; margin-right: 20px; margin-top: 15px;">
+
+                            <div style="width: 230px; height: 30px; font-size: 14px;">
+                                <input type="checkbox" id="@itemm.Value" value="@itemm.Value" name="SelectedShiftIDs" @isChecked />
+                                @itemm.Text
+                                <span>
+
+
+                                    @{
+                        string str = Model.GetShiftTime(ShiftId);
+                                        @str;
+                                    }
+                                </span>
+
+                            </div>
+                        </div>
+
+
+                            
+                    }
+
+
+
+                </div>
+            </fieldset>
+                <br />
+                <fieldset>
+                <legend style="font-size: medium; color: #1C5183; width: 1000px;">Education Information</legend>
+                <div class="well well-small" id="Add-Item">
+                    @Html.ActionLink("Add", "_EmployeeEducationInfo", null, new { @class = "addProductItem btn btn-primary" })
+
+                    <table id="particularTable" style="width:100%;">
+                        <tr>
+                            <td class="span2" style="border:none; text-align:left;">Level</td>
+                            <td class="span2" style="border:none; text-align:left;">University Name</td>
+                            <td class="span2" style="border:none; text-align:left;">Grade</td>
+                            <td class="span2" style="border:none; text-align:left;">Percentage</td>
+                        </tr>
+                        <tr>
+                              
+                        </tr>
+                      </table>
+                     @foreach (var item in Model.EmployeeEducationInfoList)
+                               {
+                                 @Html.Partial("_EmployeeEducationInfo",item)                            
+                               }
+                    </div>
+            </fieldset>
+                <br />
+                <fieldset>
+                 <legend style="font-size: medium; color: #1C5183; width: 1000px;">Training Information</legend>
+                   <div class="well well-small" id="Add-Item1">
+                    @Html.ActionLink("Add", "_EmployeeTrainingInfo", null, new { @class = "addProductItem btn btn-primary" })
+                    <table id="particularTable1" style="width:100%;">
+                        <tr>
+                            <td class="span2" style="border:none; text-align:left;">Course</td>
+                            <td class="span2" style="border:none; text-align:left;">Training Center</td>
+                            <td class="span2" style="border:none; text-align:left;">Grade</td>
+                            <td class="span2" style="border:none; text-align:left;">Duration</td>
+                        </tr>
+                        <tr>
+                           
+                        </tr>                       
+                     </table>
+                        @foreach (var item in Model.EmployeeTrainingInfoList)
+                             {
+                                @Html.Partial("_EmployeeTrainingInfo",item)                            
+                             }
+                    </div>
+                </fieldset>     
+                <div>
+                    <br />
+                    <p>
+                        <input type="submit" value="Create" />
+                    </p>
+                </div>
+                         
+            </fieldset>
+        }
+
+    </div>
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+    </div>
+
+
+</div>
+
+<script  type="text/javascript">
+    $("#Add-Item").on('click', '.row-button', function () {
+        $(this).closest("div.row").remove();
+    });
+
+    $("#Add-Item1").on('click', '.row-button', function () {
+        $(this).closest("div.row").remove();
+    });
+</script>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("#txtNepalidate").mask("9999/99/99");
+        $("#txtNepaliJoiningdate").mask("9999/99/99");
+
+    });
+</script>
+
+<script type="text/javascript">
+    function ChangeNepalidate(selvalue, targetElm, url) {
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { NepaliDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+            },
+            success: function (jsonResult) {
+                $("#EmployeeDOB").val(jsonResult);
+            }
+        });
+    }
+    function ChangeNepaliJoiningdate(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { NepaliDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#EmployeeJoinDate").val(jsonResult);
+            }
+        });
+    }
+
+    function ChangeNepaliRetireddate(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { NepaliDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#DateOfRetirement").val(jsonResult);
+            }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    function ChangeEnglishdate(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { EnglishDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#txtNepalidate").val(jsonResult);
+            }
+        });
+    }
+
+    function ChangeEnglishJoiningdate(selvalue, targetElm, url) {
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { EnglishDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#txtNepaliJoiningdate").val(jsonResult);
+            }
+        });
+    }
+
+    function ChangeEnglishRetireddate(selvalue, targetElm, url) {
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { EnglishDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#txtRetiredDate").val(jsonResult);
+            }
+        });
+    }
+
+    function ChangeEnglishReleasedate(selvalue, targetElm, url) {
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { EnglishDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                //$("#txtRetiredDate").val(jsonResult);
+            }
+        });
+    }
+
+
+</script>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

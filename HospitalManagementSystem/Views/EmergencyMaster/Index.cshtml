@@ -1,0 +1,290 @@
+﻿@model HospitalManagementSystem.Models.EmergecyMasterModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_EmergencyLayout.cshtml";
+}
+<style>
+    .info .ui-widget-header {
+        background: #CECECE;
+    }
+
+    .info .ui-dialog-content {
+        /*background: #e3edf3;*/
+    }
+
+    .linkDetail {
+    }
+</style>
+
+<h2 align="center">Emergency Department</h2>
+
+
+
+
+@if (TempData["success"] == "Record Created Successfully !")
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Record Creation Failed !")
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Serial Number or Emergency Number Already Exist !")
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Record Updated Successfully !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == "Record Updation Failed !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == "Record Deleted Successfully !")
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == "Record Deletion Failed !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+@if (TempData["success"] == "Patient is Discharged !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+
+
+<div class="contentWrapper">
+    <div id="DetailsId"></div>
+    <p>
+        <i class="fa  fa-plus fa-2x" style="color: blue;"></i>@Html.ActionLink("Create New", "Create", null, new { @id = "linkNewBack" })
+    </p>
+
+    @*  <div>
+        @using (Html.BeginForm("Index", "EmergencyMaster", FormMethod.Get))
+        {
+            <p>
+                @Html.TextBox("searchString")
+                <input type="submit" value="Search" />
+            </p>
+        }
+    </div>*@
+
+    @*<p>
+    @if(TempData["message"]!=null||TempData["message"]!="")
+    {
+        @TempData["message"]
+    }
+</p>*@
+
+
+    <div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Emergency Ward Details</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+                            <th>Emergency Id
+                            </th>
+                            @* <th>
+           @Html.DisplayNameFor(model => model.EmergencyNumber)
+            Emergency No.
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SerialNumber)
+            Serial No.
+
+        </th>*@
+                            <th>
+                                @Html.DisplayNameFor(model => model.ObjOpdMaster.PatientTitle)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ObjOpdMaster.FirstName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ObjOpdMaster.MiddleName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ObjOpdMaster.LastName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ObjOpdMaster.AgeYear)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ObjOpdMaster.Sex)
+                            </th>
+
+
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OpdEmergencyViewModelList)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EmergencyId)
+                                </td>
+
+                                @* <td>
+            @Html.DisplayFor(modelItem => item.EmergencyNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SerialNumber)
+        </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PatientTitle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Firstname)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MiddleName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LastName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AgeYear)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Gender)
+                                </td>
+
+
+                                <td>
+                                    @*                                    @Html.ActionLink("Edit", "Edit", new { id = item.EmergencyId }) |
+                                    @Html.ActionLink("More", "More", new { id = item.EmergencyId })|
+                                    @Html.ActionLink("Print", "BillForm", new { id = item.EmergencyId })|*@
+
+                                    <a href="/EmergencyMaster/Edit/@item.EmergencyId" title="Edit"><i class="fa fa-edit" style="color: blue; font-size: 16px;"></i></a>
+                                    |
+                                      <span onclick="viewDetails(@item.EmergencyId)" style="cursor:pointer;" title="Detail"><i class="fa fa-eye" style="color: blue; font-size: 16px;"></i></span>
+                                    |
+                                     <a href="/EmergencyMaster/More/@item.EmergencyId" title="More"><i class="fa fa-pencil" style="color: blue; font-size: 16px;"></i></a>
+                                    |
+                                    <a href="/EmergencyMaster/BillForm/@item.EmergencyId" title="Print"><i class="fa fa-print" style="color: blue; font-size: 16px;"></i></a>
+                                    |
+                               @if (item.dischargeCheck == true)
+                               {
+                                 
+                                   <a href="/EmergencyMaster/DischargeReport/@item.EmergencyId" title="Discharge"><i class="fa fa-sign-out" style="color: blue; font-size: 16px;"></i></a>    
+                        
+                               }
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+            </div>
+            @*for sorting *@
+
+            <div class="boxFooter">
+
+                <div id="pager" style="">
+                    <form>
+                        <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                        <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                        <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                        <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                        <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                        <select class="pagesize valid" style="width: 70px; height: 30px;">
+                            <option selected="selected" value="10">10</option>
+                            <option value="5">5</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                        </select>
+                    </form>
+                </div>
+
+            </div>
+
+            @*---------------*@
+
+
+        </div>
+    </div>
+
+
+    <script>
+
+
+        function viewDetails(id) {
+            jQuery.noConflict();
+            $.get('/EmergencyMaster/Details/' + id,
+                           function (data) {
+                               $('#DetailsId').html(data);
+
+                               $(function () {
+
+                                   $("#DetailsId").dialog({
+                                       position: [490, 190],
+                                       resizable: true,
+                                       minWidth: 550,
+                                       maxWidth: 550,
+                                       height: 400,
+                                       title: "Patient Details",
+                                       dialogClass: 'info'
+
+                                   });
+
+                               });
+
+                           }
+                 );
+
+        };
+
+    </script>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

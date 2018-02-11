@@ -1,0 +1,134 @@
+﻿@model HospitalManagementSystem.Models.EmergecyMasterModel
+
+@{
+    ViewBag.Title = "EmergencyDailyCensus";
+    if (Model.SerialNumber == 100)
+    {
+        Layout = "~/Views/Shared/_EmergencyLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_MisLayOutLayout.cshtml";
+    }
+
+    int i = 1;
+}
+
+<script src="~/Scripts/jquery.ui.core.js"></script>
+<script src="~/Scripts/jquery.ui.widget.js"></script>
+<script src="~/Scripts/jquery.ui.datepicker.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.ui.timepicker.js"></script>
+
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery.ui.timepicker.css" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+
+<script src="~/Scripts/json.cycle.js"></script>
+
+<script>
+
+
+
+    var j = $.noConflict();
+
+    j(document).ready(function (e) {
+
+        j("#StartDate").datepicker();
+
+
+    });
+
+</script>
+<div class="contentWrapper">
+    <div class="bs-docs-example form-inline">
+        @using (Html.BeginForm())
+        {   
+            @Html.HiddenFor(model=>model.SerialNumber)
+    
+            <div class="row-fluid singleline">
+                <label>
+                    Day:
+            @Html.TextBoxFor(model => model.CreatedDate, new { @id = "StartDate", @Value = DateTime.Now.ToShortDateString() })
+                    @Html.ValidationMessageFor(model => model.CreatedDate)
+                </label>
+                <label>
+                    <input type="submit" value="show" /></label>
+            </div>
+            <div class="contentWrapper">
+                <div class="general-box clearfix">
+                    <div class="general-box clearfix">
+
+                        <div class="boxWrapper">
+                            <div class="boxHeadingPanel">
+                                <h1>Emergency Daily Census</h1>
+                            </div>
+
+                            <table class="table table-hover tablesorter">
+                                <thead>
+                                    <tr>
+                                        <th>S.N
+                                        </th>
+                                        <th>Patient's Name
+                                        </th>
+                                        <th>Age/Sex
+                                        </th>
+                                        <th>Address
+                                        </th>
+                                        <th>Dx
+                                        </th>
+                                        <th>Addmission
+                                        </th>
+                                        <th>Discharge
+                                        </th>
+                                        <th>Remarks
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Model.OpdEmergencyViewModelList)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @i
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.PatientTitle)
+                                                @Html.DisplayFor(modelItem => item.Firstname)
+                                                @Html.DisplayFor(modelItem => item.MiddleName)
+                                                @Html.DisplayFor(modelItem => item.LastName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AgeYear)/@Html.DisplayFor(modelItem => item.Gender)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Address)
+                                            </td>
+
+
+                                            <td></td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TimeIn)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TimeOutD)
+                                            </td>
+                                            <td></td>
+
+                                        </tr>
+         
+                                    }
+                                    @{i++;}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+

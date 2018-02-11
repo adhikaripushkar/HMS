@@ -1,0 +1,436 @@
+﻿@{
+    ViewBag.Title = "Master Setup";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+
+<style>
+    .dashboard-action {
+      
+        transition: all 0.4s ease-in-out 0s;
+    }
+</style>
+<div class="contentWrapper mainWrapper">
+
+    <div class="row-fluid">
+
+        <div class="container accessBox">
+
+            <ul class="dashboard-actions clearfix wrap clear">
+
+
+                <li>
+                    <a href="~/FiscalYear/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/fiscal_year.jpg" alt="" class="">
+                            <h5>Fiscal Year Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="~/SetUpHospitalManagementSystemDetail/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action wrap clear">
+                            <img src="~/Images/HospitalManagementSystem.jpg" alt="" class="">
+                            <h5>HospitalManagementSystem Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/SetUpHospitalManagementSystemFee/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/fee2.jpg" alt="" class="">
+                            <h5>Registration Fee Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/SetUpHospitalManagementSystemFeeDiscount/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/discount.jpg" alt="" class="">
+                            <h5>Reg. Fee Discount Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/SetupOtherDiscount/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/other_discount.jpg" alt="" class="">
+                            <h5>Other Discount Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                <br />
+
+                @*first row complete*@
+
+                <li>
+                    <a href="~/SetupBlock/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/HospitalManagementSystemblock.jpg" alt="" class="">
+                            <h5>Block Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/SetupFloor/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/HospitalManagementSystemfloor.jpg" alt="" class="">
+                            <h5>Floor Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/SetupIpdWard/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/ipd-ward.jpg" alt="DepartmentSetup/Index" class=""><h5>Ward Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href='~/SetupRoomType/Index' data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/roomtype.jpg" alt="" class="">
+                            <h5>Room Type Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="~/SetupIpdRoom/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/roomtype.jpg" alt="" class="">
+                            <h5>Room Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                @*Second Row complete*@
+
+                <br />
+
+                <li>
+                    <a href="~/DepartmentSetup/DeptMain" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/department.jpg" alt="" class="">
+
+                            <h5>Department Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href='~/DoctorTypeSetup/Index' data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/doctype.jpg" alt="" class="">
+                            <h5>Doctor Type Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/DoctorSetup/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/doctormaster.jpg" alt="" class="">
+                            <h5>Doctor Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href='~/DoctorFeeSetup/Index' data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/doctorfee.jpg" alt="" class="">
+                            <h5>Doctor Fee Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/DoctorTime/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/doctortime.jpg" alt="" class="">
+                            <h5>Doctor Time Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                @*3'rd complete*@
+                <br />
+
+
+
+                <li>
+                    <a href="~/MemberTypeSetup/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/member1.jpg" alt="" class="">
+                            <h5>Member Type Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                @*<li>
+                    <a href="~/MemberTypeDiscount/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/memberdiscount.jpg" alt="" class="">
+                            <h5>Member Discount Setup</h5>
+                        </div>
+                    </a>
+                </li>*@
+
+                <li>
+                    <a href="~/SetupMemberShip/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/membership.jpg" alt="" class="">
+                            <h5>Member Ship Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="~/SetupMemberDependent/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/memberdepend.jpg" alt="" class="">
+                            <h5>Member Dependent Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                @*<li>
+                    <a href="~/SetupMemberDependent/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/memberdepend.jpg" alt="" class="">
+                            <h5>Member Dependent Setup</h5>
+                        </div>
+                    </a>
+                </li>*@
+
+
+
+                @*4th row complete*@
+                <br />
+
+                <li>
+                    <a href="~/SetupSection/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setupsection.jpg" alt="" class="">
+                            <h5>Section Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="~/SetupUnit/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Unit Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/SetupPathoTest/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setuppathotest.jpg" alt="" class="">
+                            <h5>Pathology Test Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="~/Relationship/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/relation.jpg" alt="" class="">
+                            <h5>Relationship Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+
+                <li>
+                    <a href="~/SetupBillingType/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/billing.jpg" alt="" class="">
+                            <h5>Billing Type Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                @*5ht row complete*@
+                <br />
+
+
+                <li>
+                    <a href='~/SetupEmployeeType/Index' data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/emptype.jpg" alt="" class="">
+                            <h5>Employee Type Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+
+                <!--------------------------Here i am breaking with <br/> tag to make as design pyramid styles if you dont need that styles that remove the <br/> tag from here--------------------------------------->
+
+
+
+
+                <li>
+                    <a href="~/SetupEmployeeMaster/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/empmaster.jpg" alt="" class="">
+                            <h5>Employee Master Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/SetupEmployeeShiftMaster/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/empshift.jpg" alt="" class="">
+                            <h5>Employee Shift Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="~/SetupManpower/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Manpower Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/SetupMedicalCharge/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Medical Charge Setup</h5>
+                        </div>
+                    </a>
+                </li>
+                <br />
+
+                <li>
+                    <a href="~/SetupAgent/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/agentsetup.jpg" alt="" class="">
+                            <h5>Agent Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="~/JournalVFromat/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setupjv.jpg" alt="" class="">
+                            <h5>Journal Vouchar No.Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/SetUpEmergencyFee/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Emergency Fee Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/SetupBank/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setupbank.jpg" alt="" class="">
+                            <h5>Bank Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/SetupDiagnosis/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setupdiagnosis.jpg" alt="" class="">
+                            <h5>Diagnosis Setup</h5>
+                        </div>
+                    </a>
+                </li>
+                <br />
+
+                <li>
+                    <a href="~/SetupEmergencyCase/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Emergency Case Setup</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/Package/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Package Setup</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/Zone/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Zone Setup</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/District/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>District Setup</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/VDCMUN/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>VDCMUN Setup</h5>
+                        </div>
+                    </a>
+                </li>
+                <br />
+                <li>
+                    <a href="~/Refer/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="" />
+                            <h5>Out Refer Setup</h5>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+

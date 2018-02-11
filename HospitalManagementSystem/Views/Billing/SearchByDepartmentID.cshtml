@@ -1,0 +1,107 @@
+﻿@model HospitalManagementSystem.Models.BillingModel
+
+@{
+    ViewBag.Title = "Billing Details";
+    Layout = "~/Views/Shared/_BillingLayout.cshtml";
+}
+@if (TempData["a"] != null)
+{ 
+    <script type="text/javascript">
+
+        alert("Result not Found");
+
+    </script>
+
+
+}
+<h2 style="text-align: center;">Billing Details (Department Wise)</h2>
+<script>
+    var j = $.noConflict();
+    j(document).ready(function (e) {
+        //j('#TransactionDate').val("");
+        //  j("#TransactionDate").attr("value", "@DateTime.Now.ToShortDateString()");
+        j("#TransactionDate").datepicker();
+        j("#EndTransactionDate").datepicker();
+    });
+</script>
+<div class="contentWrapper">
+
+    <div class="bs-docs-example form-inline">
+
+        @using (Html.BeginForm())
+        { 
+            <div class="row-fluid singleline">
+                <label>
+                    <span>From</span>
+                    @Html.TextBoxFor(model => model.TransactionDate, new { @Value = DateTime.Now.ToShortDateString() })
+                </label>
+                <label>
+
+                    <span>To</span>
+                    @Html.TextBoxFor(model => model.EndTransactionDate, new { @Value = DateTime.Now.ToShortDateString() })
+
+                </label>
+                <label>
+                    <span>Departments</span>
+                    @Html.DropDownListFor(model => model.DepartmentID, HospitalManagementSystem.Utility.GetDepartmentList())
+                    <input type="submit" value="Show" />
+                </label>
+            </div>
+        }
+    </div>
+
+
+
+    <br />
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Result</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <tr>
+                        <th>Department Name</th>
+                        <th>Total Amount</th>
+                        <th>Action</th>
+                    </tr>
+                    @if (Model.CentralizeBillingViewModelList != null)
+                    {
+                        foreach (var item in Model.CentralizeBillingViewModelList)
+                        { 
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DepartmentName)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalAmount)
+                            </td>
+                            <td>Details</td>
+
+
+                        </tr>
+  
+   
+   
+                        }
+
+
+                    }
+
+                </table>
+
+
+
+
+
+            </div>
+
+
+
+        </div>
+    </div>

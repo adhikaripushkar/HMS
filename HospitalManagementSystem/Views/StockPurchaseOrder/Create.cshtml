@@ -1,0 +1,344 @@
+﻿@model Hospital.Models.StockPurchaseOrderModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+
+<script src="~/Scripts/jquery.ui.core.js"></script>
+<script src="~/Scripts/jquery.ui.widget.js"></script>
+<script src="~/Scripts/jquery.ui.datepicker.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.ui.timepicker.js"></script>
+
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery.ui.timepicker.css" rel="stylesheet" />
+
+
+<script src="~/Scripts/json.cycle.js"></script>
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+<h2 style="text-align:center;">Stock Item Purchase Setup</h2>
+
+<style>
+    
+    .custom-table td {
+        border:none;
+       
+    }
+     .sizes{
+            width:150px;
+        }
+    </style>
+
+@if (TempData["message"] != null || TempData["message"] != "")
+{ 
+    <p>
+        @TempData["message"]
+    </p>
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        AddClickEvents();
+       
+    });
+</script>
+<script>
+
+    $(document).ready(function (e) {
+
+      //  $(".DateId").val("");
+       // $(".DeliveryDateId").val("");
+     
+
+    });
+
+
+</script>
+<script>
+
+
+    var j = $.noConflict();
+    j(function () {
+        j(".DateId").datepicker();
+        j(".DeliveryDateId").datepicker();
+     
+    });
+</script>
+
+<div class="contentWrapper">
+
+
+
+@using (Html.BeginForm("Create", "StockPurchaseOrder", FormMethod.Post, new { @id = "FormId" }))
+{
+    
+     <div class="bs-docs-example form-inline">
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model=>model.DemandId)
+    <fieldset>
+        <legend>Create</legend>
+
+       
+       
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PurchaseOrderNo)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.PurchaseOrderNo, new { @readonly="readonly"})
+            
+        </div>
+                    </label>
+                 <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StockPurchaseOrderDetailsModel.SupplierId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.StockPurchaseOrderDetailsModel.SupplierId, Hospital.Utility.GetSupplier())
+            @Html.ValidationMessageFor(model => model.StockPurchaseOrderDetailsModel.SupplierId)
+        </div>
+                </label>
+                 <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.PurchaseOrderDate)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.PurchaseOrderDate)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.PurchaseOrderDate, new { @class = "DateId", @Value = DateTime.Now.ToShortDateString() })
+                        </div>
+
+                    </label>
+                <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.OrderDerliveryDate)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.OrderDerliveryDate)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.OrderDerliveryDate, new { @class = "DeliveryDateId", @Value = DateTime.Now.ToShortDateString() })
+                        </div>
+
+                    </label>
+                    
+
+            
+                </div>
+           <div class="row-fluid singleline">
+               <label>
+
+<div class="size">@Html.ValidationMessageFor(model => model.Remarks)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Remarks)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Remarks)
+            
+        </div>
+
+                </label>   
+
+       </div>
+
+        
+
+        <div class="well well-small" id="Add-Item" style="width:990px;">
+         
+            @Html.ActionLink("Add Items", "StockItemPurchaseOrderDetail", null, new {@id="btns", @class = "addProductItem btn btn-primary",@style="display:none"})
+          <br /><br />
+            <table id="tblotm" style="width:782px;">
+                  <tr>
+                      <td class="span6 pagination-centered" style="border:none">Category</td>
+                      <td class="span5 pagination-centered" style="border:none">Sub Category</td>
+                      <td class="span5 pagination-centered" style="border:none">Item Name</td>
+                      <td class="span5 pagination-centered" style="border:none">Quantity</td>
+                      <td class="span3 pagination-centered" style="border:none">Quotation Price</td>
+                      <td class="span2 pagination-centered" style="border:none">Vat (%)</td>
+                       
+                  </tr>
+               </table><table>
+                    @try
+                    {
+                        foreach (var item in Model.StockPurchaseItemEntryList)
+                        {
+                        
+                     <tr>
+                         @Html.Partial("StockIPurchaseOrderDetail", item)
+                    </tr>
+                        }
+                    }
+                    catch { }
+                   
+            </table>
+        </div>
+
+        <br /><br />
+           
+          
+        
+        <br />
+        
+        <p>
+            <input type="submit" value="Save and Print" id="create"/>
+            
+        </p>
+    </fieldset>
+        
+
+         
+         </div>
+    <span id="linkNewBack"> @Html.ActionLink("Back to List", "Index","Demand")</span>
+}
+    </div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+    $("#Add-Item").on('click', '.row-button', function () {
+        $(this).closest("div.row").remove();
+    });
+
+</script>
+
+
+<script type="text/javascript">
+
+    var formData=null;
+
+
+    $("#btns").click(function (e) {
+        $("#amounts").show();
+    });
+
+
+    $("#Add-Item").on('change', '.CategoryId', function () {
+        var id = this.id;
+
+        id = id.replace("__StockCategoryId", "__StockSubCategoryId");
+        $('#' + id).val('');
+
+
+        $.get('/AjaxRequest/GetSubCategory/' + this.value,
+              function (data) {
+                  $('#' + id).find('option').remove()
+                  $(data).each(
+                      function (index, item) {
+                          $('#' + id).append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                      });
+              }
+    );
+    });
+
+
+    $("#Add-Item").on('change', '.SubCategoryId', function () {
+        var id = this.id;
+
+        id = id.replace("__StockSubCategoryId", "__StockItemEntryId");
+        $('#' + id).val('');
+
+
+        $.get('/AjaxRequest/GetItemName/' + this.value,
+              function (data) {
+                  $('#' + id).find('option').remove()
+                  $(data).each(
+                      function (index, item) {
+                          $('#' + id).append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                      });
+              }
+    );
+    });
+
+
+    $("#Add-Item").on('change', '.CategoryId', function () {
+        var id = this.id;
+
+        id = id.replace("__StockCategoryId", "__StockItemEntryId");
+        $('#' + id).val('');
+
+
+        $.get('/AjaxRequest/GetItemNameByCategory/' + this.value,
+              function (data) {
+                  $('#' + id).find('option').remove()
+                  $(data).each(
+                      function (index, item) {
+                          $('#' + id).append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                      });
+              }
+    );
+    });
+
+
+
+    </script>
+
+
+<script>
+    $("#create").live('click',function () {
+        //alert();
+      
+        var flag = 0;
+        var flag2 = 0;
+        $(".ItemEntryId").each(function () {
+           
+            var id1 = this.id;
+            var v1 = $("#" + id1).val();
+            $(".ItemEntryId").each(function () {
+                var id2 = this.id;
+                if (id1 != id2) {
+                    var v2 = $("#" + id2).val();
+                    if (v1 == v2) {
+                        alert("Identical Items selected in multiple rows!!");
+                        flag = 1;
+                        return false;
+                       
+                    }
+                }
+            })
+            if (flag == 1) {
+              
+                return false;
+            }
+            
+        })
+        if (flag == 1) {
+            $("#FormId").submit(false);
+        }
+        else {
+           
+            $(".Quantity").each(function () {
+                var id = this.id;
+                var v = $("#" + id).val();
+                v = parseFloat(v);
+                
+                if (isNaN(v)==true) {
+                    flag2 = 1;
+                    $("#" + id).focus();
+                    return false;
+                }
+            })
+            $(".QuotationPrice").each(function () {
+                var id = this.id;
+                var v = $("#" + id).val();
+                v = parseFloat(v);
+                if (isNaN(v) == true) {
+                    flag2 = 1;
+                    $("#" + id).focus();
+                    return false;
+                }
+            })
+            if (flag2 == 0) {
+                this.form.submit();
+            }
+            return false;
+            
+        }
+    })
+</script>

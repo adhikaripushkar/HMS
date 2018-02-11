@@ -1,0 +1,265 @@
+﻿@model Hospital.Models.PatientTestResultModel
+
+@{
+    ViewBag.Title = "Patho Report";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+}
+
+
+
+<style>
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+        font-size: 15px;
+    }
+
+
+    table#tstDsply {
+        border-style: solid;
+        border-width: 8px;
+    }
+
+        table#tstDsply thead {
+            background-color: #EBEBEB;
+        }
+
+        table#tstDsply th:hover {
+            color: black;
+        }
+
+    table#tbmdsplyamnt,
+    table#tbmdsplyamnt td {
+        border: none !important;
+    }
+</style>
+
+
+
+<div class="contentWrapper">
+
+    <script type="text/javascript">
+        function print() {
+
+            //	    var values = document.getElementById('printDiv').innerHTML.toString();
+            var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+            printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+            printing.document.write('<div style="font-size:small;">');
+            printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+            printing.document.close();
+            printing.focus();
+            printing.print();
+            printing.close();
+        }
+        window.onload = print;
+    </script>
+
+    <div id="printdiv">
+      
+
+@*        @MyHelpers.DesingForLogo()
+        <p style="font: bold; font-size: 19px; text-align: center">
+            <span>Department Of Pathology</span>
+        </p>
+        <p style="font: bold; font-size: 19px; text-align: center">
+            <u>LAB INVESTIGATION REPORT</u>
+        </p>*@
+
+
+
+        <div id="PatientDetails" style="font-size: 12px; font-weight: bold;">
+            @foreach (var item2 in Model.PopulatePatientTestResultReportModelList.Take(1))
+            {
+@*<span>Name : @Html.DisplayFor(m => item2.PatientName)</span><br />
+                <span>Patient Id: @Html.DisplayFor(m => item2.PatientID)</span><br />
+                <span>Age/Gender : @Html.DisplayFor(m => item2.Sex)/@Html.DisplayFor(m => item2.Age)</span><br />
+                <span>Age : @Html.DisplayFor(m => item2.Age)</span><br />
+                <span>Doctor : @Html.DisplayFor(m => item2.DoctorName)</span><br />
+                <span>Prov.Diagnosis/Clinical Features : </span>
+                <br />
+                <span>Lab Number : </span>
+                <br />*@
+                
+                <table style="width: 100%; font-family:Arial;">
+                    <tr><td colspan="3"><h2 style="text-align: center;">Pathology Lab Report</h2></td></tr>
+                    <tr>
+                        <td>
+                            <strong>PatientId : @Html.DisplayFor(m => item2.PatientID)</strong>
+                            <p>Name : @Html.DisplayFor(m => item2.PatientName)</p>
+                            <p>Address:@Hospital.Utility.GetOpdAddress(item2.PatientID) </p>
+                        </td>
+
+                        <td><strong>Lab Number : @Model.TestID</strong>
+                            <p>Age/Sex : @Html.DisplayFor(m => item2.Sex)/@Html.DisplayFor(m => item2.Age)</p>
+                            <p>Contact :</p>
+
+                        </td>
+
+                        <td><strong>Date: @item2.TestRegisterdDate.ToShortDateString()</strong>
+                            <p>Refering Doctor : @Html.DisplayFor(m => item2.DoctorName)</p>
+                            <p>Print Date:@DateTime.Now.ToShortDateString()</p>
+
+                        </td>
+
+
+                    </tr>
+
+
+
+                </table>
+                
+                
+                
+                
+            }
+        </div>
+
+
+        <table style="border: 1px solid gray; width: 650px; margin-left: 0px; margin-top: 20px;" id="tstDsply">
+            @{int i = 1;}
+
+            <tr style="border: 1px solid gray">
+                <th>Tests</th>
+                <th>Result</th>
+                <th>Flag</th>
+                <th>Unit</th>
+                <th>Reference Range</th>
+
+            </tr>
+
+
+            <tbody>
+                @{int SectionID = Convert.ToInt32(0);
+                  int counter = 0;
+                  int PreViousSectionId = 0;}
+                @foreach (var item in Model.PopulatePatientTestResultReportModelList)
+                {
+                    SectionID = item.SectionId;
+                    <tr style="border: 1px solid gray; text-align: center;">
+                        @if (SectionID == item.SectionId && PreViousSectionId != SectionID)
+                        {
+
+                            if (counter == 0)
+                            {
+                            <td colspan="5"><strong><u>@Hospital.Utility.GetSectionNameById(item.SectionId)</u></strong></td>
+                                counter++;
+                                PreViousSectionId = item.SectionId;
+                            }
+                            else
+                            {
+
+                            }
+
+                        }
+                        else
+                        {
+                            counter = 0;
+                        }
+
+                    </tr>
+              
+                    <tr style="border: 1px solid gray; text-align: center;">
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TestName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Value1)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Value2)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UnitName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RefRange)
+                        </td>
+                    </tr>               
+
+                        i++;
+                }
+
+            </tbody>
+
+        </table>
+        <div style="margin-top: 80px;">
+            <table style="width: 680px; border: none;">
+                <tr>
+                </tr>
+                <tr>
+                    <td>Prepared by:</td>
+                </tr>
+            </table>
+        </div>
+
+        <div style="margin-top: 60px;">
+            <table style="width: 680px; border: none;">
+                <tr>
+                    <td>Pathologist</td>
+                   @* <td>Biochemist</td>
+                    <td>Microbiologist</td>*@
+
+                </tr>
+            </table>
+        </div>
+       @* <div style="margin-top: 60px;">
+            <table style="width: 680px; border: none;">
+                <tr>
+                    <td>Lab Technologist</td>
+                    <td></td>
+                    <td>Lab Technician</td>
+                </tr>
+            </table>
+        </div>*@
+
+
+        <br />
+    </div>
+    <div style="float: right;">
+        <input type="button" id="btnPrintTestReport" style="width: 50px; float: right;" value="Print" />
+    </div>
+</div>
+
+<script>
+
+    var hh = $.noConflict();
+    hh('#btnPrintTestReport').click(function (e) {
+
+        e.preventDefault();
+        var msg = 'Do You Want To Print?';
+        var div = hh("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            resizable: false,
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0', 'alert("hi");');
+
+                        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+
+    });
+
+</script>

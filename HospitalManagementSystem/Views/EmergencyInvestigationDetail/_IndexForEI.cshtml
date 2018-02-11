@@ -1,0 +1,87 @@
+﻿@model HospitalManagementSystem.Models.EmergencyInvestigationDetailModel
+ @Html.HiddenFor(model => model.EmergencyMasterId, new {@id = "EmergencyMID" })
+ @Html.HiddenFor(model => model.EmergencyInvDetailId, new {@id = "EmergencyInvID" })
+  <div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+       <div class="boxWrapper" id="EIlistId">
+    <div class="boxHeadingPanel"><h1>Emergency Investigation Details</h1></div>
+
+<table class="table table-hover tablesorter">
+
+    <thead>
+
+
+    <tr>    
+        <th>
+            @Html.DisplayNameFor(model => model.TestId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Remarks)
+        </th>
+      
+        </tr>
+        </thead>
+    <tbody>
+     @foreach (var item in Model.ListEmergencyInvestigationDetailModel)
+      {
+    <tr>  
+           @Html.HiddenFor(modelItem => item.EmergencyInvDetailId, new {@id = "EmergencyVitalId" })
+  
+        <td>
+         @Hospital.Utility.GetInvestigationTestName(item.TestId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Remarks)
+        </td>
+      
+        </tr>
+     }
+         </tbody>
+    </table>
+           <br />
+    @if (Model.ListEmergencyInvestigationDetailModel.Count == 0)
+    {
+  <p>
+<a href='~/EmergencyInvestigationDetail/CreateEI?id=@Model.EmergencyMasterId' title="" class="crtlink" id="linkNewBack"><span>Create new</span></a> 
+
+</p>
+    }
+    @if (Model.ListEmergencyInvestigationDetailModel.Count!=0)
+    {
+  <p>
+           <a href='~/EmergencyInvestigationDetail/EditEI?id=@Model.EmergencyMasterId' title="" class="crtlink" id="linkNewEdit"><span style="font-size:18px;">Edit</span></a> 
+
+</p>
+    }
+            </div></div></div>
+<div id="cart"></div>
+<div id="udpvitals"></div>
+<script>
+    $(".crtlink").click(function (e) {
+        e.preventDefault();
+        var data = $('#EmergencyMasterId').val();
+
+        var url = this.href;
+
+        $.get(url, { id: data }, function (res) {
+
+            $("#cart").html(res);
+
+        });
+    });
+</script>
+<script>
+    $(".updtlink").click(function (e) {
+        e.preventDefault();
+        var data = $('#EmergencyMasterId').val();
+
+        var url = this.href;
+
+        $.get(url, { id: data }, function (res) {
+
+            $("#udpvitals").html(res);
+
+        });
+    });
+</script>

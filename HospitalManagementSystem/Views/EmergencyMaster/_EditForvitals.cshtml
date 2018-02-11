@@ -1,0 +1,147 @@
+﻿@model HospitalManagementSystem.Models.VitalsModel
+@*@{
+    ViewBag.Title = "More";
+    Layout = "~/Views/Shared/_EmergencyLeftBlankLayout.cshtml";
+}*@
+
+
+
+<style>
+    select {
+        width: 210px;
+        height: 27px;
+    }
+</style>
+
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+@*@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+  <div class="leftMenu"style="margin-left:-260px;">
+<div class="left-s-heading">
+ 
+  </div>
+      <ul id="menu" class="nav">
+
+            <li class=""><a href='~/EmergencyMaster/Viatal' title="" class="linkAddress"><span>Viatal</span></a> </li>
+          <li class=""><a href='~/EmergencyTreatmentAllergies/CreateForEmergencyTreatmentAllergies' title="" class="linkAddress"><span>Treatment/Allergies</span></a> </li>
+          <li class=""><a href='~/EmergencyMaster/EditForDischarge' title="" class="linkAddress"><span>Discharge/Admittion</span></a> </li>
+         <li class=""><a href='~/ComplainEntry/EditForComplainEntry' title="" class="linkAddress"><span>Complain/Examination</span></a> </li>
+       
+      </ul>
+    </div>*@
+    <fieldset>
+        <legend>VitalsModel</legend>
+
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.EmergencyVitalId)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.EmergencyVitalId)
+            @Html.ValidationMessageFor(model => model.EmergencyVitalId)
+        </div>
+
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.EmergencyMasterId)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.EmergencyMasterId)
+            @Html.ValidationMessageFor(model => model.EmergencyMasterId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AVPU)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AVPU)
+            @Html.ValidationMessageFor(model => model.AVPU)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Pulse)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Pulse)
+            @Html.ValidationMessageFor(model => model.Pulse)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BP)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.BP)
+            @Html.ValidationMessageFor(model => model.BP)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RR)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RR)
+            @Html.ValidationMessageFor(model => model.RR)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SPO2)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SPO2)
+            @Html.ValidationMessageFor(model => model.SPO2)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TPR)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TPR)
+            @Html.ValidationMessageFor(model => model.TPR)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Wt)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Wt)
+            @Html.ValidationMessageFor(model => model.Wt)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@*<script>
+
+
+    $(".linkAddress").click(function(e)
+    {
+
+        e.preventDefault();
+        //alert('hi');
+
+        var data = $('#EmergencyMasterId').val();
+
+        //alert(data);
+
+        var url = this.href;
+
+      
+
+
+
+        $.get(url, { id: data }, function (res) {
+
+            $("#load").html(res);
+
+        });
+
+    
+        })
+</script>*@

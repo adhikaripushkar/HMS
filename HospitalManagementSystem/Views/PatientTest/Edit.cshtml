@@ -1,0 +1,426 @@
+﻿@model Hospital.Models.PatientTestModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+}
+
+
+<style>
+    table#mytbl td {
+        width: 850px;
+        border: none !important;
+    }
+
+
+
+    table#testdesign .clsdate {
+        width: 150px;
+    }
+
+
+
+    table#testdesign .clstime {
+        width: 150px;
+    }
+
+    table#testdesign .clssize {
+        width: 150px;
+    }
+</style>
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+        j(".clsdate").datepicker();
+
+    });
+
+</script>
+
+
+<script src="~/Scripts/OrderManagerScript.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        AddClickEvents();
+    });
+
+</script>
+
+<h2 style="text-align: center;">Patient Test</h2>
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("Edit", "PatientTest", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+    
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+
+            <legend>Edit Patient Test</legend>
+
+
+            <label>
+                <h4>Patient Information</h4>
+            </label>
+
+            <div class="row-fluid singleline">
+
+                <label>
+
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.DepartmentID)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.DepartmentID)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.DepartmentID, Hospital.Utility.GetDepartmentList(), new {@disabled=true})
+                    </div>
+                </label>
+
+               @* <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.PatientID)</div>
+
+                    <div class="editor-label">
+                        @Html.Label("Patient ID")
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.TextBox("txtpatientName")
+                    </div>
+
+                </label>
+
+
+                <label>
+                    @Html.ActionLink("Search", "Create", "PatientTest", new { ipValue = "xxx" }, new { @class = "linkb" })
+                </label>*@
+            </div>
+
+            <div class="row-fluid singleline">
+
+                @if (Model.PatientInformationModel != null)
+                {            
+                    <label>
+                        <div class="editor-label">
+                            @Html.Label("Patient Full Name")
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBox("PatientFullName", Model.PatientInformationModel.FirstName +  " " + Model.PatientInformationModel.MiddleName ?? " " + Model.PatientInformationModel.LastName)
+                            @Html.HiddenFor(m => Model.PatientInformationModel.FirstName)
+                            @Html.HiddenFor(m => Model.PatientInformationModel.LastName)
+                            @Html.HiddenFor(m => Model.PatientInformationModel.MiddleName)
+                        </div>
+                    </label>                   
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.PatientInformationModel.Gender)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.PatientInformationModel.Gender)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.PatientInformationModel.Gender)
+                        </div>
+                    </label>            
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.PatientInformationModel.Age)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.PatientInformationModel.Age)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.PatientInformationModel.Age)
+                        </div>
+                    </label>        
+                }
+            </div>
+            <div class="row-fluid singleline">
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.PatientInformationModel.EmergencyMasterId)</div>
+                    <div class="editor-label">
+                       @* @Html.LabelFor(model => model.PatientInformationModel.EmergencyMasterId)*@
+                        @Html.DisplayName("Patient ID")
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.PatientInformationModel.EmergencyMasterId)
+                    </div>
+                </label>
+            </div>
+            <div class="row-fluid singleline">
+                <fieldset>
+                    <legend>
+                        <h4>Test Details</h4>
+                    </legend>
+                    <div>
+                        <label>
+                            <div class="size">@Html.ValidationMessageFor(model => model.TestRegistrationDate)</div>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.TestRegistrationDate)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.TestRegistrationDate)
+                            </div>
+                        </label>
+                        <label>
+                            <div class="size">@Html.ValidationMessageFor(model => model.ReferDoctorID)</div>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.ReferDoctorID)
+                            </div>
+                            <div class="editor-field">
+                                @Html.DropDownListFor(model => model.ReferDoctorID, Hospital.Utility.GetDoctors())
+                            </div>
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="layer1" style="width: 1000px;">
+                <fieldset>
+                    <legend>
+                        <h4>Test List</h4>
+                    </legend>
+                </fieldset>
+                @{Hospital.Providers.PatientTestProvider pro = new Hospital.Providers.PatientTestProvider();}
+                @foreach (var item in Model.PathoSectionModelList)
+                {
+                    //Model.TestCheckBoxListModelList = pro.PopulatePatientTestForEdit(Model.PatientTestID);
+                    <div class="heading" id="headingOne" onclick="showHideDiv('@item.SectionId')">@item.Name</div>              
+                    <div id="con_@item.SectionId">
+                        <table id="testdesign" style="width: 1000px;">
+                            <thead style="background-color: silver;">
+                                <tr style="font-size: 15px;">
+                                    <td style="width: 250px;">Test Name</td>
+                                    <td>Test Price</td>
+                                    <td>Test Date</td>
+                                    <td>Test Time</td>
+                                    <td>Test Delivery Date</td>
+                                   @* <td>Discount</td>*@
+                                </tr>
+                            </thead>
+                            @for (int i = 0; i < Model.TestCheckBoxListModelList.Count; i++)
+                            {
+                                if (item.SectionId == Model.TestCheckBoxListModelList[i].SectionId)
+                                {                             
+                                <tr>
+                                    <td>
+                                        @Html.CheckBoxFor(m => Model.TestCheckBoxListModelList[i].isSelected, new { @id = "chk", @text = Model.TestCheckBoxListModelList[i].Price })
+                                        @Html.DisplayFor(m => Model.TestCheckBoxListModelList[i].TestName)
+                                        @Html.HiddenFor(m=>Model.TestCheckBoxListModelList[i].TestName)
+                                        @Html.HiddenFor(m => Model.TestCheckBoxListModelList[i].TestId)
+                                    </td>
+                                    <span>&nbsp;&nbsp;&nbsp;</span>
+                                    <td>
+                                        @Html.HiddenFor(m => Model.TestCheckBoxListModelList[i].Price)
+                                        @Html.DisplayFor(m => Model.TestCheckBoxListModelList[i].Price)
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => Model.TestCheckBoxListModelList[i].TestDate, new { @class = "clsdate" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => Model.TestCheckBoxListModelList[i].TestTime, new { @class = "clstime" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => Model.TestCheckBoxListModelList[i].DeliveryDate, new { @class = "clsdate" })
+                                    </td>
+                                   @* <td>
+                                        @Html.TextBoxFor(m => Model.TestCheckBoxListModelList[i].Discount, new { @value = 0, @class = "clssize" })
+                                    </td>*@
+
+                                    @Html.HiddenFor(m => Model.TestCheckBoxListModelList[i].SectionId)
+
+                                </tr>
+                                }
+
+
+                            }
+
+                        </table>
+
+                        @* @{Model.TestCheckBoxListModelList = pro.GetAllTestWithCheckBoxes(1); } *@
+
+                    </div>
+                }
+                <br />
+
+
+
+
+                          <div style="float: right;">
+
+                    <table>
+                        <tr>
+                            <td>Total Price:</td>
+                            <td>@Html.TextBoxFor(m => Model.TotalAmount, new { @id = "txtTotalAmount" })</td>
+                        </tr>
+                        <tr>
+                            <td>Discount(%)</td>
+                            <td>@Html.TextBoxFor(m => Model.Discount, new { @id = "txtDiscount", @onkeyup = "onDiscountChange();" })</td>
+                        </tr>
+                        <tr>
+                            <td>Payable Amount</td>
+                            <td>@Html.TextBoxFor(m => Model.PayableAmount, new { @id = "txtPayableAmount" })</td>
+                            
+                        </tr>
+
+                    </table>
+                    
+                              <div style="display: none;">User total usage: <span id="usertotal"></span></div>
+                </div>
+
+
+             @*   <span style="float: right;">Total Price:
+                    @Html.TextBoxFor(m => Model.TotalAmount, new { @id = "txtTotalAmount" })                  
+                </span>
+                <span>Discount
+                    @Html.TextBoxFor(m=>Model.Discount,new {@id="txtDiscount", @onkeyup = "onDiscountChange();" })
+                </span>
+                 <span>Payable Amount
+                    @Html.TextBoxFor(m=>Model.PayableAmount,new {@id="txtPayableAmount"})
+                </span>
+                <div style="display: none;">User total usage: <span id="usertotal"></span></div>*@
+
+            </div>
+             <div>
+                <br /><br /><br /><br /><br /><br /><br /><br />
+
+                <p style="float:right; margin-right:10px;">
+                    <input type="submit" value="Edit" />
+                </p>
+            </div>
+        </fieldset>
+    }
+
+    <div>
+    @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+</div>
+
+
+</div>
+
+
+
+<script type="text/javascript">
+    function onDiscountChange() {
+        var vartxtTotalAmount = $("#txtTotalAmount").val();
+        var vartxtDiscount = $("#txtDiscount").val();
+        var vartxtPayableAmount = $("#txtPayableAmount").val();
+        
+        if (vartxtTotalAmount == "") {
+            vartxtTotalAmount = 0;
+        }
+        if (vartxtDiscount == "") {
+            vartxtDiscount = 0;
+        }
+
+        
+
+        var discountAmt = parseFloat(vartxtTotalAmount) * parseFloat(vartxtDiscount) / 100;
+
+        varTotal = parseFloat(vartxtTotalAmount) - parseFloat(discountAmt);
+        $("#txtPayableAmount").val(parseFloat(varTotal.toFixed(2)));
+    }    
+</script>
+<script type="text/javascript">
+
+    function showHideDiv(divId) {
+        $("#con_" + divId).slideToggle("slow");
+    };
+</script>
+
+<script>
+    $(function () {
+        $('.linkb').click(function () {
+            var ipvalue = $("#txtpatientName").val();
+            this.href = this.href.replace("xxx", ipvalue);
+        });
+    });
+</script>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+    $("#Add-Item").on('click', '.row-button', function () {
+        $(this).closest("div.rowr").remove();
+    });
+
+</script>
+<script type="text/javascript">
+    var $cbs = $('input[id="chk"]');
+    function calcUsage() {
+
+        var total = $("#usertotal").val();
+        if (total == "") {
+            total = 0;
+        }
+
+        $cbs.each(function () {
+            if (this.checked) {
+                var data = $(this).attr('text');
+                total = parseFloat(total) + parseFloat(data);
+            }
+        });
+        $("#usertotal").text(total);
+        var totalForModel = $("#usertotal").text();
+        $("#txtTotalAmount").val(totalForModel);
+        $("#txtPayableAmount").val(totalForModel);
+        onDiscountChange();
+    };
+    $cbs.click(calcUsage);
+    
+</script>
+
+
+<script type="text/javascript">
+
+    $("#Add-Item").on('change', '.SectionId', function () {
+        var id = this.id;
+
+        id = id.replace("__SectionId", "__TestId");
+        $('#' + id).val('');
+        $.get('/AjaxRequest/GetPathoTest/' + this.value,
+              function (data) {
+                  $('#' + id).find('option').remove()
+                  $(data).each(
+                      function (index, item) {
+                          $('#' + id).append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                      });
+              }
+    );
+    });
+
+</script>
+
+@*for getting price of test*@
+
+<script type="text/javascript">
+    $("#Add-Item").on('change', '.TestId', function () {
+        var id = this.id;
+
+        id = id.replace("__TestId", "__Price");
+        $('#' + id).val('');
+
+
+        $.get('/AjaxRequest/getTestPrice/' + this.value,
+              function (jsonResult) {
+                  // alert(jsonResult);
+                  $('#' + id).val(jsonResult);
+                  var data = $('#' + id).val();
+                  alert(data);
+
+                  var varTotalAmount = $("#TotalAmount").val();
+                  if (varTotalAmount == '') {
+                      varTotalAmount = 0;
+                  }
+                  $("#TotalAmount").val(parseFloat(data) + parseFloat(varTotalAmount));
+
+
+
+              });
+
+    });
+</script>
+

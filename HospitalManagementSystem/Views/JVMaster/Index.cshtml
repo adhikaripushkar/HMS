@@ -1,0 +1,285 @@
+﻿@model HospitalManagementSystem.Models.JVMasterModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_BillingLayout.cshtml";
+}
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.maskedinput.js"></script>
+
+@{
+    int count = 0;}
+
+<script>
+    $(function () {
+        $.noConflict();
+
+
+        $("#JvDateEnd").datepicker().datepicker("setDate", new Date());
+        $("#JvDate").datepicker().datepicker("setDate", new Date());
+    });
+
+</script>
+
+<div class="contentWrapper">
+
+    <div class="bs-docs-example form-inline">
+
+        @using (Html.BeginForm())
+        { 
+            <div class="row-fluid singleline">
+                <label>
+                    <label style="width: 135px;">From Date (Nepali)</label>
+                    @Html.TextBox("FromNepaliDate", null, new { @onblur = "ChangeNepalidateFrom(this.value,'DobId','/AjaxRequest/GetEnglishDate/')" })
+                </label>
+
+                <label>
+                    <label style="width: 115px;">To Date (Nepali)</label>
+                    @Html.TextBox("ToNepaliDate", null, new { @onblur = "ChangeNepalidateTo(this.value,'DobId','/AjaxRequest/GetEnglishDate/')" })
+                </label>
+            </div>
+            
+            <div class="row-fluid singleline">
+                <label>
+                    <label style="width: 135px;">From Date (English)</label>
+                    @Html.TextBox("JvDate", null, new { @onchange = "ChangeEnglishdateFrom(this.value,'txtNepalidate','/AjaxRequest/getNepaliDate/')" })
+                </label>
+                <label>
+                    <label style="width: 115px;">To Date (English)</label>
+                    @Html.TextBox("JvDateEnd", null, new { @onchange = "ChangeEnglishdateTo(this.value,'txtNepalidate','/AjaxRequest/getNepaliDate/')" })
+                </label>
+            </div>
+            
+            
+            <div class="row-fluid singleline">
+                <label>
+                    <span>
+                        <input type="submit" value="Show" /></span>
+                </label>
+            </div>
+        }
+
+
+    </div>
+
+    @{  decimal DiffAmount = 0;
+        decimal discountAmount = 0;
+        decimal CrAmount = 0;
+        decimal DrAmount = 0;
+        if (Model.BillingDetailViewModelListNew != null)
+        {
+            if (Model.BillingDetailViewModelListNew.Count() > 0)
+            {
+                
+        <div style="margin-top: 20px;">
+            <div style="font-size: 16px; margin-bottom: 10px;">All Transaction summary :</div>
+            <table style="font-size: 14px; width: 600px;">
+
+                <tr style="font-size: 18px; color: blue;">
+                    <td>Account Head
+                    </td>
+                    <td>Debit
+                    </td>
+                    <td>Credit
+                    </td>
+
+                </tr>
+                @foreach (var item in Model.BillingDetailViewModelListNew)
+                {   
+                    <tr>
+                        <td>
+                            @item.HeadName
+                        </td>
+                        <td>
+                            @item.TotalDebit
+                        </td>
+                        <td>
+                            @item.TotalCredit
+                        </td>
+                       
+                    </tr>
+                    DrAmount += item.TotalDebit;
+                    CrAmount += item.TotalCredit;
+                }
+            </table>
+        </div> 
+        <br />
+        <div style="font-size: 16px; margin-bottom: 10px;">
+                <table>  
+                    <tr style="font-size: 15px; color: blue;">
+                        <td>Debit</td>
+                        <td>Credit</td>
+                        <td>Difference</td>
+                    </tr>
+                    <tr>                        
+                        <td>@DrAmount</td>
+                        <td>@CrAmount</td>
+                        @{DiffAmount = DrAmount - CrAmount;}
+                        <td>@DiffAmount</td>
+                    </tr>
+                </table>                          
+            </div>           
+       
+        <div style="color: #f00;">
+            @if (DrAmount != CrAmount)
+            {
+                <div>
+                    Debit Amount Is Not Equals To Credit Amount
+                </div>
+            }
+            else
+            {
+                <div>
+                    
+                </div>
+            }
+        </div>
+        <div>
+            <span>Narration</span><br />
+            <span>@Html.TextAreaFor(model => model.objBillingDetailViewModel.Narration1, new { @id = "NarrationVal", @style = "width: 598px; height: 25px;" })</span>
+        </div>
+        <div style="font-size: 18px;">
+            @if (DrAmount == CrAmount)
+            {    
+                if(Model.Count==0)
+                {
+                    @Html.ActionLink("Post JV", "MakeJournalVoucher", "JVMaster", new { @DeptName = 1, @jvDate = Model.objBillingDetailViewModel.BillingDate, @JvDateEnd = Model.objBillingDetailViewModel.EndDate, @TotalAmount = DrAmount, Narration = "xxx" }, new { @class = "linkc" })
+                }
+                else{
+                    <p>Please Add Commission Details To Post JV</p>
+                }
+            }            
+        </div>
+
+            }
+            else
+            {
+        <div style="margin-top: 20px;">
+            No records found.....!
+        </div>
+            }
+        }
+    }
+
+
+
+
+    <br />
+
+    <div id="MakeJVDiv">
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("#FromNepaliDate").mask("9999/99/99");
+        $("#ToNepaliDate").mask("9999/99/99");
+
+    });
+
+
+    $(function () {
+
+        $('.linkc').click(function () {
+            var ipvalue = $("#NarrationVal").val();
+            if (ipvalue == "") {
+                ipvalue = "Narration";
+            }
+            this.href = this.href.replace("xxx", ipvalue);
+
+        });
+    });
+
+
+
+</script>
+
+<script type="text/javascript">
+    function ChangeNepalidateFrom(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { NepaliDate: selvalue },
+            contentType: "text/json",
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#JvDate").val(jsonResult);
+            }
+        });
+    };
+
+    function ChangeNepalidateTo(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { NepaliDate: selvalue },
+            contentType: "text/json",
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#JvDateEnd").val(jsonResult);
+            }
+        });
+    };
+
+
+
+    function ChangeEnglishdateFrom(selvalue, targetElm, url) {
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { EnglishDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#FromNepaliDate").val(jsonResult);
+            }
+        });
+    };
+
+    function ChangeEnglishdateTo(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { EnglishDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#ToNepaliDate").val(jsonResult);
+            }
+        });
+    };
+
+</script>
+
+
+

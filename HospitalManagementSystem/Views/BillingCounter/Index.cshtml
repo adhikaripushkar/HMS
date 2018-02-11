@@ -1,0 +1,117 @@
+﻿@model HospitalManagementSystem.Models.BillingCounterModel
+@using Humanizer;
+
+@{
+    ViewBag.Title = "Billing Counter";
+    Layout = "~/Views/Shared/_BillingCounterLayout.cshtml";
+}
+
+<h2 style="text-align:center;">Unpaid Bill Details</h2>
+
+<div class="contentWrapper">
+
+    <p id="linkNewBack">
+        @Html.ActionLink("Create New", "Create")
+    </p>
+
+     <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Unpaid Bill</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ObjBillingCounterIndexViewModel.TransactionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ObjBillingCounterIndexViewModel.DepartmentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ObjBillingCounterIndexViewModel.PatientName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ObjBillingCounterIndexViewModel.BillNumber)
+            </th>
+
+            <th>Action</th>
+        </tr>
+                        </thead>
+                    <tbody>
+
+        @foreach (var item in Model.BillingCounterIndexViewModelList)
+        {
+            <tr>
+                <td>
+                    @item.TransactionDate.ToShortDateString()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartmentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PatientName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BillNumber)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "PaymentDetails", new { DeptName = item.DepartmentName, BillNo = item.BillNumber })
+                    @*@Html.ActionLink("Details", "ViewUnpaidBillDetail", new { DeptName = item.DepartmentName, BillNo = item.BillNumber })*@
+                </td>
+
+                @*<td onclick="ShowPaymentDetail('@item.DepartmentName', '@item.BillNumber')">
+                <span style="cursor:pointer;">Detail</span>
+            </td>*@
+            </tr>
+        }
+</tbody>
+    </table>
+
+                 </div>
+
+            @*for sorting *@
+
+            <div class="boxFooter">
+
+                <div id="pager" style="">
+                    <form>
+                        <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                        <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                        <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                        <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                        <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                        <select class="pagesize valid" style="width: 70px; height: 30px;">
+                            <option selected="selected" value="10">10</option>
+                            <option value="5">5</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                        </select>
+                    </form>
+                </div>
+
+            </div>
+
+            @*---------------*@
+
+
+        </div>
+    </div>
+
+
+
+    <script>
+        function ShowPaymentDetail(DepartmentName, BillNumber) {
+
+
+        };
+
+    </script>
+
+</div>

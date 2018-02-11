@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "OpdType";
+    Layout = "~/Views/Shared/_OpdLayOut.cshtml";
+}
+
+<h2 style="text-align: center;">OPD Type Setup</h2>
+
+
+
+<div class="contentWrapper">
+
+
+    @using (Html.BeginForm("ChangeOpdType", "Opd", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <div class="bs-docs-example form-inline">
+                <legend>Create</legend>
+
+
+
+                <div class="row-fluid singleline">
+
+
+                    <label>
+                        <div class="editor-label">
+                            Opd Type
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownList("OpdTypeId",HospitalManagementSystem.Utility.ChooseOpdType())
+                        </div>
+                    </label>
+                    
+                </div>
+
+                <p>
+                    <input type="submit" value="Change" />
+                </p>
+
+            </div>
+        </fieldset>
+    }
+
+    <div id="linkNewBack">
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

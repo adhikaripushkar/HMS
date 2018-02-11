@@ -1,0 +1,116 @@
+﻿@model HospitalManagementSystem.Models.OpdModel
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_OpdLayOut.cshtml";
+}
+
+<h2 style="text-align: center;"><i class="fa fa-search"></i>&nbsp;&nbsp;Search</h2>
+
+
+<div class="contentWrapper">
+
+
+
+    @using (Html.BeginForm("Search", "Opd", FormMethod.Post, new { @id = "myform" }))
+    {
+        <span style="display: none; color: red;" id="error">Please Select Options First</span><br />
+ 
+        <select name="selectOptions" class="srchoptn">
+
+            <option value="0">Search Option</option>
+            <option value="1">By Patient Id</option>
+            <option value="2">By Patient Name</option>
+            <option value="3">By Blood Group</option>
+           @* <option value="4">Address</option>
+            <option value="5">Mobile</option>
+            <option value="6">Phone</option>*@
+
+        </select>
+     
+        <span id="txtid"></span> @Html.TextBox("value", null, new { @id = "value", @placeholder = "Value Here" })
+
+        <span id="ddrpid"></span> @Html.DropDownList("bloodid", HospitalManagementSystem.Utility.BloodGroupList(), "Blood Group", new { @style = "display:none;" })
+     
+ 
+        <input type="submit" value="show" class="btnsub" />
+    }
+
+
+
+
+
+    <div id="showResult">
+    </div>
+
+
+
+
+
+    <br />
+
+
+
+
+    <script type="text/javascript">
+
+
+        var nonn = $.noConflict();
+        nonn(".srchoptn").on("change", function (e) {
+
+            e.preventDefault();
+            var v = this.value;
+            if (this.value == 3) {
+
+
+                nonn('#bloodid').show();
+                nonn('#value').hide();
+            }
+            else {
+
+                nonn('#bloodid').hide();
+                nonn('#value').val("");
+                nonn('#value').show();
+
+            }
+
+
+        });
+
+
+        nonn('.btnsub').on('click', function (e) {
+            e.preventDefault();
+
+            // alert("hi");
+
+            var optVal = nonn('.srchoptn').val();
+            // alert(optVal);
+            if (optVal == 0) {
+                // alert("hi");
+                nonn(".srchoptn").focus();
+                nonn('#showResult').empty();
+                // $("#error").show();
+
+            }
+            else {
+
+                // $("#error").hide();
+                var form = nonn('#myform');
+                var url = form.attr("action");
+                var formData = form.serialize();
+                nonn.post(url, formData, function (data) {
+                    // alert("suy");
+                    nonn('#showResult').empty();
+                    nonn('#showResult').html(data);
+
+                });
+            }
+
+
+        });
+
+    </script>
+
+
+
+</div>

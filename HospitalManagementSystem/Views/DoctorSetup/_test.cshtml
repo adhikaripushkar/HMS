@@ -1,0 +1,105 @@
+﻿@model HospitalManagementSystem.Models.DoctorSetupModel
+
+
+
+<style>
+    .display-label {
+        display: table-cell;
+        padding: 5px;
+        border: 1px solid #003399;
+    }
+
+    .display-field {
+        display: table-cell;
+        padding: 5px;
+        border: 1px solid #003399;
+        margin-top: -5px;
+    }
+</style>
+
+
+
+<fieldset>
+    <legend>Doctor Details</legend>
+
+
+    <table style="width: 100%">
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.DoctorID)</td>
+            <td>@Html.DisplayFor(model => model.DoctorID)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Title)</td>
+            <td>@Html.DisplayFor(model => model.Title)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.FirstName)</td>
+            <td>@Html.DisplayFor(model => model.FirstName)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.MiddleName)</td>
+            <td>@Html.DisplayFor(model => model.MiddleName)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.LastName)</td>
+            <td>@Html.DisplayFor(model => model.LastName)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.DOB)</td>
+            <td>@Model.DOB.Value.ToShortDateString()</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Sex)</td>
+            <td>@Html.DisplayFor(model => model.Sex)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.JoiningDate)</td>
+
+                
+
+            <td>@Model.JoiningDate.Value.ToShortDateString()</td>
+            
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Email)</td>
+            <td>@Html.DisplayFor(model => model.Email)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.PhoneNumber)</td>
+            <td>@Html.DisplayFor(model => model.PhoneNumber)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.MobileNumber)</td>
+            <td>@Html.DisplayFor(model => model.MobileNumber)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Address)</td>
+            <td>@Html.DisplayFor(model => model.Address)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Status)</td>
+            <td>@Html.DisplayFor(model => model.Status)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Remarks)</td>
+            <td>@Html.DisplayFor(model => model.Remarks)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+
+
+
+
+
+</fieldset>
+
+
+<p id="linkNewBack">
+    @*@Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |*@
+    @Html.ActionLink("Back to List", "Index")
+</p>

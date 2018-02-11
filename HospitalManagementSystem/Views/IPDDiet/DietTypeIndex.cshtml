@@ -1,0 +1,115 @@
+﻿@model HospitalManagementSystem.Models.DietIPDModel
+
+@{
+    ViewBag.Title = "DietTypeIndex";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+    int i = 1;
+}
+<h2 style="text-align: center;">Diet Type Setup</h2>
+@if (TempData["success"] == "Record Created Successfully !")
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Record Creation Failed !")
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Record Updated Successfully !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == "Record Updation Failed !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == "Record Deleted Successfully !")
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == "Record Deletion Failed !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+@if (TempData["success"] == "Floor Name Already Exist !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+<div class="contentWrapper">
+
+    <p>
+        @Html.ActionLink("Create New", "DietTypeCreate", null, new { @id = "linkNewBack" })
+    </p>
+    <div class="general-box clearfix">
+        <div class="general-box clearfix">
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Diet List</h1>
+                </div>
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+                            <th>SN</th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ObjDietTypeSetupViewModel.TypeName)
+                            </th>
+
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.DietTypeSetupViewModelList)
+                        {
+                            <tr>
+                                <td>@i</td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TypeName)
+                                </td>
+
+                                <td>
+                                    @Html.ActionLink("Edit", "DietTypeEdit", new { id = item.DietTypeSetupId }) |
+
+                                    @Html.ActionLink("Delete", "DietTypeDelete", new { id = item.DietTypeSetupId }, new { onclick = "return confirm('Do you want to delete?');" })
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>

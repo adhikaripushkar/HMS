@@ -1,0 +1,383 @@
+﻿@model Hospital.Models.SetupOtherTestModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_PathoAndRadiologyLayout.cshtml";
+}
+
+<h2 style="text-align: center;">Setup Other Test</h2>
+@if (TempData["success"] == "Test Name Already Exist !")
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+
+        <div class="bs-docs-example form-inline">
+            <fieldset>
+
+
+                <legend>Create</legend>
+                <div class="row-fluid singleline">
+
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.TestTypeID)</div>
+                        <div class="editor-label">
+                            Test Type
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.TestTypeID, Hospital.Utility.GetOtherTestOrRadiologyDD(), new { @value = Model.TestTypeID })
+                        </div>
+
+                    </label>
+                </div>
+
+                <div class="row-fluid singleline">
+
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.OtherTestName)</div>
+                        <div class="editor-label">
+                            Test Name
+                        </div>
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.OtherTestName)
+                        </div>
+
+                    </label>
+
+
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.TestNameRemarks1)</div>
+                        <div class="editor-label">
+                            Remarks1
+                        </div>
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.TestNameRemarks1)
+
+                        </div>
+                    </label>
+
+
+                    <label>
+
+
+                        <div class="size">@Html.ValidationMessageFor(model => model.TestNameRemarks2)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.TestNameRemarks2)
+                        </div>
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.TestNameRemarks2)
+
+                        </div>
+                    </label>
+
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.FiscalYearId)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.FiscalYearId)
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.FiscalYearId, Hospital.Utility.GetFiscalYearForDropDown())
+
+                        </div>
+                    </label>
+                </div>
+
+                <div class="row-fluid singleline">
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.TestAmount)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.TestAmount)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.TestAmount, new { @id = "TstPriceId", @onkeyup = "onchangeevent();" })
+
+                        </div>
+                    </label>
+
+
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.TestTax)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.TestTax)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.TestTax, new { @id = "TaxId", @onkeyup = "onchangeevent();" })
+
+                        </div>
+                    </label>
+
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.TaxAmount)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.TaxAmount)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.TaxAmount, new { @id = "TaxAmtid", @readonly = "readonly" })
+
+                        </div>
+                    </label>
+
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.TotalAmount)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.TotalAmount)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.TotalAmount, new { @id = "txtTotalAmount", @readonly = "readonly" })
+
+                        </div>
+
+                    </label>
+                </div>
+                <div class="row-fluid singleline">
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.PayablePercentage)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.PayablePercentage)
+
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.PayablePercentage, new { @id = "PPrecentage", @onkeyup = "PercentageOnChange();" })
+
+                        </div>
+                    </label>
+
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.PayableGrandTotal)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.PayableGrandTotal)
+
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.PayableGrandTotal, new { @readonly = "readonly", @id = "PPGrandTT" })
+
+                        </div>
+                    </label>
+                </div>
+                <div class="row-fluid singleline">
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.HosPer)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.HosPer)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.HosPer, new { @id = "txtHosPer", @onkeyup = "onchangeevent();" })
+
+                        </div>
+                    </label>
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.HosPerAmt)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.HosPerAmt)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.HosPerAmt, new { @id = "txtHosPerAmt", @readonly = "readonly" })
+
+                        </div>
+                    </label>
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.DocPer)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DocPer)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.DocPer, new { @id = "txtDocPer", @readonly = "readonly" })
+
+                        </div>
+                    </label>
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.DocPerAmt)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DocPerAmt)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.DocPerAmt, new { @id = "txtDocPerAmt", @readonly = "readonly" })
+
+                        </div>
+                    </label>
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.IsCommision)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.IsCommision)
+                        </div>
+                        <div class="editor-field">
+                            @Html.CheckBoxFor(model => model.IsCommision)
+
+                        </div>
+                    </label>
+                </div>
+
+
+                <div class="row-fluid singleline">
+
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.TestAmountForeigner)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.TestAmountForeigner)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.TestAmountForeigner, new { @id = "TstPriceIdForeigner", @onkeyup = "onchangeeventForeigner();" })
+
+                        </div>
+                    </label>
+
+
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.TestTaxForeigner)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.TestTaxForeigner)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.TestTaxForeigner, new { @id = "TaxIdForeigner", @onkeyup = "onchangeeventForeigner();" })
+
+                        </div>
+                    </label>
+
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.TaxAmountForeigner)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.TaxAmountForeigner)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.TaxAmountForeigner, new { @id = "TaxAmtidForeigner", @readonly = "readonly" })
+
+                        </div>
+                    </label>
+
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.TotalAmountForeigner)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.TotalAmountForeigner)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.TotalAmountForeigner, new { @id = "txtTotalAmountForeigner", @readonly = "readonly" })
+
+                        </div>
+
+                    </label>
+                </div>
+                <div class="row-fluid singleline">
+                </div>
+
+                <p>
+                    <input type="submit" value="Create" />
+                </p>
+            </fieldset>
+        </div>
+    }
+
+
+
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+
+    function onchangeevent() {
+        var testPriceFee = $("#TstPriceId").val();
+        var vartxtTax = $("#TaxId").val();
+        if (testPriceFee == '') {
+            testPriceFee = 0;
+        }
+        if (vartxtTax == '') {
+            vartxtTax = 0;
+        }
+
+
+        var vat = parseFloat(vartxtTax);
+
+        var Totalpercentage = parseFloat(testPriceFee) * parseFloat(vat / 100);
+
+        $("#TaxAmtid").val(Totalpercentage.toFixed(2));
+        var varTotalAmount = parseFloat(testPriceFee) + parseFloat(Totalpercentage);
+        var varTotalAmount = varTotalAmount.toFixed(2);
+        $("#txtTotalAmount").val(varTotalAmount);
+
+
+        var PayableTotal = $("#PPGrandTT").val();
+        var vartxtHospitalPer = $("#txtHosPer").val();
+        var vartxtvarDocPer = $("#txtDocPer").val();
+        if (vartxtHospitalPer == '') {
+            vartxtvarDocPer = 0;
+            vartxtHospitalPer = 0;
+        }
+        if (PayableTotal == '') {
+            PayableTotal = 0;
+        }
+        var varHosPerAmt = (parseFloat(PayableTotal) / 100) * vartxtHospitalPer;
+        var varHosPerAmt = varHosPerAmt.toFixed(2);
+        $("#txtHosPerAmt").val(varHosPerAmt);
+        var varDocPer = 100 - parseInt(vartxtHospitalPer);
+        $("#txtDocPer").val(varDocPer);
+
+        var varDocPerAmt = PayableTotal - varHosPerAmt;
+        $("#txtDocPerAmt").val(varDocPerAmt);
+
+    };
+
+    function onchangeeventForeigner() {
+        var testPriceFee = $("#TstPriceIdForeigner").val();
+        var vartxtTax = $("#TaxIdForeigner").val();
+        if (testPriceFee == '') {
+            testPriceFee = 0;
+        }
+        if (vartxtTax == '') {
+            vartxtTax = 0;
+        }
+
+
+        var vat = parseFloat(vartxtTax);
+
+        var Totalpercentage = parseFloat(testPriceFee) * parseFloat(vat / 100);
+
+        $("#TaxAmtidForeigner").val(Totalpercentage.toFixed(2));
+        var varTotalAmount = parseFloat(testPriceFee) + parseFloat(Totalpercentage);
+        var varTotalAmount = varTotalAmount.toFixed(2);
+        $("#txtTotalAmountForeigner").val(varTotalAmount);
+
+    };
+
+
+
+</script>
+<script type="text/javascript">
+    function PercentageOnChange() {
+        var varTstPriceId = $("#TstPriceId").val();
+        var VarPayablePerId = $("#PPrecentage").val();
+
+        if (varTstPriceId == '') {
+            varTstPriceId = 0;
+        }
+
+        if (VarPayablePerId == '') {
+            VarPayablePerId = 0;
+        }
+        var Totalpercentage = parseFloat(varTstPriceId) * parseFloat(VarPayablePerId / 100);
+        var TotalFinal = parseFloat(varTstPriceId) + parseFloat(Totalpercentage);
+
+
+        $("#PPGrandTT").val(TotalFinal);
+
+
+
+
+    }
+
+</script>
+
+
+

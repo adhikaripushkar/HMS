@@ -1,0 +1,280 @@
+﻿@model Hospital.Models.StockPurchaseOrderModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+<script src="~/Scripts/jquery.ui.core.js"></script>
+<script src="~/Scripts/jquery.ui.widget.js"></script>
+<script src="~/Scripts/jquery.ui.datepicker.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.ui.timepicker.js"></script>
+
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery.ui.timepicker.css" rel="stylesheet" />
+
+
+<script src="~/Scripts/json.cycle.js"></script>
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+<h2 style="text-align:center;">Stock Purchase Order</h2>
+
+<style>
+    
+    .custom-table td {
+        border:none;
+       
+    }
+     .sizes{
+            width:150px;
+        }
+    </style>
+
+@if (TempData["message"] != null || TempData["message"] != "")
+{ 
+    <p>
+        @TempData["message"]
+    </p>
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        AddClickEvents();
+       
+    });
+</script>
+
+<script>
+
+
+    var j = $.noConflict();
+    j(function () {
+        j(".DateId").datepicker();
+        j(".DeliveryDateId").datepicker();
+     
+    });
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        AddClickEvents();
+
+
+    });
+</script>
+
+<div class="contentWrapper">
+
+
+
+@using (Html.BeginForm("Edit", "StockPurchaseOrder", FormMethod.Post, new { @id = "FormId" }))
+{
+    
+     <div class="bs-docs-example form-inline">
+    @Html.ValidationSummary(true)
+    
+    <fieldset>
+        <legend>Edit</legend>
+
+       
+       
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PurchaseOrderNo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PurchaseOrderNo)
+            
+        </div>
+                    </label>
+                 <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StockPurchaseOrderDetailsModel.SupplierId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.StockPurchaseOrderDetailsModel.SupplierId, Hospital.Utility.GetSupplier())
+            @Html.ValidationMessageFor(model => model.StockPurchaseOrderDetailsModel.SupplierId)
+        </div>
+                </label>
+                 <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.PurchaseOrderDate)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.PurchaseOrderDate)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.PurchaseOrderDate,@Model.PurchaseOrderDate.ToShortDateString(), new { @class = "DateId", @placeholder = DateTime.Now.ToShortDateString() })
+                        </div>
+
+                    </label>
+                <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.OrderDerliveryDate)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.OrderDerliveryDate)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.OrderDerliveryDate,@Model.OrderDerliveryDate.ToShortDateString(), new { @class = "DeliveryDateId", @placeholder = DateTime.Now.ToShortDateString() })
+                        </div>
+
+                    </label>
+                    
+
+            <label>
+                </div>
+           <div class="row-fluid singleline">
+               <label>
+
+<div class="size">@Html.ValidationMessageFor(model => model.Remarks)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Remarks)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Remarks)
+            
+        </div>
+
+                </label>   
+
+       </div>
+
+        
+
+        <div class="well well-small" id="Add-Item" style="width:990px;">
+         
+            @Html.ActionLink("Add Items", "StockItemPurchaseOrderDetail", null, new {@id="btns", @class = "addProductItem btn btn-primary"})
+
+            <br /><br />
+          
+            <table id="tblotm" style="width:782px;">
+                  <tr>
+                      <td class="span5 pagination-centered" style="border:none">Category</td>
+                      <td class="span5 pagination-centered" style="border:none">Sub Category</td>
+                      <td class="span5 pagination-centered" style="border:none">Item Name</td>
+                      <td class="span5 pagination-centered" style="border:none">Quantity</td>
+                      <td class="span5 pagination-centered" style="border:none">Qutation Price</td>
+                       
+                  </tr>
+               </table><table>
+                    @try
+                    {
+                        foreach (var item in Model.StockPurchaseItemEntryList)
+                        {
+                        
+                     <tr>
+                         @Html.Partial("StockIPurchaseOrderDetail", item)
+                    </tr>
+                        }
+                    }
+                    catch { }
+                   
+            </table>
+        </div>
+
+        <br /><br />
+           
+          
+        
+        <br />
+        
+        <p>
+            <input type="submit" value="Save" />
+            
+        </p>
+    </fieldset>
+        
+
+         
+         </div>
+    <span id="linkNewBack"> @Html.ActionLink("Back to List", "Index")</span>
+}
+    </div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+    $("#Add-Item").on('click', '.row-button', function () {
+        $(this).closest("div.row").remove();
+    });
+
+</script>
+
+
+<script type="text/javascript">
+
+    var formData=null;
+
+
+    $("#btns").click(function (e) {
+        $("#amounts").show();
+    });
+
+
+    $("#Add-Item").on('change', '.CategoryId', function () {
+        var id = this.id;
+
+        id = id.replace("__StockCategoryId", "__StockSubCategoryId");
+        $('#' + id).val('');
+
+
+        $.get('/AjaxRequest/GetSubCategory/' + this.value,
+              function (data) {
+                  $('#' + id).find('option').remove()
+                  $(data).each(
+                      function (index, item) {
+                          $('#' + id).append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                      });
+              }
+    );
+    });
+
+
+    $("#Add-Item").on('change', '.SubCategoryId', function () {
+        var id = this.id;
+
+        id = id.replace("__StockSubCategoryId", "__StockItemEntryId");
+        $('#' + id).val('');
+
+
+        $.get('/AjaxRequest/GetItemName/' + this.value,
+              function (data) {
+                  $('#' + id).find('option').remove()
+                  $(data).each(
+                      function (index, item) {
+                          $('#' + id).append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                      });
+              }
+    );
+    });
+
+
+    $("#Add-Item").on('change', '.CategoryId', function () {
+        var id = this.id;
+
+        id = id.replace("__StockCategoryId", "__StockItemEntryId");
+        $('#' + id).val('');
+
+
+        $.get('/AjaxRequest/GetItemNameByCategory/' + this.value,
+              function (data) {
+                  $('#' + id).find('option').remove()
+                  $(data).each(
+                      function (index, item) {
+                          $('#' + id).append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                      });
+              }
+    );
+    });
+
+
+
+    </script>
+
+
+

@@ -1,0 +1,58 @@
+﻿@model HospitalManagementSystem.Models.DistrictModel
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<div class="block-header">
+    <h4 class="block-title">Create New Districts</h4>
+</div>
+<div class="well" style="border-radius: 0;">
+    <div class="side-by-side clearfix">
+
+
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.ValidationSummary(true)
+            <div class="clearfix">
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="contGroup">
+                        @Html.LabelFor(model => model.ZoneID)
+                        @Html.DropDownListFor(model => model.ZoneID, HospitalManagementSystem.Utility.GetZoneList(), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ZoneID)
+
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="contGroup">
+                        @Html.LabelFor(model => model.DistrictEng)
+                        @Html.TextBoxFor(model => model.DistrictEng, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.DistrictEng)
+
+                    </div>
+                </div>
+
+            </div>
+
+            ///@Html.Partial("VUC_Add");
+            <div class="bottom_btn">
+
+                <a href="@Url.Action("Index", "District")" class="btn btn-sm btn-warning"><i class="fa fa-undo"></i>Go Back</a>
+
+
+                <button type="submit" id="" name="" class="btn btn-success"><i class="fa fa-save"></i>Save</button>
+
+            </div>
+
+
+        }
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

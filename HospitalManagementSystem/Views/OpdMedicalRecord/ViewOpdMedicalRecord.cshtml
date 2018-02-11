@@ -1,0 +1,1049 @@
+﻿@model HospitalManagementSystem.Models.OpdMedicalRecordModel
+
+@{
+    ViewBag.Title = "ViewOpdMedicalRecord";
+    Layout = "~/Views/Shared/_OpdLayOut.cshtml";
+}
+
+<style>
+
+      #tblid tr td:first-child {
+        /*border: 1px solid black;*/
+        background-color: #C5B971;
+        font-weight: bold;
+    }
+
+      /*.verticalLine {
+    border-left: thick solid #ff0000;
+    height:100px;
+    float:right;
+}*/
+
+.ui-dialog,.ui-dialog,.ui-widget, .ui-widget-content, .ui-corner-all, .foo, .ui-draggable, .ui-resizable {background:#F0F0F0 !important}
+      
+.linkcls4addmore {
+display: block;
+width: 180px;
+height: 15px;
+background: #4E9CAF;
+
+padding: 5px 5px 10px 5px;
+text-align: center;
+border-radius: 5px;
+color: white;
+font-weight: bold;
+}
+
+    .case {
+        width:644px;
+        height:71px;
+       resize:none;
+
+    }
+
+    /*table.noborder,
+    table.noborder td,th {
+        border:none !important;
+    }*/
+
+
+</style>
+
+
+<h2 style="text-align:center;">OPD Medical Records</h2>
+
+<div class="contentWrapper">
+  
+    
+    
+    <table id="tblid" style="float:right; width:300px;">
+        <tr>
+            <td style="background-color:white;" colspan="2">Patient Information:-</td>
+        
+        </tr>
+        <tr>
+            <td>Department Name</td>
+            <td>@HospitalManagementSystem.Utility.GetDepartmentName(Model.DepartmentId)</td>
+        </tr>
+        <tr>
+            <td>Doctor Name</td>
+            <td>@HospitalManagementSystem.Utility.GetDoctorName(Model.DoctorId)</td>
+        </tr>
+        <tr>
+            <td>Patient Name</td>
+            <td>@HospitalManagementSystem.Utility.OpdPatientName(Model.PatientId)</td>
+        </tr>
+       
+        <tr>
+            <td style="background-color:white; font-weight:100;" colspan="2"><span>Department Id:-<span id="deptid">@Model.DepartmentId</span></span>||<span>Patient Id:-<span id="patientid">@Model.PatientId</span></span>||<span>Doctor Id:-<span id="docid">@Model.DoctorId</span></span>||<span>MedicalRecordMasterid:-<span id="masterid">@Model.OpdMedicalRecordMastetId</span></span></td>
+        </tr>
+        <tr></tr>
+    </table>
+
+    <h5>Vital Info:-</h5>
+     <table style="width:700px;">
+    <tr>
+        
+        <td>
+           <b> @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.OpdId)</b>
+        </td>
+        <td>
+           <b> @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.AVPU)</b>
+        </td>
+        <td>
+           <b> @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.Pulse)</b>
+        </td>
+        <td>
+           <b> @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.BP)</b>
+        </td>
+        <td>
+           <b> @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.RR)</b>
+        </td>
+        <td>
+           <b> @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.SPO2)</b>
+        </td>
+        <td>
+          <b>  @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.TPR)</b>
+        </td>
+        <td>
+           <b> @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.Wt)</b>
+        </td>
+        <td>
+          <b>  @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.Date)</b>
+        </td>
+        <td>
+           <b> @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.VTime)</b>
+        </td>
+        <td>
+          <b>  @Html.DisplayNameFor(model => model.refOfVitalForOthersModel.Staff)</b>
+        </td>
+ 
+    </tr>
+
+
+    <tr>
+        
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.OpdId)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.AVPU)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.Pulse)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.BP)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.RR)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.SPO2)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.TPR)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.Wt)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.VTime)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.refOfVitalForOthersModel.Staff)
+        </td>
+        
+        
+    </tr>
+
+
+</table>
+
+        <br />
+    <div>
+        <table class="table table-hover tablesorter containermytbl"  style="width:700px;">
+            <tr>
+                <th>
+                    Previous Case
+                </th>
+            </tr>
+            <tr>
+                <td>
+                @Html.TextAreaFor(model=>model.PreviousCase,new {@class="case",disabled="disabled",@id="PreviousCaseId"})
+                    </td>
+                <td>
+                    @Html.ActionLink("Edit", "WriteRecord",null, new {@class="linkclsPrevCase" })
+                    @Html.ActionLink("Save", "WriteRecord",null, new {@class="linkSavPrevCase" })
+
+                </td>
+
+            </tr>
+
+        </table>
+       
+
+    </div>
+    <div>
+        <table class="table table-hover tablesorter containermytbl"  style="width:700px;">
+           <tr>
+                <th>
+                    Current Case
+                </th>
+            </tr>
+            <tr>
+                <td>
+                @Html.TextAreaFor(model => model.CurrentCase, new {@class="case",disabled="disabled",@id="CurrentCaseId"})
+                    </td>
+                <td>  
+                    @Html.ActionLink("Edit", "WriteRecord",null, new {@class="linkclsCrntCase" })
+                    @Html.ActionLink("Save", "WriteRecord",null, new {@class="linkSavCrntCase" })
+
+                </td>
+            </tr>
+
+        </table>
+    </div>
+    <div>
+         <table class="table table-hover tablesorter containermytbl"  style="width:700px;">
+            <tr>
+                <th>
+                    Provisional Diagnosis
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    @Html.TextAreaFor(model=>model.ProvisionalDiagnosis,new {@class="case",disabled="disabled",@id="ProvDigCaseId"})
+                </td>
+
+                <td>
+
+                     @Html.ActionLink("Edit", "WriteRecord",null, new {@class="linkclsProvDigCase" })
+                    @Html.ActionLink("Save", "WriteRecord",null, new {@class="linkSavProvDigCase" })
+                </td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+    <h4>Common Test List</h4>
+    <table class="table table-hover tablesorter containermytbl" style="width:700px;">
+                    <tr>
+                        
+
+                        <th>
+                            Short Description
+                        </th>
+                        <th>
+                            Details
+                        </th>
+                        
+                        <th colspan="2">Action</th>
+                    </tr>
+
+                    @foreach (var item in Model.PatientCommonTestList)
+                    {
+                        <tr>
+
+                        
+                                @Html.HiddenFor(modelItem => item.OpdMRCommonTestId, new {@class="OpdMRCommonTestId"})
+                                
+                            
+                            <td>
+                               <span class="valueidSd"> @Html.DisplayFor(modelItem => item.ShortDesc)</span>
+                                @Html.TextBoxFor(modelItem => item.ShortDesc, new {@class="sdid" })
+                           
+                            </td>
+
+                            <td>
+                                <span class="valueidDet"> @Html.DisplayFor(modelItem => item.Details)</span>
+                                @Html.TextBoxFor(modelItem => item.Details, new{@class="Details" })
+                                
+                            </td>
+                            
+                            <td colspan="2">
+                                @Html.ActionLink("Edit", "WriteRecord",null, new {@class="linkcls" })
+                                @Html.ActionLink("Save", "WriteRecord",null, new {@class="linkSav" })
+                               | @Html.ActionLink("Delete", "Delete",null, new { id=@item.OpdMRCommonTestId,@class="delclsforCommonTest"})
+                                <span class="msz"></span>
+                            </td>
+                            
+                            
+                        </tr>
+                    }
+        <tr>
+            <td colspan="3">
+               
+                @*<input type="button" value="Add More Common Test"  id="btn4FormCommonTest" style="display:initial;"/>*@
+
+                
+
+                @Html.ActionLink("Add Common Test", null, null, new { @id="btn4FormCommonTest",@class="linkcls4addmore",@style="float:right;"})
+
+            </td>
+        </tr>
+        
+      
+                </table>
+  <br />
+                
+   
+    
+
+   
+    
+    
+    <br /><hr />
+
+
+    <h4>Further Test List</h4>
+     <table class="table table-hover tablesorter containermytbl noborder" style="width:700px;">
+                    <tr>
+                       @* <th>
+                            OpdMRFurtherTestId
+                        </th>*@
+
+                        <th>
+                            TestName
+                        </th>
+                      
+                        
+                        <th>Action</th>
+                    </tr>
+
+                    @foreach (var item in Model.PatientFurtherTestList)
+                    {
+                        <tr>
+
+                            
+                             @Html.HiddenFor(modelItem => item.OpdMRFurtherTestId, new{@class="OpdMRFurtherTestIdcls" })
+                            <td>
+                                 <span class="ftestNameIdCls"> @Html.DisplayFor(modelItem => item.TestName)</span>
+                                @Html.TextBoxFor(modelItem => item.TestName, new { @class="ftestName",@style="width:300px;"})
+                            </td>
+
+                           
+                            
+                            <td>
+                               @Html.ActionLink("Edit", "WriteRecord",null, new {@class="Ftestlinkedit" })
+                                @Html.ActionLink("Save", "WriteRecord",null, new {@class="Ftestlinksave" })
+                               | @Html.ActionLink("Delete", "Delete",null, new { id=@item.OpdMRFurtherTestId,@class="delclsforFurtherTest"})
+                                <span class="msz"></span>
+                            </td>
+                            
+                        </tr>
+                    }
+
+          <tr>
+            <td colspan="2">
+               
+                @*<input type="button" value="Add More Common Test"  id="btn4FormCommonTest" style="display:initial;"/>*@
+
+                
+
+                @Html.ActionLink("Add Further Test", null, null, new { @id="btn4FormFurtherTest",@class="linkcls4addmore",@style="float:right;"})
+
+            </td>
+        </tr>
+
+                </table>
+    
+        
+    
+        
+    <div id="form4AddMore"></div>
+
+    
+    <hr />
+
+
+    <h4>Medicine Refered</h4>
+
+    <table class="table table-hover tablesorter containermytbl" style="width:700px;">
+                    <tr>
+                        @*<th>
+                            OpdMRMedicineReferId
+                        </th>*@
+
+                        <th>
+                            MedicineName
+                        </th>
+                      <th>
+                          Doses
+                          </th>
+                            <th>
+                                DosesTime
+
+                            </th>
+                           <th>
+                               DosesDay
+
+                           </th>
+                        
+                        <th>
+                            Action
+
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model.PatientMedicineDosesList)
+                    {
+                        <tr>
+
+                            @*<td>
+                                @Html.DisplayFor(modelItem => item.OpdMRMedicineReferId)
+
+                            </td>*@
+
+                           @Html.HiddenFor(modelItem => item.OpdMRMedicineReferId, new{@class="OpdMrMedRefCls" })
+
+
+                            <td>
+                               <span class="MedicineNameclsspan"> @Html.DisplayFor(modelItem => item.MedicineName)</span>
+                                @Html.TextBoxFor(modelItem => item.MedicineName,new{@class="Mdnamecls"})
+                            </td>
+                            <td>
+                                <span class="Dosesclsspan">@Html.DisplayFor(modelItem => item.Doses)</span>
+                                @Html.TextBoxFor(modelItem => item.Doses, new {@class="Dosescls" })
+                            </td>
+                            <td>
+                                <span class="DosesTimeclsspan">@Html.DisplayFor(modelItem => item.DosesTime)</span>
+                                @Html.TextBoxFor(modelItem => item.DosesTime, new{@class="DosesTimecls" })
+                            </td>
+                           <td>
+                               <span class="DosesDayclsspan">@Html.DisplayFor(modelItem => item.DosesDay)</span>
+                               @Html.TextBoxFor(modelItem => item.DosesDay, new{@class="DosesDaycls" })
+                           </td>
+                            
+                            <td>
+                              @Html.ActionLink("Edit", "WriteRecord",null, new {@class="Doseslinkedit" })
+                                @Html.ActionLink("Save", "WriteRecord",null, new {@class="Doseslinksave" })
+                               | @Html.ActionLink("Delete", "Delete",null, new { id=@item.OpdMRMedicineReferId,@class="delclsforMedDoes"})
+                            </td>
+                            
+                        </tr>
+                    }
+
+          <tr>
+            <td colspan="5">
+               
+                
+
+                
+
+                @Html.ActionLink("Add Medicine Records", null, null, new { @id="btn4MedicineRecords",@class="linkcls4addmore",@style="float:right;"})
+
+            </td>
+        </tr>
+
+
+                </table>
+
+   <h2 style="float:right;"> @Html.ActionLink("Print Report", "OpdMedicalReportPrint", new { id = Model.PatientId, docid = Model.DoctorId, deptid = Model.DepartmentId,patientlogid=Model.PatientLogId,opdMedMasid=Model.OpdMedicalRecordMastetId})</h2>
+                            
+
+    <div id="formDoes1"></div>
+    
+    <br /><br />
+    </div>
+
+<div></div>
+<script>
+
+    ///for common test script
+   
+    var jqmrcfm = $.noConflict();
+
+    var result;
+    jqmrcfm(document).ready(function () {
+
+        
+        jqmrcfm('.containermytbl tr').find('input').hide();
+        jqmrcfm('.linkSav').hide();
+        jqmrcfm('.Ftestlinksave').hide();
+        jqmrcfm('.Doseslinksave').hide();
+        jqmrcfm('.linkSavPrevCase').hide();
+        jqmrcfm('.linkSavCrntCase').hide();
+        jqmrcfm('.linkSavProvDigCase').hide();
+        
+        jqmrcfm('.linkcls').on('click', function (e) {
+
+            e.preventDefault();
+           
+            
+            
+            jqmrcfm(this).closest("tr").find("input").show();
+            
+            jqmrcfm(this).closest("tr").find("span").hide();
+            jqmrcfm(this).closest("tr").find(".valueidTestId").show();
+            
+           
+          
+            jqmrcfm(this).hide();
+
+          
+
+            jqmrcfm(this).closest("tr").find(".linkSav").show();
+
+           
+
+   
+        });
+
+        jqmrcfm('.linkSav').on("click", function (e) {
+            e.preventDefault();
+           
+            var OpdMRCommonTestId = $(this).closest('tr').find(".OpdMRCommonTestId").val();
+            var sdid = $(this).closest('tr').find(".sdid").val();
+            var Details = $(this).closest('tr').find(".Details").val();
+         
+
+
+            jqmrcfm.get("/OpdMedicalRecord/OpdMedRecrdDataforCommonTest/", { commtestId:OpdMRCommonTestId,shortDes:sdid,Detail:Details}, function (res) {
+
+                result = res;
+                alert(result);
+                
+
+            });
+            
+            //alert(result);
+
+            jqmrcfm(this).closest('tr').find(".valueidTestId").text(OpdMRCommonTestId);
+            jqmrcfm(this).closest('tr').find(".valueidSd").text(sdid);
+            jqmrcfm(this).closest('tr').find(".valueidDet").text(Details);
+
+            jqmrcfm(this).closest('tr').find(".valueidTestId").show();
+            jqmrcfm(this).closest('tr').find(".valueidSd").show();
+            jqmrcfm(this).closest('tr').find(".valueidDet").show();
+
+            jqmrcfm(this).closest('tr').find("input").hide();
+            jqmrcfm(this).hide();
+            jqmrcfm(this).closest('tr').find(".linkcls").show();
+           // jqmrcfm(this).closest('tr').find(".msz").text(result);
+           // jqmrcfm(this).closest('tr').find(".msz").show();
+
+        });
+
+
+        //ehd common test
+        //*******
+        //*******
+        //start further test
+
+        jqmrcfm('.Ftestlinkedit').on('click', function (e) {
+
+            e.preventDefault();
+
+
+
+            
+
+
+            var ftestnamegetfromspancls = jqmrcfm(this).closest("tr").find(".ftestNameIdCls").text();
+
+            jqmrcfm(this).closest("tr").find(".ftestName").val(ftestnamegetfromspancls);
+            
+            jqmrcfm(this).closest("tr").find("input").show();
+            jqmrcfm(this).closest("tr").find("span").hide();
+
+            jqmrcfm(this).hide();
+
+
+            jqmrcfm(this).closest("tr").find(".Ftestlinksave").show();
+            
+
+
+
+
+
+
+
+        });
+
+
+        jqmrcfm('.Ftestlinksave').on("click", function (e) {
+            e.preventDefault();
+
+            var FTestName = $(this).closest('tr').find(".ftestName").val();
+
+            var OpdMrFurtherTestId=$(this).closest('tr').find(".OpdMRFurtherTestIdcls").val();
+
+          
+
+            
+            jqmrcfm.get("/OpdMedicalRecord/OpdMedRecrdDataforFurtherTest/", { OpdMrFurtherTestId: OpdMrFurtherTestId, fTestName: FTestName }, function (res) {
+
+               
+                alert(res);
+
+
+            });
+
+            
+
+            jqmrcfm(this).closest('tr').find(".ftestNameIdCls").text(FTestName);
+        
+            jqmrcfm(this).closest('tr').find(".ftestNameIdCls").show();
+           
+
+            jqmrcfm(this).closest('tr').find("input").hide();
+            jqmrcfm(this).hide();
+            jqmrcfm(this).closest('tr').find(".Ftestlinkedit").show();
+
+         
+
+        });
+        //end further test
+        //************
+        //**************
+
+        jqmrcfm('#btn4MedicineRecords').on("click", function (e) {
+
+            e.preventDefault();
+
+            jqmrcfm.get("/OpdMedicalRecord/FormForMedicineRecords/", { Deptid: jqmrcfm('#deptid').text(), patientid: jqmrcfm('#patientid').text(), docid: jqmrcfm('#docid').text(), masterid: jqmrcfm('#masterid').text() }, function (res) {
+
+               
+                jqmrcfm("#form4AddMore").empty();
+                jqmrcfm("#form4AddMore").html(res);
+                jqmrcfm(function () {
+
+
+
+                    jqmrcfm('#form4AddMore').dialog({
+                        position: [290, 190],
+                        resizable: true,
+                        overFlow: scroll,
+                        width: 'auto',
+                        height: 'auto',
+                        
+                        
+                        
+                        zIndex: 1010
+
+
+
+
+
+
+
+                        //close: function () { $(this).remove() },
+                        //modal: true
+
+                    });
+
+                });
+
+                
+
+
+            });
+
+        });
+
+        ///further test button click and load form 
+
+        jqmrcfm('#btn4FormFurtherTest').on("click", function (e) {
+
+            e.preventDefault();
+
+            jqmrcfm.get("/OpdMedicalRecord/FormForFurtherTest/", { Deptid: jqmrcfm('#deptid').text(), patientid: jqmrcfm('#patientid').text(), docid: jqmrcfm('#docid').text(), masterid: jqmrcfm('#masterid').text(), masterid: jqmrcfm('#masterid').text() }, function (res) {
+
+
+                jqmrcfm("#form4AddMore").empty();
+                jqmrcfm("#form4AddMore").html(res);
+                jqmrcfm(function () {
+
+                    jqmrcfm('#form4AddMore').dialog({
+                        position: [290, 190],
+                        overFlow: scroll,
+                        
+                        width: 'auto',
+                        height:'auto',
+                        zIndex: 1010
+
+
+                        //close: function () { $(this).remove() },
+                        //modal: true
+
+                    });
+
+                });
+
+
+
+
+            });
+
+        });
+
+
+
+        //end button work of further test
+
+        //work for common test button
+
+        jqmrcfm('#btn4FormCommonTest').on("click", function (e) {
+
+            e.preventDefault();
+
+            jqmrcfm.get("/OpdMedicalRecord/CommontestRecord/", { Deptid: jqmrcfm('#deptid').text(), patientid: jqmrcfm('#patientid').text(), docid: jqmrcfm('#docid').text(), masterid: jqmrcfm('#masterid').text() }, function (res) {
+
+
+                jqmrcfm("#form4AddMore").empty();
+                jqmrcfm("#form4AddMore").html(res);
+                jqmrcfm(function () {
+
+                    jqmrcfm('#form4AddMore').dialog({
+                        position: [290, 190],
+                        overFlow: scroll,
+
+                        width: 'auto',
+                        height: 'auto',
+                        zIndex: 1010
+
+
+                        //close: function () { $(this).remove() },
+                        //modal: true
+
+                    });
+
+                });
+
+
+
+
+            });
+
+        });
+
+        //end common test button
+
+
+
+
+        /////Doses edit:--
+
+
+        jqmrcfm('.Doseslinkedit').on('click', function (e) {
+
+            e.preventDefault();
+
+            var mdnamefospan = jqmrcfm(this).closest("tr").find(".MedicineNameclsspan").text();
+            jqmrcfm(this).closest("tr").find(".Mdnamecls").val(mdnamefospan);
+            
+
+            var dosesclsspan = jqmrcfm(this).closest("tr").find(".Dosesclsspan").text();
+            jqmrcfm(this).closest("tr").find(".Dosescls").val(dosesclsspan);
+            
+            var DosesTimeclsspan = jqmrcfm(this).closest("tr").find(".DosesTimeclsspan").text();
+            jqmrcfm(this).closest("tr").find(".DosesTimecls").val(DosesTimeclsspan);
+            
+            var DosesDayclsspan = jqmrcfm(this).closest("tr").find(".DosesDayclsspan").text();
+            jqmrcfm(this).closest("tr").find(".DosesDayclsspan").val(DosesDayclsspan);
+
+
+            jqmrcfm(this).closest("tr").find("input").show();
+            jqmrcfm(this).closest("tr").find("span").hide();
+
+            jqmrcfm(this).hide();
+
+
+            jqmrcfm(this).closest("tr").find(".Doseslinksave").show();
+
+
+});
+
+
+        jqmrcfm('.Doseslinksave').on("click", function (e) {
+            e.preventDefault();
+
+
+            var Mdnamecls=jqmrcfm(this).closest("tr").find(".Mdnamecls").val();
+            var Dosescls = jqmrcfm(this).closest("tr").find(".Dosescls").val();
+            var DosesTimecls = jqmrcfm(this).closest("tr").find(".DosesTimecls").val();
+            var DosesDayclsspan=jqmrcfm(this).closest("tr").find(".DosesDayclsspan").val();
+            var OpdMrMedRefCls = $(this).closest('tr').find(".OpdMrMedRefCls").val();
+
+
+
+
+            jqmrcfm.get("/OpdMedicalRecord/OpdMedRecrdDataMedicineDoses/", { Mdnamecls: Mdnamecls, Dosescls: Dosescls, DosesTimecls: DosesTimecls, DosesDayclsspan: DosesDayclsspan, OpdMrMedRefCls: OpdMrMedRefCls }, function (res) {
+
+
+                alert(res);
+
+
+            });
+
+            jqmrcfm(this).closest("tr").find(".MedicineNameclsspan").text(Mdnamecls);
+            jqmrcfm(this).closest("tr").find(".Dosesclsspan").text(Dosescls);
+            jqmrcfm(this).closest("tr").find(".DosesTimeclsspan").text(DosesTimecls);
+            jqmrcfm(this).closest("tr").find(".DosesDayclsspan").text(DosesDayclsspan);
+
+
+            //jqmrcfm(this).closest('tr').find(".ftestNameIdCls").text(FTestName);
+
+            //jqmrcfm(this).closest('tr').find(".ftestNameIdCls").show();
+
+
+            jqmrcfm(this).closest('tr').find("input").hide();
+            jqmrcfm(this).closest('tr').find("span").show();
+
+            jqmrcfm(this).hide();
+            jqmrcfm(this).closest('tr').find(".Doseslinkedit").show();
+
+
+
+        });
+
+        jqmrcfm(".delclsforMedDoes").on("click", function (e) {
+            e.preventDefault();
+
+            jqmrcfm.get('/OpdMedicalRecord/deleteMedicalDoes/' + this.id,
+                   function (data) {
+
+                       alert(data);
+
+                   });
+            jqmrcfm(this).closest('tr').remove();
+
+
+        });
+
+
+
+        jqmrcfm(".delclsforFurtherTest").on("click", function (e) {
+            e.preventDefault();
+
+            jqmrcfm.get('/OpdMedicalRecord/deleteFurtherTest/' + this.id,
+                   function (data) {
+
+                       alert(data);
+
+                   });
+            jqmrcfm(this).closest('tr').remove();
+
+
+        });
+
+        jqmrcfm(".delclsforCommonTest").on("click", function (e) {
+            e.preventDefault();
+
+            jqmrcfm.get('/OpdMedicalRecord/deleteCommonTest/' + this.id,
+                   function (data) {
+
+                       alert(data);
+
+                   });
+            jqmrcfm(this).closest('tr').remove();
+
+
+        });
+
+
+
+        jqmrcfm('.linkclsPrevCase').on('click', function (e) {
+
+            e.preventDefault();
+
+
+            //$("#linkclsPrevCase").removeAttr("disabled");
+
+            jqmrcfm(this).closest('tr').find('.case').removeAttr("disabled");
+
+            jqmrcfm(this).closest('tr').find('.case').focus();
+
+            jqmrcfm(this).hide();
+            jqmrcfm('.linkSavPrevCase').show();
+
+
+            
+       
+
+        });
+
+        jqmrcfm('.linkSavPrevCase').on("click", function (e) {
+
+            e.preventDefault();
+        
+           
+            val = document.getElementById('PreviousCaseId').value;
+          
+
+            jqmrcfm.get("/OpdMedicalRecord/EditPreviousCase/", { PrevCaseVal:val, masterid: jqmrcfm('#masterid').text() }, function (res) {
+
+
+                alert(res);
+
+
+            });
+
+            jqmrcfm('#PreviousCaseId').prop("disabled", true);
+            jqmrcfm(this).hide();
+            jqmrcfm(this).closest("tr").find(".linkclsPrevCase").show();
+            //linkclsPrevCase
+
+
+        });
+
+
+        jqmrcfm('.linkclsCrntCase').on('click', function (e) {
+
+            e.preventDefault();
+
+
+            //$("#linkclsPrevCase").removeAttr("disabled");
+
+            jqmrcfm(this).closest('tr').find('.case').removeAttr("disabled");
+
+            jqmrcfm(this).closest('tr').find('.case').focus();
+
+            jqmrcfm(this).hide();
+            jqmrcfm('.linkSavCrntCase').show();
+
+
+
+
+
+        });
+
+        jqmrcfm('.linkSavCrntCase').on("click", function (e) {
+
+            e.preventDefault();
+
+
+            val = document.getElementById('CurrentCaseId').value;
+
+
+            jqmrcfm.get("/OpdMedicalRecord/EditCurrentCase/", { CrntCaseVal: val, masterid: jqmrcfm('#masterid').text() }, function (res) {
+
+
+                alert(res);
+
+
+            });
+
+            jqmrcfm('#CurrentCaseId').prop("disabled", true);
+            jqmrcfm(this).hide();
+            jqmrcfm(this).closest("tr").find(".linkclsCrntCase").show();
+            //linkclsPrevCase
+
+
+        });
+
+
+
+        jqmrcfm('.linkclsProvDigCase').on('click', function (e) {
+
+            e.preventDefault();
+
+
+            //$("#linkclsPrevCase").removeAttr("disabled");
+
+            jqmrcfm(this).closest('tr').find('.case').removeAttr("disabled");
+
+            jqmrcfm(this).closest('tr').find('.case').focus();
+
+            jqmrcfm(this).hide();
+            jqmrcfm('.linkSavProvDigCase').show();
+
+        });
+
+
+        jqmrcfm('.linkSavProvDigCase').on("click", function (e) {
+
+            e.preventDefault();
+
+
+            val = document.getElementById('ProvDigCaseId').value;
+
+
+            jqmrcfm.get("/OpdMedicalRecord/EditProvDigCase/", { ProvDigVal: val, masterid: jqmrcfm('#masterid').text() }, function (res) {
+
+
+                alert(res);
+
+
+            });
+
+            jqmrcfm('#ProvDigCaseId').prop("disabled", true);
+            jqmrcfm(this).hide();
+            jqmrcfm(this).closest("tr").find(".linkclsProvDigCase").show();
+            //linkclsPrevCase
+
+
+        });
+
+
+        //jqmrcfm(".ftestName").autocomplete({
+        //    source: function (request, response) {
+        //        jqmrcfm.ajax({
+        //            url: "/PatientTest/SearchTestName",
+        //            type: "POST",
+        //            dataType: "json",
+        //            data: { s: request.term },
+        //            success: function (data) {
+        //                response($.map(data, function (item) {
+        //                    //alert(item);
+        //                    return { label: item, value: item };
+        //                }))
+        //            }
+        //        })
+        //    },
+        //    messages: {
+        //        noResults: "", results: ""
+        //    }
+        //});
+
+
+
+
+    });
+
+    
+    
+</script>
+
+
+
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".ftestName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/PatientTest/SearchTestName",
+                        type: "POST",
+                        dataType: "json",
+                        data: { s: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                //alert(item);
+                                return { label: item, value: item };
+                            }))
+                        }
+                    })
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+        })
+    </script>
+
+
+
+
+

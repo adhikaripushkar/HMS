@@ -1,0 +1,234 @@
+﻿@model HospitalManagementSystem.Models.OpdModel
+
+
+
+
+
+
+
+
+
+
+<style>
+    table#mytbl,
+    table#mytbl td {
+        width: 900px;
+        border: none !important;
+    }
+</style>
+
+
+
+
+
+
+<fieldset>
+    <legend>Details</legend>
+
+
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.OpdID)
+
+
+
+
+
+
+
+
+    <table style="width: 500px;">
+        <tr>
+            <td>@Html.LabelFor(model => model.FirstName)</td>
+            <td>@Html.DisplayFor(model => model.FirstName)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.MiddleName)</td>
+            <td>@Html.DisplayFor(model => model.MiddleName)</td>
+        </tr>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.LastName)</td>
+            <td>@Html.DisplayFor(model => model.LastName)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Sex)</td>
+            <td>@Html.DisplayFor(model => model.Sex, HospitalManagementSystem.Utility.GetGenderList())</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.ContactName)</td>
+            <td>@Html.DisplayFor(model => model.ContactName)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.MobileNumber)</td>
+
+            <td>@Html.DisplayFor(model => model.MobileNumber)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.RegistrationDate)</td>
+            <td>@Html.DisplayFor(model => model.RegistrationDate, @Model.RegistrationDate.ToShortDateString(), new { @readonly = true })</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.RegistrationMode) </td>
+
+            <td>@Html.DisplayFor(model => model.RegistrationMode, HospitalManagementSystem.Utility.RegistrationModeList())</td>
+        </tr>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.Email)</td>
+            <td>@Html.DisplayFor(model => model.Email)
+            </td>
+        </tr>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.AgeYear)</td>
+            <td>@Html.DisplayFor(model => model.AgeYear)
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>@Html.LabelFor(model => model.AgeMonth)</td>
+            <td>@Html.DisplayFor(model => model.AgeMonth)</td>
+        </tr>
+
+
+        <tr>
+            <td>@Html.LabelFor(model => model.AgeDay)
+            </td>
+            <td>@Html.DisplayFor(model => model.AgeDay)</td>
+        </tr>
+
+
+
+        <tr>
+            <td>@Html.LabelFor(model => model.MaritalStatus)</td>
+            <td>@Html.DropDownListFor(model => model.MaritalStatus, HospitalManagementSystem.Utility.MatitalStatusList(), new { @disabled = "disabled" })</td>
+        </tr>
+
+
+        <tr>
+            <td>@Html.LabelFor(model => model.BloodGroup)</td>
+
+            <td>@Html.DropDownListFor(model => model.BloodGroup, HospitalManagementSystem.Utility.BloodGroupList(), "select", new { @disabled = "disabled" })</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.MemberTypeID)</td>
+            <td>@Html.DropDownListFor(model => model.MemberTypeID, HospitalManagementSystem.Utility.GetAllMemberType(), "select", new { @disabled = "disabled" })</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Status)</td>
+            <td>@Html.DisplayFor(model => model.Status)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Address)</td>
+            <td>@Html.DisplayFor(mod => mod.Address)</td>
+        </tr>
+
+    </table>
+
+
+
+    <table style="width: 500px;">
+        <tr>
+            <td style="width: 700px;">Department</td>
+            <td style="width: 700px;">Doctor</td>
+            <td style="width: 700px;">Date</td>
+            <td style="width: 700px;">Time</td>
+        </tr>
+        @foreach (var item in Model.OpdDoctorList)
+        {
+                   
+            <tr style="width: 100%;">
+
+                @Html.Partial("_AddDoctorList", item)
+
+            </tr>
+                       
+        }
+    </table>
+
+    <table style="width: 500px;">
+
+        <tr>
+            <td>@Html.LabelFor(model => model.OpdFeeDetailsModel.RegistrationFee)</td>
+            <td>@Html.DisplayFor(model => model.OpdFeeDetailsModel.RegistrationFee, new { @id = "txtRegistrationFee", @onkeyup = "onchangeevent();" })</td>
+        </tr>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.OpdFeeDetailsModel.DoctorFee)
+            </td>
+            <td>@Html.DisplayFor(model => model.OpdFeeDetailsModel.DoctorFee, new { @id = "txtDoctorFee", @onkeyup = "onchangeevent();" })
+            </td>
+        </tr>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.OpdFeeDetailsModel.MemberDiscountAmount)</td>
+            <td>@Html.DisplayFor(model => model.OpdFeeDetailsModel.MemberDiscountAmount, new { @id = "txtMemberDiscountAmount", @onkeyup = "onchangeevent();" })</td>
+
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.OpdFeeDetailsModel.OtherDiscountAmount)</td>
+            <td>@Html.DisplayFor(model => model.OpdFeeDetailsModel.OtherDiscountAmount, new { @id = "txtOtherDiscountAmount", @onkeyup = "onchangeevent();" })</td>
+
+        </tr>
+
+
+        <tr>
+            <td>@Html.LabelFor(model => model.OpdFeeDetailsModel.TotalAmount)</td>
+            <td>@Html.DisplayFor(model => model.OpdFeeDetailsModel.TotalAmount, new { @id = "txtTotalAmount" })</td>
+
+        </tr>
+
+
+        <tr>
+            <td>@Html.LabelFor(model => model.OpdFeeDetailsModel.Remarks)</td>
+            <td>@Html.DisplayFor(model => model.OpdFeeDetailsModel.Remarks)</td>
+
+        </tr>
+
+
+
+
+
+    </table>
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+    </div>
+
+</fieldset>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

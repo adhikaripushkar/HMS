@@ -1,0 +1,166 @@
+﻿@model Hospital.Models.PatientTestResultModel
+
+
+<link href="~/Content/TableSort.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.4.4.min.js"></script>
+<script src="~/Scripts/jquery.tablesorter.js"></script>
+<script src="~/Scripts/jquery.tablesorter.pager.js"></script>
+
+
+
+<script type="text/javascript">
+    var p = $.noConflict();
+    p(function () {
+        p("table.tablesorter").tablesorter({ widthFixed: true, sortList: [[0, 0]] })
+        .tablesorterPager({ container: j("#pager"), size: j(".pagesize option:selected").val() });
+    });
+
+</script>
+
+
+
+
+
+@if (TempData["msz"] != null)
+{
+    
+    <div class="alert">@TempData["msz"]</div>
+    
+}
+
+
+
+
+<div class="general-box clearfix">
+
+    <div class="general-box clearfix">
+
+        <div class="boxWrapper">
+            <div class="boxHeadingPanel">
+                <h1>Search Result</h1>
+            </div>
+
+
+
+
+
+
+
+            @if (Model.OpdModelList == null)
+            {
+        
+                <h3 colspan="10" style="text-align: center;">Data not found ! </h3>
+        
+            }
+            else if (Model.OpdModelList.Count > 0)
+            {
+
+        
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+                            <th style="">
+                                @*@Html.DisplayNameFor(model => model.OpdID)*@
+                                <span>Opd ID</span>
+                            </th>
+                            <th>Patient Name
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ObjOpdMaster.Sex)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ObjOpdMaster.ContactName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ObjOpdMaster.MobileNumber)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ObjOpdMaster.RegistrationDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ObjOpdMaster.Address)
+                            </th>
+
+
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OpdModelList)
+                        {
+    
+                            <tr>
+                                <td>
+                                    @item.OpdID
+                                </td>
+                                <td>
+                                    @Hospital.Utility.GetPatientNameWithIdFromOpd(item.OpdID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Sex)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ContactName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MobileNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RegistrationDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Address)
+                                </td>
+
+                                <td>
+                                    @Html.ActionLink("Cytoreport", "CreateCytologyRpt", new { id = item.OpdID })||@Html.ActionLink("Bonemarrow", "CreateBoneMarrowRpt", new { id = item.OpdID })
+                                    @*@Html.ActionLink("Print", "BillForm", new { id=item.OpdID})  *@
+                                </td>
+                            </tr>
+                        }
+
+
+
+                    </tbody>
+
+                </table>
+            }
+
+            else
+            {
+        
+                <h3 colspan="10" style="text-align: center;">Data not found ! </h3>
+            }
+
+
+        </div>
+
+        @*for sorting *@
+
+        <div class="boxFooter">
+
+            <div id="pager" style="">
+                <form>
+                    <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                    <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                    <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                    <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                    <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                    <select class="pagesize valid" style="width: 70px; height: 30px;">
+                        <option selected="selected" value="10">10</option>
+                        <option value="5">5</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                    </select>
+                </form>
+            </div>
+
+        </div>
+
+        @*---------------*@
+
+    </div>
+</div>
+
+

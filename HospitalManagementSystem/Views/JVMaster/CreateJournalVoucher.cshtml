@@ -1,0 +1,107 @@
+﻿@model HospitalManagementSystem.Models.JVMasterModel
+
+@{
+    ViewBag.Title = "CreateJournalVoucher";
+    Layout = "~/Views/Shared/_BillingLayout.cshtml";
+}
+<h2 style="text-align: center;">Doctor Setup</h2>
+<script src="~/Scripts/OrderManagerScript.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        AddClickEvents();
+    });
+
+</script>
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("AddMoreDrOrCr", "JVMaster", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+  
+
+        <fieldset>
+
+            <legend>Create New Journal Voucher</legend>
+
+            <div class="row-fluid singleline">
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.ObjJournalVoucharViewModel.JVnumber)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjJournalVoucharViewModel.JVnumber)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.ObjJournalVoucharViewModel.JVnumber)
+                    </div>
+
+                </label>
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.ObjJournalVoucharViewModel.JvDate)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjJournalVoucharViewModel.JvDate)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.ObjJournalVoucharViewModel.JvDate)
+                    </div>
+
+                </label>
+
+            </div>
+
+            <div class="row-fluid singleline">
+                <div class="well well-small" id="Add-Item">
+
+                    <label>
+
+                        <span class="size">@Html.ValidationMessageFor(model => model.ObjJournalVoucharViewModel.AccountHeadId)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.ObjJournalVoucharViewModel.AccountHeadId)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.ObjJournalVoucharViewModel.AccountHeadId)
+                        </div>
+
+                    </label>
+
+                    <label>
+
+                        <span class="size">@Html.ValidationMessageFor(model => model.ObjJournalVoucharViewModel.DrAmount)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.ObjJournalVoucharViewModel.DrAmount)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.ObjJournalVoucharViewModel.DrAmount)
+                        </div>
+
+                    </label>
+
+                    <label>
+
+                        <span class="size">@Html.ValidationMessageFor(model => model.ObjJournalVoucharViewModel.CrAmount)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.ObjJournalVoucharViewModel.CrAmount)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.ObjJournalVoucharViewModel.CrAmount)
+                        </div>
+
+                    </label>
+                </div>
+
+                @Html.ActionLink("Add More", "AddMoreDrOrCr", null, new { @class = "addProductItem btn btn-primary" })
+            </div>
+        </fieldset>
+        
+        <div>
+            <p>
+                <input type="submit" value="add" />
+            </p>
+        </div>
+    }
+</div>

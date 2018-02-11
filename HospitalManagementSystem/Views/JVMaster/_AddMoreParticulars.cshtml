@@ -1,0 +1,40 @@
+﻿@using HospitalManagementSystem.Helpers
+@model HospitalManagementSystem.Models.AddMoreParticularsJVModel
+
+@using (Html.BeginCollectionItem("AddMoreParticularsJVModelList"))
+{
+    <div class="row" style="margin-left: 0px;" id="clsdiv">
+        <table style="width:50%;">
+            <tr>
+                <td>
+                    @Html.DropDownListFor(model => model.DrOrCr, HospitalManagementSystem.Utility.DrOrCrTypeList(), new { @class = "firstinput", @style = "width:103px;" })
+                    @Html.ValidationMessageFor(model => model.DrOrCr)
+                </td>
+                <td>
+                    @Html.DropDownListFor(model => model.Particulars, HospitalManagementSystem.Utility.GetCOA4thHeadList(), new { @class = "AccGroupID", @id = "AccGroupID", })
+                    @Html.ValidationMessageFor(model => model.Particulars)
+                </td>
+                <td>
+                    @Html.DropDownListFor(model => model.SubParticulars, HospitalManagementSystem.Utility.GetCOA5thHeadList(Model.Particulars), new { @class = "ParentID", @id = "ParentID" })
+                    @Html.ValidationMessageFor(model => model.SubParticulars)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.DrAmount, new { @class = "DrAmountClass",@style = "width:150px;" })
+                    @Html.ValidationMessageFor(model => model.DrAmount)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.CrAmount, new { @class = "CrAmountClass",@style = "width:150px;" })
+                    @Html.ValidationMessageFor(model => model.CrAmount)
+                </td>
+                <td>
+                    <input type="button" class="row-button btn btn-warning" value="Remove" />
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+
+
+
+
+

@@ -1,0 +1,168 @@
+﻿@model Hospital.Models.StockItemModel
+
+@{
+    ViewBag.Title = "ShowGroupingItemDetails";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+    int i = 1;
+}
+
+<h2 style="text-align: center;">Stock Item Rack Details</h2>
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+@if (TempData["success"] == Hospital.UtilityMessage.savefailed)
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == Hospital.UtilityMessage.edit)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.editfailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.delete)
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.deletefailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+@{
+    var PrintConfirmation = TempData["AlertPrint"] ?? string.Empty;
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var message = '@PrintConfirmation';
+        if (message) {
+            if (confirm("Are you sure?")) {
+                window.location.href = '@Url.Action("BillForm", "Opd", 1)';
+            }
+        }
+    });
+</script>
+
+
+
+<div class="contentWrapper">
+    <div id="DetailsId"></div>
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Store Department</h1>
+                </div>
+                @*@if (Model.StockItemGroupSetupViewModelList.Count > 0)
+                {
+                    int Sno = ViewBag.currentPage == 1 ? 0 : (ViewBag.currentPage - 1) * 10;
+                }*@
+
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px;">SN</th>
+                            <th>Group Name</th>
+                            <th>Item Name</th>
+                            <th>Serial Number</th>
+                            <th>Party Name</th>
+                            <th>Description</th>
+                            <th>Condition</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.StockItemGroupingDetailsViewModelList)
+                        {
+                            <tr>
+                                <td>@i</td>
+
+                                <td>@Hospital.Utility.GetStockGroupingNameFromId(item.GroupID)</td>
+
+                                <td>
+                                    @Hospital.Utility.GetItemNameFromStockItemEntry(item.ItemId)
+                                </td>
+                                <td>
+                                    @item.SerrialNo
+                                </td>
+                                <td>
+                                    @item.PartyName
+                                </td>
+                                <td>
+                                    @item.Description
+                                </td>
+                                <td>
+                                    @item.Condition
+                                </td>
+                                @*<td>
+                                    @Html.ActionLink("Details", "ShowGroupingItemDetails", new { @id = item.GroupingId, @itemId = item.ItemId })
+                                </td>*@
+
+                            </tr>
+                            i++;
+                        }
+
+                    </tbody>
+
+                </table>
+
+                <div class="pagination pagination-centered">
+                    <ul class="pager">
+                        @*<li><a href="#">Page:</a></li>
+                        @for (int p = 1; p <= ViewBag.TotalPages; p++)
+                        {           
+                            <li><a class="@(p == ViewBag.currentPage ? "btn btn-default" : "")"
+					        href="@Url.Action("Index", "Opd", new { Page = p })">@p</a></li>          
+                        }*@
+                    </ul>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    <p>
+        <i class="fa  fa-plus fa-2x" style="color: blue;"></i>&nbsp;@Html.ActionLink("Go to Group Item", "ShowGroupingItemIndex", null, new { @id = "linkNewBack" })
+    </p>
+    <p>
+        <i class="fa  fa-plus fa-2x" style="color: blue;"></i>&nbsp;@Html.ActionLink("Go to Group Setting", "ItemGroupSetup", null, new { @id = "linkNewBack" })
+    </p>
+    
+
+</div>

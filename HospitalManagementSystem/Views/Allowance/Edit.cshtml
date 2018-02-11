@@ -1,0 +1,125 @@
+﻿ @using AutoMapper.Internal
+@using Hospital
+@model HospitalManagementSystem.Models.AllowanceSetupModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_PayRollLayout.cshtml";
+}
+
+HospitalManagementSystem
+
+
+
+<h2 style="text-align: center;">Allowance Setup</h2>
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("Edit", "Allowance", FormMethod.Post, new {@class = "bs-docs-example form-inline"}))
+    {
+        @Html.ValidationSummary(true)
+        <fieldset>
+            <legend>Edit</legend>
+            <div class="row-fluid singleline">
+
+       
+         @Html.HiddenFor(model=>model.ID)
+
+               <label>
+                    <span class="size">
+                      
+                    </span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.AlowanceName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.AccountHeadID, HospitalManagementSystem.Utility.GetCOAHeadList(), new {@id = "txtAlowanceName"})
+        
+                    </div>
+                </label>
+            
+            
+                <label>
+                    <span class="size">   @* @Html.ValidationMessageFor(model => model.Amount)*@</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Amount)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Amount)
+        
+                    </div>
+                </label>
+       
+       
+        
+                <p>
+                    <input type="submit" value="Create" />
+                </p>
+              
+            </div>
+           
+        </fieldset>
+
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new {@id = "linkNewBack"})
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+
+        $("#txtAlowanceName1").autocomplete({
+           
+            source: function (request, response) {
+                $.ajax({
+                    url: "/AjaxRequest/GetAllowanceName?Name=" + $('#txtAlowanceName').val(),
+                    type: "POST",
+                    dataType: "json",
+                    //data: { s: request.term },
+                    success: function(data) {
+
+                        response($.map(data, function(item) {
+                            //alert(item);
+                            return { label: item, value: item };
+
+                        }));
+                    }
+                });
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    });
+
+    
+
+    //function test1() {
+    //    alert('hy');
+    //    $.ajax({
+    //        url: "/AjaxRequest/GetAllowanceName?Name=" + $('#txtAlowanceName').val(),
+    //        type: "POST",
+    //        dataType: "json",
+    //        //data: { s: request.term },
+    //        success: function(data) {
+
+    //            response($.map(data, function(item) {
+    //                //alert(item);
+    //                return { label: item, value: item };
+
+    //            }));
+    //        }
+    //    });
+    //}
+
+
+</script>

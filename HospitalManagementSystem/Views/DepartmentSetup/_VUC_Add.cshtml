@@ -1,0 +1,94 @@
+﻿@model HospitalManagementSystem.Models.DepartmentSetupModel
+
+
+@{
+    // ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+        // int SN = 1;
+    
+}
+
+
+<h2 align="center">Department</h2>
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("Create", "DepartmentSetup", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+    
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.DeptID)
+
+        <fieldset>
+
+            <legend>Create</legend>
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.DeptCode)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.DeptCode)
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.DeptCode)
+
+                    </div>
+                </label>
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.DeptName)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.DeptName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.DeptName)
+
+                    </div>
+
+                </label>
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.Block)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Block)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.Block, HospitalManagementSystem.Utility.GetBlockListName())
+
+                    </div>
+
+                </label>
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.Floor)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Floor)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.Floor, HospitalManagementSystem.Utility.GetFloorListName())
+
+                    </div>
+
+                </label>
+
+            </div>
+
+            <p>
+                <input type="submit" value="Create" />
+            </p>
+
+
+        </fieldset>
+    }
+
+
+    <div>@Html.ActionLink("Back To List", "DeptMain", "DepartmentSetup", new { @id = "linkNewBack" })</div>
+
+
+
+</div>

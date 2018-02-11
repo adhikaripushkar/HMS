@@ -1,0 +1,197 @@
+﻿@model Hospital.Models.SetupMedicalChargeModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 style="text-align:center;">Medical Charge Setup</h2>
+
+<div class="contentWrapper">
+
+@using (Html.BeginForm()) {
+    
+    <div class="bs-docs-example form-inline">
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Create</legend>
+
+        <div class="row-fluid singleline">
+     
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.PreMedicalPirce)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PreMedicalPirce)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.PreMedicalPirce, new { @id="PreMedicalPirce", @onkeyup = "onchangeevent();"})
+            
+        </div>
+                </label>
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.HologramPrice)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.HologramPrice)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.HologramPrice,new { @id="HologramPrice", @onkeyup = "onchangeevent();"})
+            
+        </div>
+                </label>
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.TotalPrice)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TotalPrice)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.TotalPrice, new { @id="TotalPriceId"})
+            
+        </div>
+                </label>
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.DiscontPrice)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DiscontPrice)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.DiscontPrice, new { @id="DiscontPriceId", @onkeyup = "onchangeevent();"})
+            
+        </div>
+                </label>
+            </div>
+
+        <div class="row-fluid singleline">
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.CommissionAmount)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CommissionAmount)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.CommissionAmount, new {@id="CommissionAmountId",@onkeyup = "onchangeevent();" })
+            
+        </div>
+</label>
+            
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.GrandTotalAmount)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.GrandTotalAmount)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.GrandTotalAmount, new { @id="GrandTotalAmountId"})
+            
+        </div>
+                </label>
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.Status)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Status)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Status)
+            
+        </div>
+                </label><br /><br /><br />
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+        </div>
+}
+
+
+<div>
+    <span id="linkNewBack">
+    @Html.ActionLink("Back to List", "Index")
+</span>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+</div>
+
+
+
+<script type="text/javascript">
+
+        function onchangeevent() {
+
+            var vartxtPreMedicalPrice = $("#PreMedicalPirce").val();
+            var vartxtHologramPrice = $("#HologramPrice").val();
+
+            var vartxtDiscontPrice = $("#DiscontPriceId").val();
+            var vartxtCommissionAmount = $("#CommissionAmountId").val();
+
+            
+            if (vartxtPreMedicalPrice == '') {
+                vartxtPreMedicalPrice = 0;
+            }
+            if (vartxtHologramPrice == '') {
+                vartxtHologramPrice = 0;
+            }
+
+            if (vartxtDiscontPrice == '') {
+                vartxtDiscontPrice = 0;
+            }
+
+            if (vartxtCommissionAmount == '') {
+                vartxtCommissionAmount = 0;
+            }
+            
+
+            var totalprice = parseFloat(vartxtPreMedicalPrice) + parseFloat(vartxtHologramPrice);
+
+            var discount = totalprice - vartxtDiscontPrice;
+
+            var GrandTotalAmount = parseFloat(vartxtCommissionAmount) + parseFloat(discount);
+
+           // alert(discount);
+            
+
+            $("#TotalPriceId").val(totalprice);
+            $("#GrandTotalAmountId").val(GrandTotalAmount);
+
+
+
+
+            //alert(vartxtPreMedicalPrice);
+
+
+
+            //var vartxtTax = $("#TaxId").val();
+            //var vartxtVat = $("#VatId").val();
+
+            //if (vartxtHospitalFee == '') {
+            //    vartxtHospitalFee = 0;
+            //}
+            //if (vartxtTax == '') {
+            //    vartxtTax = 0;
+            //}
+            //if (vartxtVat == '') {
+            //    vartxtVat = 0;
+            //}
+
+            //var vatAndTax = parseFloat(vartxtTax) + parseFloat(vartxtVat);
+
+            //var Totalpercentage = parseFloat(vartxtHospitalFee) * parseFloat(vatAndTax / 100);
+
+            ////var varTotalAmount = parseInt(vartxtHospitalFee) + parseInt(vartxtTax) + parseInt(vartxtVat);
+            //var varTotalAmount = parseFloat(vartxtHospitalFee) + parseFloat(Totalpercentage);
+
+            $("#TotalPrice").val(vartxtPreMedicalPrice);
+
+
+
+            //$("#Totalfee").val();
+
+        }
+
+
+    </script>
+
+    </div>

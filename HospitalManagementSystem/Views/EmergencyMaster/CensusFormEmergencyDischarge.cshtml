@@ -1,0 +1,393 @@
+﻿@model HospitalManagementSystem.Models.EmergecyMasterModel
+@{
+    ViewBag.Title = "CensusFormEmergencyDischarge";
+    Layout = "~/Views/Shared/_EmergencyLayout.cshtml";
+    int i = 1;
+}
+
+<script src="~/Scripts/jquery.ui.core.js"></script>
+<script src="~/Scripts/jquery.ui.widget.js"></script>
+<script src="~/Scripts/jquery.ui.datepicker.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.ui.timepicker.js"></script>
+
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery.ui.timepicker.css" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+<script src="~/Scripts/json.cycle.js"></script>
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.maskedinput.js"></script>
+<script src="~/Scripts/json.cycle.js"></script>
+
+<script>
+
+
+
+    var j = $.noConflict();
+
+    j(document).ready(function (e) {
+
+        j(".DOB").datepicker();
+        j(".ENDDOB").datepicker();
+
+    });
+
+  </script>
+ <script type="text/javascript">
+     jQuery(function ($) {
+         $(".startdate").mask("9999/99/99");
+         $(".enddate").mask("9999/99/99");
+
+     });
+</script>
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        //printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">EMERGENCY CENSUS <br>');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+      </script>
+<div class="bs-docs-example form-inline">
+ @using (Html.BeginForm())
+ {   
+    
+      <div class="row-fluid singleline">
+          <label>
+
+                        <div class="editor-label">
+                            @Html.Label("START DATE(Nepali)")
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBox("txtNepalidate", null, new {@class="startdate", @onblur = "ChangeNepalidate(this.value,'DobId','/AjaxRequest/GetEnglishDate/')" })
+
+                        </div>
+                    </label>
+
+                    <label>
+
+                        <span class="size">@Html.ValidationMessageFor(model => model.OpdEmergencyViewDischargeModel.StartDate)</span>
+                        <div class="editor-label">
+                            <span>&nbsp;</span>   @Html.LabelFor(model => model.OpdEmergencyViewDischargeModel.StartDate)
+                        </div>
+                        <div class="editor-field">
+                            <span>&nbsp;</span> @Html.TextBoxFor(model => model.OpdEmergencyViewDischargeModel.StartDate, new
+                                           {
+                                               @Value =
+
+                                                   DateTime.Now.ToShortDateString(),
+                                               @class = "DOB",
+                                               @onchange = "ChangeEnglishdate(this.value,'txtNepalidate','/AjaxRequest/getNepaliDate/')"
+                                           })
+
+                        </div>
+                    </label>
+          </div>
+      <div class="row-fluid singleline">
+          <label>
+
+                        <div class="editor-label">
+                            @Html.Label("END DATE(Nepali)")
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBox("txtENDNepalidate", null, new {@class="enddate", @onblur = "ChangeNepaliJoiningdate(this.value,'DobId','/AjaxRequest/GetEnglishDate/')" })
+
+                        </div>
+                    </label>
+
+                    <label>
+
+                        <span class="size">@Html.ValidationMessageFor(model => model.OpdEmergencyViewDischargeModel.EndDate)</span>
+                        <div class="editor-label">
+                            <span>&nbsp;</span>   @Html.LabelFor(model => model.OpdEmergencyViewDischargeModel.EndDate)
+                        </div>
+                        <div class="editor-field">
+                            <span>&nbsp;</span> @Html.TextBoxFor(model => model.OpdEmergencyViewDischargeModel.EndDate, new
+                                           {
+                                               @Value =
+
+                                                   DateTime.Now.ToShortDateString(),
+                                               @class = "ENDDOB",
+                                               @onchange = "ChangeEnglishJoiningdate(this.value,'txtNepalidate','/AjaxRequest/getNepaliDate/')"
+                                           })
+
+                        </div>
+                    </label>
+          </div>
+
+          <label> <input type="submit" value="show" /></label>
+ }
+     <div class="contentWrapper">
+  <span><input type ="button" ID="btnPrint"   style="width:110px;" onclick="print()" value="Print Report"/></span>
+<br />
+  <div id="printdiv" style="border-style:solid; border-color:#999; width:auto;">
+      <p style=" font:bold; font-size:25px; text-align:center"><br />
+@HospitalManagementSystem.Utility.GetHospitalManagementSystemName()<br/>
+<p style="font-size:20px; text-align:center">@HospitalManagementSystem.Utility.HospitalManagementSystemAddress()</p>
+</p>
+
+<h3 style="text-align:center;"> <u>EMERGENCY Discharge CENSUS REPORT</u> </h3>
+
+<br />
+@*<h3 style="text-align:left; margin-left:85px;"> <u>Addmision</u> </h3>
+<table width="660" border="0" cellspacing="0" cellpadding="5" align="center">
+    <thead>
+    <tr>
+        <th>
+        S.No.
+        </th>
+        <th>
+            Emergency ID
+        </th>  
+          <th>
+          Name
+        </th>  
+         <th>
+          Age
+        </th>  
+         <th>
+          Sex
+        </th>  
+         <th>
+         Time
+        </th>  
+        <th>
+          Diagnosis
+        </th>
+        <th>
+          Remarks
+        </th>    
+    </tr>
+</thead>
+      <tbody>
+    @foreach (var item in Model.OpdEmergencyViewModelList)
+    {
+  
+
+    <tr>
+        <td width="70"><span class="font"></span>
+        @i
+        </td>
+          <td width="70"><span class="font"></span>
+              @Html.DisplayFor(modelItem => item.EmergencyId)
+            </td>
+         <td width="70" style="text-align:center"><span class="font"></span>
+         @Html.DisplayFor(modelItem => item.PatientTitle)
+                @Html.DisplayFor(modelItem => item.Firstname)
+             @Html.DisplayFor(modelItem => item.MiddleName)
+             @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+      
+           <td width="70" style="text-align:center"><span class="font"></span>
+          @Html.DisplayFor(modelItem => item.AgeYear)
+        </td>
+           <td width="70" style="text-align:center"><span class="font"></span>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+          <td width="70" style="text-align:center"><span class="font"></span>
+           @Html.DisplayFor(modelItem => item.TimeIn)
+        </td>
+            <td width="70"><span class="font"></span>
+           
+        </td>
+            <td width="70"><span class="font"></span>
+           
+        </td>
+        
+    </tr>
+       
+        i++;
+    
+    }
+           </tbody>
+</table>
+
+<br />*@
+      <br />
+ 
+ <h3 style="text-align:left; margin-left:85px;"> <u>Discharge</u> </h3>        
+<table width="660" border="0" cellspacing="0" cellpadding="5" align="center">
+    <thead>
+    <tr>
+        <th>
+        S.No.
+        </th>
+        <th>
+          @*Bed No*@
+            EmerGency ID
+        </th>  
+          <th>
+          Name
+        </th>  
+         <th>
+          Age
+        </th>  
+         <th>
+          Sex
+        </th>  
+         <th>
+         Time
+        </th>  
+        <th>
+          Diagnosis
+        </th>
+        <th>
+          Remarks
+        </th>    
+    </tr>
+</thead>
+        <tbody>
+    @foreach (var item in Model.OpdEmergencyViewDischargeModelList)
+    {
+
+
+    <tr>
+          <td width="70"><span class="font"></span>
+       @i
+        </td>
+        <td width="70"><span class="font"></span>
+      @Html.DisplayFor(modelItem => item.EmergencyId)
+        </td>
+        <td width="70" style="text-align:center"><span class="font"></span>
+         @Html.DisplayFor(modelItem => item.PatientTitle)
+                @Html.DisplayFor(modelItem => item.Firstname)
+             @Html.DisplayFor(modelItem => item.MiddleName)
+             @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+      
+       <td width="70" style="text-align:center"><span class="font"></span>
+          @Html.DisplayFor(modelItem => item.AgeYear)
+        </td>
+        <td width="70" style="text-align:center"><span class="font"></span>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+        <td width="70" style="text-align:center"><span class="font"></span>
+           @Html.DisplayFor(modelItem => item.TimeOut)
+        </td>
+          <td width="70"><span class="font"></span>
+          @Html.DisplayFor(model => model.FinalDiagnosis) 
+        </td>
+         <td width="70"><span class="font"></span>
+             @Html.DisplayFor(model => model.DischargeConditionAndInst)
+        </td>
+    </tr>
+        i++;
+
+       
+    
+    }
+             </tbody>
+</table>
+
+<br />
+      <br />
+ </div> 
+ 
+         
+         </div>
+   
+    <script type="text/javascript">
+        function ChangeNepalidate(selvalue, targetElm, url) {
+
+
+            $.ajax({
+                async: false,
+                type: "get",
+                url: url,
+                data: { NepaliDate: selvalue },
+                contentType: "text/json",
+
+
+                beforeSend: function () {
+                    // $("#" + targetElm).attr('disabled', 'disabled');
+                    // $("#" + targetElm).addClass('ac_loading');
+                },
+                success: function (jsonResult) {
+                    $(".DOB").val(jsonResult);
+                }
+            });
+        }
+        function ChangeNepaliJoiningdate(selvalue, targetElm, url) {
+
+
+            $.ajax({
+                async: false,
+                type: "get",
+                url: url,
+                data: { NepaliDate: selvalue },
+                contentType: "text/json",
+
+
+                beforeSend: function () {
+                    // $("#" + targetElm).attr('disabled', 'disabled');
+                    // $("#" + targetElm).addClass('ac_loading');
+                },
+                success: function (jsonResult) {
+                    $(".ENDDOB").val(jsonResult);
+                }
+            });
+        }
+</script>
+
+<script type="text/javascript">
+    function ChangeEnglishdate(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { EnglishDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#txtNepalidate").val(jsonResult);
+            }
+        });
+    }
+
+    function ChangeEnglishJoiningdate(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { EnglishDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#txtENDNepalidate").val(jsonResult);
+            }
+        });
+    }
+
+
+</script>
+     
+

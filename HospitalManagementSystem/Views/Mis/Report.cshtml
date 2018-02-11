@@ -1,0 +1,100 @@
+﻿@model HospitalManagementSystem.Models.EmergecyMasterModel
+@{
+    ViewBag.Title = "Report";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<style type="text/css">
+    .font
+    {
+        font-weight:bold;
+    }
+    .decorate
+    {
+        text-decoration:underline
+    }
+</style>
+
+<h2 align="center">Emergency Card</h2>
+<div class="contentWrapper">
+<table class="customtable">
+    <tr>
+        <td class="font">
+            ER No.:
+        </td><td>
+                   @Model.EmergencyNumber
+             </td>
+        <td></td><td></td><td></td><td></td>
+        <td class="font">
+            SERIAL NO.:
+        </td><td>
+                    @Model.SerialNumber
+             </td>
+    </tr>
+    <tr>
+        <td class="font">
+            Name:
+        </td><td>
+                    @Model.FirstName @Model.MiddleName @Model.LastName
+             </td>
+        <td class="font">
+            Age/Sex:
+        </td><td>
+                @Model.Age / @Model.Gender
+             </td>
+        <td class="font">
+            Date:
+        </td><td>
+                @Model.Date
+             </td>
+        <td class="font">
+            Time in:
+        </td><td>
+                @Model.TimeIn
+             </td>
+    </tr>
+    <tr>
+        <td class="font">
+            Address:
+        </td><td>
+            @Model.Address
+             </td>
+        <td class="font">
+            Relationship:
+        </td><td>
+            @HospitalManagementSystem.Utility.GetRelationName(Model.RelationShip)
+             </td>
+        <td class="font">
+            Brought By:
+        </td><td>
+            @Model.BroughtBy
+             </td>
+        <td class="font">
+           Time out:
+        </td><td>
+            @Model.TimeOut
+             </td>
+
+    </tr>
+</table>
+<hr />
+<table class="customtable">
+    <tr>
+        <td class="font">
+            Triage Time:
+        </td><td>
+                @Model.EmergencyTriageModel.Time
+             </td>
+        <td class="font">
+            Medium:
+        </td><td>
+            @HospitalManagementSystem.Utility.GetMediumName(Model.EmergencyTriageModel.MediumId)
+             </td>
+        <td class="font">
+            Doctor:
+        </td><td>
+            @HospitalManagementSystem.Utility.GetDoctorName(Model.EmergencyTriageModel.DoctorId)
+             </td>
+    </tr>
+</table>
+    </div>

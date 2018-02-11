@@ -1,0 +1,33 @@
+﻿@using Hospital.Helpers
+@model Hospital.Models.EmployeeEducationInfoModel
+
+@using (Html.BeginCollectionItem("EmployeeEducationInfoList"))
+{
+    <div class="row" style="margin-left: 0px;" id="clsdiv">
+        <table>
+            <tr>
+                <td>
+                 @Html.TextBoxFor(model => model.LevelID)
+                </td>
+                <td>
+                 @Html.TextBoxFor(model => model.UniversityName)
+                </td>
+                <td>
+                 @Html.TextBoxFor(model => model.Grade)
+                </td>
+                <td>
+                 @Html.TextBoxFor(model => model.Percentage)
+                </td>
+                <td>
+                 <input type="button" class="row-button btn btn-warning" value="Remove" />
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+
+
+
+
+
+

@@ -1,0 +1,310 @@
+﻿@model IEnumerable<HospitalManagementSystem.Models.ItemBlockRecordsModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+<style>
+
+    .ui-dialog {
+        background:#F0F0F0 !important;
+   
+    }
+    .ui-title {
+        background:pink !important;
+    }
+    /*.ui-dialog,.ui-dialog,.ui-widget, .ui-widget-content, .ui-corner-all, .foo, .ui-draggable, .ui-resizable {background:#F0F0F0 !important}*/
+</style>
+
+<h2 style="text-align:center;">Item Distribution</h2>
+
+
+<div class="contentWrapper">
+
+
+
+
+<p id="linkNewBack">
+    @Html.ActionLink("Create New", "Create")
+    </p>
+
+
+    <div>
+    <p style="float:right;">
+    <span>
+        @Html.DropDownList("serialno",HospitalManagementSystem.Utility.GetSerialNoList())
+    </span>
+    <span>
+       @Html.ActionLink("Search", "SearchItemRecord", new { itemsetupid = "xxx" }, new { @class="btnlink"})
+    </span>
+</p>
+        </div>
+
+<div class="general-box clearfix">
+        <div class="general-box clearfix">
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel"><h1>Item Distribution</h1></div>
+<table class="table table-hover tablesorter">
+    <thead>
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.ItemBlcokRecID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemBlockSetupID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Particular)
+        </th>*@
+        <th>
+            Block
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SerialNo)
+        </th>
+        <th>
+            Item
+        </th>
+        <th>
+            Department
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Condition)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoomNo)
+        </th>
+        <th>
+        Supplier
+        </th>
+        <th>
+          Delivery Date
+        </th>
+        <th>
+            Remarks
+        </th>
+        <th>
+           Status
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>*@
+        <th>Action</th>
+    </tr>
+        </thead>
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+       @* <td>
+            @Html.DisplayFor(modelItem => item.ItemBlcokRecID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemBlockSetupID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Particular)
+        </td>*@
+
+        <td>
+            @HospitalManagementSystem.Utility.GetBlockNameWithID(item.ItemBlockSetupID)
+
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.SerialNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemName)
+        </td>
+        <td>
+            
+
+          @HospitalManagementSystem.Utility.GetDepartmentName(item.DepId)
+           
+            
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Condition)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoomNo)
+        </td>
+        <td>
+            
+
+            @HospitalManagementSystem.Utility.GetSupplierName(item.SupplierId)
+
+           
+
+        </td>
+        <td>
+           @* @Html.DisplayFor(modelItem => item.DeliveryDate)*@
+
+            @Convert.ToDateTime(item.DeliveryDate).ToShortDateString()
+
+
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Remarks)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+       @* <td>
+            @Html.DisplayFor(modelItem => item.CreatedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>*@
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ItemBlcokRecID }) |
+            @Html.ActionLink("Details","Details",null, new {@id=item.ItemBlcokRecID,@class="clsdetails" })|
+            @Html.ActionLink("Delete","Delete", new{ id=item.ItemBlcokRecID})
+        </td>
+    </tr>
+}
+        </tbody>
+
+</table>
+
+                </div>
+                </div>
+         </div>
+
+
+     @*for sorting *@
+        
+               <div class="boxFooter">
+                   
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+
+               </div> 
+
+        @*---------------*@
+    
+
+
+    <div id="DatilsDivId"></div>
+    </div>
+@*<script>
+    var noconfdlf = $.noConflict();
+    noconfdlf(".clsdetails").click(function (e){
+        e.preventDefault();
+        alert(this.id);
+        noconfdlf.get('/ItemBlockRecord/Details', {id: this.id}, function (data) {
+            noconfdlf("#DatilsDivId").html(data);
+            noconfdlf(function () {
+            
+                noconfdlf("#datilsDivId").dialog({
+                
+                    overFlow: scroll,
+                    width: 'auto',
+                    height: 'auto',
+                    resizable: true,
+                    title : "Item Details"
+                });
+            });
+        });
+    });
+</script>*@
+
+
+<script>
+
+    var noconfdlf = $.noConflict();
+    noconfdlf(".clsdetails").click(function (e) {
+        e.preventDefault();
+
+        alert(this.id);
+
+        noconfdlf.get('/ItemBlockRecord/Details', { id: this.id }, function (data) {
+
+            noconfdlf("#DatilsDivId").html(data);
+
+            noconfdlf(function () {
+
+                noconfdlf('#DatilsDivId').dialog({
+
+                    
+                    overFlow: scroll,
+
+                    width: 'auto',
+                    height: 'auto',
+                    resizable: true,
+                    title: "Item Details"
+                });
+
+            });
+
+        });
+
+    });
+        
+
+    //var dlg = $.noConflict();
+
+    //dlg(".linkDetail").click(function (e) {
+    //    e.preventDefault();
+
+    //    dlg.get('/SetUpHospitalManagementSystemDetail/Details/' + this.id,
+    //               function (data) {
+
+    //                   dlg('#DetailsId').html(data);
+
+    //                   dlg(function () {
+    //                       dlg("#DetailsId").dialog({
+
+    //                           position: [490, 190],
+    //                           resizable: true,
+    //                           minWidth: 500,
+    //                           maxWidth: 500,
+    //                           height: 400
+    //                           //title: "Doctor Details"
+                      
+    //                           //close: function () { $(this).remove() },
+    //                           //modal: true
+
+    //                       });
+                           
+    //                   });
+
+    //               }
+    //     );
+
+    //});
+
+    </script>
+<script>
+    $(".btnlink").click(function () {
+        var v = $("serialno").val();
+        this.href = this.href.replace("xxx", v);
+    })
+</script>
+
+@*<script>
+    $(".btnlink").click(function () {
+        //alert("hi");
+        var v = $("#serialno").val();
+        //alert(v);
+        this.href = this.href.replace("xxx", v);
+    })
+</script>*@

@@ -1,0 +1,57 @@
+﻿@model Hospital.Models.ReportModel
+
+<table>
+    <tr>
+        <td>
+         <b>Catagory</b>   
+        </td>
+        <td>
+           <b>Count</b> 
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Total Pre-Registration:-
+        </td>
+        <td>
+            @Model.Total
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Male Count
+        </td>
+        <td>
+         @Model.CountMale
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Female Count
+        </td>
+        <td>
+            @Model.CountFemale
+        </td>
+    </tr>
+    
+    <tr>
+        <td>
+            Pre-Registration To Opd
+        </td>
+        <td>
+            @Model.AbsTotal
+        </td>
+    </tr>
+    <tr>
+        <td>
+            People Who didnt Came
+        </td>
+        <td>
+            @Model.Absent
+        </td>
+        
+    </tr>
+
+
+
+</table>

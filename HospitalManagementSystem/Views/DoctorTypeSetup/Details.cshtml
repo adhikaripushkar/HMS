@@ -1,0 +1,42 @@
+﻿@model HospitalManagementSystem.Models.DoctorTypeSetupModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 style="text-align:center;">Doctor Type Setup</h2>
+
+
+<div class="contentWrapper">
+<fieldset>
+    <legend>Details</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DoctorTypeId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DoctorTypeId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DoctorTypeName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DoctorTypeName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Status)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Status)
+    </div>
+</fieldset>
+<p id="linkNewBack">
+   @* @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |*@
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+
+   </div>

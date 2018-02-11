@@ -1,0 +1,165 @@
+﻿@model Hospital.Models.PatientTestResultModel
+
+@{
+    ViewBag.Title = "PatientReport";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+}
+
+<script>
+    var j = $.noConflict();
+    j(document).ready(function () {
+
+        j("#txtfromDate").attr("Value", "@DateTime.Now.ToShortDateString()");
+        j("#txtfromDate").datepicker();
+
+        j("#txttoDate").attr("Value", "@DateTime.Now.ToShortDateString()");
+        j("#txttoDate").datepicker();
+        j("#txtpatientID").attr("placeholder", "Patient ID");
+
+
+    });
+
+
+</script>
+
+
+<h2 style="text-align: center;">Patient Test Report</h2>
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm())
+    {
+        <div class="bs-docs-example form-inline">
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                <legend>Patient Test</legend>
+
+
+                <div class="row-fluid singleline">
+
+                    <label>
+
+                        <div class="editor-label">
+                            @Html.Label("Department")
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.PopulatePatientTestDetailModel.DepartmentID, Hospital.Utility.GetDepartmentListForPathology(), new { @id = "PathoDeptId",@disabled="disabled" })
+                            @Html.ValidationMessageFor(model => model.PopulatePatientTestDetailModel.DepartmentID)
+                        </div>
+
+                    </label>
+                    <label>
+
+                        <div class="editor-label">
+                            @Html.Label("From Date")
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBox("txtfromDate")
+                        </div>
+                    </label>
+                    <label>
+
+                        <div class="editor-label">
+                            @Html.Label("To Date")
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBox("txttoDate")
+                        </div>
+                    </label>
+
+                    <label>
+                        <div class="editor-label">
+                            @Html.Label("Patient ID")
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBox("txtpatientID")
+                        </div>
+                    </label>
+
+                    <label>
+                        <div id="linkNewBack">
+                            @Html.ActionLink("Search", "PatientReport", "PatientTestResult", new { fdate = "xxx" }, new { @class = "linkb" })
+                        </div>
+                    </label>
+                </div>
+
+
+
+
+                @*display patient test List*@
+                <div>
+                    <table style="width: 885px;">
+                        <tr>
+                            <th>Patient ID</th>
+                            <th>Test Date</th>
+                            <th>Refer Doctor Name</th>
+                            <th>Patient Name</th>
+                            <th>Action</th>
+                        </tr>
+
+                        <tr>
+                            @if (Model.PopulatePatientTestModelList != null)
+                            {
+
+
+
+                                foreach (var item in Model.PopulatePatientTestModelList)
+                                {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(m => item.PatientID)
+                                        @Html.HiddenFor(m => item.PatientTestID)
+                                    </td>
+                                    @*    <td>
+                        @Html.DisplayFor(m => item.PatientTestID)
+                                </td>*@
+                                    <td>
+
+
+                                        @Convert.ToDateTime(item.TestRegistrationDate).ToShortDateString()
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(m => item.DoctorName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(m => item.PatientName)
+                                    </td>
+                                    <td>@Html.ActionLink("Print Report", "PatientReportResult", new { PatientTestID = item.PatientTestID })</td>
+                                </tr>
+                                }
+
+
+                            }
+                        </tr>
+                    </table>
+                </div>
+
+            </fieldset>
+
+        </div>
+    }
+
+    <div id="linkNewBack">
+        @Html.ActionLink("Back to List", "Index", "PatientTest")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+</div>
+
+<script>
+    $(function () {
+        $('.linkb').click(function () {
+            var fDate = $("#txtfromDate").val();
+            var tDate = $("#txttoDate").val();
+            var DepartmentId = $("#PathoDeptId").val();
+            var ipPatientid = $("#txtpatientID").val();
+            var ipanddid = fDate + '&tDate=' + tDate + '&pid=' + ipPatientid + '&deptId=' + DepartmentId;
+            this.href = this.href.replace("xxx", ipanddid);
+        });
+    });
+</script>

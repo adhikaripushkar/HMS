@@ -1,0 +1,449 @@
+﻿@model HospitalManagementSystem.Models.SurgeryChargeModel
+
+@{
+    ViewBag.Title = "SurgeryCharge";
+    Layout = "~/Views/Shared/_OperationTheatreLayout.cshtml";
+}
+
+<h2>Surgery Charge Setup</h2>
+<div class="contentWrapper">
+    <div class="boxHeadingPanel">
+        <h2>Available Items</h2>
+    </div>
+    <table class="table table-hover tablesorter">
+        <thead>
+
+            <tr>
+                <th>Chare Name
+                </th>
+                <th>Charge Amount
+                </th>
+                <th>Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.SurgerChargeList)
+            { 
+                <tr>
+                    <td>
+                        @item.ChargeName
+                    </td>
+                    <td>
+                        @item.TotalAmount
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "SurgeryCharge", new { id = item.SurgeryChargeId }) |
+                        @Html.ActionLink("Delete", "DeleteSurgChg", new { id = item.SurgeryChargeId })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="boxFooter">
+
+        <div id="pager" style="">
+            <form>
+                <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                <select class="pagesize valid" style="width: 70px; height: 30px;">
+                    <option selected="selected" value="5">5</option>
+                    <option value="5">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                </select>
+            </form>
+        </div>
+
+    </div>
+    <br />
+    <div class="bs-docs-example form-inline">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.SurgeryChargeId)
+            <br />
+            if (Model.SurgeryChargeId != 0)
+            {
+            <h2>Edit</h2>
+            }
+            else
+            {
+            <h2>Create New</h2>
+            }
+    
+   
+            <fieldset>
+
+                <legend></legend>
+                <div class="row-fluid singleline">
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.ChargeName)
+                        </div>
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.ChargeName)
+                            @Html.ValidationMessageFor(model => model.ChargeName)
+                        </div>
+                    </label>
+                </div>
+                <div class="row-fluid singleline">
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.ChargeAmount)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.ChargeAmount, new { @id = "txtChargeAmount", @onkeyup = "onchangeevent();" })
+                            @Html.ValidationMessageFor(model => model.ChargeAmount)
+                        </div>
+                    </label>
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Tax)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.Tax, new { @id = "taxId", @onkeyup = "onchangeevent();" })
+                            @Html.ValidationMessageFor(model => model.Tax)
+                        </div>
+                    </label>
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.TaxAmount)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.TaxAmount, new { @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.TaxAmount)
+                        </div>
+                    </label>
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.TotalAmount)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.TotalAmount, new { @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.TotalAmount)
+                        </div>
+                    </label>
+                </div>
+
+                <div class="row-fluid singleline">
+
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.PayablePercentage)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.PayablePercentage)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.PayablePercentage, new { @id = "PPrecentage", @onkeyup = "PercentageOnChange();" })
+
+                        </div>
+                    </label>
+
+
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.PayableGrandTotal)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.PayableGrandTotal)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.PayableGrandTotal)
+
+                        </div>
+                    </label>
+
+
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.IsCommision)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.IsCommision)
+                        </div>
+                        <div class="editor-field">
+                            @Html.CheckBoxFor(model => model.IsCommision)
+
+                        </div>
+                    </label>
+
+
+
+
+                </div>
+
+
+
+
+
+                <div class="row-fluid singleline">
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.HosPer)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.HosPer)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.HosPer, new { @id = "txtHosPer", @onkeyup = "HospitalManagementSystemPerChange();" })
+
+                        </div>
+                    </label>
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.HosPerAmt)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.HosPerAmt)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.HosPerAmt, new { @id = "txtHosPerAmt", @readonly = "readonly" })
+
+                        </div>
+                    </label>
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.DocPer)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DocPer)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.DocPer, new { @id = "txtDocPer", @onkeyup = "DoctorPerChange();" })
+
+                        </div>
+                    </label>
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.DocPerAmt)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DocPerAmt)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.DocPerAmt, new { @id = "txtDocPerAmt", @readonly = "readonly" })
+
+                        </div>
+                    </label>
+                </div>
+
+                <div class="row-fluid singleline">
+
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.AnesthiaComm)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.AnesthiaComm)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.AnesthiaComm, new { @id = "AnePer", @onkeyup = "AnePerOnChange();" })
+
+                        </div>
+                    </label>
+
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.AnesthiaCommAmount)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.AnesthiaCommAmount)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.AnesthiaCommAmount)
+
+                        </div>
+                    </label>
+                </div>
+
+
+
+
+                <p>
+                    <input type="submit" value="Save" />
+                </p>
+            </fieldset>
+        }
+    </div>
+    <div id="linkNewBack">
+        @Html.ActionLink("Back", "Main")
+    </div>
+</div>
+
+
+<script>
+    $(".edit").click(function () {
+        alert(this.id);
+    })
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+@*<script>
+    $("#Tax").keyup(function () {
+        var t = $("#Tax").val();
+        var ca = $("#txtChargeAmount").val();
+        var ta = parseFloat(t) * parseFloat(ca) / 100;
+        $("#TaxAmount").val(ta);
+        $("#TotalAmount").val(parseFloat(ca) + parseFloat(ta));
+    });
+
+</script>*@
+@*<script type="text/javascript">
+    function onPerchangeevent() {
+        var vartxtChargeAmount = $("#txtChargeAmount").val();
+        var vartxtHospitalManagementSystemPer = $("#txtHosPer").val();
+        var vartxtvarDocPer = $("#txtDocPer").val();
+        if (vartxtHospitalManagementSystemPer == '') {
+            vartxtvarDocPer = 0;
+        }
+        var varHosPerAmt = (parseFloat(vartxtChargeAmount) / 100) * vartxtHospitalManagementSystemPer;
+        $("#txtHosPerAmt").val(varHosPerAmt);
+        var varDocPer = 100 - parseInt(vartxtHospitalManagementSystemPer);
+        $("#txtDocPer").val(varDocPer);
+
+        var varDocPerAmt = vartxtChargeAmount - varHosPerAmt;
+        $("#txtDocPerAmt").val(varDocPerAmt);
+
+    }
+
+     </script>*@
+<script type="text/javascript">
+
+    function onchangeevent() {
+
+        var vartxtHospitalManagementSystemFee = $("#txtChargeAmount").val();
+
+
+        var vartxtTax = $("#taxId").val();
+        if (vartxtTax == '') {
+            vartxtTax = 0;
+        }
+
+        var vatAndTax = parseFloat(vartxtTax);
+
+
+        var Totalpercentage = parseFloat(vartxtHospitalManagementSystemFee) * parseFloat(vatAndTax / 100);
+        var varTotalAmount = parseFloat(vartxtHospitalManagementSystemFee) + parseFloat(Totalpercentage);
+
+        var ta = ((parseFloat(vatAndTax) / 100)) * parseFloat(vartxtHospitalManagementSystemFee);
+
+        $("#TaxAmount").val(ta);
+        $("#TotalAmount").val(parseFloat(vartxtHospitalManagementSystemFee) + parseFloat(ta));
+
+        $("#txtTotalAmount").val(varTotalAmount);
+
+        //var PayableAmount = $("#PayableGrandTotal").val();
+
+        //if (PayableAmount == '') {
+        //    PayableAmount = 0;
+        //}
+
+        //var vartxtHospitalManagementSystemPer = $("#txtHosPer").val();
+        //var vartxtvarDocPer = $("#txtDocPer").val();
+
+        //if (vartxtHospitalManagementSystemPer == '') {
+        //    vartxtvarDocPer = 0;
+        //    vartxtHospitalManagementSystemPer = 0;
+        //}
+
+        //var varHosPerAmt = (parseFloat(PayableAmount) / 100) * vartxtHospitalManagementSystemPer;
+        //var varHosPerAmt = varHosPerAmt.toFixed(2);
+
+        //$("#txtHosPerAmt").val(varHosPerAmt);
+
+        //var varDocPer = 100 - parseInt(vartxtHospitalManagementSystemPer);
+
+        //$("#txtDocPer").val(varDocPer);
+        //var varDocPerAmt = PayableAmount - varHosPerAmt;
+        //$("#txtDocPerAmt").val(varDocPerAmt);
+    }
+</script>
+
+
+
+<script type="text/javascript">
+
+    function DoctorPerChange() {
+
+        var varTstPriceId = $("#PayableGrandTotal").val();
+        var VarPayablePerId = $("#txtDocPer").val();
+
+        if (varTstPriceId == '') {
+            varTstPriceId = 0;
+        }
+
+        if (VarPayablePerId == '') {
+            VarPayablePerId = 0;
+        }
+
+        var Totalpercentage = (parseFloat(varTstPriceId) / 100) * VarPayablePerId;
+        var Totalpercentage = Totalpercentage.toFixed(2);
+
+        //var Totalpercentage = parseFloat(varTstPriceId) * parseFloat(VarPayablePerId / 100);
+        //var TotalFinal = parseFloat(varTstPriceId) + parseFloat(Totalpercentage);
+        $("#txtDocPerAmt").val(Totalpercentage);
+
+    };
+
+
+
+    function HospitalManagementSystemPerChange() {
+
+        var varTstPriceId = $("#PayableGrandTotal").val();
+        var VarPayablePerId = $("#txtHosPer").val();
+
+        if (varTstPriceId == '') {
+            varTstPriceId = 0;
+        }
+
+        if (VarPayablePerId == '') {
+            VarPayablePerId = 0;
+        }
+
+
+        var Totalpercentage = (parseFloat(varTstPriceId) / 100) * VarPayablePerId;
+        Totalpercentage = Totalpercentage.toFixed(2);
+
+        $("#txtHosPerAmt").val(Totalpercentage);
+
+    };
+
+
+    function AnePerOnChange() {
+
+        var varTstPriceId = $("#PayableGrandTotal").val();
+        var VarPayablePerId = $("#AnePer").val();
+
+        if (varTstPriceId == '') {
+            varTstPriceId = 0;
+        }
+
+        if (VarPayablePerId == '') {
+            VarPayablePerId = 0;
+        }
+
+
+        var Totalpercentage = (parseFloat(varTstPriceId) / 100) * VarPayablePerId;
+        Totalpercentage = Totalpercentage.toFixed(2);
+        $("#AnesthiaCommAmount").val(Totalpercentage);
+
+    };
+
+
+
+    function PercentageOnChange() {
+
+        var varTstPriceId = $("#txtChargeAmount").val();
+        var VarPayablePerId = $("#PPrecentage").val();
+        if (varTstPriceId == '') {
+            varTstPriceId = 0;
+        }
+
+        if (VarPayablePerId == '') {
+            VarPayablePerId = 0;
+        }
+        var Totalpercentage = parseFloat(varTstPriceId) * parseFloat(VarPayablePerId / 100);
+        var TotalFinal = parseFloat(varTstPriceId) + parseFloat(Totalpercentage);
+        $("#PayableGrandTotal").val(TotalFinal);
+
+    };
+
+
+
+
+
+
+
+
+</script>
+

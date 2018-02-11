@@ -1,0 +1,205 @@
+﻿@model IEnumerable<Hospital.Models.StockItemPurchaseDetailModel>
+
+@{
+    ViewBag.Title = "SupplierWiseReport";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+<h2>Supplier wise Report</h2>
+<script type="text/javascript">
+    function prints(divName) {
+
+        //Get the HTML of div
+        var divElements = document.getElementById(divName).innerHTML;
+        //Get the HTML of whole page
+        var oldPage = document.body.innerHTML;
+
+        //Reset the page's HTML with div's HTML only
+        document.body.innerHTML = "<html><head><title></title></head><body>" + divElements + "</body>";
+
+        //Print Page
+        window.print();
+
+        //Restore orignal HTML
+        document.body.innerHTML = oldPage;
+
+        //disable postback on print button
+        return false;
+
+    }
+</script>
+<div class="contentWrapper">
+    @using(Html.BeginForm()){
+    <table>
+        <tr>
+            <td>
+                From Date:@Html.TextBox("fromdate")
+            </td>
+            <td>
+                To Date:@Html.TextBox("todate")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Stock Entry No.:@Html.TextBox("seno")
+            </td>
+            <td>
+                Supplier:@Html.DropDownList("supplier", Hospital.Utility.GetSupplier(),"All")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="Show Report" id="btn"/>
+            </td>
+        </tr>
+    </table>
+    }
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: 100%; grid-row-align: center;">
+                     @if (@Hospital.Utility.GetPathOfHospitalLogo() != null && @Hospital.Utility.GetPathOfHospitalLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalLogo/@Hospital.Utility.GetPathOfHospitalLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@Hospital.Utility.GetPathOfHospitalLogo() == "")
+        { 
+            
+            <br />
+        
+        }
+        <div style="font: bold; font-size: 18px; text-align: center; height: 100px;">
+            @if (@Hospital.Utility.GetHospitalTitleName() != null && @Hospital.Utility.GetHospitalTitleName() != "")
+            {
+                <span>@Hospital.Utility.GetHospitalTitleName()</span>
+            }
+            <br />
+            @Hospital.Utility.GetHospitalName()<br />
+            <div style="height: 80px;">
+                <span style="font-size: 15px; text-align: center">@Hospital.Utility.HospitalAddress()</span><br />
+                <span style="font-size: 14px; text-align: center">Website:-@Hospital.Utility.HospitalUrl()</span><br />
+                <span style="font-size: 14px; text-align: center">Ph:-@Hospital.Utility.HospitalPhone()</span>
+
+            </div>
+
+        </div>
+                   <br />
+         <span style="margin-left:85%">Date:@DateTime.Today.ToShortDateString()</span>
+     @if(Model!=null){
+        
+            
+    var groupList = (from ls in Model
+                     group ls by new { ls.SeNo ,ls.SupplierId,ls.PurchaseDate}
+                         into g
+                         select new { g.Key.SeNo,g.Key.SupplierId,g.Key.PurchaseDate}).ToList();
+    
+    foreach (var items in groupList){
+        <p>
+            Supplier:@Hospital.Utility.GetSupplierName(items.SupplierId)
+           
+        </p>
+        <p>
+           Stock Entry No.:@items.SeNo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>Bill Date:@items.PurchaseDate</span>
+        </p>
+<table class="table">
+    <tr>
+        
+        <th>
+            Item
+        </th>
+       
+        <th>
+            Quantity
+        </th>
+        <th>
+           Rate
+        </th>
+        <th>
+            TotalAmount
+        </th>
+      
+    </tr>
+
+@foreach (var item in (from mo in Model where (mo.SeNo == items.SeNo) select new { mo }).ToList())
+{
+   
+    <tr>
+        
+        <td>
+            @Hospital.Utility.GetItemNameFromStockItemEntry(item.mo.StockItemEntryId)
+        </td>
+       
+        <td>
+            @((int) item.mo.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mo.Rate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mo.TotalAmount)
+        </td>
+      
+    </tr>
+}
+
+</table>
+         <br />
+    }
+        <br /><br />
+    }
+    </div>
+     <p id="linkNewBack">
+                   
+                        <input type="button" value="Print" onclick="prints('printdiv')" />
+         <span>@Html.ActionLink("Back","Index")</span>
+     </p>
+    </div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+
+
+<script type="text/javascript">
+    var autocom = $.noConflict();
+
+    autocom(document).ready(function () {
+        
+        autocom("#seno").autocomplete({
+            source: function (request, response) {
+                autocom.ajax({
+                    url: "/StockItemPurchase/AutocompleteSeNo",
+                    type: "GET",
+                    dataType: "json",
+                    data: { s: request.term },
+                    success: function (data) {
+
+                        response(autocom.map(data, function (item) {
+
+                            return { label: item, value: item };
+
+                        }))
+
+                    },
+                   
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    });
+</script>
+    <script>
+        var j = $.noConflict();
+        j(function () {
+            j("#fromdate").datepicker();
+            j("#todate").datepicker();
+
+        });
+       
+</script>
+    }

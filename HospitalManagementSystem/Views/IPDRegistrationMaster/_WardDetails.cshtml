@@ -1,0 +1,39 @@
+﻿@model HospitalManagementSystem.Models.IpdRegistrationMasterModel
+
+@{int i = 1;
+    }
+
+
+<div style="margin-top:40px;">
+    <table style="width: 100%">
+        <tr>
+            <th>SN</th>
+            <th>IPD Number</th>
+            <th>OPD Number</th>
+            <th>Patient Name</th>
+            <th>Sex</th>
+            <th>Ward</th>
+            <th>Room Type</th>
+            <th>Room No</th>
+            <th>Bed No</th>
+            <th>Registration Date</th>
+        </tr>
+        @foreach (var item in Model.IPDWardDetailsViewModelList)
+        {
+            <tr>
+                <td>@i</td>
+                <td>@item.IpdRegistrationID</td>
+                <td>@item.OpdNoEmergencyNo</td>
+                <td>@HospitalManagementSystem.Utility.GetPatientNameWithIdFromOpd(item.OpdNoEmergencyNo)</td>
+                <td>@HospitalManagementSystem.Utility.GetPatientSexType(item.OpdNoEmergencyNo)</td>
+                <td>@HospitalManagementSystem.Utility.GetIpdWardNo(item.WardNo)</td>
+                <td>@HospitalManagementSystem.Utility.GetRoomTypeName(item.RoomType)</td>
+                <td>@item.RoomNo</td>
+                <td>@item.BedNo</td>
+                <td>@item.RegistrationDate.ToShortDateString()</td>
+            </tr>
+            i++;
+        }
+
+    </table>
+</div>

@@ -1,0 +1,67 @@
+﻿@model HospitalManagementSystem.Models.IpdRegistrationMasterModel
+
+@{
+    ViewBag.Title = "ShiftFromIPD";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+<h2>IPD Department</h2>
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("ShiftFromIPD", "IpdRegistrationMaster", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+      
+    
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(m => m.OpdNoEmergencyNo)
+        @Html.HiddenFor(m => m.IpdRegistrationID)
+        <fieldset>
+            <legend>Shift</legend>
+
+            <div class="row-fluid singleline">
+
+                <label>
+
+                    <div class="size">
+                        @Html.ValidationMessageFor(model => model.ObjShiftFromIPDViewModel.ShiftedDepartmentId)
+                    </div>
+                    <div>Action</div>
+                    <div>
+                        @Html.DropDownListFor(model => model.ObjShiftFromIPDViewModel.ShiftedDepartmentId, HospitalManagementSystem.Utility.GetShiftListFromIPD())
+
+                    </div>
+
+                </label>
+
+                <label>
+
+                    <div class="size">
+                        @Html.ValidationMessageFor(model => model.ObjShiftFromIPDViewModel.Remarks)
+                    </div>
+                    <div>@Html.LabelFor(model => model.ObjShiftFromIPDViewModel.Remarks)</div>
+                    <div>
+                        @Html.TextBoxFor(model => model.ObjShiftFromIPDViewModel.Remarks)
+
+                    </div>
+
+                </label>
+
+            </div>
+
+            @if (Model.ObjShiftFromIPDViewModel.Status == false)
+            {
+                <p>
+                    <input type="submit" value="Shift" />
+                </p>
+            }
+            else
+            {
+                <p>This Patient is already shifted</p>
+            }
+
+
+        </fieldset>
+    }
+
+</div>
+

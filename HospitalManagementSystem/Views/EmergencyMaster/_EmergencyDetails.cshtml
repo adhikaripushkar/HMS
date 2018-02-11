@@ -1,0 +1,98 @@
+﻿@model HospitalManagementSystem.Models.EmergecyMasterModel
+
+<style>
+    table#mytbl,
+    table#mytbl td {
+        width: 900px;
+        border: none !important;
+    }
+</style>
+
+<fieldset>
+    <legend>Details</legend>
+
+
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.EmergencyMasterId)
+
+
+
+
+
+
+
+
+    <table style="width: 500px;">
+        <tr>
+            <td>Patient Name</td>
+            <td>@Html.DisplayFor(model => model.OpdEmergencyViewModel.PatientTitle)
+                @Html.DisplayFor(model => model.OpdEmergencyViewModel.Firstname)
+                @Html.DisplayFor(model => model.OpdEmergencyViewModel.MiddleName)
+                @Html.DisplayFor(model => model.OpdEmergencyViewModel.LastName)
+               </td>
+        </tr>
+        
+            
+  
+         <tr>
+            <td>@Html.LabelFor(model => model.OpdEmergencyViewModel.AgeYear)</td>
+            <td>@Html.DisplayFor(model => model.OpdEmergencyViewModel.AgeYear)</td>
+        </tr>
+         <tr>
+            <td>@Html.LabelFor(model => model.OpdEmergencyViewModel.Gender)</td>
+            <td>@Html.DisplayFor(model => model.OpdEmergencyViewModel.Gender)</td>
+        </tr>
+         <tr>
+            <td>@Html.LabelFor(model => model.OpdEmergencyViewModel.MaritalStatus)</td>
+            <td>@Html.DisplayFor(model => model.OpdEmergencyViewModel.MaritalStatus)</td>
+        </tr>
+         <tr>
+            <td>@Html.LabelFor(model => model.OpdEmergencyViewModel.Address)</td>
+            <td>@Html.DisplayFor(model => model.OpdEmergencyViewModel.Address)</td>
+        </tr>
+           <tr>
+            <td>@Html.LabelFor(model => model.ContactNumber)</td>
+            <td>@Html.DisplayFor(model => model.ContactNumber)</td>
+        </tr>
+          <tr>
+            <td>@Html.LabelFor(model => model.Date)</td>
+            <td>@Html.DisplayFor(model => model.Date)</td>
+        </tr>
+      @*   <tr>
+            <td>@Html.LabelFor(model => model.TimeIn)</td>
+            <td>@Html.DisplayFor(model => model.TimeIn)</td>
+        </tr>*@
+        <tr>
+            <td>@Html.LabelFor(model => model.BroughtBy)</td>
+            <td>@Html.DisplayFor(model => model.BroughtBy)</td>
+        </tr>
+            <tr>
+            <td>@Html.LabelFor(model => model.RelationShip)</td>
+           <td>@HospitalManagementSystem.Utility.GetRelationName(Model.RelationShip)</td>
+        </tr>
+           <tr>
+            <td>@Html.LabelFor(model => model.RelationShip)</td>
+           <td>@HospitalManagementSystem.Utility.GetRelationName(Model.RelationShip)</td>
+        </tr>
+          <tr>
+            <td>@Html.LabelFor(model => model.EmergencyTriageModel.Time)</td>
+           <td>@Html.DisplayFor(model => model.EmergencyTriageModel.Time)</td>
+        </tr>
+          <tr>
+            <td>@Html.LabelFor(model => model.EmergencyTriageModel.MediumId)</td>
+           <td>@HospitalManagementSystem.Utility.GetTriagemediumForReport(Model.EmergencyTriageModel.MediumId)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.EmergencyTriageModel.DoctorId)</td>
+           <td>@HospitalManagementSystem.Utility.GetDoctorName(Model.EmergencyTriageModel.DoctorId)</td>
+        </tr>
+          <tr>
+            <td>@Html.LabelFor(model => model.EmergencyTriageModel.MedicalOfficer)</td>
+           <td>@HospitalManagementSystem.Utility.GetDoctorName(Model.EmergencyTriageModel.MedicalOfficer)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.CheifComplainAndHistory)</td>
+           <td>@Html.DisplayFor(model => model.CheifComplainAndHistory)</td>
+        </tr>
+        </table>
+    </fieldset>

@@ -1,0 +1,64 @@
+﻿@model HospitalManagementSystem.Models.BillingCounterModel
+
+<div class="general-box clearfix">
+
+    <div class="general-box clearfix">
+
+        <div class="boxWrapper">
+            <div class="boxHeadingPanel">
+                <h1>Search Result</h1>
+            </div>
+
+            <table class="table table-hover tablesorter">
+                <thead>
+                    <tr>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.ObjPatientDischageBillDetailsViewModel.PatientId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ObjPatientDischageBillDetailsViewModel.PatientFullName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ObjPatientDischageBillDetailsViewModel.Age)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ObjPatientDischageBillDetailsViewModel.Address)
+                        </th>
+
+
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.PatientDischageBillDetailsViewModelList.Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="10" style="text-align: center;">Data not found ! </td>
+                        </tr>
+                    }
+                    @foreach (var item in Model.PatientDischageBillDetailsViewModelList)
+                    {
+    
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PatientId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PatientFullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Age)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+                            <td>@Html.ActionLink("Refund", "RefundForm", new { @id=item.PatientId},null)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

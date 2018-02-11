@@ -1,0 +1,80 @@
+﻿@model HospitalManagementSystem.Models.OpdModel
+
+
+
+
+@{
+    Layout = null;
+    int i = 1;
+}
+
+
+
+
+
+<table class="table table-hover tablesorter">
+
+    <thead>
+        <tr>
+            <th>S.N:</th>
+            <th>Name:</th>
+
+            <th>Address
+            </th>
+            <th>Mobile
+
+            </th>
+            <th>
+            Registration Date
+                    <th>Age</th>
+            <th>Sex</th>
+            <th>Blood Group</th>
+
+
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.OpdModelList)
+        {
+            <tr>
+                <td>@i</td>
+                <td>@item.FirstName </td>
+                <td>@item.Address</td>
+                <td>@item.MobileNumber</td>
+                <td>@item.RegistrationDate.ToShortDateString() </td>
+                <td>@item.AgeYear</td>
+                <td>@item.Sex</td>
+                <td>@item.BloodGroup</td>
+
+
+
+            </tr>
+            i++;
+        }
+
+    </tbody>
+</table>
+
+
+<div class="boxFooter">
+
+    <div id="pager" style="">
+        <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width: 70px; height: 30px;">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+        </form>
+    </div>
+
+</div>
+

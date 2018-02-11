@@ -1,0 +1,281 @@
+﻿@model Hospital.Models.SetUpMemberShipModel
+
+
+
+
+
+<script src="~/Scripts/jquery-ui-1.8.20.js"></script>
+
+@*<script src="~/Scripts/jquery-1.7.1.js"></script>*@
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+
+
+
+  @*for talble sorter*@
+
+@*<link href="~/Content/TableSort.css" rel="stylesheet" />*@
+@*<script src="~/Scripts/jquery-1.4.4.min.js"></script>*@
+<script src="~/Scripts/jquery.tablesorter.js"></script>
+@*<script src="~/Scripts/jquery.tablesorter.pager.js"></script>*@
+
+
+
+        <script type="text/javascript">
+            var j = $.noConflict();
+            j(function () {
+                j("table.tablesorter").tablesorter({ widthFixed: true, sortList: [[0, 0]] })
+                .tablesorterPager({ container: j("#pager"), size: j(".pagesize option:selected").val() });
+            });
+    </script>
+
+
+
+
+
+
+
+        <div class="general-box clearfix">
+
+       <div class="boxWrapper">
+    <div class="boxHeadingPanel"><h1>Member Dependents</h1></div>
+
+<table class="table table-hover tablesorter">
+    <thead>
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.SetupMemberID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MemberID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MemberTypeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JoinDate)
+        </th>*@
+        <th>
+            Name
+        </th>
+        <th>
+            Member Type
+        </th>
+      @*  <th>
+            Maximum Dependent
+        </th>*@
+       @* <th>
+            Aviable Dependent
+        </th>*@
+
+        <th>
+            @Html.DisplayNameFor(model => model.MobileNumber)
+        </th>
+         <th>
+            @Html.DisplayNameFor(model => model.ContactNumber)
+        </th>
+        <th>Address</th>
+        @*
+       
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BloodGroupID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Remarks)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>*@
+        <th>Action</th>
+   @*     <th>Action</th>*@
+    </tr>
+        </thead>
+    <tbody>
+
+@foreach (var item in Model.lstOfsetSetUpMemberShipModel)
+{
+    <tr>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.SetupMemberID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MemberID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MemberTypeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JoinDate)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName) @item.MiddleName @item.LastName
+        </td>
+        <td>
+            @Hospital.Utility.MemberTypeName(item.MemberTypeID)
+        </td>
+
+     @*   <td>
+            @Html.DisplayFor(modelItem => item.MaximumDependent)
+
+        </td>*@
+
+        @*<td>
+            @Html.DisplayFor(modelItem=>item.cnt)
+        </td>*@
+
+      
+        <td>
+            @Html.DisplayFor(modelItem => item.MobileNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContactNumber)
+        </td>
+         <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+         @*
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.BloodGroupID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Remarks)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>*@
+        <td>
+
+
+         
+                 
+            @* @Html.Action("MemberSelf","Opd", new{@id=item.SetupMemberID}) *@
+
+            @Html.ActionLink("self","MemberSelf","Opd",new {Id=item.SetupMemberID,FirstName=item.FirstName,MembertypeId=item.MemberTypeID,MaxDepend=item.MaximumDependent,DueDepend=item.cnt},null)
+            
+       
+         
+            
+           
+           
+        </td>
+
+       @* <td>
+          
+            @if(item.MaximumDependent>0)
+            {
+                
+             @Html.ActionLink("Relations", "Relations",null,new { @Id = item.SetupMemberID, Name = item.FirstName,@class="RelationCls"})
+            }
+
+        </td>*@
+
+    </tr>
+}
+
+        </tbody>
+</table>
+           
+  <div id="relationsrelId"></div>
+    </div>
+
+               @*for sorting *@
+        
+               <div class="boxFooter">
+                   
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:20px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="5">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+
+               </div> 
+
+        @*---------------*@
+            </div>
+
+
+<script>
+
+    var mmdlg = $.noConflict();
+
+    mmdlg('.RelationCls').click(function (e) {
+        
+        e.preventDefault();
+        var id = this.id;
+
+       // alert(id);
+
+        mmdlg.get('/SetupMemberDependent/RelationsPartial/' + id,
+             function (data) {
+                 
+                 mmdlg('#relationsrelId').html(data);
+
+                 mmdlg(function () {
+
+                     
+
+                     mmdlg('#relationsrelId').dialog({
+                         position: [290, 190],
+                         resizable: true,
+                         overFlow: scroll,
+                         minWidth: 600,
+                         maxWidth: 600,
+                         height: 200,
+                         title: "Relation",
+                         zIndex:1010
+                        
+
+                        
+
+
+
+
+                         //close: function () { $(this).remove() },
+                         //modal: true
+
+                     });
+
+                 });
+                  
+             });
+   
+
+      
+    });
+
+</script>

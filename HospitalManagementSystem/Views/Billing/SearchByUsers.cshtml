@@ -1,0 +1,143 @@
+﻿@model HospitalManagementSystem.Models.BillingModel
+@using Humanizer;
+
+@{
+    ViewBag.Title = "Billing Details";
+    Layout = "~/Views/Shared/_BillingLayout.cshtml";
+}
+
+<h2 style="text-align: center;">Billing Details By User</h2>
+<script>
+    var j = $.noConflict();
+    j(document).ready(function (e) {
+        //j('#TransactionDate').val("");
+        //  j("#TransactionDate").attr("value", "@DateTime.Now.ToShortDateString()");
+        j("#TransactionDate").datepicker();
+    });
+</script>
+
+
+
+<div class="contentWrapper">
+
+    @if (TempData["a"] != null)
+    { 
+        <script type="text/javascript">
+            alert("Invalid Data");
+
+        </script>
+
+    }
+    <div class="bs-docs-example form-inline">
+
+        @using (Html.BeginForm())
+        {   
+      
+            <div class="row-fluid singleline">
+
+                <label>
+                    <span>Date</span>
+                    @Html.TextBoxFor(model => model.TransactionDate, new { @Value = DateTime.Now.ToShortDateString() })
+                </label>
+                <label>
+                    <span>User</span>
+                    @Html.DropDownListFor(model => model.UserId, HospitalManagementSystem.Utility.GetRegisterEmployeeIdWithName())
+                </label>
+                <label>
+                    @*@Html.LabelFor(model => model.UserId)
+                    @Html.DropDownListFor(model => model.UserId, Hospital.Utility.GetAllRegisterUser())*@
+                </label>
+                <input type="submit" value="Show" />
+            </div>
+        }
+    </div>
+
+    <br />
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Result</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OpdId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DepartmentID)
+
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Narration1)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LedgerName)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.TransactionDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Amount)
+                        </th>
+
+                    </tr>
+                    @if (Model.BillingModelList != null)
+                    {
+                        foreach (var item in Model.BillingModelList)
+                        { 
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OpdId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+
+                                @HospitalManagementSystem.Utility.GetDepartmentName(item.DepartmentID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Narration1)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LedgerName)
+                            </td>
+                            <td>
+                                @*@Html.DisplayFor(modelItem => item.TransactionDate)*@
+                                @item.TransactionDate.Humanize()
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            @*<td>
+                                @Html.ActionLink("Print", "Pdfdate", new { date = item.TransactionDate })
+                            </td>*@
+
+                        </tr>
+   
+   
+   
+                        }
+                    }
+                </table>
+
+
+
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+</div>

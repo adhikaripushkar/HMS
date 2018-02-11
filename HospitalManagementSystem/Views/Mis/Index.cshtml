@@ -1,0 +1,503 @@
+﻿@model HospitalManagementSystem.Models.EmergecyMasterModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MisLayOutLayout.cshtml";
+}
+
+
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var id = $('.deptlist').val();
+            if (id == 4) {
+                //alert();
+                $('#adm-dis').dialog({
+
+                    resizable: false,
+                    modal: true,
+                    width: 1300,
+                    height: 600,
+                    zIndex: 10000000,
+
+                    buttons: [
+                    {
+                        text: "Close",
+                        click: function () {
+                            $('#adm-dis').dialog("close");
+                            //                    $(this).dialog("close");
+                        }
+                    }
+                    ],
+                    close: function (event, ui) {
+                        //                $('#confmsg').remove();
+                    }
+                });
+            }
+            $("#name").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Mis/SearchPatient",
+                        type: "POST",
+                        dataType: "json",
+                        data: { s: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                //alert(item);
+                                return { label: item, value: item };
+                            }))
+
+                        }
+                    })
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+        })
+    </script>
+
+}
+
+<script src="~/Scripts/jquery-1.7.2.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.8.21.custom.min.js"></script>
+<link href="~/Content/jquery-ui-1.8.21.custom.css" rel="stylesheet" />
+<style>
+    .customtable td {
+        border: none;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+
+        var id = $('.deptlist').val();
+        if (id == 3) {
+            $('#hideshow').show();
+            $('#btnsubmit').hide();
+
+        }
+        if (id == 1 || id == 2) {
+            $("#btnstat").show();
+        }
+    });
+
+    var j = $.noConflict();
+    j(function () {
+        j(".fromdate").datepicker();
+        j(".todate").datepicker();
+    });
+
+</script>
+
+
+<h2>Index</h2>
+<div class="contentWrapper">
+    @using (Html.BeginForm())
+    {
+   
+        <table class="customtable">
+
+            <tr>
+                <td>Date From
+                </td>
+                <td>
+
+                    @if (ViewBag.fromdate != null)
+                    {
+                        <input type="text" name="FromDate" class="fromdate" value="@ViewBag.fromdate" required/>
+                    }
+                    else
+                    {
+
+                        <input type="text" name="FromDate" class="fromdate" value="@DateTime.Now.ToShortDateString()" required/>
+                    }
+
+
+                </td>
+
+
+                <td>Date To
+                </td>
+                <td>
+                    @if (ViewBag.todate != null)
+                    {
+                        <input type="text" name="ToDate" class="todate" value="@ViewBag.todate" required/>
+                    }
+                    else
+                    {
+                     
+                        <input type="text" name="ToDate" class="todate" value="@DateTime.Now.ToShortDateString()" required/>
+                    }
+                </td>
+                <td>Report</td>
+                <td>
+                    @Html.DropDownList("departmentlist", HospitalManagementSystem.Providers.MisPorvider.GetDepartment(), new { @class = "deptlist" })
+                </td>
+                
+            </tr>
+        </table>
+               <input type="submit" value="Show Report" id="btnsubmit" />
+        <span>
+            <input type="button" id="btnstat" value="Statistics" style="display: none" />
+        </span>
+        <div id="hideshow" style="display: none">
+
+            @Html.Partial("Emergency", Model.EmergencyMasterModelList)
+
+        </div>
+        <div id="stat"></div>
+        
+        <input type="text" value="@ViewBag.department" style="display:none" id="deptvalue"/>
+                    if (ViewBag.department == "1")
+                    {
+        <table id="opd" class="table">
+            <tr>
+                <th>Opd Id
+                </th>
+                <th>Name
+                </th>
+                <th>Sex
+                </th>
+                <th>Registration Date
+                </th>
+
+                <th>Amount
+                </th>
+            </tr>
+
+            @try
+            {
+                int i = 0;
+                foreach (var item in ViewBag.List)
+                {
+                    i++;
+                <tr>
+                    <td>
+                        @item.OpdId
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Sex
+                    </td>
+                    <td>
+                        @*// @item.RegistrationDate*@
+
+                        @Convert.ToDateTime(@item.RegistrationDate).ToShortDateString()
+                    </td>
+
+                    <td>
+                        @item.Amount
+                    </td>
+                </tr>
+                }
+
+                if (i == 0)
+                {
+                    TempData["message"] = "No Results Found.";
+                <tr>
+                    @TempData["message"]
+                </tr>
+                }
+
+            }
+
+            catch (Exception e)
+            {
+
+            }
+
+        </table>
+    
+                    }
+                    else if (ViewBag.department == "2")
+                    {
+        <table id="operation" class="table">
+            <tr>
+                <th>Operation Theatre Id
+                </th>
+                <th>Operation Date
+                </th>
+                <th>Operation Time
+                </th>
+                <th>Operation Room
+                </th>
+                <th>Operation End Time
+                </th>
+                <th>Patient
+                </th>
+                <th>Fee Date
+                </th>
+                <th>Total Amount
+                </th>
+            </tr>
+            @try
+            {
+                int i = 0;
+                foreach (var item in ViewBag.List)
+                {
+                    i++;
+                <tr>
+                    <td>
+                        @item.OperationTheatreId
+                    </td>
+                    <td>
+                        @item.OperationDate
+                    </td>
+                    <td>
+                        @item.OperationTime
+                    </td>
+                    <td>
+                        @item.OperationRoom
+                    </td>
+                    <td>
+                        @item.OperationEndTime
+                    </td>
+                    <td>
+                        @item.PatientName
+                    </td>
+                    <td>
+                        @item.FeeDate
+                    </td>
+                    <td>
+                        @item.TotalCharge
+                    </td>
+                </tr>
+                }
+                if (i == 0)
+                {
+                    TempData["message"] = "No Results Found.";
+                <tr>
+                    @TempData["message"]
+                </tr>
+                }
+            }
+            catch { }
+        </table>
+                    }
+                    //else if (ViewBag.department == "4")
+                    //{
+        <div style="display: none" id="adm-dis" title="Admission/Discharge Report">
+            @{
+                    Html.RenderPartial("AdmissionDischarge");
+            }
+        </div>@*
+        }*@
+
+        //else if (ViewBag.department == "3")
+        //{
+@*<div id="hideshow" style="display: none">
+
+            @Html.Partial("Emergency", Model.EmergencyMasterModelList)
+
+        </div>*@
+        //}
+
+    }
+    @*@if (ViewBag.department == "3") {
+    Html.RenderPartial("Emergency");
+}*@
+
+    <div id="msg" title="Message!!!" style="display: none;">An error occured!!!</div>
+</div>
+
+<script>
+
+    $('.deptlist').change(function (e) {
+
+
+        e.preventDefault();
+
+        var id = $('.deptlist').val();
+        var depid = $('#deptvalue').val();
+        //alert(id);
+
+        if (id != 1 && id != 2) {
+            $("#btnstat").hide();
+        }
+        else $("#btnstat").show();
+        if (id != 3) {
+
+            $('#hideshow').hide();
+            $('#btnsubmit').show();
+
+        }
+        else {
+
+            $('#hideshow').show();
+            $('#btnsubmit').hide();
+            $('#opd').hide();
+            $('#operation').hide();
+        }
+
+        //if (depid == 3 && id == 3) {
+        //    $('#btnsubmit').hide();
+        //}
+        //if (id != 3) {
+        //    $('#btnsubmit').show();
+        //}
+    });
+
+    //var depid = $('#deptvalue').val();
+    //if (depid == 3) {
+    //    $('#btnsubmit').hide();
+    //}
+
+
+</script>
+<script type="text/javascript">
+
+    //var jq = $.noConflict();
+
+    $('.patientname').keyup(function () {
+        //alert(this.value);
+        //alert("second");
+        var id = this.value;
+        var url = '@Url.Action("SearchPatient","Mis")';
+        $.post(url + "/" + id, function (data) {
+            $(data).each(function (i) {
+                //alert(data[i]);
+
+            });
+            
+            
+        });
+    
+    });
+
+    
+
+</script>
+<script>
+    var jr = $.noConflict();
+    jr("#btnstat").click(function () {
+
+        jr('#opd').hide();
+        jr('#operation').hide();
+
+        var id = jr('.deptlist').val();
+        var df = jr(".fromdate").val();
+        var dt = jr(".todate").val();
+        //  alert(df+" "+dt);
+        if (df == "" || dt == "") {
+            if (df == "") jr(".fromdate").focus();
+            if (dt == "") jr(".todate").focus();
+            return false;
+        }
+        if (id == 1) {
+            jr.ajax({
+
+                url: "/Mis/Statistics",
+                type: "get",
+
+                data: { id: id, df: df, dt: dt },
+                success: function (data) {
+
+                    jr('#stat').html(data);
+                    //jr('#stat').dialog({
+
+                    //    resizable: false,
+                    //    modal: true,
+                    //    width: 'auto',
+                    //    height: 'auto',
+                    //    buttons: [
+                    //    {
+                    //        text: "Close",
+                    //        click: function () {
+                    //            jr('#stat').dialog("close");
+                    //            //                    $(this).dialog("close");
+                    //        }
+                    //    }
+                    //    ],
+                    //    close: function (event, ui) {
+                    //        //                $('#confmsg').remove();
+                    //    }
+                    //});
+                },
+                error: function (e) {
+                    //alert('Sorry Error Occured');
+                    //e.preventDefault();
+                    jr('#msg').dialog({
+
+                        resizable: false,
+                        modal: true,
+                        buttons: [
+                        {
+                            text: "Ok",
+                            click: function () {
+                                jr('#msg').dialog("close");
+                                //                    $(this).dialog("close");
+                            }
+                        }
+                        ],
+                        close: function (event, ui) {
+                            //                $('#confmsg').remove();
+                        }
+                    });
+                }
+            })
+        } else if (id == 2) {
+            jr.ajax({
+
+                url: "/Mis/OperationStatistics",
+                type: "get",
+
+                data: { id: id, df: df, dt: dt },
+                success: function (data) {
+
+                    jr('#stat').html(data);
+                    //jr('#stat').dialog({
+
+                    //    resizable: false,
+                    //    modal: true,
+                    //    width: 'auto',
+                    //    height: 'auto',
+                    //    buttons: [
+                    //    {
+                    //        text: "Close",
+                    //        click: function () {
+                    //            jr('#stat').dialog("close");
+                    //            //                    $(this).dialog("close");
+                    //        }
+                    //    }
+                    //    ],
+                    //    close: function (event, ui) {
+                    //        //                $('#confmsg').remove();
+                    //    }
+                    //});
+                },
+                error: function (e) {
+                    //alert('Sorry Error Occured');
+                    //e.preventDefault();
+                    jr('#msg').dialog({
+
+                        resizable: false,
+                        modal: true,
+                        buttons: [
+                        {
+                            text: "Ok",
+                            click: function () {
+                                jr('#msg').dialog("close");
+                                //                    $(this).dialog("close");
+                            }
+                        }
+                        ],
+                        close: function (event, ui) {
+                            //                $('#confmsg').remove();
+                        }
+                    });
+                }
+            })
+        }
+    });
+</script>
+

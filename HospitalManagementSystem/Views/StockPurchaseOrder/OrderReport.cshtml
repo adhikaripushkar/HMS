@@ -1,0 +1,226 @@
+﻿@model Hospital.Models.StockPurchaseOrderModel
+
+@{
+    ViewBag.Title = "OrderReport";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+    decimal totalFinalAmount = Convert.ToDecimal(0);
+}
+<script type="text/javascript">
+    function prints(divName) {
+
+        //Get the HTML of div
+        var divElements = document.getElementById(divName).innerHTML;
+        //Get the HTML of whole page
+        var oldPage = document.body.innerHTML;
+
+        //Reset the page's HTML with div's HTML only
+        document.body.innerHTML = "<html><head><title></title></head><body>" + divElements + "</body>";
+
+        //Print Page
+        window.print();
+
+        //Restore orignal HTML
+        document.body.innerHTML = oldPage;
+
+        //disable postback on print button
+        return false;
+
+    }
+</script>
+
+
+<h2>Order Report</h2>
+
+<div class="contentWrapper">
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; grid-row-align: center; padding: 5px;">
+        <style>
+            .custom-table td {
+                border: none;
+            }
+        </style>
+
+        <div style="font: bold; font-size: 16px; text-align: center;">
+            @if (@Hospital.Utility.GetPathOfHospitalLogo() != null && @Hospital.Utility.GetPathOfHospitalLogo() != "")
+            {
+                <div style="text-align: center;">
+                    <div class="holder">
+                        <img src="~/Content/HospitalLogo/@Hospital.Utility.GetPathOfHospitalLogo()" style="width:48px; height:55px;"/>
+                    </div>
+                </div>
+            }
+            @if (@Hospital.Utility.GetHospitalTitleName() != null && @Hospital.Utility.GetHospitalTitleName() != "")
+            {
+                <span>@Hospital.Utility.GetHospitalTitleName()</span>
+            }
+            <br />
+
+            @Hospital.Utility.GetHospitalName()<br />
+            <div style="height: 80px;">
+                <span style="font-size: 15px; text-align: center">@Hospital.Utility.HospitalAddress()</span><br />
+                <span style="font-size: 14px; text-align: center">Website:-@Hospital.Utility.HospitalUrl()</span><br />
+                <span style="font-size: 14px; text-align: center">Ph:-@Hospital.Utility.HospitalPhone()</span><br />
+                <br />
+                <span style="font-size: 14px; text-align: center; font-weight: bold">Purchase Order Report</span>
+            </div>
+            <br />
+            <br />
+
+        </div>
+
+        <div style="float: right;">
+            <span>Date: @Model.PurchaseOrderDate.ToShortDateString()</span>(
+                    <span>@Hospital.Utility.getNepaliDate(Model.PurchaseOrderDate.ToShortDateString())</span>)
+        </div>
+        <table class="custom-table">
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    @*<span> Date: @Model.PurchaseOrderDate.ToShortDateString()</span><br />
+                    <span> @Hospital.Utility.getNepaliDate(Model.PurchaseOrderDate.ToShortDateString())</span>*@
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="width: 290px"></td>
+                <td></td>
+
+            </tr>
+
+            <tr>
+                <td>Contact:
+                </td>
+
+            </tr>
+            <tr>
+                <td>Email:nehconepal62@gmail.com
+                </td>
+
+                <td style="width: 370px;"><span style="float: right;">Purchase Order:@Model.PurchaseOrderNo</span></td>
+
+            </tr>
+
+        </table>
+        <br />
+        <table class="table table-hover tablesorter">
+            <tr>
+                <th>Details
+                </th>
+                <th>Quantity
+                </th>
+                <th>Unit Price
+                </th>
+                <th>Vat Amount
+                </th>
+                <th>Total
+                </th>
+            </tr>
+            @foreach (var item in Model.StockPurchaseOrderDetailsModel.StockPurchaseOrderDetailsModelList)
+            {
+                decimal totalVatAmount = item.TotalAmount - (item.Quantity * item.QuotationPrice);
+                decimal FinalVatAmount = Convert.ToDecimal(0);
+
+                if (totalVatAmount > 0)
+                {
+                    FinalVatAmount = totalVatAmount;
+                }
+                <tr class="details">
+                    <td>
+                        @Hospital.Utility.GetItemNameFromStockItemEntry(item.ItemId)
+                    </td>
+                    <td class="qty">
+                        @item.Quantity&nbsp;/@Hospital.Utility.GetUnitNameByItemId(item.ItemId)
+                    </td>
+                    <td class="rate">
+                        @item.QuotationPrice.ToString("N")/@Hospital.Utility.GetUnitNameByItemId(item.ItemId)
+                    </td>
+                    <td class="vamount">
+                        @FinalVatAmount
+
+                    </td>
+                    <td class="total">
+                        @item.TotalAmount
+                    </td>
+                </tr>
+                totalFinalAmount += item.TotalAmount;
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@totalFinalAmount</td>
+
+            </tr>
+            @*<tr>
+                    <td></td><td></td>
+                    <td>
+                        Sub Total
+                    </td>
+                    <td class="subtotal">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td></td><td></td>
+                    <td>
+                        13 % VAT
+                    </td>
+                    <td class="vat">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td></td><td></td>
+                    <td>
+                        Total
+                    </td>
+                    <td class="totalamount">
+
+                    </td>
+                </tr>*@
+        </table>
+        <br />
+        <br />
+        <table style="width: 300px;">
+            <tr>
+                <th>Additional Notes:</th>
+            </tr>
+            <tr>
+                <td style="height: 10px"></td>
+            </tr>
+            <tr>
+                <td style="height: 10px"></td>
+            </tr>
+            <tr>
+                <td style="height: 10px"></td>
+            </tr>
+            <tr>
+                <td style="height: 10px"></td>
+            </tr>
+        </table>
+        <span style="float: right; margin-top: -20px">Signature:__________________</span>
+    </div>
+    <span>
+        <input type="button" id="btnPrint" onclick="prints('printdiv')" value="Print" style="float: right;" /></span>
+    <span id="linkNewBack">@Html.ActionLink("Back to List", "Index")</span>
+
+</div>
+<script>
+    //var st = 0;
+    //var vat = 0;
+    //$(".details").each(function () {
+    //    var q = $(this).closest('tr').find('.qty').html();
+    //    var r = $(this).closest('tr').find('.rate').html();
+    //    //alert(q+" "+r);
+    //    var t = parseFloat(q) * parseFloat(r);
+    //    $(this).closest('tr').find('.total').html(t);
+    //    st = st + parseFloat(t);
+    //})
+    //$('.subtotal').html(st);
+    //vat = 13 * st / 100;
+    //$('.vat').html(vat);
+    //$('.totalamount').html(st+vat);
+</script>

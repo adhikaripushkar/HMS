@@ -1,0 +1,153 @@
+﻿@model HospitalManagementSystem.Models.DemandPatientAssignmentModel
+
+@{
+    ViewBag.Title = "AssignPatients";
+    Layout = "~/Views/Shared/_StockSetupLayout.cshtml";
+}
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        AddClickEvents();
+
+    });
+   
+</script>
+<div class="contentWrapper">
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model=>model.DemandId)
+    <fieldset>
+        <legend>Assign Patients</legend>
+        <div id="plist">
+        @if(Model.OpdModelList.Count>0){
+          
+<table style="width:500px;">
+    <tr>
+        <th colspan="5" style="color:brown">
+            Already Assigned Patients
+        </th>
+    </tr>
+    <tr>
+        <th>
+            Demand Id
+        </th>
+        <th>
+            Demand NO
+        </th>
+        <th>
+            Patient
+        </th>
+        <th>
+            Remarks
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+    @foreach (var item in Model.OpdModelList) { 
+        <tr id="tr_@item.OpdID" class="trow">
+            <td style="text-align:center;">
+                @Model.DemandId
+            </td>
+            <td style="text-align:center;">
+                @item.RegistrationMode
+            </td>
+            <td style="text-align:center;">
+                @item.FirstName @item.MiddleName @item.LastName
+            </td>
+            <td style="text-align:center;">
+               @item.MobileNumber
+            </td>
+            <td style="text-align:center">
+                
+                <img src="~/Images/images.jpg" id="@item.OpdID" class="remove" title="Remove" style="cursor:pointer"/>
+            </td>
+        </tr>
+    }
+</table>
+}
+      </div> 
+        <br />
+       
+
+       
+
+        
+
+
+         <div class="well well-small" id="Add-Item" style="width:480px;">
+         
+            @Html.ActionLink("Add Patients", "PatientList", null, new { @class = "addProductItem btn btn-primary"})
+          <br /><br />
+            <table id="tblotm" style="margin-left:-135px;">
+                  <tr>
+                      <td class="span5 pagination-centered" style="border:none">Patient Name</td>
+                     
+                      
+                  </tr>
+               </table><table>
+                   @* @try
+                    {
+                        foreach (var item in Model.OpdModelList)
+                        {
+                        
+                     <tr>
+                         @Html.Partial("PatientList", item)
+                    </tr>
+                        }
+                    }
+                    catch { }*@
+                   
+            </table>
+
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Remarks)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Remarks)
+            @Html.ValidationMessageFor(model => model.Remarks)
+        </div>
+       @* <div id="test">Test</div>*@
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+    </div>
+<script type="text/javascript">
+    $("#Add-Item").on('click', '.row-button', function () {
+        $(this).closest("div.row").remove();
+
+    });
+    $(".remove").live('click', function () {
+        //alert(this.id);
+        
+        $.get('/MedicalTest/RemovePatient/'+this.id,
+            function (data) {
+                //alert(data);
+                var id = "tr_" + data
+                //alert(id);
+                $('#' + id).remove();
+                
+                //$("#test").empty();
+                //$("#test").append('<table>' +
+                //    '<tr><th>Data</th></tr>' +
+                //    '<tr><td>' + data + '</td></tr>' +
+                //    '</table>')
+            }
+            );
+    });
+       
+   
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

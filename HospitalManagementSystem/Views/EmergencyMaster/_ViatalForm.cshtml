@@ -1,0 +1,131 @@
+﻿@model HospitalManagementSystem.Models.VitalsModel
+
+@using (Html.BeginForm("ViatalForm", "EmergencyMaster", FormMethod.Post, new { @id = "VitalFormId" }))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>VitalsModel</legend>
+
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.EmergencyVitalId)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.EmergencyVitalId)
+            @Html.ValidationMessageFor(model => model.EmergencyVitalId)
+        </div>
+        
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.EmergencyMasterId)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.EmergencyMasterId)
+            @Html.ValidationMessageFor(model => model.EmergencyMasterId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AVPU)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AVPU)
+            @Html.ValidationMessageFor(model => model.AVPU)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Pulse)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Pulse)
+            @Html.ValidationMessageFor(model => model.Pulse)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BP)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.BP)
+            @Html.ValidationMessageFor(model => model.BP)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RR)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RR)
+            @Html.ValidationMessageFor(model => model.RR)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SPO2)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SPO2)
+            @Html.ValidationMessageFor(model => model.SPO2)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TPR)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TPR)
+            @Html.ValidationMessageFor(model => model.TPR)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Wt)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Wt)
+            @Html.ValidationMessageFor(model => model.Wt)
+        </div>
+      
+        <p>
+            <input type="submit" value="Create" id="btnid" />
+        </p>
+    </fieldset>
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+}
+<script>
+    $('#crt').live('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            cache: false,
+            async: true,
+            type: "POST",
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {
+                alert(data);
+            }
+        });
+    });
+</script>
+
+
+<script>
+
+    $("#btnid").live("click", function (e) {
+            e.preventDefault();
+       
+
+            var form = $('#VitalFormId');
+
+            var url = form.attr("action");
+
+            var formData = form.serialize();
+            $.post(url, formData, function (data) {
+
+                $('#vltlistId').empty();
+
+                $('#vltlistId').html(data);
+                $('#VitalFormId').remove();
+
+            });
+ });
+
+
+    </script>

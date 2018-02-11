@@ -1,0 +1,329 @@
+﻿@model HospitalManagementSystem.Models.BillingCounterNewTestListModel
+@using HospitalManagementSystem.Helpers
+
+
+<script src="~/Scripts/OrderManagerScript.js"></script>
+<script src="~/Scripts/json.cycle.js"></script>
+
+
+<style>
+    #row-button {
+        height: 26px;
+        width: 30px;
+        background-image: url(/Content/del.jpg);
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+
+        #row-button:focus {
+            background-color: pink;
+        }
+
+    .contentWrapper input, .contentWrapper textarea, .contentWrapper select {
+        border-radius: 2px !important;
+        border: 1px solid #a5a4a4;
+        padding: 2px 4px;
+        font-size: 13px;
+        line-height: 1.2em;
+        background: #fff;
+        background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccc));
+        -webkit-appearance: none;
+        -webkit-box-shadow: 1px 1px 1px #fff;
+        -webkit-border-radius: 0.5em;
+    }
+</style>
+
+
+
+
+@using (Html.BeginCollectionItem("BillingCounterNewTestListModelList"))
+{
+    
+    <div class="row" style=" width: 100%;">
+
+        <table style="width: 100%;" id="MyTbleCls">
+
+            <tr>
+                <td>
+                    @Html.DropDownListFor(model => model.DepartmentID, HospitalManagementSystem.Utility.GetDepartmentListForPathology(), new { @id = "Department", @class = "deptcls", style = "width:6em;" })
+
+                </td>
+               
+
+                <td>
+                    <span class="size">@Html.ValidationMessageFor(model => model.TestName, "Required")</span>
+
+                    @Html.TextBoxFor(model => model.TestName, new { @required = "required", @id = "txtTestName", @class = "aucomcls", style = "width:8em;" })
+
+                    @Html.HiddenFor(model => model.TestName, new { @class = "hdTestName" })
+
+                    @Html.HiddenFor(model => model.TestId, new { @class = "clsTestId" })
+
+
+                </td>
+                 @*Edited By Pushkar*@
+                <td>
+                    @*@Html.ListBoxFor(model => model.ReferDoctorID, Hospital.Utility.GetDoctors())*@
+                    @Html.DropDownListFor(model => model.ReferDoctorID, HospitalManagementSystem.Utility.GetDoctors(), new { @class = "Doctor", @id = "DoctorID", style = "width: 8em;"})
+                    @*@Html.DropDownListFor(model => model.ReferDoctorID, Hospital.Utility.GetDoctors().Where(x => x.Text == "Unit"), new { @class = "DoctorID" })*@
+                                    
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.ShowingRateOnly, new { @id = "rateOnly", @class = "rateOnlyClass", style = "width:4em;", @readonly = "true" })
+                    @Html.HiddenFor(model => model.ShowingTaxOnly, new { @id = "TaxOnlyShow", @class = "TaxOnlyShowClass" })
+                </td>
+
+                @*<td>
+                    @Html.DropDownListFor(model=>model.TestTime, Hospital.Utility.getTimes(), new { @class="timcls", style = "width:3em;" })
+                    @Html.TextBoxFor(model => model.TestTime, new { @class = "timcls", style = "width:1.5em;", @Value = "1", @maxlength = "2" })
+
+                </td>*@
+                <td>
+                    @Html.DropDownList("getDiscountIN", HospitalManagementSystem.Utility.getDiscountIN(), new { @class = "disincls", style = "width:4em;" })
+
+                </td>
+
+                <td>
+                    @Html.TextBox("txtPer", "0", new { @class = "percls", style = "width:4em;" })
+
+                </td>
+
+
+                <td>
+
+
+                    @Html.TextBoxFor(model => model.Rate, new { style = "width:4em;", @class = "ratecls", @readonly = "true" })
+                    @Html.HiddenFor(model => model.Rate, new { style = "width:4em;", @class = "ratehcls" })
+
+
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.TaxAmount, new { style = "width:2em;", @class = "taxcls", @readonly = "true" })
+                    @Html.HiddenFor(model => model.TaxAmount, new { style = "width:4em;", @class = "taxhcls" })
+                </td>
+
+                <td>
+                    @Html.TextBoxFor(model => model.Price, new { style = "width:4em;", @class = "pricecls", @readonly = "true" })
+
+                </td>
+
+                <td>
+                    @Html.TextBoxFor(model => model.DiscountPer, new { style = "width:2em;", @class = "disPercls", @readonly = "true" })
+
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.Discount, new { style = "width:4em;", @class = "disAmountcls", @readonly = "true" })
+
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.TotalAmount, new { style = "width:4em;", @class = "totalAmountcls", @readonly = "true" })
+                </td>
+                <td>
+                    @*<input type="button" class="row-button btn btn-warning" value="Remove" /></td>*@
+
+                    <button type="button" class="row-button" title="Delete row" id="row-button">&nbsp</button>
+                </td>
+            </tr>
+
+        </table>
+
+
+    </div>
+    
+
+}
+
+@Scripts.Render("~/bundles/jqueryui")
+
+
+<script type="text/javascript">
+    $(function () {
+        $('.deptcls').focus();
+        $('#row-buttonadd').css('border-width', '0');
+        window.scrollBy(0, 50);
+
+    });
+
+    $('.ratecls ').focus(function () {
+        $('#row-buttonadd').css('border', '2px solid blue');
+        $('#row-buttonadd').focus();
+
+        CalculateTotalAmount();
+    });
+
+
+
+    $(".aucomcls").on("focusin", function (e) {
+
+        var df = $(this).closest("tr");
+        var d = df.find(".deptcls").val();
+
+
+
+        $(".aucomcls").autocomplete({
+
+            source: function (request, response) {
+                $.ajax({
+                    url: "/BillingCounter/SearchTestName?deptid=" + d,
+                    type: "POST",
+                    dataType: "json",
+
+                    data: { s: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item, value: item };
+                        }))
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+
+
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(".percls").on("blur", function (e) {
+        e.preventDefault();
+        var df = $(this).closest("tr");
+        var d = df.find(".deptcls").val();
+        var totalTimes = df.find(".timcls").val();
+        var discountIn = df.find(".disincls").val();
+        var txtRate = df.find(".ratecls").val();
+        var txtPer = df.find(".percls").val();
+        var TestTax = df.find(".taxhcls").val();
+        if (isNaN(txtPer)) {
+            txtPer = 0;
+        }
+
+        if (discountIn == 1) {
+
+            df.find(".disPercls").val(txtPer);
+            var disAmt = parseFloat(txtRate) * parseFloat(txtPer) / 100;
+            //alert(disAmt);
+            //disAmount = to_neat_decimal(disAmt);
+            //alert(toFixedOwn(disAmt,2));
+            disAmt = toFixedOwn(disAmt, 2);
+            df.find(".disAmountcls").val(disAmt);
+
+            var AfterDiscountAmount = parseFloat(txtRate) - parseFloat(disAmt);
+
+            //alert(txtRate + ' ' + disAmt);
+
+
+            var calculateNewTaxamt = (parseFloat(AfterDiscountAmount) * 0.05);
+
+            var txtamtNew = df.find(".taxhcls").val();
+
+            calculateNewTaxamt = toFixedOwn(calculateNewTaxamt, 2);
+            if (txtPer <= 0) {
+
+            }
+
+            df.find(".taxcls").val(calculateNewTaxamt);
+
+            //var NewTestWithNewTax = parseFloat(AfterDiscountAmount + calculateNewTaxamt);
+            var NewTestWithNewTax = eval(parseFloat(AfterDiscountAmount) + parseFloat(calculateNewTaxamt));
+            //alert(NewTestWithNewTax);
+            NewTestWithNewTax = to_neat_decimal(NewTestWithNewTax);
+            //NewTestWithNewTax = toFixedOwn(NewTestWithNewTax, 2);
+            //alert(NewTestWithNewTax);
+            //alert(AfterDiscountAmount + 'sdfds' + calculateNewTaxamt + '999' + NewTestWithNewTax);
+            df.find(".pricecls").val(NewTestWithNewTax);
+            //df.find(".pricecls").val(NewTestWithNewTax);
+
+        } else {
+
+            df.find(".disAmountcls").val(parseFloat(txtPer));
+
+        }
+
+        if (discountIn == 2) {
+            
+
+            var per = parseFloat(txtPer) / txtRate * 100;
+            
+            var AfterDisFinalAmt = parseFloat(txtRate - txtPer).toFixed(2);
+
+            df.find(".disPercls").val(per.toFixed(2));
+
+            var calculateNewTaxamt = parseFloat(AfterDisFinalAmt) * 0.05;
+            
+
+            df.find(".taxcls").val(toFixedOwn(calculateNewTaxamt,2));
+
+            var NewTestWithNewTax = parseFloat(AfterDisFinalAmt) + parseFloat(calculateNewTaxamt);
+            alert(NewTestWithNewTax);
+            NewTestWithNewTax = toFixedOwn(NewTestWithNewTax, 2);
+            //NewTestWithNewTax = to_neat_decimal(NewTestWithNewTax);
+
+            //df.find(".pricecls").val(NewTestWithNewTax.toFixed(2));
+            df.find(".pricecls").val(NewTestWithNewTax);
+
+
+        } else {
+
+            df.find(".disPercls").val(parseFloat(txtPer));
+
+        }
+
+        var disAmount = df.find(".disAmountcls").val();
+        var txtPrice = df.find(".pricecls").val();
+        var NewAmount = df.find(".pricecls").val();
+        df.find(".totalAmountcls").val(NewAmount);
+        CalculateTotalAmount();
+    });
+
+</script>
+
+<script type="text/javascript">
+    var TestAmount = 0;
+    $(".timcls").on("blur", function (e) {
+        e.preventDefault();
+        var df = $(this).closest("tr");
+        var txtRateh = df.find(".ratehcls").val();
+        var txtTaxh = df.find(".taxhcls").val();
+        var time = df.find(".timcls").val();
+        df.find(".ratecls").val(parseFloat(txtRateh) * parseFloat(time));
+        df.find(".taxcls").val(parseFloat(txtTaxh) * parseFloat(time));
+        var total = parseFloat(df.find(".ratecls").val()) + parseFloat(df.find(".taxcls").val());
+        total = total.toFixed(5);
+        total = total.slice(0, (total.indexOf(".")) + 3);
+        df.find(".pricecls").val(total);
+        df.find(".totalAmountcls").val(total);
+
+    });
+
+
+</script>
+
+<script type="text/javascript">
+
+    function toFixedOwn(num, fixed) {
+        fixed = fixed || 0;
+        fixed = Math.pow(10, fixed);
+        return Math.floor(num * fixed) / fixed;
+    };
+
+    function to_neat_decimal(val) {
+        if (isNaN(val)) {
+            alert(val + " is an invalid input");
+            return;
+        }
+        val = "" + Math.round(100 * val);
+        var dec_point = val.length - 2;
+
+        var first_part = val.substring(0, dec_point);
+        var second_part = val.substring(dec_point, val.length);
+
+        var result = first_part + "." + second_part;
+        return result;
+    };
+
+</script>

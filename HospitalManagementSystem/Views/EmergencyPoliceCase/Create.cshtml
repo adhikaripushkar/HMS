@@ -1,0 +1,177 @@
+﻿@model HospitalManagementSystem.Models.EmergencyPoliceCaseModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_EmergencyLayout.cshtml";
+}
+<style>
+    .editor-multiline-field textarea {
+    width: 650px;
+    height: 75px;
+}
+</style>
+
+
+
+<script src="~/Scripts/jquery.ui.core.js"></script>
+<script src="~/Scripts/jquery.ui.widget.js"></script>
+<script src="~/Scripts/jquery.ui.datepicker.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.ui.timepicker.js"></script>
+
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery.ui.timepicker.css" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+
+<script src="~/Scripts/json.cycle.js"></script>
+<script>
+
+
+    var j = $.noConflict();
+    j(function () {
+        j(".DateId").datepicker();
+        j(".TimeInId").timepicker();   
+    });
+</script>
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("Create", "EmergencyPoliceCase", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+  
+
+    
+
+        <fieldset>
+
+            <legend>Create</legend>
+            <div class="row-fluid singleline">
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.Date)</span>
+                     <div class="editor-label">
+                        @Html.LabelFor(model => model.Date)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Date, new { @class = "DateId", @Value = DateTime.Now.ToShortDateString() })
+                    </div>
+
+                </label>
+                     <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.TimeIn)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.TimeIn)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.TimeIn, new { @class = "TimeInId", @Value = DateTime.Now.ToString("hh:mm") })
+                    </div>
+
+                </label>
+                </div>
+              <div class="row-fluid singleline">
+                    <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.PatientName)</span>
+                     <div class="editor-label">
+                        @Html.LabelFor(model => model.PatientName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.PatientName)
+                    </div>
+
+                </label>
+                   <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.Age)</span>
+                     <div class="editor-label">
+                        @Html.LabelFor(model => model.Age)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Age)
+                    </div>
+
+                </label>
+                   <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.Gender)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Gender)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.Gender, HospitalManagementSystem.Utility.GetGenderList(), new { @class = "ddpsize" })
+
+                    </div>
+                </label>
+                  
+                  </div>
+             <div class="row-fluid singleline">
+                 <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.Address)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Address)
+                    </div>
+                    <div class="editor-field">
+                          @Html.TextBoxFor(model => model.Address)
+
+                    </div>
+                </label>
+                  <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.PhoneNo)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PhoneNo)
+                    </div>
+                    <div class="editor-field">
+                          @Html.TextBoxFor(model => model.PhoneNo)
+
+                    </div>
+                </label>
+                  <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.PatientCase)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PatientCase)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.PatientCase, HospitalManagementSystem.Utility.CaseList(), "select", new { @class = "ddpsize" })
+
+                    </div>
+                </label>
+                 </div>
+              <div class="row-fluid singleline">
+                  <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.RemarksA)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.RemarksA)
+                    </div>
+                    <div class="editor-multiline-field">
+                          @Html.EditorFor(model => model.RemarksA,new { style="width:650px; height:75px" })
+
+                    </div>
+                </label>
+                  </div>
+            <div class="row-fluid singleline">
+                <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.RemarksB)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.RemarksB)
+                    </div>
+                    <div class="editor-multiline-field">
+                          @Html.EditorFor(model => model.RemarksB,new { style="width:650px; height:75px" })
+
+                    </div>
+                </label>
+                  </div>
+            </fieldset>
+         <p>
+            <input type="submit" value="Create" />
+        </p>
+    }
+    <div>
+    @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+</div>

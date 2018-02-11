@@ -1,0 +1,167 @@
+﻿@model HospitalManagementSystem.Models.BillingModel
+
+@{
+    ViewBag.Title = "Billing Details";
+    Layout = "~/Views/Shared/_BillingLayout.cshtml";
+}
+
+<h2 style="text-align: center;">Today Billing Details</h2>
+<script>
+    var j = $.noConflict();
+    j(document).ready(function (e) {
+        //j('#TransactionDate').val("");
+        //  j("#TransactionDate").attr("value", "@DateTime.Now.ToShortDateString()");
+        j("#TransactionDate").datepicker();
+    });
+</script>
+
+
+
+<div class="contentWrapper">
+
+    @if (TempData["a"] != null)
+    { 
+        <script type="text/javascript">
+            alert("Invalid Data");
+
+        </script>
+
+    }
+    <div class="bs-docs-example form-inline">
+
+        @using (Html.BeginForm())
+        {   
+      
+            <div class="row-fluid singleline">
+
+                <label>
+                    @Html.LabelFor(model => model.TransactionDate)
+                    @Html.TextBoxFor(model => model.TransactionDate, new { @Value = DateTime.Now.ToShortDateString() })
+                    <input type="submit" value="Show" />
+                </label>
+            </div>
+        }
+    </div>
+
+    <br />
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Result</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OpdId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DepartmentID)
+
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Narration1)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LedgerName)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.TransactionDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Amount)
+                        </th>
+
+                    </tr>
+                    @if (Model.BillingModelList != null)
+                    {
+                        foreach (var item in Model.BillingModelList)
+                        { 
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OpdId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+
+                                @HospitalManagementSystem.Utility.GetDepartmentName(item.DepartmentID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Narration1)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LedgerName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TransactionDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            @*<td>
+                                @Html.ActionLink("Print", "Pdfdate", new { date = item.TransactionDate })
+                            </td>*@
+
+                        </tr>
+   
+   
+   
+                        }
+                    }
+                </table>
+
+
+
+
+            </div>
+
+
+            @*for sorting *@
+
+            @*            <div class="boxFooter">
+
+                <div id="pager" style="">
+                    <form>
+                        <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                        <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                        <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                        <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                        <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                        <select class="pagesize valid" style="width: 70px; height: 30px;">
+                            <option selected="selected" value="10">10</option>
+                            <option value="5">5</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                        </select>
+                    </form>
+                </div>
+
+            </div>*@
+
+            @*---------------*@
+
+        </div>
+
+
+
+
+        @if (TempData["Value"] != null)
+        {
+            <span style="margin-left: 850px;"><b>Total Amount @TempData["Value"]</b></span> 
+        }
+
+
+
+    </div>
+</div>

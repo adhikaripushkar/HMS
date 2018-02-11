@@ -1,0 +1,188 @@
+﻿@model HospitalManagementSystem.Models.MisModel
+
+@{
+    ViewBag.Title = "DoctorCommission";
+    Layout = "~/Views/Shared/_MisLayOutLayout.cshtml";
+    int i = 1;
+    decimal TotalAmountValue = Convert.ToDecimal(0);
+}
+
+
+<script>
+    var j = $.noConflict();
+    j(document).ready(function (e) {
+
+        $('#FromDateString').val("");
+        $('#TodateString').val("");
+
+        $("#FromDateString").attr("value", "@DateTime.Now.ToShortDateString()");
+        $("#TodateString").attr("value", "@DateTime.Now.ToShortDateString()");
+
+
+        j("#FromDateString").datepicker();
+        j("#TodateString").datepicker();
+
+    });
+
+
+</script>
+<h2 style="text-align: center;">List</h2>
+<div class="contentWrapper">
+
+    <div class="general-box clearfix">
+        <div style="font-weight: bold;">
+            @using (Html.BeginForm("DoctorCommission", "Mis", FormMethod.Get))
+            {
+                <p>
+                    <span style="font-size: 14px; font-weight: bold;">From:&nbsp;&nbsp;</span>@Html.TextBox("FromDateString")
+                    <span style="font-size: 14px; font-weight: bold;">To:&nbsp;&nbsp;</span>@Html.TextBox("TodateString")
+                    @*<span style="font-size: 14px; font-weight: bold;">Patient Name:&nbsp;&nbsp;</span>@Html.TextBox("NameOfPatient")*@
+
+                    <input type="submit" value="Search" />
+                </p>
+            }
+        </div>
+
+        <div class="general-box clearfix">
+
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Details</h1>
+                </div>
+                <div id="DateDetails"></div>
+                <div id="PrintDiv">
+                    <table class="table table-hover tablesorter">
+
+                        <tr style="fon">
+                            <th>SN</th>
+                            <th>Commission To</th>
+                            <th>Commission Total</th>
+                            <th>Details</th>
+                        </tr>
+
+
+                        @foreach (var item in Model.DoctorCommissionViewModelList)
+                        {
+     
+                            <tr>
+                                <td>@i</td>
+                                <td>@item.CommissionName</td>
+
+                                <td>@item.DoctorCommission</td>
+
+
+                                <td>
+                                    @{
+                            TotalAmountValue += item.DoctorCommission;
+                                    }
+
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                        <tr style="font-weight: bold;">
+                            <td colspan="2">Total :</td>
+                            <td colspan="3">@TotalAmountValue</td>
+
+                        </tr>
+
+                    </table>
+                </div>
+
+
+                @*<div style="font-size: 14px; font-weight: bold; margin-top: 10px; margin-left: 550px;">
+                    <span>Total Amount : &nbsp; @TotalAmountValue</span>
+                </div>*@
+
+
+            </div>
+
+
+        </div>
+        <span style="float: right;">
+            <input type="button" id="btnPrint" style="width: 50px;" onclick="print()" value="Print" />
+
+        </span>
+    </div>
+
+
+</div>
+<script>
+    var K = jQuery.noConflict();
+    K(document).ready(function () {
+
+        K("#NameOfPatient").autocomplete({
+            source: function (request, response) {
+                K.ajax({
+                    url: "/AjaxRequest/SearchIPPatienName",
+                    type: "POST",
+                    dataType: "json",
+                    data: { s: request.term },
+                    success: function (data) {
+                        response(K.map(data, function (item) {
+                            //alert(item);
+                            return { label: item, value: item };
+                        }))
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+
+
+    var hhv = $.noConflict();
+
+    function print() {
+
+        var msg = 'Do You Want To Print?';
+        var div = hhv("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            resizable: false,
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0', 'alert("hi");');
+
+                        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('PrintDiv').innerHTML.toString());
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+
+                    }
+                }
+            ]
+        });
+
+    };
+
+</script>
+
+
+
+
+
+
+
+

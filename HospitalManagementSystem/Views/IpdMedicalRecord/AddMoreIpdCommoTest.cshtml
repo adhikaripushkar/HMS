@@ -1,0 +1,44 @@
+﻿@using HospitalManagementSystem.Helpers
+@model HospitalManagementSystem.Models.IpdMRCommonTestModel
+
+<style>
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+@using (Html.BeginCollectionItem("IpdMRCommonTestModeList"))
+{
+  
+    
+    
+     
+    <div class="row" style="margin-left: 10px;">
+        Common Test Name
+       @Html.TextBoxFor(model => model.CommonTestName)
+        Details
+       @Html.TextBoxFor(model => Model.Details)
+        Date
+       @Html.TextBoxFor(model => model.IpdMRcCommonTesDate, new { @class = "MyDatePicker1", @Value = DateTime.Now.ToShortDateString() })
+
+
+
+        <input type="button" class="row-button btn btn-warning" value="Remove" />
+    </div>
+
+}
+
+
+    
+  @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+   

@@ -1,0 +1,294 @@
+﻿@model HospitalManagementSystem.Models.IpdRegistrationMasterModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+    int i = 1;
+}
+
+<h2 style="text-align: center;">IPD Registration</h2>
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+<script>
+    var j = $.noConflict();
+    j(document).ready(function (e) {
+
+        $('#FromDateString').val("");
+        $('#TodateString').val("");
+
+        $("#FromDateString").attr("value", "@DateTime.Now.ToShortDateString()");
+        $("#TodateString").attr("value", "@DateTime.Now.ToShortDateString()");
+
+
+        j("#FromDateString").datepicker();
+        j("#TodateString").datepicker();
+
+    });
+
+
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#linkNewBack').css('border', '2px solid blue');
+        $('#linkNewBack').css('padding', '6px');
+
+        $('#linkNewBack').focus();
+
+    });
+
+    $("#linkNewBack").live("focusout", function (e) {
+        $('#linkNewBack').css('border-width', '0');
+
+    });
+</script>
+
+
+
+<div class="contentWrapper">
+
+
+    <p>
+        @Html.ActionLink("Create New", "Create", null, new { @id = "linkNewBack" })
+    </p>
+
+
+    <div class="general-box clearfix">
+        <div style="font-weight: bold;">
+            @using (Html.BeginForm("Index", "IpdRegistrationMaster", FormMethod.Get))
+            {
+                <p>
+                    <span style="font-size: 14px; font-weight: bold;">From:&nbsp;&nbsp;</span>@Html.TextBox("FromDateString")
+                    <span style="font-size: 14px; font-weight: bold;">To:&nbsp;&nbsp;</span>@Html.TextBox("TodateString")
+                    <span style="font-size: 14px; font-weight: bold;">Patient Name:&nbsp;&nbsp;</span>@Html.TextBox("NameOfPatient")
+
+                    <input type="submit" value="Search" />
+                </p>
+            }
+        </div>
+
+        <div class="general-box clearfix">
+
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>IPD Registration</h1>
+                </div>
+
+
+                <div id="v">
+
+                    <table class="table table-hover tablesorter">
+
+                        <thead>
+                            <tr>
+                                <th>SN
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.IpdRegistrationID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.OpdNoEmergencyNo)
+                                </th>
+                                <th>Patient Name
+                                </th>
+                                <th>Sex
+                                </th>
+                                <th>Age
+                                </th>
+                                <th>Address
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.RegistrationDate)
+                                </th>
+                                @*<th>
+                                    @Html.DisplayNameFor(model => model.DepartmentID)
+                                </th>*@
+
+
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model.IpdRegistrationMasterModelList)
+                            {
+                                <tr>
+                                    <td>
+                                        @i
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.IpdRegistrationID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.OpdNoEmergencyNo)
+                                    </td>
+                                    <td>
+                                        @if (item.DepartmentID == 1001)
+                                        {
+
+                                            string stremer = HospitalManagementSystem.Utility.GetPatientNameWithIdFromEmergency(Convert.ToInt32(item.OpdNoEmergencyNo));
+                                            <span>@stremer</span>
+                                        }
+
+                                        else
+                                        {
+                                            string str = HospitalManagementSystem.Utility.GetPatientNameWithIdFromOpd(Convert.ToInt32(item.OpdNoEmergencyNo));
+                                            <span>@str</span>
+                
+                                        }
+
+                                    </td>
+                                    <td>
+                                        @HospitalManagementSystem.Utility.GetPatientSexTypeFromPatiendId(item.OpdNoEmergencyNo)
+                                    </td>
+                                    <td>
+                                        @HospitalManagementSystem.Utility.GetCurrentPatientAgeFromId(item.OpdNoEmergencyNo)
+                                    </td>
+                                    <td>
+                                        @HospitalManagementSystem.Utility.GetOpdAddress(item.OpdNoEmergencyNo)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RegistrationDate)
+                                    </td>
+                                    @*<td>
+                                        @HospitalManagementSystem.Utility.GetDepartmentName(item.DepartmentID)
+                                    </td>*@
+
+                                    <td>
+
+                                        @* @Html.ActionLink("Change", "Change","IpdRegistrationMaster", new { id = item.IpdRegistrationID,DepartmentID=item.DepartmentID})|*@
+
+
+
+                                        @Html.ActionLink("Change", "Change", new { id = item.IpdRegistrationID, DepartmentID = item.DepartmentID, OpdEmerNo = item.OpdNoEmergencyNo }) |
+          @*@Html.ActionLink("Print", "BillForm", new { id = item.IpdRegistrationID, DepartmentID = item.DepartmentID, OpdEmerNo = item.OpdNoEmergencyNo })*@|
+           @Html.ActionLink("Vital", "IpdVital", new { id = item.OpdNoEmergencyNo }) |
+                                        @Html.ActionLink("Discharge", "Discharge", new { id = item.OpdNoEmergencyNo, ipdid = item.IpdRegistrationID }) |
+                                        @Html.ActionLink("Shift", "ShiftFromIPD", new { id = item.OpdNoEmergencyNo, ipdid = item.IpdRegistrationID }) |
+                                        @Html.ActionLink("OT", "ActionToOT", new { id = item.OpdNoEmergencyNo, ipdid = item.IpdRegistrationID }) |
+            
+
+
+                                        @*  @Html.ActionLink("Delete", "Delete", new { id = item.IpdRegistrationID })*@
+                                    </td>
+
+                                </tr>
+                                        i++;
+                            }
+                        </tbody>
+                    </table>
+
+
+
+                </div>
+                @*for sorting *@
+
+                <div class="boxFooter">
+
+                    <div id="pager" style="">
+                        <form>
+                            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                            <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                            <select class="pagesize valid" style="width: 70px; height: 30px;">
+                                <option selected="selected" value="10">10</option>
+                                <option value="5">5</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+                            </select>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+            @*---------------*@
+            @*  @using (Html.BeginForm("ExportData", "Export", FormMethod.Post, new { enctype = "multipart/form-data" }))
+             {
+        <table>
+         <tr>
+             <td>
+
+             </td>
+             <td>
+                 <input  type="submit" name="Export" id="Export" value="Export"/>
+
+             </td>
+
+         </tr>
+        
+        </table>
+         }*@
+            <input type="submit" name="Export" id="Export" value="Export" />
+
+            <script type="text/javascript">
+
+                $('#Export').click(function () {
+
+                    var DepartmentID = $("#v").val();
+
+                    alert(DepartmentID)
+                    $.ajax({
+                        url: '/Export/ExportData/',
+                        type: 'GET',
+                        data: {
+                            divvalues: DepartmentID,
+
+                        },
+                        success: function (data) {
+                            $('#SearchById').html(data);
+                        },
+                        errro: function () {
+                            alert('Sorry Error Occured');
+                        }
+                    });
+                });
+            </script>
+
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<script>
+
+    //var K = jQuery.noConflict();
+    $(document).ready(function () {
+
+        $("#NameOfPatient").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/AjaxRequest/SearchPatienName",
+                    type: "POST",
+                    dataType: "json",
+                    data: { s: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            //alert(item);
+                            return { label: item, value: item };
+                        }))
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    });
+
+</script>
+

@@ -1,0 +1,92 @@
+﻿@model HospitalManagementSystem.Models.IpdMRCommonTestModel
+
+@{
+    ViewBag.Title = "EditIpdMRCommonTest";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+
+
+
+<script>
+
+    var Jnd = $.noConflict();
+    Jnd(function () {
+        Jnd("#dpicker").datepicker();
+
+    });
+
+</script>
+
+
+
+
+<h2 style="text-align: center">IPD Common Test</h2>
+
+<div class="contentWrapper">
+
+
+    @using (Html.BeginForm())
+    {
+    
+        <div class="bs-docs-example form-inline">
+            @Html.ValidationSummary(true)
+
+
+            <fieldset>
+                <legend>Edit</legend>
+
+                @Html.HiddenFor(model => model.IpdMRCommonTestID)
+
+                @Html.HiddenFor(m => m.OpdID)
+                @Html.HiddenFor(m => m.IpdRegistrationID)
+
+                <div class="row-fluid singleline">
+
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.CommonTestName)
+                        </div>
+                        <div class="editor-field">
+                            @Html.EditorFor(modelItems => modelItems.CommonTestName)
+                            @Html.ValidationMessageFor(model => model.CommonTestName)
+                        </div>
+                    </label>
+                    <label>
+
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Details)
+                        </div>
+                        <div class="editor-field">
+                            @Html.EditorFor(modelItems => modelItems.Details)
+                            @Html.ValidationMessageFor(model => model.Details)
+                        </div>
+                    </label>
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.IpdMRcCommonTesDate)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(modelItems => modelItems.IpdMRcCommonTesDate, Model.IpdMRcCommonTesDate.ToShortDateString(), new { @id = "dpicker" })
+                            @Html.ValidationMessageFor(model => model.IpdMRcCommonTesDate)
+                        </div>
+                    </label>
+                </div>
+
+                <p>
+                    <input type="submit" value="Edit" />
+                </p>
+            </fieldset>
+
+        </div>
+    }
+
+    <div>
+        @*@Html.ActionLink("Back to List", "Index")*@
+    </div>
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

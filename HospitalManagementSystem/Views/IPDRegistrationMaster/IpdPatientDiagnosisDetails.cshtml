@@ -1,0 +1,29 @@
+﻿@using HospitalManagementSystem.Helpers
+@model HospitalManagementSystem.Models.IpdPatientDiagnosisDetailsModel
+
+<script src="~/Scripts/OrderManagerScript.js"></script>
+<script src="~/Scripts/json.cycle.js"></script>
+
+
+@using (Html.BeginCollectionItem("ipdPatientDiagnosisDetailList"))  
+{
+    @Html.ValidationSummary(true)
+  
+    
+  
+    <div class="row" style="margin-left: 40px;">
+
+        @*@Html.TextBoxFor(model => model.DiagnosisID, new {@id="i_"+ViewBag.id})*@
+        @Html.DropDownListFor(model=>model.DiagnosisID,HospitalManagementSystem.Utility.GetDiagosisList())
+
+        
+
+       
+           
+        <input type="button" class="row-button btn btn-warning" value="Remove" />
+
+    </div>
+        
+   
+}
+  

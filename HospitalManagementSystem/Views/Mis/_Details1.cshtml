@@ -1,0 +1,80 @@
+﻿@model HospitalManagementSystem.Models.MisModel
+@{
+    decimal GrandTotalAmount = Convert.ToDecimal(0);
+}
+<style>
+    table#mytbl,
+    table#mytbl td {
+        width: 900px;
+        border: none !important;
+    }
+</style>
+
+<fieldset>
+    <legend>Details</legend>
+
+    @Html.ValidationSummary(true)
+
+    <table style="width: 500px;">
+        <tr>
+            <th>BillNo</th>
+            <th>Particulars</th>
+            <th>Commission Type</th>
+            <th>Commission Amount</th>
+
+        </tr>
+        @foreach (var item in Model.EHSDoctorDetailViewModelList)
+        {
+            GrandTotalAmount += item.TotalAmount;
+            <tr>
+                <td>@item.Billnumber</td>
+                <td>@item.TestId</td>
+                <td>@item.CommissionName</td>
+                <td>@item.FeeAmount</td>
+
+            </tr>
+        }
+
+    </table>
+
+    @*<div>
+        @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+    </div>*@
+
+</fieldset>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

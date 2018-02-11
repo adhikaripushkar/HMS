@@ -1,0 +1,104 @@
+﻿@model HospitalManagementSystem.Models.IpdRegistrationMasterModel
+
+@{
+    ViewBag.Title = "BillForm";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+
+<style>
+    table#tblnoborder,
+    table#tblnoborder td {
+        border: none !important;
+    }
+
+    .font {
+        font-weight: bold;
+    }
+
+    .small-table td {
+        border: none;
+    }
+
+    #printdiv {
+        background-image: url("/Images/MMTH_Logo.jpg");
+    }
+</style>
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);"> <br>');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+    window.onload = print;
+</script>
+
+
+
+
+
+<div class="contentWrapper">
+
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto;">
+
+       @MyHelpers.DesingForLogo()
+
+
+
+        <h3 style="text-align: center;"><u>IPD asdfasdfasdf sfsdafDepartment</u> </h3>
+
+        <br />
+
+
+
+
+        <table width="660" border="0" cellspacing="0" cellpadding="5" align="center">
+            <tr>
+                <td width="314"><span class="font">Ipd Id:-@Model.IpdRegistrationID/Patient:-@Model.OpdNoEmergencyNo</span> </td>
+                <td width="326"><span class="font">Date:-@Model.RegistrationDate.ToShortDateString()</span><span>Date Nepali: @HospitalManagementSystem.Utility.getNepaliDate(Model.RegistrationDate.ToShortDateString())</span> </td>
+
+            </tr>
+            <tr>
+                <td width="314"><span class="font">Name:-@Model.refOfEmergecyMasterModel.FirstName  @Model.refOfEmergecyMasterModel.MiddleName  @Model.refOfEmergecyMasterModel.LastName </span></td>
+                <td width="326"><span class="font">Age:-@Model.refOfEmergecyMasterModel.Age</span> </td>
+            </tr>
+            <tr>
+                <td><span class="font">Address:-@Model.refOfEmergecyMasterModel.Address</span> </td>
+                <td><span class="font">Sex:-@Model.refOfEmergecyMasterModel.Gender</span> </td>
+
+            </tr>
+            <tr>
+                <td><span class="font">Room No:-@Model.IpdPatientroomDetailsModel.RoomNo</span></td>
+                <td><span class="font">Bed No:-@Model.IpdPatientBedDetailsModel.BedNumber</span></td>
+
+            </tr>
+            <tr></tr>
+        </table>
+        <br />
+        <p style="text-align: center; font: bold;"><b>Fee:-@Model.IpdPatientBedDetailsModel.Amount </b></p>
+         <p style="text-align: center; font: bold;"><b>Fee:-@Model.TotalAmoutn </b></p>
+    </div>
+
+    <span>
+        <input type="button" id="btnPrint" style="width: 50px; float:right;" onclick="print()" value="Print" />
+
+    </span>
+    <br />
+    
+    <p id="linkNewBack">@Html.ActionLink("Back to List", "Index")</p>
+
+
+</div>

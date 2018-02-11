@@ -1,0 +1,85 @@
+﻿@model HospitalManagementSystem.Models.EmergencyPoliceCaseModel
+
+@{
+    ViewBag.Title = "Emergency Police Case";
+    Layout = "~/Views/Shared/_EmergencyLayout.cshtml";
+}
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+    window.onload = print;
+</script>
+
+
+ <div id="printdiv" style="width: auto;">
+
+      <table width="660" border="0" cellspacing="0" cellpadding="5" align="center">
+          <tr>
+         <td colspan="3" width="440" style="text-align:center;"><h2>Emergency Police Case Format</h2></td>
+          </tr>
+            <tr>
+               
+                <td colspan="2" width="440"><span class="font">Date:-</span> @HospitalManagementSystem.Utility.GetDateOnly(Model.Date.ToString()) AD / @HospitalManagementSystem.Utility.getNepaliDate(Model.Date.ToShortDateString()) BS</td>
+               
+                  <td width="220"><span class="font">Time:-</span>@Model.TimeIn</td>
+
+             </tr>
+    <tr> 
+        <td colspan="3" style="text-align: left;">
+             <h4><u>Patient Information</u> </h4>
+             </td>
+        </tr>
+            <tr>
+               
+                <td width="220"><span class="font">Name:-</span> @Model.PatientName</td>
+                <td width="220"><span class="font">Age:-</span> @Model.Gender</td>
+                   <td width="220"><span class="font">Sex:-</span> @Model.Gender</td>
+
+
+             </tr>
+          <tr>
+               
+                <td width="220"><span class="font">Address:-</span> @Model.Address</td>
+                <td width="220"><span class="font">Phone No:-</span> @Model.PhoneNo</td>
+                   <td width="220"><span class="font"></span></td>
+
+
+             </tr>
+           <tr><td colspan="3"></td> </tr>
+            <tr> 
+        <td colspan="3" style="text-align: left;">
+          <span class="font">Case:-</span>  @HospitalManagementSystem.Utility.GetCaseName(Model.PatientCase)
+             </td>
+        </tr>
+          <tr>
+                 <td colspan="3"><span class="font">Remark A:-</span>@Model.RemarksA</td>
+               
+          </tr>
+            <tr>
+                 <td colspan="3"><span class="font">Remark B:-</span>@Model.RemarksB</td>
+               
+          </tr>
+         
+      </table>
+     <br />
+     <br />
+     <br />
+      <div style="margin-left:220px; width:660px;">---------------------------------</div>
+     <div style="margin-left:245px;width:660px;"><h5>Police Incharge </h5></div>
+
+      
+ </div>

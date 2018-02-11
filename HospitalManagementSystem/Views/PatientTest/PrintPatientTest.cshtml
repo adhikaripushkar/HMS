@@ -1,0 +1,274 @@
+﻿@model Hospital.Models.PatientTestModel
+
+@{
+    ViewBag.Title = "Pathology";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+
+    
+}
+
+
+
+
+
+<style>
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+        font-size: 15px;
+    }
+
+
+    table#tstDsply {
+        border-style: solid;
+        border-width: 8px;
+    }
+
+        table#tstDsply thead {
+            background-color: #EBEBEB;
+        }
+
+        table#tstDsply th:hover {
+            color: black;
+        }
+
+
+
+    table#tbmdsplyamnt,
+    table#tbmdsplyamnt td {
+        border: none !important;
+    }
+</style>
+
+@*<h2 style="text-align: center;">Patient Test Bill</h2>*@
+
+
+
+
+
+
+
+<div class="contentWrapper">
+
+    <script type="text/javascript">
+        function print() {
+
+            //	    var values = document.getElementById('printDiv').innerHTML.toString();
+            var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+            printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+            printing.document.write('<div style="font-size:small;">');
+            printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+            printing.document.close();
+            printing.focus();
+            printing.print();
+            printing.close();
+        }
+        window.onload = print;
+    </script>
+
+    <div id="printdiv">
+
+        @if (@Hospital.Utility.GetPathOfHospitalLogo() != null && @Hospital.Utility.GetPathOfHospitalLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalLogo/@Hospital.Utility.GetPathOfHospitalLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@Hospital.Utility.GetPathOfHospitalLogo() == "")
+        { 
+            
+            <br />
+        
+        }
+
+        <div style="font: bold; font-size: 22px; text-align: center; height: 150px;">
+            @if (@Hospital.Utility.GetHospitalTitleName() != null && @Hospital.Utility.GetHospitalTitleName() != "")
+            {
+                <span>@Hospital.Utility.GetHospitalTitleName()</span>
+            }
+            <br />
+            @Hospital.Utility.GetHospitalName()<br />
+            <div style="height: 100px;">
+                <p style="font-size: 17px; text-align: center">@Hospital.Utility.HospitalAddress()</p>
+                <p style="font-size: 14px; text-align: center">Website:-@Hospital.Utility.HospitalUrl()</p>
+                <p style="font-size: 14px; text-align: center">Ph:-@Hospital.Utility.HospitalPhone()</p>
+            </div>
+
+        </div>
+        <hr />
+
+       
+
+        <table style="width: 700px; margin-left: 190px;" id="mytbl">
+
+            <tr>
+                <td>Patient ID: @Html.DisplayFor(m => Model.PatientInformationModel.EmergencyMasterId)</td>
+                <td>Name: @Html.DisplayFor(m => Model.PatientInformationModel.FirstName)
+                    @Html.DisplayFor(m => Model.PatientInformationModel.MiddleName)
+                    @Html.DisplayFor(m => Model.PatientInformationModel.LastName)
+
+                </td>
+
+
+
+                <td>Age: @Html.DisplayFor(m => Model.PatientInformationModel.Age)
+                </td>
+
+                <td>Gender: @Html.DisplayFor(m => Model.PatientInformationModel.Gender)
+
+                </td>
+
+            </tr>
+
+
+        </table>
+
+
+        <br />
+
+
+        <table style="border: 1px solid gray; width: 650px; margin-left: 190px;" id="tstDsply">
+            @{int i = 1;}
+
+            <tr style="border: 1px solid gray">
+                <th>Sn.No.</th>
+                <th>Test Name
+                </th>
+              @*  <th>Test Time
+                </th>
+                <th>Test Date
+                </th>*@
+
+                <th>Test Price
+                </th>
+                <th>Tax Amount
+                </th>
+                <th>Total Amount
+                </th>
+            </tr>
+
+            <tbody>
+                @foreach (var item in Model.TestCheckBoxListModelList)
+                {
+                    
+                    <tr style="border: 1px solid gray">
+
+                        <td>@i</td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TestName)
+                        </td>
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.TestTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TestDate)
+
+                            @Convert.ToDateTime(@item.TestDate).ToShortDateString()
+                        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaxAmount)
+                        </td>
+                        <td>
+                           @* @Html.DisplayFor(modelItem => item.TotalAmount)*@
+
+                            @{decimal totalamount = (decimal)(item.TotalAmount - item.DiscountPer);
+                              
+                              }
+                            @totalamount
+                        </td>
+                    </tr>
+
+                    i++;
+                }
+
+                @foreach (var item in Model.PathoOtherTestModelCBList)
+                {
+                    if (item.isChecked == true)
+                    {
+                    <tr style="border: 1px solid gray">
+
+                        <td>@i</td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OtherTestName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TestTimeR)
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.TestDate)*@
+
+                            @Convert.ToDateTime(@item.TestDateR).ToShortDateString()
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                    </tr>
+                    
+                    
+                    }
+
+                    i++;
+                }
+
+            </tbody>
+
+        </table>
+
+        <br />
+
+        <table style="margin-left: 650px;" id="tbmdsplyamnt">
+            <tbody>
+
+                <tr>
+                    <td>Total Amount</td>
+                    <td></td>
+                    <td>:</td>
+                    <td>@Html.DisplayFor(m => Model.TotalAmount)</td>
+                </tr>
+
+                <tr>
+                    <td>
+                    Discount<td>
+                    <td>:</td>
+                    <td>@Html.DisplayFor(m => Model.Discount)</td>
+                </tr>
+
+                <tr>
+                    <td>
+                    Payable Amount<td>
+                    <td>:</td>
+                    <td>@Html.DisplayFor(m => Model.PayableAmount)</td>
+                </tr>
+
+            </tbody>
+
+
+        </table>
+
+
+         <div style="margin-left: 100px;">
+            <span>User:- @Hospital.Utility.GetEmployeeNameFromEmpID(Hospital.Utility.GetCurrentLoginUserId())</span><br />
+            <span>Date:-@DateTime.Now.ToShortDateString()</span>
+
+        </div>
+
+
+
+    </div>
+    <span style="float: right;">
+        <input type="button" id="btnPrint" style="width: 50px;" onclick="print()" value="Print" /></span><br />
+    <p id="linkNewBack">
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+</div>
+

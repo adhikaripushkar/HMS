@@ -1,0 +1,139 @@
+﻿@model HospitalManagementSystem.Models.AdmissionDipositFeeModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>AdmissionDipositFeeModel</legend>
+
+        
+        <div class="row-fluid singleline">
+        
+        <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DepartmentID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DepartmentID)
+            @Html.ValidationMessageFor(model => model.DepartmentID)
+        </div>
+            </label>
+        <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FeeTypeID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FeeTypeID)
+            @Html.ValidationMessageFor(model => model.FeeTypeID)
+        </div>
+            </label>
+        <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DepositAmount)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.DepositAmount, new { @id="DepositAmountFee",@onkeyup="TosavetheRecords();"})
+            @Html.ValidationMessageFor(model => model.DepositAmount)
+        </div>
+            </label>
+        <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TaxPersentage)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.TaxPersentage, new { @id="TaxID",@onkeyup="TosavetheRecords();"})
+          @*  @Html.ValidationMessageFor(model => model.TaxPersentage)*@
+        </div>
+            </label>
+        <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.VatPersentage)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.VatPersentage, new { @id="VatID",@onkeyup="TosavetheRecords();"})
+          @*  @Html.ValidationMessageFor(model => model.VatPersentage)*@
+        </div>
+
+            </label>
+        <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TotalAmount)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.TotalAmount, new { @id="TotalDipositAmout",@readonly="readonly"})
+            @Html.ValidationMessageFor(model => model.TotalAmount)
+        </div>
+
+       
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Status)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Status)
+            @Html.ValidationMessageFor(model => model.Status)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+            </div>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+    <script type="text/javascript">
+
+        function TosavetheRecords() {
+
+            var txtDipositFee = $("#DepositAmountFee").val();
+            
+            var txtTax = $("#TaxID").val();
+            var txtVat = $("#VatID").val();
+
+            if (txtDipositFee == '') {
+                txtDipositFee = 0;
+            }
+            if (txtTax == '') {
+                txtTax = 0;
+            }
+            if (txtVat == '') {
+                txtVat = 0;
+            }
+
+            var vatAndTax = parseFloat(txtTax) + parseFloat(txtVat);
+
+            var Totalpercentage = parseFloat(txtDipositFee) * parseFloat(vatAndTax / 100);
+
+            //var varTotalAmount = parseInt(vartxtHospitalFee) + parseInt(vartxtTax) + parseInt(vartxtVat);
+            var varTotalAmount = parseFloat(txtDipositFee) + parseFloat(Totalpercentage);
+            var varTotalAmount = varTotalAmount.toFixed(2);
+            $("#TotalDipositAmout").val(varTotalAmount);
+
+
+
+            //$("#Totalfee").val();
+
+        }
+
+
+    </script>

@@ -1,0 +1,195 @@
+﻿@model IEnumerable<HospitalManagementSystem.Models.ItemBlockRecordsModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+<style>
+
+    .ui-dialog {
+        background:#F0F0F0 !important;
+   
+    }
+    .ui-title {
+        background:pink !important;
+    }
+    
+</style>
+
+<h2 style="text-align:center;">Search Distributed</h2>
+
+
+<div class="contentWrapper">
+
+    <h4 style="float:right;">Serail No From @ViewBag.serialno</h4>
+<div class="general-box clearfix">
+        <div class="general-box clearfix">
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel"><h1>Search Distributed</h1>  </div>
+<table class="table table-hover tablesorter">
+    <thead>
+    <tr>
+       
+        <th>
+            Block
+        </th>
+        <th>
+            Serial No
+        </th>
+        <th>
+            Item
+        </th>
+        <th>
+            Department
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Condition)
+        </th>
+        <th>
+            Room No
+        </th>
+        <th>
+        Supplier
+        </th>
+        <th>
+          Delivery Date
+        </th>
+        <th>
+            Remarks
+        </th>
+       
+       
+        
+    </tr>
+        </thead>
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+     
+
+        <td>
+            @HospitalManagementSystem.Utility.GetBlockNameWithID(item.ItemBlockSetupID)
+
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.SerialNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemName)
+        </td>
+        <td>
+            
+
+          @HospitalManagementSystem.Utility.GetDepartmentName(item.DepId)
+           
+            
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Condition)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoomNo)
+        </td>
+        <td>
+            
+
+            @HospitalManagementSystem.Utility.GetSupplierName(item.SupplierId)
+
+           
+
+        </td>
+        <td>
+         
+
+            @Convert.ToDateTime(item.DeliveryDate).ToShortDateString()
+
+
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Remarks)
+        </td>
+      
+      
+    </tr>
+}
+        </tbody>
+
+</table>
+
+</div>
+                </div>
+         </div>
+
+
+     @*for sorting *@
+        
+               <div class="boxFooter">
+                   
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+
+               </div> 
+
+        @*---------------*@
+
+
+
+    <br />
+
+
+    <div id="linkNewBack">
+    @Html.ActionLink("Back to List", "Index")
+</div>
+</div>
+   
+
+
+<script>
+
+    var noconfdlf = $.noConflict();
+    noconfdlf(".clsdetails").click(function (e) {
+        e.preventDefault();
+
+        alert(this.id);
+
+        noconfdlf.get('/ItemBlockRecord/Details', { id: this.id }, function (data) {
+
+            noconfdlf("#DatilsDivId").html(data);
+
+            noconfdlf(function () {
+
+                noconfdlf('#DatilsDivId').dialog({
+
+                    
+                    overFlow: scroll,
+
+                    width: 'auto',
+                    height: 'auto',
+                    resizable: true,
+                    title: "Item Details"
+                });
+
+            });
+
+        });
+
+    });
+       
+    </script>
+

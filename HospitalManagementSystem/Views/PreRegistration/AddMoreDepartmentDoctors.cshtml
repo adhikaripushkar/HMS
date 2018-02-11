@@ -1,0 +1,152 @@
+﻿@using Hospital.Helpers
+@model Hospital.Models.PreRegistrationPreferDetailsModel
+
+
+
+
+
+
+<link href="~/Content/themes/base/jquery.ui.timepicker.css" rel="stylesheet" />
+
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.ui.timepicker.js"></script>
+
+
+
+<script>
+    var y = $.noConflict();
+    y(function () {
+     
+        y(".PreferTimeIdn").timepicker();
+        y(".PreferDateIdn").datepicker();
+    });
+
+</script>
+
+
+
+<style>
+
+    .DepartmentID
+    {
+        width:207px;
+    }
+    .DoctorID
+    {
+        width:207px;
+    }
+
+    .PreferDateIdn {
+
+        width:200px;
+    }
+
+
+    .PreferDateIdn {
+         width:200px;
+    }
+  
+
+</style>
+
+
+
+@using (Html.BeginCollectionItem("PreRegistrationPreferModelList"))
+{
+
+    
+
+        <div class="row" style="margin-left:5px;">
+
+            
+        
+            @Html.HiddenFor(model => model.PreferDetailsID)
+        
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.DepartmentID)</div>
+             @Html.DropDownListFor(model => model.DepartmentID, Model.GetDepartmentList(), new { @class = "DepartmentID" })
+            
+        </label>
+                
+
+            
+
+      
+            
+        <label>
+            <div class="size">@Html.ValidationMessageFor(model => model.DoctorID)</div>
+            @Html.DropDownListFor(model => model.DoctorID, Model.GetDoctorsList(), new { @class = "DoctorID" })
+            
+       
+              </label>
+
+            
+         
+            
+        
+            <label>
+        
+                <div class="size">@Html.ValidationMessageFor(model => model.PreferTime)</div>
+            @Html.TextBoxFor(model => model.PreferTime, new { @class = "PreferTimeIdn",@Value=DateTime.Now.ToString("HH:mm") })
+            
+        
+         </label>
+
+            
+            
+       
+            <label>
+        
+                <div class="size">@Html.ValidationMessageFor(model => model.PreferDate)</div>
+            @Html.TextBoxFor(model => model.PreferDate,"{0:MM/dd/yyyy}", new { @class="PreferDateIdn",@Value=DateTime.Now.ToShortDateString()})
+            
+        
+          </label>
+                
+
+            
+           <input type="button" class="row-button btn btn-warning" value="Remove" id="rbtn" />
+            <div>
+                   <input type="button" name="Check Available" value="Check Availability" onclick="check_user()" class="ava" />
+            </div>
+    
+        </div>
+    
+}
+<div id ="doctorDetails"></div>
+
+
+@*<script>
+
+    function check_username() {
+
+        $.ajax({
+            async: false,
+            url: '@Url.Action("CheckAvailibility", "PreRegistration")',
+            type: 'get',
+
+            data: { doctorid: $('#docsid').val(), datesid: $('#datesid').val() },
+
+            success: function (result) {
+
+
+                $('#doctorDetails').html(result);
+
+                $(function () {
+                    j("#doctorDetails").dialog({
+                        height: 140
+
+                    });
+                });
+            }
+
+        });
+
+
+    }
+
+</script>*@

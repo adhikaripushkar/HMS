@@ -1,0 +1,103 @@
+﻿@model HospitalManagementSystem.Models.GlAccountSubGroupModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_GlAccountSubGrp.cshtml";
+}
+<h2 style="text-align:center;">Chart Off Account</h2>
+
+
+<div class="contentWrapper">
+
+    <div class="bs-docs-example form-inline">
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Edit</legend>
+        <div class="row-fluid singleline">
+            <label>
+         <div class="editor-label">
+            @Html.LabelFor(model => model.AccGroupID)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.AccGroupID, HospitalManagementSystem.Utility.GetMainAccountHead(), new { @class="AccGroupID"})
+            @Html.ValidationMessageFor(model => model.AccGroupID)
+        </div>   
+                </label>   
+            <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ParentID)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.ParentID, HospitalManagementSystem.Utility.GetSubAccountHead(Model.AccGroupID), new { @class="ParentID"})
+            @Html.ValidationMessageFor(model => model.ParentID)
+        </div>  
+                </label>    
+            <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AccSubGroupName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AccSubGroupName)
+            @Html.ValidationMessageFor(model => model.AccSubGroupName)
+        </div>   
+</label>
+    <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsLeafLevel)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsLeafLevel)
+            @Html.ValidationMessageFor(model => model.IsLeafLevel)
+        </div>    
+        </label>
+    
+            <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Remarks)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Remarks)
+            @Html.ValidationMessageFor(model => model.Remarks)
+        </div>
+</label>
+            </div>
+        <p>
+            <input type="submit" value="Edit" />
+        </p>
+    </fieldset>
+}
+</div>
+<div id="linkNewBack">
+    @Html.ActionLink("Back to List", "Index")
+</div>
+        
+    </div>
+
+<script type="text/javascript">
+
+    $(".AccGroupID").change(function (e) {
+        var id = this.id;
+
+        id = id.replace("AccGroupID", "ParentID");
+        $('#' + id).val('');
+        $.get('/AjaxRequest/GetSubAccountHeadList/' + this.value,
+              function (data) {
+                  $('#' + id).find('option').remove()
+                  $(data).each(
+                      function (index, item) {
+                          $('#' + id).append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                      });
+              }
+    );
+    });
+
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+ 

@@ -1,0 +1,90 @@
+﻿@model Hospital.Models.SetupOtherDiscountModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 style="text-align:center;">Other Discount Setup</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    
+    
+    <div class="bs-docs-example form-inline">
+    <fieldset>
+        <legend>Edit</legend>
+
+        @Html.HiddenFor(model => model.DiscountID)
+
+
+        <div class="row-fluid singleline">
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.DiscountName)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DiscountName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DiscountName)
+            
+        </div>
+                </label>
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.DiscountPercentage)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DiscountPercentage)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DiscountPercentage)
+            
+        </div>
+      </label>
+
+
+            
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.Status)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Status)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Status)
+            
+        </div>
+                </label>
+
+        @*<div class="editor-label">
+            @Html.LabelFor(model => model.CreatedBy)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreatedBy)
+            @Html.ValidationMessageFor(model => model.CreatedBy)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreatedDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreatedDate)
+            @Html.ValidationMessageFor(model => model.CreatedDate)
+        </div>*@
+        <br />
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+        </div>
+    
+    <div>
+    @Html.ActionLink("Back to List", "Index", null, new { @id="linkNewBack"})
+</div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<HospitalManagementSystem.Models.EmergecyMasterModel>
+@{
+    ViewBag.Title = "Emergency";
+    Layout = "";
+}
+
+<h2>Search Patient</h2>
+@using (Html.BeginForm())
+{
+    
+    <table class="customtable">
+        <tr>
+            <td>Emergency Id
+            </td>
+            <td>
+                <input type="text" name="PatientId" id="patientid" value="@ViewBag.Id" />
+            </td>
+            <td>Name
+            </td>
+            <td>
+                <input id="name" type="text" name="PatientName" class="patientname" value="@ViewBag.Name"/>
+            </td>
+            <td>
+                <input type="submit" value="Search" />
+            </td>
+        </tr>
+
+    </table>
+    if (Model.Count() > 0)
+    {
+    <table>
+        <tr>
+            <th>Emergency Id
+            </th>
+            <th>Name
+            </th>
+            <th></th>
+        </tr>
+        @try
+        {
+            foreach (var item in Model)
+            { 
+            <tr>
+                <td>
+                    @item.EmergencyMasterId
+                </td>
+                <td>
+                    @*@item.FirstName @item.MiddleName @item.LastName*@
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Report", new { id = item.EmergencyMasterId }, new { target = "blank" })
+                </td>
+            </tr>
+            }
+        }
+        catch { }
+    </table>
+    }
+    else if (ViewBag.print == 1)
+    {
+    <p>No Results Found!</p>
+    }
+    
+   
+}
+

@@ -1,0 +1,68 @@
+﻿@model HospitalManagementSystem.Models.DoctorCommisionModel
+@using Humanizer;
+@{
+    int i = 1;
+    decimal TotalAmt = Convert.ToDecimal(0);
+}
+<div class="general-box clearfix">
+
+    <div class="general-box clearfix">
+
+        <div class="boxWrapper">
+
+
+            @if (Model.DoctorCommisionModelList != null)
+            {
+                <table class="table table-hover tablesorter">
+
+                    <div class="boxHeadingPanel">
+                        <h1>Doctor Commision</h1>
+                    </div>
+                    <thead>
+                        <tr>
+                            <th>SN</th>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Commision</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.DoctorCommisionModelList)
+                        {
+                            <tr>
+                                <td>
+                                    @i
+                                </td>
+                                <td>
+                                    @HospitalManagementSystem.Utility.GetDoctorNameFromDoctorId(item.DoctorID)
+                                </td>
+                                <td>
+                                    @item.CreatedDate
+                                </td>
+                                <td>
+                                    @item.DoctorCom
+                                    @{TotalAmt += item.DoctorCom;}
+                                </td>
+                            </tr>
+                                      i++;
+                        }
+                    </tbody>
+                    <tr>
+                        <td colspan="3">Total</td>
+                        <td>@TotalAmt</td>
+                    </tr>
+                </table>
+            }
+        </div>
+    </div>
+    <div style="margin-top: 15px;">
+        <p>
+            <input type="button" value="Print" class="btn btn-primary" />
+             <input type="button" value="Export" class="btn btn-primary" />
+        </p>
+        <p>
+            
+        </p>
+    </div>
+</div>
+

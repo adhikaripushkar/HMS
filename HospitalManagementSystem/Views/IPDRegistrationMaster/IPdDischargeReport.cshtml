@@ -1,0 +1,74 @@
+﻿@model HospitalManagementSystem.IpdRegistrationMaster
+
+@{
+    ViewBag.Title = "IPdDischargeReport";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+<h2>IPd Discharge Report</h2>
+
+
+
+<div>
+  
+    <input type="text" id="txtSearch" />
+    
+
+
+
+</div>
+<div>
+
+<span id="SearchByName"></span>
+</div>
+
+
+    
+<script type="text/javascript">
+
+
+
+    $('#txtSearch').live('keypress', function () {
+
+        $.ajax({
+            url: '/IpdRegistrationMaster/GetAllDischargReport/',
+            type: 'GET',
+            data: {
+                FirstName: $('#txtSearch').val()
+            },
+            success: function (data) {
+                $('#SearchByName').html(data);
+            },
+            errro: function () {
+                alert('Sorry Error Occured');
+            },
+
+        });
+    });
+
+
+
+</script>
+
+        
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $.ajax({
+            url: '/IpdRegistrationMaster/GetAllDischargReport/',
+            type: 'GET',
+            data: {
+                FirstName: $('#txtSearch').val()
+            },
+            success: function (data) {
+                $('#SearchByName').html(data);
+            },
+            errro: function () {
+                alert('Sorry Error Occured');
+            },
+
+        });
+    });
+
+

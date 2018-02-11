@@ -1,0 +1,55 @@
+﻿@model HospitalManagementSystem.Models.MisModel
+
+@{
+    ViewBag.Title = "DeptPieChartView";
+    Layout = "~/Views/Shared/_MisLayOutLayout.cshtml";
+}
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<h2>Department / Patient</h2>
+
+<div id="chartdiv" style="width: 600px; height: 350px;"></div>
+<script type="text/javascript">
+    google.load("visualization", "1", { packages: ["corechart"] });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            url: '@Url.Action("PieChartDepartmentsWise", "AjaxRequest")',
+            data: '{}',
+            success: function (chartsdata) {
+
+                // Callback that creates and populates a data table,    
+                // instantiates the pie chart, passes in the data and    
+                // draws it.    
+
+                var data = new google.visualization.DataTable();
+
+                data.addColumn('string', 'DeptName');
+                data.addColumn('number', 'TotalPatient');
+
+                for (var i = 0; i < chartsdata.length; i++) {
+                    data.addRow([chartsdata[i].DeptName, chartsdata[i].TotalPatient]);
+                }
+
+                // Instantiate and draw our chart, passing in some options    
+                var chart = new google.visualization.PieChart(document.getElementById('chartdiv'));
+
+                chart.draw(data,
+                  {
+                      title: "Department/Patient",
+                      position: "top",
+                      fontsize: "14px",
+                      chartArea: { width: '50%' },
+                  });
+            },
+            error: function () {
+                alert("Error loading data! Please try again.");
+            }
+        });
+    })
+
+</script>

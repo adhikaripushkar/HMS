@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "PatientSearch";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+<h2>PatientSearch</h2>
+
+
+@using (Html.BeginForm("Discharge","IpdRegistrationMaster", FormMethod.Get))
+{ 
+
+    @Html.TextBox("id")
+
+    <input type="submit" value="Go" />
+
+}

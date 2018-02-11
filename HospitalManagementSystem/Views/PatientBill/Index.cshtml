@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_BillingLayout.cshtml";
+   
+}
+
+<h2>Patient Bill</h2>
+<div class="contentWrapper">
+@using (Ajax.BeginForm("Index", "PatientBill", FormMethod.Post, new AjaxOptions() { UpdateTargetId = "result" }))
+{
+<table>
+    <tr>
+        <td>
+            Name: @Html.TextBox("name")
+        </td>
+        <td>
+            Patient Id: @Html.TextBox("id")
+        </td>
+        <td>
+            <input type="submit" value="Search"/>
+        </td>
+    </tr>
+</table>
+
+}      
+
+    
+    <br /><br />
+  
+    <div id="result">
+        
+    </div>
+
+
+
+    </div>
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+
+<script type="text/javascript">
+    var autocom = $.noConflict();
+
+    autocom(document).ready(function () {
+        
+        autocom("#name").autocomplete({
+            source: function (request, response) {
+                autocom.ajax({
+                    url: "/PatientBill/AutocompletePatientName",
+                    type: "GET",
+                    dataType: "json",
+                    data: { s: request.term },
+                    success: function (data) {
+
+                        response(autocom.map(data, function (item) {
+
+                            return { label: item, value: item };
+
+                        }))
+
+                    },
+                   
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    });
+</script>
+
+    }

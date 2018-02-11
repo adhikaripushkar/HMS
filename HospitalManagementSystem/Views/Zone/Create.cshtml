@@ -1,0 +1,36 @@
+﻿@model Hospital.Models.ZoneModel
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<div class="block-header">
+    <h2 class="block-title", style="text-align:center">Create New Zone</h2>
+</div>
+<div class="well" style="border-radius:0;">
+        <div class="side-by-side clearfix">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.ValidationSummary(true)
+             <div class="clearfix">
+                 
+                      <div class="contGroup">
+                         @Html.LabelFor(model => model.ZoneInEng)
+                          @Html.TextBoxFor(x =>x.ZoneInEng)
+                            @Html.ValidationMessageFor(model => model.ZoneInEng)
+
+                      </div>
+                 
+            </div>
+                <br />
+                <div class="bottom_btn">
+                    <a href="@Url.Action("Index","Zone")" class="btn btn-sm btn-warning"><i class="fa fa-undo"></i>Go Back</a>
+                    <button type="submit" id="" name="" class="btn btn-success"><i class="fa fa-save"></i>Add Zone</button>
+                    </div>
+            }
+        </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

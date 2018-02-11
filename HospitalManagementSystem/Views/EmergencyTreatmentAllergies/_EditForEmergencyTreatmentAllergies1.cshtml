@@ -1,0 +1,126 @@
+﻿@model HospitalManagementSystem.Models.EmergencyTreatmentAllergiesModel
+
+
+
+
+
+
+
+<style>
+    select {
+        width: 210px;
+        height: 27px;
+    }
+</style>
+<link href="~/Content/themes/base/jquery.ui.timepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.ui.core.js"></script>
+<script src="~/Scripts/jquery.ui.widget.js"></script>
+<script src="~/Scripts/jquery.ui.datepicker.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.ui.timepicker.js"></script>
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+        j("#TreatmentTime").datepicker();
+
+    });
+    </script>
+
+@using (Html.BeginForm("EditForEmergencyTreatmentAllergies", "EmergencyTreatmentAllergies", FormMethod.Post, new { @id = "EditForEmergencyTreatmentAllergiesId" }))
+{
+
+    <fieldset>
+        <legend>Edit</legend>
+
+        @Html.HiddenFor(model => model.TreatmentAllergiesId)
+
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.EmergencyMasterId)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.EmergencyMasterId)
+            @Html.ValidationMessageFor(model => model.EmergencyMasterId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TreatmentText)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TreatmentText)
+            @Html.ValidationMessageFor(model => model.TreatmentText)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AllergiesText)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AllergiesText)
+            @Html.ValidationMessageFor(model => model.AllergiesText)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProcedureText)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ProcedureText)
+            @Html.ValidationMessageFor(model => model.ProcedureText)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TreatmentTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TreatmentTime, new { @id="TreatmentTime"})
+            @Html.ValidationMessageFor(model => model.TreatmentTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DrugsName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DrugsName)
+            @Html.ValidationMessageFor(model => model.DrugsName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DoseAndRoute)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DoseAndRoute)
+            @Html.ValidationMessageFor(model => model.DoseAndRoute)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DoctorId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.DoctorId,  HospitalManagementSystem.Utility.GetDoctors())
+            @Html.ValidationMessageFor(model => model.DoctorId)
+        </div>
+
+     
+
+        <p>
+            <input type="submit" value="Save" id="btnid" />
+        </p>
+    </fieldset>
+}
+<script>
+    $("#btnid").live("click", function (e) {
+        e.preventDefault();
+        var form = $('#EditForEmergencyTreatmentAllergiesId');
+        var url = form.attr("action");
+        var formData = form.serialize();
+        $.post(url, formData, function (data) {
+            $('#EmergencyTreatmentAllergieslistId').empty();
+            $('#EmergencyTreatmentAllergieslistId').html(data);
+            $('#EditForEmergencyTreatmentAllergiesId').remove();
+        });
+    });
+    </script>
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@

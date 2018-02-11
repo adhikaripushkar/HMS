@@ -1,0 +1,46 @@
+﻿@model HospitalManagementSystem.Models.DietIPDModel
+
+@{
+    ViewBag.Title = "DietTypeCreate";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 style="text-align: center;">Diet Setup</h2>
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("DietTypeCreate", "IPDDiet", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Create</legend>
+            <div class="row-fluid singleline">
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.ObjDietTypeSetupViewModel.TypeName)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ObjDietTypeSetupViewModel.TypeName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.ObjDietTypeSetupViewModel.TypeName)
+
+                    </div>
+                </label>
+
+            </div>
+            <p>
+                <input type="submit" value="Create" />
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "DietTypeIndex", null, new { @id = "linkNewBack" })
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

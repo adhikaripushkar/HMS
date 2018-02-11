@@ -1,0 +1,85 @@
+﻿@using HospitalManagementSystem.Helpers;
+@model HospitalManagementSystem.Models.OpdDoctorListModel
+
+
+
+<link href="~/Content/themes/base/jquery.ui.timepicker.css" rel="stylesheet" />
+
+
+<script src="~/Scripts/jquery.ui.core.js"></script>
+<script src="~/Scripts/jquery.ui.widget.js"></script>
+@*<script src="~/Scripts/jquery.ui.datepicker.js"></script>*@
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.ui.timepicker.js"></script>
+
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+
+
+
+<script src="~/Scripts/json.cycle.js"></script>
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+
+<script>
+
+ $(document).ready(function () {
+        
+
+     //$('.PreferDateId').val("");
+     //$('.PreferTimeId').val("");
+
+ });
+
+    </script>
+
+<script>
+    var y = $.noConflict();
+    y(function () {
+        y(".PreferDateId").datepicker();
+
+        y(".PreferTimeId").timepicker();
+    });
+
+</script>
+
+<style>
+
+    .DepartmentID
+    {
+        width:185px;
+    }
+    .DoctorID
+    {
+        width:185px;
+    }
+  
+
+</style>
+
+@using (Html.BeginCollectionItem("OpdDoctorList"))
+{
+    <div class="rowr">
+        
+            
+        @Html.DropDownListFor(model => model.DepartmentID, Model.GetDepartmentListOnlyPrimaryDept(), new { @class = "DepartmentID" })
+        @Html.ValidationMessageFor(model => model.DepartmentID)
+                
+
+            
+        @Html.DropDownListFor(model => model.DoctorID, Model.GetDoctorList(), new { @class = "DoctorID" })
+        @Html.ValidationMessageFor(model => model.DoctorID)
+                
+            
+        @*@Html.TextBoxFor(model =>  model.PreferDate,@Model.PreferDate.Value.ToShortDateString(), new { @class="PreferDateId",@Placeholder=DateTime.Now})*@
+
+        @Html.TextBoxFor(model =>  model.PreferDate,"{0:MM/dd/yyyy}", new { @class="PreferDateId",@Value=DateTime.Now.ToShortDateString()})
+        @Html.ValidationMessageFor(model => model.PreferDate)
+              
+        @Html.TextBoxFor(model => model.PreferTime,new { @class="PreferTimeId",@Value=DateTime.Now.ToString("HH:mm")})
+        @Html.ValidationMessageFor(model => model.PreferTime)
+            
+        @*<input type="button" class="row-button btn btn-warning" value="Remove" />*@
+            
+    </div>
+     
+}

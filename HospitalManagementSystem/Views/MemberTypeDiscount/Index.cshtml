@@ -1,0 +1,185 @@
+﻿@model HospitalManagementSystem.Models.MemberTypeDiscountModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+    int i = 1;
+}
+
+<h2 style="text-align:center;">Member Type Discount Setup</h2>
+
+
+
+
+
+@*<p>
+    @if(TempData["message"]!=null||TempData["message"]!=""){
+        @TempData["message"]
+    }
+</p>*@
+
+
+
+
+
+
+@if (TempData["success"] == "Record Created Successfully !")
+{ 
+    <div class="alert alert-success">
+@TempData["success"]
+        </div>
+
+}
+
+@if (TempData["success"] == "Record Creation Failed !")
+{ 
+    <div class="alert alert-error">
+@TempData["success"]
+        </div>
+
+}
+
+@if (TempData["success"] == "Record Updated Successfully !")
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}
+
+
+@if (TempData["success"] == "Record Updation Failed !")
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}
+
+ 
+
+@if (TempData["success"] == "Record Deleted Successfully !")
+{ 
+    <div class="alert alert-info">
+@TempData["success"]
+        </div>
+
+}
+
+
+@if (TempData["success"] == "Record Deletion Failed !")
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}
+
+
+
+
+
+<div class="contentWrapper">
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @id="linkNewBack"})
+</p>
+
+
+
+
+     <div class="general-box clearfix">
+        <div class="general-box clearfix">
+            
+       <div class="boxWrapper">
+    <div class="boxHeadingPanel"><h1>Member Type Discount</h1></div>
+
+<table class="table table-hover tablesorter">
+    
+    <thead>
+    <tr>
+        
+        <th>S.N.</th>
+        <th>
+            @Html.DisplayNameFor(model => model.MemberShipType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DiscountPercent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Others)
+        </th>
+        
+        
+        <th>
+            @Html.DisplayNameFor(model => model.Remarks)
+        </th>
+        <th>Actions</th>
+    </tr>
+</thead>
+    <tbody>
+@foreach (var item in Model.memberDiscountTypes) {
+    <tr>
+        <td>@i</td>
+        
+        <td>
+           @HospitalManagementSystem.Utility.MemberTypeName(item.MemberShipType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DiscountPercent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Others)
+        </td>
+        
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.Remarks)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MemberDiscountID }) |
+           
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.MemberDiscountID })*@
+            @Html.ActionLink("Delete", "Delete", new {  id=item.MemberDiscountID },new {onclick = "return confirm('Do you want to delete?');"})
+        </td>
+    </tr>
+    i++;
+}
+</tbody>
+</table>
+
+
+           </div>
+
+      @*for sorting *@
+        
+               <div class="boxFooter">
+                   
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+
+               </div> 
+
+        @*---------------*@
+
+
+            </div>
+        </div>
+
+
+
+    </div>

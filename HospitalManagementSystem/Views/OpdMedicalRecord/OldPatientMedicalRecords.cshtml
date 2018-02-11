@@ -1,0 +1,60 @@
+﻿@model HospitalManagementSystem.Models.opdOldPatientMedicalRecords
+
+
+@{
+    ViewBag.Title = "OldPatientMedicalRecords";
+    Layout = "~/Views/Shared/_OpdLayOut.cshtml";
+}
+
+<style>
+
+    table#mytbl td {
+        border:none !important;
+    }
+
+
+
+</style>
+
+
+
+
+    <div class="contentWrapper">
+
+    <div>
+@using (Ajax.BeginForm("OldPatientMedicalRecords", "OpdMedicalRecord", FormMethod.Post, new AjaxOptions() { UpdateTargetId = "result" }, new { @class = "bs-docs-example form-inline" }))
+{
+
+  <span>Patinet Id</span>
+    @Html.TextBoxFor(model=>model.OpdId)
+
+    
+    
+    <input type="submit" value="Show Medical Records"  style="width:auto;"/>
+   
+
+}
+
+
+</div>
+<br />
+        <div id="result"></div>
+    
+
+       
+
+
+        </div>
+
+  
+
+
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

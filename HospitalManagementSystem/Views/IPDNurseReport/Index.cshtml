@@ -1,0 +1,39 @@
+﻿@model HospitalManagementSystem.Models.IpdSearchResults
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+<h2 style="text-align:center;">IPD Nurse Daily Report</h2>
+
+<div class="contentWrapper">
+
+
+
+@using (Ajax.BeginForm("NurseDailyReport", "IpdNurseReport", FormMethod.Post, new AjaxOptions() { UpdateTargetId = "UPdateSearch" }))
+{
+<table>
+
+    <tr>
+
+        <td>
+            @Html.DropDownListFor(model => model.OpdId, HospitalManagementSystem.Utility.GetPatientIDAndNameFormIpdResistrationMaster())
+        </td>
+        <td>
+            <input type="submit" value="Search" />
+
+        </td>
+
+    </tr>
+
+</table>
+     
+ }
+
+
+<div id="UPdateSearch">
+   
+</div>
+
+    </div>

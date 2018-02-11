@@ -1,0 +1,102 @@
+﻿@model HospitalManagementSystem.Models.JVMasterModel
+
+<style>
+    table#tblnoborder,
+    table#tblnoborder td {
+        border: none !important;
+    }
+
+    .font {
+        font-weight: bold;
+    }
+
+    .small-table td {
+        border: none;
+    }
+
+
+
+    .holder img {
+        max-height: 48px;
+        max-width: 55px;
+        object-fit: cover;
+    }
+
+
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+    }
+</style>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        text-align: center;
+        font-size: 13px;
+    }
+</style>
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+</script>
+
+<div class="contentWrapper">
+    @using (Html.BeginForm("_OpeningBalance", "JvMaster", FormMethod.Post, new { @class = "", @style = "", @id = "" }))
+    {
+        @Html.HiddenFor(model => model.objOpeningBalanceModelView.MainAccountHeadId)
+       
+        <br />              
+        <div class="row-fluid singleline">
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>                       
+                        <th>Account Head
+                        </th>
+                        <th>DrAmount
+                        </th>
+                        <th>CrAmount
+                        </th>
+                    </tr>
+                    @for (int i = 0; i < Model.objOpeningBalanceModelViewList.Count; i++)
+                    {
+                       <tr>                       
+                            @Html.HiddenFor(model=>model.objOpeningBalanceModelViewList[i].AccountHeadId)                       
+                        <td>@Html.DisplayFor(model=>model.objOpeningBalanceModelViewList[i].AccountHeadName)
+                        </td>
+                        <td>@Html.TextBoxFor(model=>model.objOpeningBalanceModelViewList[i].DrAmount)
+                        </td>
+                        <td>@Html.TextBoxFor(model=>model.objOpeningBalanceModelViewList[i].CrAmount)
+                        </td>
+                    </tr> 
+                    }             
+                </table>
+            </div>
+            @if (Model.objOpeningBalanceModelViewList.Count > 0)
+            {
+                <div class="row-fluid singleline">
+                    <label>
+                        <input type="submit" value="Save" id="btnidsubmitHandOver" />
+                    </label>
+                </div>              
+            }
+
+        </div>
+    }
+</div>

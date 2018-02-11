@@ -1,0 +1,174 @@
+﻿@using HospitalManagementSystem.Helpers
+@model HospitalManagementSystem.Models.BillingCounterNewTestListModel
+
+
+
+
+<style>
+
+
+
+    .remove-row{
+	height: 26px; 
+	width: 30px; 
+	background-image: url(/Content/remove.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+</style>
+
+
+@using (Html.BeginCollectionItem("BillingCounterNewTestListModelList"))
+{
+    
+    <div class="row" style="margin-left: 0px;">
+
+        <table>
+            <tr>
+                <td>@Html.DropDownList("Department", HospitalManagementSystem.Utility.GetDepartmentListForPathology(), new { @id = "Department", @class = "deptcls", style = "width:9em;" })</td>
+                <td>@Html.TextBox("txtTestName", null, new { @id = "txtTestName", @class = "aucomcls", style = "width:20em;" })
+                    @Html.Hidden("hdTestName", null, new { @id = "hdTestName" })</td>
+                <td>@Html.DropDownList("Times", HospitalManagementSystem.Utility.getTimes(), new { @class="timcls", style = "width:4em;" })</td>
+                <td>@Html.DropDownList("DiscountIN", HospitalManagementSystem.Utility.getDiscountIN(), new { @class="disincls",style = "width:4em;" })</td>
+                <td>@Html.TextBox("txtPer", "0", new {@class="percls", style = "width:4em;" })</td>
+                <td>@Html.TextBox("txtRate", "0", new { style = "width:4em;",@class="ratecls" })
+                    @Html.Hidden("txtRateh", "0", new { style = "width:4em;",@class="ratehcls" })
+                </td>
+                 <td>@Html.TextBox("txtTaxAmount", "0", new { style = "width:4em;",@class="taxcls" })
+                     @Html.Hidden("txtTaxAmounth", "0", new { style = "width:4em;",@class="taxhcls" })
+                 </td>
+                 <td>@Html.TextBox("txtPrice", "0", new { style = "width:4em;",@class="pricecls" })</td>
+                  <td>@Html.TextBox("txtDiscountPer", "0", new { style = "width:4em;",@class="disPercls" })</td>
+                 <td>@Html.TextBox("txtDiscountAmount", "0", new { style = "width:4em;",@class="disAmountcls" })</td>    
+                 <td>@Html.TextBox("txtTotalAmount", "0", new { style = "width:4em;",@class="totalAmountcls" })</td>             
+                <td>                     < />
+                    <button type="button" class="remove-row" title="Delete row">&nbsp</button>
+            </tr>
+        </table>
+    </div>
+    
+    
+
+
+ 
+   
+    
+
+}
+
+@Scripts.Render("~/bundles/jqueryui")
+
+
+<script type="text/javascript">
+
+
+    $(".aucomcls").on("focusin", function (e) {
+
+        var df = $(this).closest("tr");
+        var d = df.find(".deptcls").val();
+
+
+        $(".aucomcls").autocomplete({
+
+            source: function (request, response) {
+                $.ajax({
+                    url: "/BillingCounter/SearchTestName?deptid=" + d,
+                    type: "POST",
+                    dataType: "json",
+
+                    data: { s: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            //alert(item);
+                            return { label: item, value: item };
+                        }))
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(".aucomcls").on("blur", function (e) {
+        e.preventDefault();
+        var df = $(this).closest("tr");
+        var d = df.find(".deptcls").val();       
+        var value = df.find(".aucomcls").val();
+        var disAmount = df.find(".disAmountcls").val();
+        $.get("/BillCounterNew/ParticularsDetails/", { id: value, id2: d },
+        function (data) {           
+            var fee = data;
+            var arry = data.split('~');          
+            df.find(".ratecls").val(arry[0]);
+            df.find(".ratehcls").val(arry[0]);
+            df.find(".taxcls").val(arry[1]);
+            df.find(".taxhcls").val(arry[1]);
+            df.find(".pricecls").val(parseFloat(arry[0]) + parseFloat(arry[1]));
+
+            var txtPrice = df.find(".pricecls").val();
+            df.find(".totalAmountcls").val(parseFloat(txtPrice) - parseFloat(disAmount));
+            
+
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(".percls").on("blur", function (e) {
+        e.preventDefault();
+        var df = $(this).closest("tr");
+        var d = df.find(".deptcls").val();
+        var discountIn = df.find(".disincls").val();
+        var txtRate = df.find(".ratecls").val();
+        var txtPer = df.find(".percls").val();     
+        if (discountIn == 1) {  
+            var disAmt = parseFloat(txtRate) * parseFloat(txtPer) / 100;
+            df.find(".disAmountcls").val(disAmt.toFixed(2));
+        } else {          
+            df.find(".disAmountcls").val(parseFloat(txtPer));
+        }
+        if (discountIn == 2) {
+            var per = parseFloat(txtPer) / txtRate * 100;
+            df.find(".disPercls").val(per.toFixed(2));
+        } else {
+            df.find(".disPercls").val(parseFloat(txtPer));
+        }
+
+        var disAmount = df.find(".disAmountcls").val();
+        var txtPrice = df.find(".pricecls").val();
+        df.find(".totalAmountcls").val(parseFloat(txtPrice) - parseFloat(disAmount));
+    });
+
+</script>
+
+<script type="text/javascript">
+    var TestAmount = 0;
+    $(".timcls").on("change", function (e) {
+        e.preventDefault();
+        var df = $(this).closest("tr");   
+        var txtRateh = df.find(".ratehcls").val();      
+        var txtTaxh = df.find(".taxhcls").val();
+      
+        var time = df.find(".timcls").val();
+
+        df.find(".ratecls").val(parseFloat(txtRateh) * parseFloat(time));
+        df.find(".taxcls").val(parseFloat(txtTaxh) * parseFloat(time));
+
+        var total = parseFloat(df.find(".ratecls").val()) + parseFloat(df.find(".taxcls").val());
+        df.find(".pricecls").val(total);
+    
+    });
+
+</script>
+
+<script type="text/javascript">
+
+
+</script>

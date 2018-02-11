@@ -1,0 +1,91 @@
+﻿@model HospitalManagementSystem.Models.IpdMedicalRecord
+
+@{
+    ViewBag.Title = "EditMedicalRecord";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+<h2 style="text-align:center;">IPD Medical Records</h2>
+
+<div class="contentWrapper">
+
+@using (Html.BeginForm()) {
+    
+    <div class="bs-docs-example form-inline">
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Edit</legend>
+
+         @Html.HiddenFor(model => model.IpdMrMedicalRecordID)
+        @Html.HiddenFor(model=>model.PatientID)
+        @Html.HiddenFor(model=>model.IpdRegisterationID)
+       
+
+       <div class="row-fluid singleline">
+
+           <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MedicineName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.MedicineName)
+            @Html.ValidationMessageFor(model => model.MedicineName)
+        </div>
+
+               </label>
+
+           <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Doses)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Doses)
+            @Html.ValidationMessageFor(model => model.Doses)
+        </div>
+</label>
+
+           <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DosesTimes)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DosesTimes)
+            @Html.ValidationMessageFor(model => model.DosesTimes)
+        </div>
+
+               </label>
+
+           <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DosesTotalDays)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DosesTotalDays)
+            @Html.ValidationMessageFor(model => model.DosesTotalDays)
+        </div>
+
+               </label>
+
+      </div>
+
+        
+        <p>
+            <input type="submit" value="Edit" />
+        </p>
+    </fieldset>
+        </div>
+}
+
+<div>
+    
+</div>
+
+
+    </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

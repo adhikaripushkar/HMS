@@ -1,0 +1,176 @@
+﻿@model HospitalManagementSystem.Models.EmergencyPoliceCaseModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_EmergencyLayout.cshtml";
+}
+
+@if (TempData["success"] == "Record Created Successfully !")
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Record Creation Failed !")
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Serial Number or Emergency Number Already Exist !")
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Record Updated Successfully !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == "Record Updation Failed !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == "Record Deleted Successfully !")
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == "Record Deletion Failed !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+@if (TempData["success"] == "Patient is Discharged !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+ 
+<div class="contentWrapper">
+ <div id="DetailsId"></div>
+    <p>
+        <i class="fa  fa-plus fa-2x" style="color: blue;"></i>@Html.ActionLink("Create New", "Create", null, new { @id = "linkNewBack" })
+    </p>
+
+  @*  <div>
+        @using (Html.BeginForm("Index", "EmergencyMaster", FormMethod.Get))
+        {
+            <p>
+                @Html.TextBox("searchString")
+                <input type="submit" value="Search" />
+            </p>
+        }
+    </div>*@
+
+    @*<p>
+    @if(TempData["message"]!=null||TempData["message"]!="")
+    {
+        @TempData["message"]
+    }
+</p>*@
+
+
+    <div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Emergency Ward Details</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+                            <th>Id
+                            </th>
+                            <th>
+                                Date 
+                            </th>
+                             <th>
+                               time
+                            </th>
+                              <th>
+                              Patient Name
+                            </th>
+                             <th>
+                              Age
+                            </th>
+                            <th>
+                               sex
+                            </th>
+                            <th>
+                              Address
+                            </th>
+                             <th>
+                             Case
+                            </th>
+                             <th>
+                            Action
+                            </th>
+                        </thead>
+                     <tbody>
+                      @foreach (var item in Model.EmergencyPoliceCaseModelList)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PCId)
+                                </td>
+                                 <td>
+                                    @Html.DisplayFor(modelItem => item.Date)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TimeIn)
+                                </td>
+                                 <td>
+                                    @Html.DisplayFor(modelItem => item.PatientName)
+                                </td>
+                                  <td>
+                                    @Html.DisplayFor(modelItem => item.Age)
+                                </td>
+                                 <td>
+                                    @Html.DisplayFor(modelItem => item.Gender)
+                                </td>
+                                 <td>
+                                    @Html.DisplayFor(modelItem => item.Address)
+                                </td>
+                                 <td>
+                                    @*@Html.DisplayFor(modelItem => item.PatientCase)*@
+                                     @HospitalManagementSystem.Utility.GetCaseName(item.PatientCase)
+                                </td>
+                                  <td>
+           @* @Html.ActionLink("Edit", "Edit", new { id=item.PCId }) *@
+            <a href="/EmergencyPoliceCase/Edit/@item.PCId" title="Edit"><i class="fa fa-edit" style="color: blue; font-size: 16px;"></i></a>|
+          @*  @Html.ActionLink("Print", "BillForm", new { id=item.PCId }) *@
+                                       <a href="/EmergencyPoliceCase/BillForm/@item.PCId" title="Print"><i class="fa fa-print" style="color: blue; font-size: 16px;"></i></a>
+                                      </td>
+                                </tr>
+                      }
+                                 <tbody>
+                    </table>
+                </div>

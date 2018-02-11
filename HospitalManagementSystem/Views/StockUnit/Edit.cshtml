@@ -1,0 +1,40 @@
+﻿@model Hospital.Models.StockUnitModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_StockSetupLayout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model=>model.StockUnitID)
+    <fieldset>
+        <legend>StockUnitModel</legend>
+
+        
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StockUnitName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.StockUnitName)
+            @Html.ValidationMessageFor(model => model.StockUnitName)
+        </div>
+
+        
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

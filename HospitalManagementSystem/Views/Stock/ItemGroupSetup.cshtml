@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "ItemGroupSetup";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+<h2>Stock Item Group Setup</h2>
+<div class="contentWrapper" style="margin-top: 0;">
+
+    <div class="row-fluid">
+
+        <div class="container accessBox">
+
+            <ul class="dashboard-actions clearfix">
+
+                <li>
+                    <a href="~/Stock/GroupSetup" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Stock Group Setup </h5>
+                        </div>
+                    </a>
+                </li>
+
+                @*<li>
+                    <a href="~/Stock/SubGroupSetup" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Stock Sub Group Setup </h5>
+                        </div>
+                    </a>
+                </li>*@
+
+                <li>
+                    <a href='~/Stock/LocationSetup' data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Location</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/Stock/RackSetup" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Stock Rack Setup </h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/Stock/ShowGroupingItemIndex" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Item Group Detail Setup </h5>
+                        </div>
+                    </a>
+                </li>
+
+            </ul>
+        </div>

@@ -1,0 +1,123 @@
+﻿@model HospitalManagementSystem.Models.OpdModel
+
+<h2>Details</h2>
+<fieldset>
+    <legend></legend>
+
+
+    <table style="width:100%;">
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.OpdID)</td>
+            <td>@Html.DisplayFor(model => model.OpdID)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.DepartMentID)</td>
+            <td>  @Html.DisplayFor(model => model.DepartMentID)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.FirstName)</td>
+            <td> @Html.DisplayFor(model => model.FirstName)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.MiddleName)</td>
+            <td> @Html.DisplayFor(model => model.MiddleName)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.LastName)</td>
+            <td> @Html.DisplayFor(model => model.LastName)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Sex)</td>
+            <td> @Html.DisplayFor(model => model.Sex)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.ContactName)</td>
+            <td> @Html.DisplayFor(model => model.ContactName)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.RegistrationDate)</td>
+            <td> @Html.DisplayFor(model => model.RegistrationDate)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.RegistrationMode)</td>
+            <td>@Html.DisplayFor(model => model.RegistrationMode)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.Email)</td>
+            <td> @Html.DisplayFor(model => model.Email)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.AgeYear)</td>
+            <td>@Html.DisplayFor(model => model.AgeYear)</td>
+        </tr><tr>
+            <td> @Html.DisplayNameFor(model => model.AgeMonth)</td>
+            <td> @Html.DisplayFor(model => model.AgeMonth)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.AgeDay)</td>
+            <td> @Html.DisplayFor(model => model.AgeDay)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.MaritalStatus)</td>
+            <td> @Html.DisplayFor(model => model.MaritalStatus)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.BloodGroup)</td>
+            <td> @Html.DisplayFor(model => model.BloodGroup)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.MemberTypeID)</td>
+            <td> @Html.DisplayFor(model => model.MemberTypeID)</td>
+        </tr>
+        
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.DepartmentPatientId)</td>
+            <td> @Html.DisplayFor(model => model.DepartmentPatientId)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.Status)</td>
+            <td> @Html.DisplayFor(model => model.Status)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.Address)</td>
+            <td> @Html.DisplayFor(model => model.Address)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.DoctorID)</td>
+            <td> @Html.DisplayFor(model => model.DoctorID)</td>
+        </tr>
+        <tr>
+            <td>  @Html.DisplayNameFor(model => model.PreferDate)</td>
+            <td>  @Html.DisplayFor(model => model.PreferDate)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.PreferTime)</td>
+            <td> @Html.DisplayFor(model => model.PreferTime)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+
+    </table>
+   
+  
+
+    
+
+       
+
+   
+
+   
+
+   
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

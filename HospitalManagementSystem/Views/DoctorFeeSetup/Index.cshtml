@@ -1,0 +1,197 @@
+﻿@model HospitalManagementSystem.Models.DoctorFeeSetupModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 style="text-align: center;">Doctor Fee Setup</h2>
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.savefailed)
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.edit)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.editfailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.delete)
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.deletefailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+<div class="contentWrapper">
+
+    <p>
+        @Html.ActionLink("Create New", "Create", null, new { @id = "linkNewBack" })
+    </p>
+
+
+
+    <div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Doctor Fee</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <tr>
+
+                        <th>
+                            @Html.DisplayName("Doctor Name")
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.FiscalYear)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.DoctorFee)
+                        </th>
+                        <th>Tax
+
+                        </th>
+
+                        <th>Vat
+                        </th>
+
+                        <th>TotalFee
+                        </th>
+                          <th>Hospital(%)
+                        </th>
+                        <th>Hospital Amount
+                        </th>
+                        <th>Doctor(%)
+                        </th>
+                          <th>Doctor Amount
+                        </th>
+
+                        <th>Status
+                        </th>
+                        <th>Action</th>
+                    </tr>
+
+                    @foreach (var item in Model.DoctorFeeSetupModelList)
+                    {
+                        <tr>
+
+                            <td>
+                                @HospitalManagementSystem.Utility.GetDoctorName(item.DoctorID)
+                            </td>
+                            <td>
+                                @if (item.FiscalYear != 0)
+                                {
+                                    @HospitalManagementSystem.Utility.GetFiscalYearInEnglishByID(item.FiscalYear)
+                                }
+
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DoctorFee)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Tax)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Vat)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalFee)
+                            </td>
+                             <td>
+                                @Html.DisplayFor(modelItem => item.HosPer)
+                            </td>
+                              <td>
+                                @Html.DisplayFor(modelItem => item.HosPerAmt)
+                            </td>
+                              <td>
+                                @Html.DisplayFor(modelItem => item.DocPer)
+                            </td>
+                              <td>
+                                @Html.DisplayFor(modelItem => item.DocPerAmt)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.DoctorFeeID }) |
+          
+            
+
+            @Html.ActionLink("Delete", "Delete", new { id = item.DoctorFeeID }, new { onclick = "return confirm('Do you want to delete?');" })
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+
+            </div>
+        </div>
+        @*for sorting *@
+
+        <div class="boxFooter">
+
+            <div id="pager" style="">
+                <form>
+                    <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                    <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                    <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                    <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                    <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                    <select class="pagesize valid" style="width: 70px; height: 30px;">
+                        <option selected="selected" value="10">10</option>
+                        <option value="5">5</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                    </select>
+                </form>
+            </div>
+
+        </div>
+
+        @*---------------*@
+    </div>
+</div>

@@ -1,0 +1,55 @@
+﻿@model HospitalManagementSystem.PackagePatientAssignment
+
+@{
+    ViewBag.Title = "AssignPatient";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+}
+<div class="contentWrapper">
+
+    <div class="bs-docs-example form-inline">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                <legend>Assign Package To Patient</legend>
+                <div class="row-fluid singleline">
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.OpdId)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.OpdId)
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.OpdId)
+
+                        </div>
+
+                    </label>
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.DepartmentId)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DepartmentId)
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.DepartmentId, HospitalManagementSystem.Utility.GetDepartmentList())
+
+                        </div>
+
+                    </label>
+                </div>
+                <p>
+                    <input type="submit" value="Save" />
+                </p>
+            </fieldset>
+        }
+    </div>
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,28 @@
+﻿@model HospitalManagementSystem.Models.IpdPartialDetails
+@{
+    ViewBag.Title = "SearchIpdPatientByName";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+<div class="contentWrapper">
+
+    @if (ViewBag.msz != null)
+    {
+            
+        @ViewBag.msz;
+    }
+    @using (Html.BeginForm("SearchIpdPatientByName", "IPDRegistrationMaster", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        <div style="">
+            <span>Patient Name</span>
+           
+            <span>
+                <input type="text" id="blnkid" name="value" /></span>
+          
+            <input type="submit" value="Find" id="btnsubmit" />
+        </div>
+    }
+    <br />
+    <div id="oldSearchResultid">
+           @Html.Partial("_IpdPdetailsByName",Model)
+    </div>

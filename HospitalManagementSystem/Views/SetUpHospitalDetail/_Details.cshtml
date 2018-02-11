@@ -1,0 +1,124 @@
+﻿@model Hospital.Models.SetUpHospitalDetailModel
+
+
+<style>
+
+    .holder img {
+                max-height: 55px;
+                max-width: 48px;
+                object-fit: cover;
+            }
+</style>
+
+<h2>Details</h2>
+
+
+
+
+<fieldset>
+    <legend></legend>
+
+
+
+
+    <table style="width:100%">
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.HospitalName)</td>
+            <td> @Html.DisplayFor(model => model.HospitalName)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.Address)</td>
+            <td> @Html.DisplayFor(model => model.Address)</td>
+        </tr>
+         <tr>
+            <td> @Html.DisplayNameFor(model => model.WardNo)</td>
+            <td> @Html.DisplayFor(model => model.WardNo)</td>
+        </tr>
+         <tr>
+            <td> @Html.DisplayNameFor(model => model.City)</td>
+            <td> @Html.DisplayFor(model => model.City)</td>
+        </tr>
+         <tr>
+            <td> @Html.DisplayNameFor(model => model.Country)</td>
+            <td> @Html.DisplayFor(model => model.Country)</td>
+        </tr>
+         <tr>
+            <td>@Html.DisplayNameFor(model => model.PostBox)</td>
+            <td> @Html.DisplayFor(model => model.PostBox)</td>
+        </tr>
+         <tr>
+            <td> @Html.DisplayNameFor(model => model.TelPhone)</td>
+            <td> @Html.DisplayFor(model => model.TelPhone)</td>
+        </tr>
+         <tr>
+            <td> @Html.DisplayNameFor(model => model.FaxNumber)</td>
+            <td> @Html.DisplayFor(model => model.FaxNumber)</td>
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.HospitalEmail)</td>
+            <td> @Html.DisplayFor(model => model.HospitalEmail)</td>
+        </tr>
+         <tr>
+            <td> @Html.DisplayNameFor(model => model.WebsiteUrl)</td>
+            <td> @Html.DisplayFor(model => model.WebsiteUrl)</td>
+        </tr>
+
+              <tr>
+            <td>Logo</td>
+               
+            <td> 
+            <div class="holder">
+            <img src="~/Content/HospitalLogo/@Hospital.Utility.GetPathOfHospitalLogo()"/>
+              </div>   
+           </td>
+        </tr>
+
+    </table>
+
+
+    <div class="display-label">
+        
+    </div>
+    <div class="display-field">
+       
+    </div>
+
+    <div class="display-label">
+       
+    </div>
+    <div class="display-field">
+       
+    </div>
+
+    <div class="display-label">
+        
+    </div>
+    <div class="display-field">
+       
+    </div>
+
+    <div class="display-label">
+        
+    </div>
+    <div class="display-field">
+       
+    </div>
+
+    <div class="display-label">
+         
+    </div>
+    <div class="display-field">
+       
+    </div>
+
+    <div class="display-label">
+        
+    </div>
+    <div class="display-field">
+       
+    </div>
+</fieldset>
+
+<p>
+        @Html.ActionLink("Back to List", "Index")
+</p>

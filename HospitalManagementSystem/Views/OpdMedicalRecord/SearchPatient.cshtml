@@ -1,0 +1,230 @@
+﻿@model HospitalManagementSystem.Models.OpdMedicalRecordModel
+
+@{
+    ViewBag.Title = "Search Patient";
+    Layout = "~/Views/Shared/_OpdMRLayout.cshtml";
+}
+
+<h2>SearchPatient</h2>
+
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.savefailed)
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.edit)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.editfailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.delete)
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.deletefailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+<div class="contentWrapper">
+    
+    <div id="searchCase">
+        @using (Html.BeginForm("SearchPatient", "OpdMedicalRecord", FormMethod.Post))
+        {
+            <p>
+                Department: @Html.DropDownList("Default", HospitalManagementSystem.Utility.GetDepartmentList(), "All", new { @onchange = "LoadDoctorListDropDown('DefaultDoc')" })
+                Doctor:@Html.DropDownList("DefaultDoc", HospitalManagementSystem.Utility.GetDoctors(), "---Select---")
+                <input type="submit" value="Search" />
+            </p>
+        }
+
+
+
+    </div>
+
+
+    <div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Patient List</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OpdMedicalRecordListViewModel.OpdMedicalRecordMastetId)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.OpdMedicalRecordListViewModel.OpdId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OpdMedicalRecordListViewModel.PatientFullName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OpdMedicalRecordListViewModel.PatientAge)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OpdMedicalRecordListViewModel.PatientAddress)
+                        </th>
+                        <th>Action</th>
+                    </tr>
+
+                    @foreach (var item in Model.OpdMedicalRecordListViewModelList)
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OpdMedicalRecordMastetId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OpdId)
+
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PatientFullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PatientAge)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PatientAddress)
+                            </td>
+                            <td>
+                                @Html.ActionLink("View Details", "ViewDetails", new { id = item.OpdMedicalRecordMastetId })
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+
+            </div>
+        </div>
+        @*for sorting *@
+
+        <div class="boxFooter">
+
+            <div id="pager" style="">
+                <form>
+                    <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                    <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                    <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                    <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                    <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                    <select class="pagesize valid" style="width: 70px; height: 30px;">
+                        <option selected="selected" value="10">10</option>
+                        <option value="5">5</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                    </select>
+                </form>
+            </div>
+
+        </div>
+
+        @*---------------*@
+    </div>
+</div>
+<script src="~/Scripts/json.cycle.js"></script>
+<script>
+
+    function LoadDoctorListDropDown(targetElm) {
+        var deptId = $("#Default").val();
+        var Url = "/AjaxRequest/GetDoctorNameListPost/" + deptId;
+        if (deptId != "") {
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: Url,
+                contentType: "text/json",
+                data: ({ id: deptId }),
+                beforeSend: function () {
+                    //$("#" + targetElm).attr('disabled', 'disabled');
+                    //$("#" + targetElm).addClass('ac_loading');
+                },
+
+                success: function (jsonResult) {
+                    alert(jsonResult);
+                    var evlResult = JSON.retrocycle(jsonResult);
+                    var selOption = "";
+                    selOption = ParseJsonResultForSelectOptions(evlResult);
+                    tempTargetElm = targetElm.split(',');
+                    for (var i = 0; i < tempTargetElm.length; i++) {
+                        // alert(tempTargetElm.length + " : " + tempTargetElm[i]);
+                        $("#" + tempTargetElm[i]).empty().append(selOption);
+                        $("#" + tempTargetElm[i]).removeClass('ac_loading');
+                        $("#" + tempTargetElm[i]).removeAttr('disabled');
+                    }
+
+
+                },
+                error: function (jsonResult) {
+                }
+            });
+
+
+        } else {
+
+        }
+
+    }
+
+
+    function ParseJsonResultForSelectOptions(evlResult) {
+        var selOption = "";
+        $.each(evlResult, function (key, item) {
+            var isSelected = (item['Selected'] == "true") ? "Selected='Selected'" : "";
+            //var otherAttrib = (item['Attribs']!=undefined)? item['Attribs']:"";
+            var otherAttrib = "";
+            $.each(item, function (name, value) {
+                if (name != 'Selected' && name != 'Value' && name != 'Text') {
+                    otherAttrib += " " + name + '="' + value + '" ';
+                }
+            });
+            selOption += "<option value='" + item['Value'] + "' " + isSelected + " " + otherAttrib + " >"
+            + evlResult[key].Text + "</option>";
+        });
+        return selOption;
+    }
+
+
+</script>
+

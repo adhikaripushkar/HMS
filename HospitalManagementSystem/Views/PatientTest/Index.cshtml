@@ -1,0 +1,196 @@
+﻿@model HospitalManagementSystem.Models.PatientTestModel
+
+@{
+    ViewBag.Title = "Patient Test";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+}
+
+<h2 style="text-align: center;">Patient Test Details</h2>
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.savefailed)
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.edit)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.editfailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.delete)
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.deletefailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+<div class="contentWrapper">
+    <p>
+        @*<i class="fa fa-plus fa-2x" style="color: blue;"></i>&nbsp;@Html.ActionLink("Create New", "Create", null, new { @id = "linkNewBack" })*@
+    </p>
+
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Patient Test</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+                            <th>
+                                Patient ID
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PatientName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DepartmentName)
+                            </th>
+                            @*  <th>
+                                @Html.DisplayNameFor(model => model.DoctorName)
+                            </th>*@
+                            <th>
+                                @Html.DisplayNameFor(model => model.TestRegistrationDate)
+                            </th>
+                            @*<th>
+                                @Html.DisplayNameFor(model => model.Status)
+                            </th>*@
+                            <th>
+                                Amount
+                               @* @Html.DisplayNameFor(model => model.TotalAmount)*@
+                            </th>
+                            <th style="width:50px;">
+                                @Html.DisplayNameFor(model => model.Discount)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PayableAmount)
+                            </th>
+                            <th style="width:60px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.PatientTestModelList)
+                        {
+                            <tr>
+                                @Html.HiddenFor(modelItem => item.PatientTestID)
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PatientID)
+                                </td>
+
+                                @if (item.DepartmentName != "Emergency")
+                                {
+                                    <th>
+                                        @Html.DisplayFor(modelItem => item.PatientName)
+                                    </th>
+                                }
+                                else
+                                {
+                                    <th>
+                                       @HospitalManagementSystem.Utility.getEmergencyPatientName(item.PatientID)
+                                    </th>
+                                    
+                                }
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DepartmentName)
+                                </td>
+                                @*  <td>
+                                    @Html.DisplayFor(modelItem => item.DoctorName)
+                                </td>*@
+                                <td>
+                                    @*@Html.DisplayFor(modelItem => item.TestRegistrationDate)*@
+                                    @Convert.ToDateTime(item.TestRegistrationDate).ToShortDateString()
+                                </td>
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalAmount)
+                                </td>
+                                <td style="width:50px;">
+                                    @Html.DisplayFor(modelItem => item.Discount)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PayableAmount)
+                                </td>
+                                <td style="width:60px;">
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.PatientID, PatientTestID = item.PatientTestID }) |
+                                    @Html.ActionLink("Print", "PatientTestResult", new { id = item.PatientID, PatientTestID = item.PatientTestID, DeptID = item.DepartmentName })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+            @*for sorting *@
+
+            <div class="boxFooter">
+
+                <div id="pager" style="">
+                    <form>
+                        <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                        <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                        <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                        <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                        <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                        <select class="pagesize valid" style="width: 70px; height: 30px;">
+                            <option selected="selected" value="10">10</option>
+                            <option value="5">5</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                        </select>
+                    </form>
+                </div>
+
+            </div>
+
+            @*---------------*@
+
+        </div>
+    </div>
+
+
+</div>

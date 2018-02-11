@@ -1,0 +1,198 @@
+﻿@model HospitalManagementSystem.Models.OpdModel
+
+@{
+    ViewBag.Title = "calulateagenttotal";
+    Layout = "~/Views/Shared/_OpdLayOut.cshtml";
+}
+
+<h2 style="text-align:center;">OPD Deparment</h2>
+
+
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+@TempData["success"]
+        </div>
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.savefailed)
+{ 
+    <div class="alert alert-error">
+@TempData["success"]
+        </div>
+
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.edit)
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.editfailed)
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}
+
+ 
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.delete)
+{ 
+    <div class="alert alert-info">
+@TempData["success"]
+        </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.deletefailed)
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}
+
+ 
+
+<div class="contentWrapper">
+     <div id="DetailsId"></div>
+
+
+
+ <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+       <div class="boxWrapper">
+    <div class="boxHeadingPanel"><h1>Agent Total Commision Details</h1></div>
+
+<table class="table table-hover tablesorter">
+    <thead>
+    <tr>
+        
+          <th>
+           @Html.DisplayNameFor(model => model.OpdMedicalDetailModel.AgentId)
+    </th>
+     
+       
+      <th>
+         Total Commision
+      </th>
+        <th>Action</th>   
+    </tr>
+        </thead>
+    <tbody>
+@foreach (var item in Model.OpdMedicalDetailList) {
+    <tr>
+        
+         <td>
+        @HospitalManagementSystem.Utility.GetAgentFullName(item.AgentId)
+        </td>
+     
+       <td>
+           @Html.DisplayFor(modelItem => item.Amount)
+       
+       
+        <td>         
+          @Html.ActionLink("Details", "AgentTotalDetail",new {id=item.AgentId})
+           
+        </td>
+    </tr>
+}
+
+        </tbody>
+
+</table>
+         
+            </div>
+
+     @*for sorting *@
+        
+               <div class="boxFooter">
+                   
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+
+               </div> 
+
+        @*---------------*@
+
+            </div>
+        </div>
+
+
+    </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+@*<script>
+
+    
+
+    
+    var dlg = $.noConflict();
+    
+    dlg(".linkDetail").click(function (e) {
+        e.preventDefault();
+
+        
+        dlg.get('/Opd/Details/' + this.id,
+                   function (data) {
+
+                       dlg('#DetailsId').html(data);
+
+                       dlg(function () {
+                           dlg("#DetailsId").dialog({
+
+                               position: [490, 190],
+                               resizable: true,
+                               minWidth: 550,
+                               maxWidth: 550,
+                               height: 400
+                               //title: "Doctor Details"
+                      
+
+
+                               
+                               //close: function () { $(this).remove() },
+                               //modal: true
+
+                           });
+                           
+                       });
+
+                   }
+         );
+
+
+
+
+    });
+
+    </script>*@
+

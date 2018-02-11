@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - EHMS</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+
+    @Styles.Render("~/Content/css")
+
+
+
+    @*for designs*@
+
+    <link href="~/css/layout.css" rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
+    <link href="~/css/menu_assets/styles.css" rel="stylesheet" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/fontaw/css/font-awesome.min.css">
+
+
+
+    <style>
+        </style>
+
+    @*for validation or many more*@
+
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.8.20.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.ui.datepicker.js"></script>
+
+    <style>
+        /* CSS for demo containers. Remove/ edit if desired */
+
+
+        #divMain1 {
+            /*width: 500px;*/
+            background-color: #245C81;
+            height: 400px;
+            overflow: hidden;
+        }
+
+
+        #divShort {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 2em;
+            background-color: black;
+            color: white;
+            overflow: hidden;
+        }
+    </style>
+
+
+
+    @*for talble sorter*@
+
+    <link href="~/Content/TableSort.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.4.4.min.js"></script>
+    <script src="~/Scripts/jquery.tablesorter.js"></script>
+    <script src="~/Scripts/jquery.tablesorter.pager.js"></script>
+
+
+
+    <script type="text/javascript">
+        var j = $.noConflict();
+        j(function () {
+            j("table.tablesorter").tablesorter({ widthFixed: true, sortList: [[0, 0]] })
+            .tablesorterPager({ container: j("#pager"), size: j(".pagesize option:selected").val() });
+        });
+    </script>
+
+</head>
+
+
+<body>
+    <div class="mainWrapper">
+        <header class="header1 clearfix">
+
+
+            @*  <header class="header1 clearfix">*@
+
+            <div class="logoPanel">
+
+                <img src="~/Images/HospitalManagementSystem-logo.png" />
+            </div>
+
+            <div class="userInfo">
+                <div class="userloggedinfo clearfix">
+
+                    <div class="userinfo">
+
+                        <div class="userloggedinfo clearfix">
+                            <img src="~/Images/emplogo3.jpg" alt="">
+                            <div class="userinfo">
+                                @Html.Partial("_LoginPartial")
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            @*        <nav class="mainaccesPanel clearfix" role="navigation">
+
+            </nav>*@
+
+
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+
+            <div class="leftMenu" style="margin-left: -10px;">
+                <div class="left-s-heading">
+
+                    <h1><a href='~/Home/ShowDashBoard' title=""><span style="color: white;">DashBoard</span></a></h1>
+                </div>
+                <ul id="menu" class="nav" style="text-align: left;">
+                    <li class="dash"><a href="~/Inquery/SearchPatient" title="" class=""><span style="font-size: 12px;">Search Patient</span></a></li>
+                    <li class="dash"><a href="~/Inquery/SearchDoctorBYDept" title="" class=""><span style="font-size: 12px;">Search Doctor By Department</span></a></li>
+                    @*<li class="charts"><a href="~/Inquery/SearchDoctorAutocomplete" title=""><span style="font-size: 12px;">Search Doctor Detail</span></a></li>*@
+                    <li class="charts"><a href="~/Inquery/IpdSearch" title=""><span style="font-size: 12px;">Ipd Patient Search</span></a></li>
+                    @*<li class="charts"><a href="~/Inquery/BedDetails" title=""><span style="font-size: 12px;">Bed Details</span></a></li>
+                    <li class="charts"><a href="~/Inquery/OTDetails" title=""><span style="font-size: 12px;">OT Details</span></a></li>*@
+
+
+                </ul>
+            </div>
+
+        </header>
+
+
+
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+
+
+    @*    <footer>
+        <div class="footer">
+
+            <div class="footer-left"><span>© 2017. HospitalManagementSystem Management System. All Rights Reserved.</span> </div>
+            <div class="footer-right"><span>Designed and Developed by: Pushkar Adhikari</span> </div>
+        </div>
+    </footer>*@
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

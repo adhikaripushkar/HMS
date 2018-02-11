@@ -1,0 +1,106 @@
+﻿@model Hospital.Models.StockSubCategoryModel
+
+@using Hospital;
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_StockSetupLayout.cshtml";
+}
+
+
+<h2 style="text-align:center;"> Stock Sub Category Setup </h2>
+
+<div class="contentWrapper">
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="bs-docs-example form-inline">
+    <fieldset>
+        <legend>Create</legend>
+        <div class="row-fluid singleline">
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.StockCategoryID)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StockCategoryID)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.StockCategoryID, Utility.GetStockCategoryList())
+            
+        </div>
+                </label>
+
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.StockSubCategoryName)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StockSubCategoryName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.StockSubCategoryName)
+            
+        </div>
+                </label>
+
+            
+            </div>
+        <br />
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+        </div>
+}
+
+<div id="linkNewBack">
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //alert();
+      
+       
+        $("#StockSubCategoryName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/StockSubCategory/AutocompleteSubCategory",
+                    type: "GET",
+                    dataType: "json",
+                    data: { s: request.term },
+                    success: function (data) {
+                        
+                        response($.map(data, function (item) {
+                            
+                            return { label: item ,value:""};
+                           
+
+                        }))
+
+                    },
+                    //error:function(data){
+                    //    response($.map(data, function (item) {
+
+                    //        return { label: item.StockUnitName, Value: item.StockUnitName };
+                    //    }))
+                    //}
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    });
+</script>
+
+    }
+
+    </div>

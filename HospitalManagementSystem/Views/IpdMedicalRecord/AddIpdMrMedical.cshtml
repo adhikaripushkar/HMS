@@ -1,0 +1,272 @@
+﻿@model HospitalManagementSystem.Models.IpdMedicalRecord
+
+@{
+    ViewBag.Title = "AddIpdMrMedical";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+
+<style>
+
+
+    
+     .mytable tr td:first-child {
+        /*border: 1px solid black;*/
+        background-color: #C5B971;
+        font-weight: bold;
+    }
+
+     table#mytbl,
+    table#mytbl td {
+        
+        border: none !important;
+    }
+
+</style>
+
+
+
+
+
+<script src="~/Scripts/OrderManagerScript.js"></script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        AddClickEvents();
+    });
+
+
+</script>
+
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+        j("#Inserteddate").datepicker();
+       
+
+    });
+
+  </script>
+
+<h2 style="text-align:center;">IPD Medical Records</h2>
+
+
+<div class="contentWrapper">
+<h4>Patient Details</h4>
+<script src="~/Scripts/OrderManagerScript.js"></script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        AddClickEvents();
+    });
+
+
+</script>
+
+
+<table class="mytable">
+  
+
+@foreach (var item in Model.IpdMedicalRecordDataList) {
+    <tr>
+
+        <td>
+            @Html.DisplayNameFor(model => model.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>
+
+        </tr>
+
+    <tr>
+        <td>
+            @Html.DisplayNameFor(model => model.RegistrationDate)
+
+        </td>
+        
+        <td>
+          @Convert.ToDateTime(item.RegistrationDate).ToShortDateString()
+        </td>
+
+
+                
+    </tr>
+    
+    <tr>
+
+        <td>@Html.DisplayNameFor(model => model.WardNo)</td>
+        <td>@item.WardNo</td>
+
+        
+    </tr>
+    <tr>
+
+
+        <td>@Html.DisplayNameFor(model => model.RoomNo)</td>
+        <td>@item.RoomNo</td>
+    </tr>
+    
+    <tr>
+
+        <td>@Html.DisplayNameFor(model => model.BedNo)</td>
+        <td>@item.BedNo</td>
+    </tr>
+    
+  
+      
+        
+        
+    
+}
+        
+
+</table>
+
+    <hr />
+
+
+<h4>Medicine Details</h4>
+ <div class="general-box clearfix">
+        <div class="general-box clearfix">
+            
+       <div class="boxWrapper">
+    <div class="boxHeadingPanel"><h1>Details</h1></div>
+
+<table class="table table-hover tablesorter">
+    <tr>
+        <th>
+            Date
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MedicineName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Doses)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DosesTimes)
+        </th>
+        <th>
+           Remark
+        </th>
+        <th>Action</th>
+       
+       
+        
+    </tr>
+
+@foreach (var item in Model.IpdMedicalRecordValue)
+{
+    <tr>
+        <td>
+
+            
+
+            @Convert.ToDateTime(item.InsertedDate).ToShortDateString()
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MedicineName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Doses)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DosesTimes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DosesTotalDays)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IpdMrMedicalRecordID}) |
+            
+            @*@Html.ActionLink("Delete", "Delete", new { id = item.IpdMrMedicalRecordID, opd = item.PatientID, ipd = item.IpdRegisterationID})*@
+
+            @Html.ActionLink("Delete", "Delete", new { id=item.IpdMrMedicalRecordID, opd = item.PatientID,ipd = item.IpdRegisterationID },new {onclick = "return confirm('Do you want to delete?');"})
+        </td>
+       
+    </tr>
+}
+        
+
+</table></div></div></div>
+    <hr />
+
+@if (TempData["a"]!= null)
+{ 
+<script type ="text/javascript">
+
+    alert("plz insert data again");
+
+</script>
+
+
+}
+
+<h2>Add Medicines</h2>
+  
+@using (Html.BeginForm())
+{
+    <div> Enter Date</div>
+    @Html.TextBoxFor(model => model.InsertedDate, new { @id="",@Value=DateTime.Now.ToShortDateString(),@readonly="readonly"})
+    @Html.HiddenFor(model=>model.PatientID)
+    @Html.HiddenFor(model=>model.IpdRegisterationID)
+ <div class="well well-small" id="Add-Item">
+
+            @Html.ActionLink("Add More", "_MedicineEntry", null, new { @class = "addProductItem btn btn-primary" })
+            <table id="mytbl" style="width:900px; padding-left:50px;">
+                  <tr>
+                      <td style="padding-left:10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          
+                          Medicine</td>
+                      <td style="padding-left:15px;">Doses</td>
+                      <td>Doses Time</td>
+                      <td>Remark</td>
+                </tr>
+               
+                  
+                      @foreach (var item in Model.IpdMedicalRecordList)
+                      {
+                        
+                        <tr>
+                        @Html.Partial("_MedicineEntry", item)
+                        </tr>  
+                          
+                      }        
+            
+            </table>
+        </div>
+    <table>
+        <tr>
+            <td>
+                Staff @Html.DropDownListFor(model=>model.Staff,HospitalManagementSystem.Utility.GetEmployeeList())
+            </td>
+            <td>
+                Shift @Html.DropDownListFor(model=>model.Shift,HospitalManagementSystem.Utility.GetShift())
+            </td>
+            <td>
+                Time @Html.TextBoxFor(model=>model.Time, new { @Value=DateTime.Now.TimeOfDay,@readonly="readonly"})
+            </td>
+        </tr>
+    </table>
+       <input type ="submit" value ="submit" />
+
+}
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+    $("#Add-Item").on('click', '.row-button', function () {
+        $(this).closest("div.row").remove(); 
+    });
+
+</script>
+

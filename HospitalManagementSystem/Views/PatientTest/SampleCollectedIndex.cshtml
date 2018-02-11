@@ -1,0 +1,130 @@
+﻿@model Hospital.Models.PatientTestModel
+
+@{
+    ViewBag.Title = "SampleCollectedIndex";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+    int i = 1;
+}
+
+@{
+    ViewBag.Title = "Patient Test";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+}
+
+<h2 style="text-align: center;">Sample Collected List</h2>
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+@if (TempData["success"] == Hospital.UtilityMessage.savefailed)
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == Hospital.UtilityMessage.edit)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.editfailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.delete)
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.deletefailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+<div class="contentWrapper">
+    <p>
+        @*<i class="fa fa-plus fa-2x" style="color: blue;"></i>&nbsp;@Html.ActionLink("Create New", "Create", null, new { @id = "linkNewBack" })*@
+    </p>
+
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+            @using (Html.BeginForm("SampleCollectedIndex", "PatientTest", FormMethod.Get))
+            {
+                <p>
+                    <span style="font-size: 14px; font-weight: bold;">LabTestId:&nbsp;&nbsp;</span>@Html.TextBox("LabNubmer")
+                    <input type="submit" value="Search" />
+                </p>
+            }
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Sample Collected List</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+                            <th>SN</th>
+                            <th>LabTest No</th>
+                            <th>Patient ID</th>
+                            <th>Patient Name</th>
+                            <th>Age</th>
+                            <th>Sex</th>
+                            <th>Address</th>
+                            <th style="width: 60px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.SampleCollectedViewModelList)
+                        {
+                            <tr>
+
+                                <td>@i</td>
+                                <td>@item.LabNumber</td>
+                                <td>@item.PatientId</td>
+                                <td>@item.PatientFullName</td>
+                                <td>@item.PatientAge</td>
+                                <td>@item.SexType</td>
+                                <td>@item.Address</td>
+                                <td>View</td>
+                            </tr>
+                            i++;
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>

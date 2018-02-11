@@ -1,0 +1,302 @@
+﻿@{
+    ViewBag.Title = "DashBoard";
+    Layout = "~/Views/Shared/_DashBoardLayOut.cshtml";
+}
+<style>
+    .info, .success, .warning, .error, .validation {
+        border: 1px solid;
+        margin: 10px 0px;
+        padding: 15px 10px 15px 50px;
+        background-repeat: no-repeat;
+        background-position: 10px center;
+    }
+
+    .info {
+        color: #00529B;
+        background-color: #BDE5F8;
+        background-image: url("/Images/info.jpg");
+        font-size: 14px;
+    }
+</style>
+
+<div class="contentWrapper" style="margin-top: -40px; min-height: 200px;">
+
+    <div class="row-fluid">
+
+        @*@if (HospitalManagementSystem.Utility.IsUserHasHandOver() > 0)
+        {
+            <div class="info">New Handover Details :@Html.ActionLink("View", "NotifyHandOver", "Jvmaster")</div>
+        }*@
+
+        <div class="container accessBox">
+
+            <ul class="dashboard-actions clearfix">
+
+                <li>
+                    <a href="~/DepartmentSetup/Main" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setup1.jpg" alt="" class="">
+                            <h5>Master SetUp</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/Opd/Index" data-toggle="n-tooltip">
+                        @*<a href="~/Opd/OpdMain" data-toggle="n-tooltip">*@
+                        <div class="dashboard-action">
+                            <img src="~/Images/opd-img.jpg" alt="" class="">
+
+                            <h5>OPD Module</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/IpdRegistrationMaster/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/ipd-img.jpg" alt="" class="">
+                            <h5>IPD Module</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/PatientTest/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/Pathology5.jpg" alt="" class="">
+                            <h5>Pathology Module</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/Pharmacy/Main" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/Pharmacy-img.jpg" alt="" class="">
+                            <h5>Pharmacy Module</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <br />
+
+                <li>
+                    <a href="~/Security/Main" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/secutity-img.jpg" alt="DepartmentSetup/Index" class="">
+
+                            <h5>Security Module</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+
+                <!--------------------------Here i am breaking with <br/> tag to make as design pyramid styles if you dont need that styles that remove the <br/> tag from here--------------------------------------->
+
+
+
+
+                @*  <li>
+
+               <a href=# data-toggle="n-tooltip">
+
+                   
+
+                  <div class="dashboard-action">
+                    <img src="~/Images/secutity-img.jpg" alt="DepartmentSetup/Index" class="">
+                      
+                    <h5>Security Module</h5>
+                  </div>
+                </a>
+              </li>*@
+
+
+                <li>
+                    <a href="~/EmergencyMaster/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/emergency1.jpg" alt="" class="">
+                            <h5>Emergency</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/BloodTransection/Main" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/bloodbank.jpg" alt="" class="">
+                            <h5>Blood Bank</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/OperationTheatreMaster/Main" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/operation2.jpg" alt="" class="">
+                            <h5>Operation Theatre</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/PreRegistration/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/Pre-Registration.png" alt="" class="">
+                            <h5>Pre-Registration</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <br />
+
+                <li>
+                    <a href="~/Mis/MRMainPage" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/medical_report.jpg" alt="" class="">
+                            <h5>Medical Report</h5>
+                        </div>
+                    </a>
+                </li>
+
+                @*<li>
+                    <a href="~/PatientTest/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Patient Test</h5>
+                        </div>
+                    </a>
+                </li>*@
+                <li>
+                    <a href="~/Billing/Main" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/billing.jpg" alt="" class="">
+                            <h5>Account Module</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+
+                <li>
+                    <a href="~/Stock/Main" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/stock.jpg" alt="" class="">
+                            <h5>Stock</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/Mis/Main" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/ReportSetting.jpg" alt="" class="">
+                            <h5>MIS Reports</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/DepositMaster/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/DepositSetting.jpg" alt="" class="">
+                            <h5>Deposit</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <br />
+
+
+                <li>
+                    <a href="~/BillingCounter/Create" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Centralized Billing</h5>
+                        </div>
+                    </a>
+                </li>
+
+
+                @*<li>
+                    <a href="~/MedicalTest/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>Medical Kit Demand</h5>
+                        </div>
+                    </a>
+                </li>*@
+
+                <li>
+                    <a href="~/Inquery/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/enquiry.jpg" alt="" class="">
+                            <h5>Enquiry</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/GlAccountSubGroup/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/billing.jpg" alt="" class="">
+                            <h5>Chart Of Account</h5>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="~/Home/Payroll" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/billing.jpg" alt="" class="">
+                            <h5>Payroll</h5>
+                        </div>
+                    </a>
+                </li>
+
+                @*<li>
+                    <a href="~/DietDetp/Main" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/billing.jpg" alt="" class="">
+                            <h5>Diet Department</h5>
+                        </div>
+                    </a>
+                </li>*@
+                @*<li>
+                    <a href="~/Zone/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/billing.jpg" alt="" class="">
+                            <h5>Zone Setup</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/District/Index" data-toggle="n-tootip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/billing.jpg" alt="" class="" />
+                            <h5>District Setup</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/VDCMUN/Index" data-toggle="n-tooltip">
+                        <div class="dashboard-action">
+                            <img src="~/Images/setting.jpg" alt="" class="">
+                            <h5>VDCMUN Setup</h5>
+                        </div>
+                    </a>
+                </li>*@
+            </ul>
+
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<div class="footer">
+
+    <div class="footer-left"><span>© 2017. HospitalManagementSystem Management System. All Rights Reserved.</span> </div>
+    <div class="footer-right"><span>Designed and Developed by: Pushkar Adhikari</span> </div>
+</div>
+

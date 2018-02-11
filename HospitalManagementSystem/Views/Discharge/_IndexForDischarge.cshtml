@@ -1,0 +1,101 @@
+﻿@model HospitalManagementSystem.Models.EmergecyMasterModel
+<div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+       <div class="boxWrapper" id="DischargelistId">
+    <div class="boxHeadingPanel"><h1>Details</h1></div>
+
+<table class="table table-hover tablesorter">
+    <thead>
+
+
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FinalDiagnosis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OutcomeTypeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OutcomeText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DischargeConditionAndInst)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.TimeOut)
+            </th>
+            <th>Action</th>
+
+
+        </tr>
+
+        @foreach (var item in Model.EmergencyMasterModelList)
+        {
+            <tr>
+
+                @Html.HiddenFor(modelItem => item.EmergencyMasterId)
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinalDiagnosis)
+                </td>
+                <td>
+
+                   @* @Html.DisplayFor(modelItem => item.OutcomeTypeId)*@
+                   @HospitalManagementSystem.Utility.outcomename(item.OutcomeTypeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelIteml => item.OutcomeText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DischargeConditionAndInst)
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.TimeOut)
+                </td>
+                <td>
+                    @if(item.FinalDiagnosis==null)
+                    {
+                       <a href='~/Discharge/EditForDischarge?id=@Model.EmergencyMasterId' title="" class="crtdischargelink"><span>Create New</span></a>
+                    }
+                    else
+                    {
+                       <a href='~/Discharge/EditForDischarge?id=@Model.EmergencyMasterId' title="" class="crtdischargelink"><span>Edit</span></a>  
+                    }
+                </td>
+
+                @*  <td>
+            @Html.ActionLink("Edit", "Edit", new {  id=Model.EmergencyMasterId}) |
+        
+            @Html.ActionLink("Delete", "Delete", new { id=Model.EmergencyMasterId})
+        </td>*@
+            </tr>
+        }
+
+    </table>
+
+                    <br />
+    @if (Model.EmergencyMasterModelList.Count > 1)
+    {
+
+    <p>
+        <a href='~/Discharge/EditForDischarge?id=@Model.EmergencyMasterId' title="" class="crtdischargelink"><span style="font-size:20px;">Create new</span></a>
+
+    </p>
+    }
+
+</div></div></div>
+<div id="cartooning"></div>
+<script>
+    $(".crtdischargelink").click(function (e) {
+        e.preventDefault();
+        var data = $('#EmergencyMasterId').val();
+        var url = this.href;
+
+        $.get(url, { id: data }, function (res) {
+
+            $("#cartooning").html(res);
+
+        });
+    });
+</script>

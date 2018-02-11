@@ -1,0 +1,64 @@
+﻿@model HospitalManagementSystem.Models.RegisterModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_SecurityModelLayout.cshtml";
+}
+
+<hgroup class="title">
+   @* <h1>@ViewBag.Title.</h1>*@
+    <h2 style="text-align:center;">Create a new account.</h2>
+</hgroup>
+
+<div class="contentWrapper">
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <div class="bs-docs-example form-inline">
+    <fieldset>
+        <legend>Registration Form</legend>
+        <div class="row-fluid singleline">
+
+            <table>
+                  <tr>
+                    <td>Employee</td>
+                    <td>
+                        @Html.DropDownListFor(model=>model.EmployeeId, HospitalManagementSystem.Utility.GetEmployeeList())
+                    </td>
+
+                </tr>
+                <tr>
+                    <td> @Html.LabelFor(m => m.UserName)</td>
+                    <td>@Html.TextBoxFor(m => m.UserName)</td>
+                    </tr>
+                    <tr>
+
+                    <td>@Html.LabelFor(m => m.Password)</td>
+                         <td>@Html.PasswordFor(m => m.Password)</td>
+                        </tr>
+                <tr>
+                    <td> @Html.LabelFor(m => m.ConfirmPassword)</td>
+                      <td>  @Html.PasswordFor(m => m.ConfirmPassword)</td>
+                </tr>
+    <tr> <td colspan="2"><input type="submit" value="Register"  style="float:right;"/></td></tr>
+       
+       
+      
+
+
+    
+       
+    </table>
+               
+               </div>
+       
+    </fieldset>
+          </div>
+}
+
+
+    </div>
+  
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

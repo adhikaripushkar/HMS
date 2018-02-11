@@ -1,0 +1,204 @@
+﻿@model HospitalManagementSystem.Models.OpdMedicalRecordModel
+
+
+<style>
+
+    #skills-table th {
+        padding: 6px 5px;
+        text-align: left;
+        background-color: #e8eef4;
+        border: solid 1px #e8eef4;
+    }
+
+
+.new-row{
+	height: 26px; 
+	width: 30px; 
+	background-image: url(/Content/add.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.remove-row{
+	height: 26px; 
+	width: 30px; 
+	background-image: url(/Content/remove.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.rownumber:before{
+	counter-increment: row 1;
+	content: counter(row, decimal) ".";
+}
+
+TABLE {
+		
+		margin: 0 10px 0 10px;
+		counter-reset: row 0;          
+	}
+	
+	SELECT.skill-level {
+		width: 150px;
+	}
+	
+
+</style>
+
+
+
+
+@using (Html.BeginForm("GetDataFromMedicine","OpdMedicalRecord",FormMethod.Post))
+{
+    
+        <fieldset>
+        
+           <h3 style="padding-left:10px;">Enter Medicine Details</h3>
+        @Html.HiddenFor(mod=>mod.OpdMedicalRecordMastetId)
+            @Html.HiddenFor(mod=>mod.PatientId)
+            @Html.HiddenFor(mod=>mod.DepartmentId)
+            @Html.HiddenFor(mod=>mod.DoctorId)
+            @Html.HiddenFor(mod=>mod.PatientLogId)
+            
+    <table id="skills-table">
+            <thead>
+                <tr>
+                    <th style="width:20px;">&nbsp;</th>
+                    <th style="width:160px;">Medicine Name</th>
+                    <th style="width:150px;">Doses</th>
+                    <th>Doses Time</th>
+                    <th>Doses Days</th>
+                    <th style="width:32px;">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            @for (var j = 0; j < Model.PatientMedicineDosesList.Count; j++)
+            {
+                <tr valign="top">
+                    <th><span class="rownumber"></span></th>
+                    <td>
+                        @Html.TextBoxFor(model => model.PatientMedicineDosesList[j].MedicineName, new { @class = "skill-title" })
+                        
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model=>model.PatientMedicineDosesList[j].Doses)
+                    </td>
+
+                    <td>
+                        @Html.TextBoxFor(model=>model.PatientMedicineDosesList[j].DosesTime)
+                    </td>
+
+                    <td>
+                        @Html.TextBoxFor(model=>model.PatientMedicineDosesList[j].DosesDay)
+                    </td>
+
+                    <td>
+                        @if (j < Model.PatientMedicineDosesList.Count - 1)
+                        {
+                            <button type="button" class="remove-row" title="Delete row">&nbsp</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="new-row" title="New row">&nbsp</button> 
+                        }
+                    </td>
+                </tr>
+            }
+            
+                
+            </tbody>
+        </table>
+        
+    </fieldset>
+    <br />
+        <p style="float:right;">
+             <input type="submit" value="Create" style="width:100px; height:30px;"/>
+        </p>
+}
+
+
+
+
+<script type="text/javascript">
+    var addRow = function () {
+        addTableRow($("#skills-table"));
+        return false;
+    };
+
+    var deleteRow = function (event) {
+        $(event.target).closest("tr").remove();
+        return false;
+    };
+
+    function addTableRow(table) {
+       
+        
+        var $ttc = $(table).find("tbody tr:last");
+        var $tr = $ttc.clone();
+
+        $tr.find("input,select").attr("name", function () { // find name in the cloned row
+            var parts = this.id.match(/(\D+)_(\d+)__(\D+)$/); // extract parts from id, including index
+            return parts[1] + "[" + ++parts[2] + "]." + parts[3]; // build new name
+        }).attr("id", function () { // change id also
+            var parts = this.id.match(/(\D+)_(\d+)__(\D+)$/); // extract parts
+            return parts[1] + "_" + ++parts[2] + "__" + parts[3]; // build new id
+        });
+        $tr.find("span[data-valmsg-for]").attr("data-valmsg-for", function () { // find validation message
+            var parts = $(this).attr("data-valmsg-for").match(/(\D+)\[(\d+)]\.(\D+)$/); // extract parts from the referring attribute
+            return parts[1] + "[" + ++parts[2] + "]." + parts[3]; // build new value
+        })
+        $ttc.find(".new-row").attr("class", "remove-row").attr("title", "Delete row").unbind("click").click(deleteRow); // change buttin function
+        $tr.find(".new-row").click(addRow); // add function to the cloned button
+
+        // reset fields in the new row
+        $tr.find("select").val(""); 
+        $tr.find("input[type=text]").val("");
+        
+        // add cloned row as last row  
+        $(table).find("tbody tr:last").after($tr);
+
+        // Find the affected form
+        var $form = $tr.closest("FORM");
+
+        // Unbind existing validation
+        $form.unbind();
+        $form.data("validator", null);
+
+        // Check document for changes
+        $.validator.unobtrusive.parse(document);
+
+        // We could re-validate with changes
+        // $form.validate($form.data("unobtrusiveValidation").options);
+    };
+
+    (function ($) { 
+       
+
+        $.fn.resetValidation = function () {
+        var $form = this.closest('form');
+
+        //reset jQuery Validate's internals
+        $form.validate().resetForm();
+
+        //reset unobtrusive validation summary, if it exists
+        $form.find("[data-valmsg-summary=true]")
+        .removeClass("validation-summary-errors")
+        .addClass("validation-summary-valid")
+        .find("ul").empty();
+
+        //reset unobtrusive field level, if it exists
+        $form.find("[data-valmsg-replace]")
+        .removeClass("field-validation-error")
+        .addClass("field-validation-valid")
+        .empty();
+
+        return $form;
+        };
+    })(jQuery);
+
+    $(function () {
+        $(".new-row").click(addRow);
+        $(".remove-row").click(deleteRow);
+    })
+</script>

@@ -1,0 +1,202 @@
+﻿@model HospitalManagementSystem.Models.DoctorTimeModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+
+
+<style>
+
+    .ColorTR
+    {
+        background-color:#C5B971;
+    }
+    .ColorDefault
+    {
+         background-color:white;
+    }
+
+
+</style>
+
+
+@*@if (TempData["UpdateSucessfull"] == "sucess")
+{
+    <script type="text/javascript">
+
+        alert('Update Data Sucess|||')
+    </script>
+}*@
+
+    
+
+<h2 style="text-align:center;">Doctor Time Setup</h2>
+
+<div class="contentWrapper">
+
+
+<div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+       <div class="boxWrapper">
+    <div class="boxHeadingPanel"><h1>Doctor Time </h1></div>
+
+<table class="table">
+    <tr>
+      
+       <th>
+            @Html.DisplayNameFor(model => model.DoctorName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DoctorDays)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Shift)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckPatientPerDay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WebPatientPerDay)
+        </th>
+        
+        
+        <th> Action</th>
+    </tr>
+
+@foreach (var item in Model.DoctorTimeList)
+{
+    
+    
+         @Html.HiddenFor(modelITem => item.TimeId, new { @id = "AvailableTimeID" })
+        int colId = item.TimeId;
+        <tr id="Color_@colId">
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.DoctorName)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.DoctorDays)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Shift)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckPatientPerDay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WebPatientPerDay)
+        </td>
+     
+        <td>
+            <input type="button" id="btnUpdate" value="Edit" onclick="EditButtonPressed(@item.TimeId)"/>
+        @* @if (item.DoctorDays != "On Request")
+         { 
+                 <input type="button" id="btnUpdate" value="Edit" onclick="EditButtonPressed(@item.TimeId)"/>
+
+         }
+       @Html.ActionLink("Edit", "Edit", new { item.DoctorAvailableTimeId })*@
+       
+       </td>
+       
+       
+      
+    </tr>
+}
+
+</table>
+
+           </div>
+            
+
+     @*for sorting *@
+        
+               <div class="boxFooter">
+                   
+                 @*  <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>*@
+
+               </div> 
+
+        @*---------------*@
+            </div>
+
+
+<br />
+
+    
+<div id="Details"></div>
+   
+ 
+ 
+    </div>
+    <div>
+    @Html.ActionLink("Back to List", "Index", null, new { @id="linkNewBack"})
+</div>
+
+    </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+
+    var lastId = "";
+    function EditButtonPressed(btnId)
+    {
+        if(lastId!="")
+        {
+            $("#Color_"+lastId).removeClass("ColorTR");
+        }
+        lastId = btnId;
+        $("#Color_"+btnId).toggleClass("ColorTR");
+        
+        
+        $.ajax({
+            url: '/DoctorTime/Edit/',
+            type: 'GET',
+            data: {
+                id:btnId
+            },
+            success: function (data) {
+                $('#Details').html(data);
+            },
+            errro: function () {
+                alert('Sorry Error Occured');
+            }
+        });
+
+    };
+
+
+</script>
+

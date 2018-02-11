@@ -1,0 +1,33 @@
+﻿@using Hospital.Helpers
+@model Hospital.Models.EmployeeTrainingInfoModel
+
+@using (Html.BeginCollectionItem("EmployeeTrainingInfoList"))
+{
+    <div  class="row" style="margin-left: 0px;" id="clsdiv">
+        <table>
+            <tr>
+                <td>
+                 @Html.TextBoxFor(model => model.Course)
+                </td>
+                <td>
+                 @Html.TextBoxFor(model => model.TrainingCenter)
+                </td>
+                <td>
+                 @Html.TextBoxFor(model => model.TGrade)
+                </td>
+                <td>
+                 @Html.TextBoxFor(model => model.Duration)
+                </td>
+                <td>
+                 <input type="button" class="row-button btn btn-warning" value="Remove" />
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+
+
+
+
+
+

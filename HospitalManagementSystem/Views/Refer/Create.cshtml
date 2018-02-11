@@ -1,0 +1,31 @@
+﻿@model Hospital.Models.ReferModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="well" style="border-radius:0;">
+        <div class="side-by-side clearfix">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.ValidationSummary(true)
+             <div class="clearfix">
+                      <div class="contGroup">
+                        <b>@Html.LabelFor(model => model.Refername)</b> 
+                          @Html.TextBoxFor(x => x.Refername, new { @class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.Refername)
+
+                      </div>
+            </div>
+                <br />
+                <div class="bottom_btn">
+                    <a href="@Url.Action("Index","Refer")" class="btn btn-sm btn-warning"><i class="fa fa-undo"></i>Go Back</a>
+                    <button type="submit" id="" name="" class="btn btn-success"><i class="fa fa-save"></i>Save</button>
+
+                    </div>
+            }
+        </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

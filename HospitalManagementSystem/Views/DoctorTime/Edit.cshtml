@@ -1,0 +1,123 @@
+﻿@model HospitalManagementSystem.Models.DoctorTimeModel
+
+
+
+<link href="~/Content/themes/base/jquery.ui.timepicker.css" rel="stylesheet" />
+
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.ui.timepicker.js"></script>
+
+
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+
+
+        j("#stime").timepicker();
+        j("#etime").timepicker();
+        
+    });
+
+</script>
+
+
+
+
+
+<div class="bs-docs-example form-inline">
+<table>
+    <tbody>
+
+        <tr>
+            <th>
+                Start Time
+            <th>
+               End Time
+            </th>
+            <th>
+                Check Patient Per Day
+            </th>
+            <th>
+                Web Patient PerDay
+            </th>
+        </tr>
+    </tbody>
+  
+          
+    @foreach (var item in Model.DoctorTimeList)
+    {
+       
+          @Html.HiddenFor(modelITem=>item.DoctorID, new { @id = "DoctorID" })
+           @Html.HiddenFor(modelItem => item.DoctorAvailableTimeId, new { @id = "DoctorTimeID" })
+           <tr>
+           
+            <td>
+             @Html.TextBoxFor(modelIem => item.StartTime, new { @id = "stime" })
+
+            </td>
+            <td>
+                @Html.TextBoxFor(modelItem => item.EndTime, new { @id = "etime" })
+            </td>
+           
+            <td>
+                 @Html.TextBoxFor(modelItem => item.CheckPatientPerDay, new { @id = "cpn" })
+            </td>
+            <td>
+                 @Html.TextBoxFor(modelItem => item.WebPatientPerDay, new { @id = "wpn" })
+            </td>
+           <td>
+         
+            
+           </td>
+        </tr>
+        
+        
+    }  
+   
+</table>
+    <br />
+    <span><input type="submit" value="Update" id="SummitUpdate" /></span>
+
+    </div>
+
+
+    
+
+<script type="text/javascript">
+
+    $('#SummitUpdate').live('click', function () {
+
+        var sd = $('#stime').val();
+        var ed = $('#etime').val();
+        var cpn = $('#cpn').val();
+        var wpn = $('#wpn').val();
+        var TimeID = $('#DoctorTimeID').val();
+        var doctorid = $('#DoctorID').val();
+        //alert(sd);
+        //alert(ed);
+        //alert(cpn);
+        //alert(wpn);
+        $.ajax({
+            url: '/DoctorTime/GetData/',
+            type: 'POST',
+            data: {
+                stime:sd, 
+                etime: ed,
+                cp:cpn,
+                wp: wpn,
+                did:TimeID
+            },
+            success: function () {
+                window.location.href = "/DoctorTime/ShowAllData/"+doctorid;
+                
+            },
+                       
+        });
+    });
+</script>
+     
+  

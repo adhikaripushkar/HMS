@@ -1,0 +1,248 @@
+﻿@model Hospital.Models.BoneMarrowReportsModel
+
+@{
+    ViewBag.Title = "ShowBoneMarrowRpt";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+}
+
+<h2></h2>
+<style>
+    table#tblnoborder,
+    table#tblnoborder td {
+        border: none !important;
+    }
+
+    .font {
+        font-weight: bold;
+    }
+
+    .small-table td {
+        border: none;
+    }
+
+
+
+    .holder img {
+        max-height: 48px;
+        max-width: 55px;
+        object-fit: cover;
+    }
+
+
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+    }
+
+    .ui-dialog {
+        background-color: #B0E0E6;
+    }
+</style>
+
+
+
+<script type="text/javascript">
+    function print() {
+
+    }
+
+    function printTicket() {
+
+
+
+    }
+
+
+
+
+</script>
+
+<div class="contentWrapper">
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto;">
+
+        <img src="~/Images/mmh-logo1.png" style="position: absolute; margin-left: 27%; margin-top: 7%;" />
+
+        <div>
+
+            @MyHelpers.DesingForLogo()
+            <h4 style="text-align: center;"><u>Department Of Pathology</u> </h4>
+            
+
+            <table style="width: 100%;">
+                <tr>
+                    <td>
+                        <strong>Name : @Hospital.Utility.GetPatientNameWithIdFromOpd(Model.PatientId)</strong>
+                        <p>Date of Dispatch : @Model.DateOfDispatch.ToShortDateString()</p>
+
+                    </td>
+
+                    <td><strong>Age/Sex : @Hospital.Utility.GetPatientCurrentAgeFromId(Model.PatientId) /@Hospital.Utility.GetPatientSexTypeFromPatiendId(Model.PatientId)</strong>
+                        <p>Registerd Date : @Model.Registerdate.ToShortDateString()</p>
+                        <p>Bone Marrow No. : @Model.BoneMarrowNumber</p>
+                    </td>
+
+                    <td><strong>IP/Ward : @Model.IPNumber / @Model.WardOrOpd</strong>
+                        <p>
+                            Refering Doctor : @Hospital.Utility.GetDoctorName(Model.ReferDocId)
+                        </p>
+
+                    </td>
+
+
+                </tr>
+
+
+
+            </table>
+            
+
+            <p style="padding: 15px;">Site Of Aspiration : @Model.SiteOfAspiration</p>
+
+            <h4 style="text-align: center;"><u>BONE MARROW ASPIRATION REPORT</u> </h4>
+            <br />
+
+            <div style="padding: 15px;">
+                <h5>Clinical Features : @Model.ClinicalFeature</h5>
+                <h5>Peripheral Blood Smear Findings:</h5>
+                <p>@Model.PBSFinding</p>
+
+
+                <h5>Bone Marrow Aspiration Findings:</h5>
+                <p>@Model.BMAFinding</p>
+                <ol style="font-size: 14px;">
+                    <li><b>Cellularity:</b> @Model.Cellularity</li>
+                    <li><b>M:E Ratio:</b> @Model.MERation</li>
+                    <li><b>Myelopoiesis: </b>@Model.Myelopoiesis</li>
+                    <li><b>Erythropoiesis: </b>@Model.Erythropoiesis</li>
+                    <li><b>Megakaryopoiesis: </b>@Model.Megakaryopoiesis</li>
+                    <li><b>Myelogram: </b>@Model.Myelogram</li>
+                    <li><b>Plasma Cells: </b>@Model.PlasmaCells</li>
+                    <li><b>Hemoparasites: </b>@Model.Hemoparasites</li>
+
+                </ol>
+
+
+                <h3 style="background: #B0E0E6; color: #333; text-align: center; width: 90%; margin: 0 auto;">IMPRESSION: @Model.IMPRESSION</h3>
+                @*<h5>Diagnosis</h5>
+                <p>@Model.Remarks1</p>
+                <h5>Comments</h5>
+                <p>@Model.Remarks2</p>*@
+
+
+                <br />
+                <br />
+
+                <span style="border-top: 1px solid #333; padding: 5px 10px; float: left; display: block;">Pathologist
+                </span>
+
+                @*<span style="border-top: 1px solid #333; padding: 5px 10px; float: right; display: block;"></span>*@
+
+                <div class="clearfix"></div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+    <div>
+        <span style="float: right;">
+            <input type="button" id="btnPrint" style="width: 50px;" onclick="print()" value="Print" /></span>
+    </div>
+    <br />
+
+
+
+
+    <br />
+    <p id="linkNewBack">
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+</div>
+
+
+
+<script>
+
+    var hh = $.noConflict();
+    hh('#btnPrintTicket').click(function (e) {
+
+        e.preventDefault();
+        var msg = 'Do You Want To Print Ticket?';
+        var div = hh("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            resizable: false,
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=400,height=180,toolbar=0,scrollbars=0,sta­tus=0', 'alert("hi");');
+
+                        printing.document.write('<div style="width: 80%; color: rgb(255, 255, 255); font-size: 7px; background-color: rgb(102, 102, 102); ">');
+                        printing.document.write('<div style="font-size:6px;">');
+                        printing.document.write(document.getElementById('divPrintTicket').innerHTML.toString());
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+
+    });
+
+    hh('#btnPrint').click(function (e) {
+
+        e.preventDefault();
+        var msg = 'Do You Want To Print?';
+        var div = hh("<div>" + msg + "</div>");
+        div.dialog({
+            title: "Print ",
+            buttons: [
+                {
+                    text: "Yes",
+                    click: function () {
+                        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+                        window.print();
+
+                        printing.document.write('<div style="width: 100%;  font-size: x-large; font-weight: 700; background:url(../../Images/mmh-logo.png) no-repeat center; background-size:35%;">');
+                        printing.document.write('<div style="font-size:small;">');
+                        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+                        printing.document.wi
+
+                        printing.document.close();
+                        printing.focus();
+                        printing.print();
+                        printing.close();
+                        div.dialog("close");
+                    }
+
+                },
+                {
+                    text: "No",
+                    click: function () {
+                        div.dialog("close");
+                    }
+                }
+            ]
+        });
+
+    });
+
+
+</script>

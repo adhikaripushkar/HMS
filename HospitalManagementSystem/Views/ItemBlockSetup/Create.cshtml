@@ -1,0 +1,81 @@
+﻿@model HospitalManagementSystem.Models.ItemBlockSetupModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_StockSetupLayout.cshtml";
+}
+
+<h2 style="text-align:center;">Item Setup </h2>
+
+<div class="contentWrapper">
+
+@using (Html.BeginForm("Create", "ItemBlockSetup", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Create</legend>
+
+       <div class="row-fluid singleline">
+
+           <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BlockId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.BlockId,@HospitalManagementSystem.Utility.GetBlockList())
+            @Html.ValidationMessageFor(model => model.BlockId)
+        </div>
+               </label>
+           <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Particular)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Particular)
+            @Html.ValidationMessageFor(model => model.Particular)
+        </div>
+               </label>
+           <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SerialNoFrom)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.SerialNoFrom)
+            @Html.ValidationMessageFor(model => model.SerialNoFrom)
+        </div>
+
+               </label>
+           
+           <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SerialNoTo)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.SerialNoTo)
+            @Html.ValidationMessageFor(model => model.SerialNoTo)
+        </div>
+
+               </label>
+
+     </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index",null,new { @id="linkNewBack" })
+</div>
+
+
+    </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

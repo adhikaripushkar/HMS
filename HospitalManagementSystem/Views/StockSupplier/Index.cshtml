@@ -1,0 +1,161 @@
+﻿@model Hospital.Models.StockSupplierModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_StockSetupLayout.cshtml";
+}
+
+
+<h2 style="text-align:center;">Stock Supplier Setup</h2>
+
+@if (TempData["success"] == Hospital.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+@TempData["success"]
+        </div>
+}
+
+@if (TempData["success"] == Hospital.UtilityMessage.savefailed)
+{ 
+    <div class="alert alert-error">
+@TempData["success"]
+        </div>
+
+}
+
+@if (TempData["success"] == Hospital.UtilityMessage.edit)
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.editfailed)
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}
+
+ 
+
+@if (TempData["success"] == Hospital.UtilityMessage.delete)
+{ 
+    <div class="alert alert-info">
+@TempData["success"]
+        </div>
+
+}
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.deletefailed)
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}
+
+
+
+
+<div class="contentWrapper">
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @id="linkNewBack"})
+   
+</p>
+
+     <p style="float:right;" id="linkNewBack">@Html.ActionLink("View Report","Report")</p>
+
+
+<div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+       <div class="boxWrapper">
+    <div class="boxHeadingPanel"><h1>Stock Supplier</h1></div>
+<table class="table table-hover tablesorter">
+    <thead>
+    <tr>
+         <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockSupplierName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockSupplierAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockSupplierConNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockSupplierVatNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockSupplierEmail)
+        </th>
+        
+        <th>Actions</th>
+    </tr>
+        </thead>
+    <tbody>
+@foreach (var item in Model.StockSupplierList) {
+    <tr>
+         <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockSupplierName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockSupplierAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockSupplierConNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockSupplierVatNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockSupplierEmail)
+        </td>
+       
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.StockSupplierID }) |
+           
+            @Html.ActionLink("Delete", "Delete", new { id = item.StockSupplierID }, new { onclick="return confirm('Do you want to delete?')"})
+        </td>
+    </tr>
+}
+</tbody>
+</table>
+
+
+    <div class="boxFooter">
+                   
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+
+               </div>
+
+    </div>
+            </div></div></div>

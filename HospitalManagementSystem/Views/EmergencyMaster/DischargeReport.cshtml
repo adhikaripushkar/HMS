@@ -1,0 +1,422 @@
+﻿@model HospitalManagementSystem.Models.EmergecyMasterModel
+
+@{
+    ViewBag.Title = "BillForm";
+    Layout = "~/Views/Shared/_EmergencyLayout.cshtml";
+}
+
+
+<h2> Emergency Discharge Report</h2>
+<style>
+
+
+table#tblnoborder,
+table#tblnoborder td
+{
+    border: none !important;
+    
+}
+    .font
+    {
+        font-weight:bold;
+    }
+
+    .small-table td
+    {
+        border:none;
+    }
+
+    </style>
+
+<script type="text/javascript">
+ function print() {
+            
+                //	    var values = document.getElementById('printDiv').innerHTML.toString();
+                var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+                printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);"> OPD Bill <br>');
+                printing.document.write('<div style="font-size:small;">');
+                printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+                printing.document.close();
+                printing.focus();
+                printing.print();
+                printing.close();
+            
+ }
+      </script>
+@if (TempData["success"] == "Record Created Successfully !")
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Record Creation Failed !")
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Serial Number or Emergency Number Already Exist !")
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == "Record Updated Successfully !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == "Record Updation Failed !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == "Record Deleted Successfully !")
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == "Record Deletion Failed !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+ @if (TempData["success"] == "Patient is Discharged !")
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+<div class="contentWrapper">
+   
+     <span><input type ="button" ID="btnPrint"   style="width:110px;" onclick="print()" value="Print Report"/></span>
+     @* <input type="button" id="btnClick" value="Discharge"/>*@
+
+        @Html.ActionLink("Discharge", "UpdateEmergencyStatus", new {id=Model.EmergencyMasterId})
+
+    <div id="printdiv" style="border-style:solid; border-color:#999; width:auto;">
+
+<p style=" font:bold; font-size:25px; text-align:center"><br />
+@HospitalManagementSystem.Utility.GetHospitalManagementSystemName()<br/>
+<p style="font-size:20px; text-align:center">@HospitalManagementSystem.Utility.HospitalManagementSystemAddress()</p>
+</p>
+
+<h3 style="text-align:center;"> <u>Emergency Discharge Report Card</u> </h3>
+
+<br />
+        
+@*       <table width="660" cellspacing="0" cellpadding="5" align="center" id="tblnoborder">
+            <tr>
+    <td class="font" width="314">Emergency Id:- @Model.EmergencyMasterId</td>
+    <td class="font" width="326">Date:- @HospitalManagementSystem.Utility.GetDateOnly(Model.Date.ToString())</td>
+  </tr>
+           </table>*@
+        
+
+<table width="660" border="0" cellspacing="0" cellpadding="5" align="center" >
+    <tr>
+        @Html.HiddenFor(model => model.EmergencyMasterId, new { @id = "EmergencyMID" })
+         <td width="200"><span class="font">Icd:- </span>@HospitalManagementSystem.Utility.GetIcdNameByCode(Model.IcdCodeNumber)</td>
+        <td width="200"><span class="font">Emergency Id:-</span>@Model.EmergencyMasterId  </td> 
+        
+
+    </tr>
+     <tr>
+           <td width="200"><span class="font">Date:-</span> @HospitalManagementSystem.Utility.GetDateOnly(Model.Date.ToString())</td>
+        <td width="314"><span class="font">Emergency No:-</span> @Model.EmergencyNumber</td> 
+        
+
+    </tr>
+  <tr>
+        <td width="326"><span class="font">Serial No:-</span> @Model.SerialNumber</td>
+    <td width="314"><span class="font">Name:-</span>  @Model.OpdEmergencyViewModel.Firstname @Model.OpdEmergencyViewModel.MiddleName @Model.OpdEmergencyViewModel.LastName</td>
+   
+  </tr>
+  <tr>
+       <td width="326"><span class="font">Age:-</span> @Model.OpdEmergencyViewModel.AgeYear</td>
+    <td><span class="font">Address:-</span> @HospitalManagementSystem.Utility.GetEmergencyAddress(Model.EmergencyMasterId)</td>
+   
+
+  </tr>
+    <tr>
+         <td><span class="font">Sex:-</span> @Model.OpdEmergencyViewModel.Gender</td>
+    <td><span class="font">Time In:-</span> @Model.TimeIn</td>
+   
+
+  </tr>
+      <tr>
+           <td><span class="font">Time Out:-</span> @Model.TimeOut</td>
+    <td><span class="font">Bought By:-</span> @Model.BroughtBy</td>
+   
+
+  </tr>
+    <tr>
+      
+             <td><span class="font">Relationship:-</span> @HospitalManagementSystem.Utility.GetRelationship(Model.RelationShip)</td>
+       
+    </tr>
+  <tr></tr>
+</table>
+     <br />
+        
+   @*     <h3 style="text-align:left; margin-left:85px;"> <u>Triage</u> </h3>
+          
+
+        <table width="660" border="0" cellspacing="0" cellpadding="5" align="center" >
+    <tr>
+        <td width="314"><span class="font">Triage Time:-</span> @Model.EmergencyTriageModel.Time</td> 
+          <td width="326"><span class="font">Triage Medium:-</span> @HospitalManagementSystem.Utility.GetTriagemediumForReport(Model.EmergencyTriageModel.MediumId)</td>
+     </tr>
+             <tr>
+        <td width="314"><span class="font">Chief Complain and History:-</span> @Model.CheifComplainAndHistory</td> 
+          <td width="326"><span class="font">Doctor:-</span> @HospitalManagementSystem.Utility.DoctorName(Model.EmergencyTriageModel.DoctorId)</td>
+     </tr>
+            </table>
+         <br />*@
+       
+
+      @*  <h3 style="text-align:left; margin-left:85px;"> <u>VITALS</u> </h3>
+         
+        <table width="660" border="0" cellspacing="0" cellpadding="5" align="center" >
+    <tr>
+        <td width="157"><span class="font">AVPU:-</span> @Model.VitalsModel.AVPU</td> 
+          <td width="163"><span class="font">Pulse:-</span> @Model.VitalsModel.Pulse</td>
+          <td width="157"><span class="font">BP:-</span> @Model.VitalsModel.BP</td> 
+          <td width="163"><span class="font">RR:-</span> @Model.VitalsModel.RR</td>
+     </tr>
+             <tr>
+        <td width="157"><span class="font">SPO2:-</span> @Model.VitalsModel.SPO2</td> 
+          <td width="163"><span class="font">TPR:-</span> @Model.VitalsModel.TPR</td>
+          <td width="163"><span class="font">Wt:-</span> @Model.VitalsModel.Wt</td>
+     </tr>
+            </table>
+        <br />*@
+       
+        <h3 style="text-align:left; margin-left:85px;"> <u>Chief Complain And History</u> </h3>
+        <table width="660" border="0" cellspacing="0" cellpadding="5" align="center" >
+    <tr>
+        <td width="600"><span class="font">Chief Complain And History:-</span> @Model.CheifComplainAndHistory</td> 
+    </tr>
+        </table>
+
+        <br />
+         
+         <br />
+         <h3 style="text-align:left; margin-left:85px;"> <u>Clinical Examination</u> </h3>
+        <table width="660" border="0" cellspacing="0" cellpadding="5" align="center" >
+    <tr>
+        <td width="600"><span class="font">Clinical Examination:-</span> @Model.ClinicalExamination</td> 
+    </tr>
+        </table>
+        <br />
+          <br />
+         <h3 style="text-align:left; margin-left:85px;"> <u>Investigation</u> </h3>
+              <table width="660" border="0" cellspacing="0" cellpadding="5" align="center" >
+                   <thead>
+            <tr>    
+        <th style="text-align:left">
+            @Html.DisplayNameFor(model => model.EmergencyInvestigationDetailModel.TestId)
+        </th>
+        <th style="text-align:left">
+            @Html.DisplayNameFor(model => model.EmergencyInvestigationDetailModel.Remarks)
+        </th>
+      
+        </tr>
+        </thead>
+                   <tbody>
+     @foreach (var item in Model.ListEmergencyInvestigationDetailModel)
+     {
+         <tr>
+          <td width="330"><span class="font"></span>   @HospitalManagementSystem.Utility.GetInvestigationTestName(item.TestId)</td>
+         <td width="330"><span class="font"></span>   @Html.DisplayFor(modelItem => item.Remarks)</td>
+        </tr>
+     }
+                       </tbody>
+             </table>
+        <br />
+        <br />
+                <h3 style="text-align:left; margin-left:85px;"> <u>Test</u> </h3>
+          <table width="660" border="0" cellspacing="0" cellpadding="5" align="center" >
+              <thead>
+                  <tr>
+                      <th>
+                             @Html.DisplayNameFor(model => model.EmergencyTstCaridModel.SectionId)
+                      </th>
+                       <th>
+                             @Html.DisplayNameFor(model => model.EmergencyTstCaridModel.TestId)
+                      </th>
+                      <th>
+                             @Html.DisplayNameFor(model => model.EmergencyTstCaridModel.ShortDecs)
+                      </th>
+                      <th>
+                             @Html.DisplayNameFor(model => model.EmergencyTstCaridModel.LongDesc)
+                      </th>
+                      <th>
+                             @Html.DisplayNameFor(model => model.EmergencyTstCaridModel.Remarks)
+                      </th>
+                     
+                  </tr>
+              </thead>
+              <tbody>
+         @foreach (var item in Model.ListEmergencyTstCaridModel)
+         {
+           <tr>
+            <td width="70"><span class="font"></span>@HospitalManagementSystem.Utility.GetSectionNameById(item.SectionId)</td> 
+            <td width="70"><span class="font"></span> @HospitalManagementSystem.Utility.GetTestNameById(item.TestId)</td>
+            <td width="90"><span class="font"></span> @Html.DisplayFor(modelItem => item.ShortDecs)</td> 
+           
+               <td width="100"><span class="font"></span> @Html.DisplayFor(modelItem => item.LongDesc)</td> 
+          <td width="100"><span class="font"></span> @Html.DisplayFor(modelItem => item.Remarks)</td>
+               
+         </tr>    
+         }
+                  </tbody>
+            </table>
+        <br />
+        <br />
+       
+
+       @* <h3 style="text-align:left; margin-left:85px;"> <u>Treatements and Drugs</u> </h3>
+          <table width="660" border="0" cellspacing="0" cellpadding="5" align="center" >
+              <thead>
+                  <tr>
+                      <th>
+                             @Html.DisplayNameFor(model => model.EmergencyTreatmentAllergiesModel.TreatmentText)
+                      </th>
+                       <th>
+                             @Html.DisplayNameFor(model => model.EmergencyTreatmentAllergiesModel.AllergiesText)
+                      </th>
+                      <th>
+                             @Html.DisplayNameFor(model => model.EmergencyTreatmentAllergiesModel.ProcedureText)
+                      </th>
+                      <th>
+                             @Html.DisplayNameFor(model => model.EmergencyTreatmentAllergiesModel.TreatmentTime)
+                      </th>
+                      <th>
+                             @Html.DisplayNameFor(model => model.EmergencyTreatmentAllergiesModel.DrugsName)
+                      </th>
+                      <th>
+                             @Html.DisplayNameFor(model => model.EmergencyTreatmentAllergiesModel.DoseAndRoute)
+                      </th>
+                       <th>
+                             @Html.DisplayNameFor(model => model.EmergencyTreatmentAllergiesModel.DoctorId)
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+         @foreach (var item in Model.ListEmergencyTreatmentAllergiesModel)
+         {
+           <tr>
+            <td width="100"><span class="font"></span>@Html.DisplayFor(modelItem => item.TreatmentText)</td> 
+            <td width="100"><span class="font"></span> @Html.DisplayFor(modelItem => item.AllergiesText)</td>
+            <td width="100"><span class="font"></span> @Html.DisplayFor(modelItem => item.ProcedureText)</td> 
+           
+               <td width="60"><span class="font"></span> @Html.DisplayFor(modelItem => item.TreatmentTime)</td> 
+          <td width="100"><span class="font"></span> @Html.DisplayFor(modelItem => item.DrugsName)</td>
+                <td width="100"><span class="font"></span> @Html.DisplayFor(modelItem => item.DoseAndRoute)</td> 
+        <td width="100"><span class="font"></span> @HospitalManagementSystem.Utility.DoctorName(item.DoctorId)</td> 
+         </tr>    
+         }
+                  </tbody>
+            </table>
+         <br />
+        <br />*@
+         <table width="660" border="0" cellspacing="0" cellpadding="5" align="center" >
+    <tr>
+        <td width="600"><span class="font">Final Diagnosis:-</span> @Model.FinalDiagnosis</td> 
+    </tr>
+        </table>
+        @*<br />
+        <br />*@
+           
+       @*   <table width="660" border="0" cellspacing="0" cellpadding="5" align="center" >
+    <tr>
+        <td width="100"><span class="font">Time:-</span> @Model.EmergencyTreatmentAllergiesModel.TreatmentTime</td> 
+          <td width="300"><span class="font">Drug:-</span> @Model.EmergencyTreatmentAllergiesModel.DrugsName</td>
+                <td width="100"><span class="font">Dose/Route:-</span> @Model.EmergencyTreatmentAllergiesModel.DoseAndRoute</td> 
+        <td width="100"><span class="font">Doctor:-</span> @HospitalManagementSystem.Utility.DoctorName(Model.EmergencyTriageModel.DoctorId)</td> 
+     </tr>
+            </table>*@
+        <br />
+        <br />
+        <table width="660" border="0" cellspacing="0" cellpadding="5" align="center" >
+            <tr>
+          <td width="300"><span class="font">Outcome Type:-</span>  @HospitalManagementSystem.Utility.GetOutComeTypeForReport(Model.OutcomeTypeId)</td> 
+          <td width="300"><span class="font">Outcome Text:-</span> @Model.OutcomeText</td>
+            </tr>
+            </table>
+        <br />
+        <br />
+         
+         <h5 style="text-align:right; margin-right:149px;"> --------------------------------------------------------</h5>
+          <h5 style="text-align:right; margin-right:149px;"> Name of the Doctor with Signature </h5>
+        <br />
+        <br />
+
+
+</div>
+
+
+   
+    
+
+    <br />
+
+    @Html.ActionLink("Back to List", "Index")
+
+
+</div>
+
+<script type="text/javascript">
+
+    $('#btnClick').click(function () {
+
+      
+        var EmergencyId = $("#EmergencyMID").val();
+    
+        $.ajax({
+            url: '/EmergencyMaster/UpdateEmergencyStatus/',
+            type: 'GET',
+            data: {
+             
+                id: EmergencyId
+            },
+            //success: function (data) {
+            //    $('#SearchById').html(data);
+            //},
+            //errro: function () {
+            //    alert('Sorry Error Occured');
+            //}
+        });
+    });
+</script>
+
+
+
+

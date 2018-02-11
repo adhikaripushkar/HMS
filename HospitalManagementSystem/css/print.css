@@ -1,0 +1,75 @@
+@charset "utf-8";
+/* CSS Document */
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12pt;
+}
+.header, .mainaccesPanel, .leftMenu, .itour-pre, .tabs, .mainContent input[type='button'], .pagetitle, .pageHeader {
+	display:none;
+}
+ul, ol, dl    { page-break-before: avoid } 
+.ContentSection {
+padding: 0px 0px 20px 0px;
+min-height: 68px;
+width: 100%;
+background:white;
+margin:0 auto;
+
+}
+.pagetitle {
+padding: 5px;
+text-align: center;
+}
+.tab_container {
+	border:none;	
+}
+.docs-heading {
+
+padding: 4px 12px;
+color: #000000;
+font-size:14px;
+font-weight:bold;
+text-transform: uppercase !important;
+}
+.mainContent label {
+font-size:11px;	
+}
+.mainContent input[type='text'], .mainContent select, .mainContent input[type='button'], .mainContent textarea {
+	
+	border-top:1px solid white;
+	border-left:1px solid white;
+	border-right:1px solid white;
+	border-bottom: 1px solid #000 !important;
+	border-width:0;
+	padding:0px;
+}
+#hiderow,
+.delete {
+  display: none;
+}
+.printableBox input, .printableBox textarea, .printableBox select {
+	border:none !important;
+}
+.page-desc textarea.page-desc-input {
+	border-radius:0px !important;
+	 border-bottom:1px dotted #000 !important; 
+	 height:16px !important;
+	 font-size:11px;
+}
+.page-desc span {
+	font-size:12px;
+	font-weight:bold;	
+}
+table, table td, table th {
+border:1px solid #000 !important;	
+}
+.bs-docs-example span2, .bs-docs-example span3, .bs-docs-example span4, .bs-docs-example span5, .bs-docs-example span6 {
+	display:block;
+	float:left;
+	
+}
+/*.bs-docs-example label, .bs-docs-example input[type="text"], .bs-docs-example select, .bs-docs-example textarea {
+	display:inline-block;
+	float:left;
+}*/
+

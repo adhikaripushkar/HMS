@@ -1,0 +1,391 @@
+﻿@model HospitalManagementSystem.Models.JVMasterModel
+
+@{
+    ViewBag.Title = "BankReconcilation";
+    Layout = "~/Views/Shared/_BillingLayout.cshtml";
+}
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.maskedinput.js"></script>
+
+
+<script>
+    var j = $.noConflict();
+    j(document).ready(function (e) {
+
+        j("#StartDate").datepicker();
+        j("#EndDate").datepicker();
+
+    });
+
+
+</script>
+<h2 style="text-align: center;">Bank Reconcilation Statement</h2>
+
+<div class="contentWrapper">
+
+    <div class="bs-docs-example form-inline">
+        @using (Ajax.BeginForm("BankReconcilation", "JVMaster", new AjaxOptions { UpdateTargetId = "DivLedgerDetails" }))
+        {
+            <div class="row-fluid singleline">
+
+                <label>
+                    <label style="width: 135px;">Bank</label>
+                    @Html.DropDownListFor(model => model.objGetBankReconcilationModelView.BankID, HospitalManagementSystem.Utility.GetBankList(), new { @class = "AccGroupID", @id = "AccGroupID", })
+                </label>
+
+                <label>
+                    <label style="width: 105px;">Bank SubHead</label>
+                    @Html.DropDownListFor(model => model.objGetBankReconcilationModelView.BankSubID, HospitalManagementSystem.Utility.GetCOA5thHeadList(Model.objGetBankReconcilationModelView.BankID), new { @class = "ParentID", @id = "ParentID" })
+                </label>
+            </div>
+            
+            <div class="row-fluid singleline">
+                <label>
+                    <label style="width: 135px;">From Date (Nepali)</label>
+                    @Html.TextBox("FromNepaliDate", null, new { @onblur = "ChangeNepalidateFrom(this.value,'DobId','/AjaxRequest/GetEnglishDate/')" })
+                </label>
+
+                <label>
+                    <label style="width: 115px;">To Date (Nepali)</label>
+                    @Html.TextBox("ToNepaliDate", null, new { @onblur = "ChangeNepalidateTo(this.value,'DobId','/AjaxRequest/GetEnglishDate/')" })
+                </label>
+            </div>
+            <div class="row-fluid singleline">
+                <label>
+                    <label style="width: 135px;">From Date (English)</label>
+                    @Html.TextBoxFor(model => model.objGetBankReconcilationModelView.StartDate, new { @id = "StartDate", @Value = DateTime.Now.ToShortDateString(), @onchange = "ChangeEnglishdateFrom(this.value,'txtNepalidate','/AjaxRequest/getNepaliDate/')" })
+                </label>
+                <label>
+                    <label style="width: 115px;">To Date (English)</label>
+                    @Html.TextBoxFor(model => model.objGetBankReconcilationModelView.EndDate, new { @id = "EndDate", @Value = DateTime.Now.ToShortDateString(), @onchange = "ChangeEnglishdateTo(this.value,'txtNepalidate','/AjaxRequest/getNepaliDate/')" })
+                </label>
+                <label>
+                    @Html.CheckBoxFor(model=>model.objGetBankReconcilationModelView.CheckValue)
+                    Only Reconciled
+                </label>
+            </div>            
+            <div class="row-fluid singleline">
+                <label>
+                    <input type="submit" value="Search" /></label>
+            </div>
+        }
+    </div>
+
+
+    <br />
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+
+                <div id="DivLedgerDetails"></div>
+
+            </div>
+        </div>
+
+    </div>
+
+    @section Scripts {
+        
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/jqueryval")
+
+    }
+
+</div>
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("#FromNepaliDate").mask("9999/99/99");
+        $("#ToNepaliDate").mask("9999/99/99");
+
+    });
+</script>
+
+<script type="text/javascript">
+
+    var k = $.noConflict();
+    k(".AccGroupID").on("change", function (e) {
+        e.preventDefault();
+        k.get('/AjaxRequest/GetSubAccountHeadLeafList/' + this.value,
+              function (data) {
+                  k(".ParentID").find('option').remove();
+                  k(data).each(
+                      function (index, item) {
+                          k(".ParentID").append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                      });
+              }
+    );
+    });
+    function ChangeNepalidateFrom(selvalue, targetElm, url) {
+        k.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { NepaliDate: selvalue },
+            contentType: "text/json",
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                k("#StartDate").val(jsonResult);
+            }
+        });
+    };
+
+    function ChangeNepalidateTo(selvalue, targetElm, url) {
+        k.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { NepaliDate: selvalue },
+            contentType: "text/json",
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                k("#EndDate").val(jsonResult);
+            }
+        });
+    };
+
+    function ChangeEnglishdateFrom(selvalue, targetElm, url) {
+        k.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { EnglishDate: selvalue },
+            contentType: "text/json",
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                k("#FromNepaliDate").val(jsonResult);
+            }
+        });
+    };
+
+    function ChangeEnglishdateTo(selvalue, targetElm, url) {
+        k.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { EnglishDate: selvalue },
+            contentType: "text/json",
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                k("#ToNepaliDate").val(jsonResult);
+            }
+        });
+    }
+
+</script>
+
+
+<script>
+    //var dl = jQuery.noConflict();
+    //dl('#btnPrintDeposite').click(function (e) {
+
+    //    e.preventDefault();
+    //    var msg = 'Do You Want To Print?';
+    //    var div = dl("<div>" + msg + "</div>");
+    //    var BankDrVal = dl('#Bankdr').val();
+    //    var BankCrVal = dl('#Bancr').val();
+
+    //    dl('#BankdrDiv').html(BankDrVal);
+    //    dl('#BankcrDiv').html(BankCrVal);
+
+
+    //    dl(".ReconcileClass").hide();
+
+    //    div.dialog({
+    //        title: "Print ",
+    //        resizable: false,
+    //        buttons: [
+    //            {
+    //                text: "Yes",
+    //                click: function () {
+    //                    var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0', 'alert("hi");');
+
+    //                    printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+    //                    printing.document.write('<div style="font-size:small;">');
+    //                    printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+
+    //                    printing.document.close();
+    //                    printing.focus();
+    //                    printing.print();
+    //                    printing.close();
+    //                    div.dialog("close");
+    //                }
+
+    //            },
+    //            {
+    //                text: "No",
+    //                click: function () {
+    //                    div.dialog("close");
+    //                }
+    //            }
+    //        ]
+    //    });
+
+    //});
+</script>
+
+
+@*<script>
+    var dk = $.noConflict();
+
+    dk(".ReconcileClass").live("blur", function (e) {
+        e.preventDefault();
+        var tr = dk(this).closest("tr");
+        var ReconcilStatus = tr.find(".ReconcileClass").val();
+        var TotalDrClassR = tr.find(".TotalDRClass").val();
+        var TotalCrclassR = tr.find(".TotalCredidAmtcls").val();
+        var JvDate = tr.find(".JvDate").val();
+
+        var allDrSectors = dk('.TotalDRClass'); //gets all elements that have class name as 'SectorFare'
+        var allCrSectors = dk('.TotalCredidAmtcls');
+        var AllReconStatus = dk('.ReconcileClass');
+        //Compare Date           
+        if (ReconcilStatus != "") {
+            var Message;
+            dk.post('@Url.Action("CompareDateofBRS")', { JvDate: JvDate, BRSDate: ReconcilStatus }, function (result) {
+                Message = (result.Message);
+                if (Message == "Wrong") {
+                    alert("Bank Date is not valid. Please Check !!");
+                    dk(".ReconcileClass").focus();
+                    return;
+                }
+            })
+        }
+
+        //// Calculate Debit 
+        var totalDrAmt = 0;
+        var sectorDrCount = 0;
+        sectorDrCount = dk(allDrSectors).length;
+        //// Calculate credit
+        var totalCrAmt = 0;
+        var sectorCrCount = 0;
+        sectorCrCount = dk(allCrSectors).length;
+        for (var i = 0; i <= sectorDrCount - 1; i++) {
+            if (isNaN(parseFloat(dk(allDrSectors[i]).val())))
+                dk(allDrSectors[i]).val('0');
+
+            if (dk(AllReconStatus[i]).val() == '') {
+                totalDrAmt += parseFloat(dk(allDrSectors[i]).val());
+            }
+        }
+
+        for (var i = 0; i <= sectorCrCount - 1; i++) {
+            if (isNaN(parseFloat(dk(allCrSectors[i]).val())))
+                dk(allCrSectors[i]).val('0');
+            if (dk(AllReconStatus[i]).val() == '') {
+                totalCrAmt += parseFloat(dk(allCrSectors[i]).val());
+            }
+        }
+        dk("#CrDivv").html(totalCrAmt);
+        dk("#DrDivv").html(totalDrAmt);
+        dk("#HCrDivv").html(totalCrAmt);
+        dk("#HDrDivv").html(totalDrAmt);
+
+        var LedgerAmountDr = 0;
+        var LedgerAmountCr = 0;
+        var Amount = 0;
+        LedgerAmountDr =@LedgerAmountDR
+            LedgerAmountCr =@LedgerAmountCR
+            Amount = LedgerAmountDr - LedgerAmountCr - totalDrAmt + totalCrAmt;
+        if (Amount > 0) {
+            dk("#BankdrDiv").html(Amount);
+            dk("#BankcrDiv").html(0);
+            dk("#HBankdrDiv").html(Amount);
+            dk("#HBankcrDiv").html(0);
+        }
+        else {
+            dk("#BankdrDiv").html(0);
+            dk("#BankcrDiv").html(Amount * -1);
+            dk("#HBankdrDiv").html(0);
+            dk("#HBankcrDiv").html(Amount * -1);
+        }
+    });
+
+    dk(document).ready(function () {
+        var tr = dk(this).closest("tr");
+        var ReconcilStatus = tr.find(".ReconcileClass").val();
+        var TotalDrClassR = tr.find(".TotalDRClass").val();
+        var TotalCrclassR = tr.find(".TotalCredidAmtcls").val();
+        var JvDate = tr.find(".JvDate").val();
+
+        var allDrSectors = dk('.TotalDRClass'); //gets all elements that have class name as 'SectorFare'
+        var allCrSectors = dk('.TotalCredidAmtcls');
+        var AllReconStatus = dk('.ReconcileClass');
+        //// Calculate Debit 
+        var totalDrAmt = 0;
+        var sectorDrCount = 0;
+        sectorDrCount = dk(allDrSectors).length;
+        //// Calculate credit
+        var totalCrAmt = 0;
+        var sectorCrCount = 0;
+        sectorCrCount = dk(allCrSectors).length;
+        for (var i = 0; i <= sectorDrCount - 1; i++) {
+            if (isNaN(parseFloat(dk(allDrSectors[i]).val())))
+                dk(allDrSectors[i]).val('0');
+
+            if (dk(AllReconStatus[i]).val() == '') {
+                totalDrAmt += parseFloat(dk(allDrSectors[i]).val());
+            }
+        }
+
+        for (var i = 0; i <= sectorCrCount - 1; i++) {
+            if (isNaN(parseFloat(dk(allCrSectors[i]).val())))
+                dk(allCrSectors[i]).val('0');
+            if (dk(AllReconStatus[i]).val() == '') {
+                totalCrAmt += parseFloat(dk(allCrSectors[i]).val());
+            }
+        }
+        dk("#CrDivv").html(totalCrAmt);
+        dk("#DrDivv").html(totalDrAmt);
+
+        var LedgerAmountDr = 0;
+        var LedgerAmountCr = 0;
+        var Amount = 0;
+        LedgerAmountDr =@LedgerAmountDR
+            LedgerAmountCr =@LedgerAmountCR
+            Amount = LedgerAmountDr - LedgerAmountCr - totalDrAmt + totalCrAmt;
+            if (Amount > 0) {
+                dk("#BankdrDiv").html(Amount);
+                dk("#BankcrDiv").html(0);
+            }
+            else {
+                dk("#BankdrDiv").html(0);
+                dk("#BankcrDiv").html(Amount * -1);
+            }
+            getcount();
+        });
+
+        function getcount() {
+            var BankID = dk("#BankID").val();
+            var BankSubID = dk("#BankSubID").val();
+            var StartDate = dk("#StartDate").val();
+            dk.post('@Url.Action("GetBrsCount")', { BankID: BankID, BankSubID: BankSubID, BRSDate: StartDate }, function (result) {
+                var count = result.count;
+                if (count == 0) {
+                    dk('#Savebtn').removeAttr("disabled");
+                }
+                else {
+                    dk('#Savebtn').attr('disabled', 'disabled');
+                }
+            });
+        };
+
+</script>
+*@

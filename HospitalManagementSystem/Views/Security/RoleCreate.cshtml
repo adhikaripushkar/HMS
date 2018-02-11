@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "RoleCreate";
+    Layout = "~/Views/Shared/_SecurityModelLayout.cshtml";
+    
+}
+
+
+<h2 style="text-align:center;">Role Setup</h2>
+
+<div class="contentWrapper">
+
+<div class="spacerBody">
+    <div class="bs-docs-example form-inline">
+  <span id="linkNewBack">  @Html.ActionLink("Add Role to User", "RoleAddToUser")</span>
+    
+        <br /><br /><br /><br />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        
+        <div class="row-fluid singleline">
+        <label>
+            Role name
+        </label><br />
+        
+        
+        <label>
+            @Html.TextBox("RoleName")
+        </label>
+        </div>
+        
+        <input type="submit" value="Save" />
+    }
+
+        </div>
+
+</div>
+
+
+
+    </div>

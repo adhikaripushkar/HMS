@@ -1,0 +1,89 @@
+﻿@model HospitalManagementSystem.Models.BillingCounterModel
+
+<div class="general-box clearfix">
+
+    <div class="general-box clearfix">
+
+        <div class="boxWrapper">
+            <div class="boxHeadingPanel">
+                <h1>Search Result</h1>
+            </div>
+
+            <table class="table table-hover tablesorter">
+                <thead>
+                    <tr>
+                        
+                        <th>
+                            @Html.DisplayNameFor(model => model.ObjAdvancedSearchViewModel.PatientId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ObjAdvancedSearchViewModel.patientName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ObjAdvancedSearchViewModel.MemebershipId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ObjAdvancedSearchViewModel.MemberName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ObjAdvancedSearchViewModel.Age)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ObjAdvancedSearchViewModel.Address)
+                        </th>
+                        <th>
+                            Contact
+                        </th>
+                        <th>
+                            Sex
+                        </th>
+
+                        @*<th>Action</th>*@
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.AdvancedSearchViewModelList.Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="10" style="text-align: center;">Data not found ! </td>
+                        </tr>
+                    }
+                    @foreach (var item in Model.AdvancedSearchViewModelList)
+                    {
+    
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PatientId)
+                            </td>
+                            <td>
+                                @HospitalManagementSystem.Utility.GetPatientNameWithIdFromOpd(item.PatientId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MemebershipId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MemberName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Age)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+                            <td>
+                                @item.ContactNumber
+                            </td>
+                            <td>
+                                @item.Sex
+                            </td>
+                            @*<td>
+                                View Details
+                            </td>*@
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

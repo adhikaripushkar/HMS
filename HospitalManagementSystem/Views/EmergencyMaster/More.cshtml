@@ -1,0 +1,62 @@
+﻿@model HospitalManagementSystem.Models.EmergecyMasterModel
+
+
+@{
+    ViewBag.Title = "More";
+    Layout = "~/Views/Shared/_EmergencyLeftBlankLayout.cshtml";
+}
+
+
+
+<div class="leftMenu" style="margin-left: -260px;">
+    <div class="left-s-heading"></div>
+    <ul id="menu" class="nav">
+        <li class="" style="text-align: left;"><a href='~/ComplainEntry/ShowDashBoard' title="" class="linkAddress"><span style="font-size: 13px;">DashBoard</span></a> </li>
+        <li class="" style="text-align: left;"><a href='~/Viatal/IndexForVitals' title="" class="linkAddress"><span style="font-size: 13px;">Viatal</span></a> </li>
+        <li class="" style="text-align: left;"><a href='~/ComplainEntry/IndexForComplainEntry' title="" class="linkAddress"><span style="font-size: 13px;">Complain/Examination</span></a> </li>
+        <li class="" style="text-align: left;"><a href='~/EmergencyTstCarid/IndexForEmergencyTestCaried' title="" class="linkAddress"><span style="font-size: 13px;">Test</span></a> </li>
+        <li class="" style="text-align: left;"><a href='~/EmergencyInvestigationDetail/IndexForEI' title="" class="linkAddress"><span style="font-size: 13px;">Investigation</span></a> </li>
+        <li class="" style="text-align: left;"><a href='~/EmergencyTreatmentAllergies/IndexForEmergencyTreatmentAllergies' title="" class="linkAddress"><span style="font-size: 13px;">Treatment/Allergies</span></a> </li>
+        <li class="" style="text-align: left;"><a href='~/Consulation/Index' title="" class="linkAddress"><span style="font-size: 13px;">Consulation</span></a> </li>
+
+
+        <li class="" style="text-align: left;"><a href='~/Discharge/IndexForDischarge' title="" class="linkAddress"><span style="font-size: 13px;">Discharge/Admittion</span></a> </li>
+
+    </ul>
+</div>
+<div class="contentWrapper">
+    @* <div style="text-align: center; font-size: 21px;">Patient Details</div>*@
+    <div style="margin-top: 20px; font-size: 18px">
+        <span>Patient Name:&nbsp;&nbsp;</span><span>@Model.ObjOpdMaster.FirstName</span><br />
+        <span>Patient Id:-&nbsp;&nbsp;&nbsp;&nbsp;@Model.EmergencyMasterId</span>
+
+    </div>
+    <fieldset>
+
+        <legend>
+
+            @Html.HiddenFor(model => model.EmergencyMasterId, new { id = "EmergencyMasterId" })
+
+        </legend>
+
+    </fieldset>
+    <div id="load"></div>
+</div>
+
+
+
+
+
+
+<script>
+    $(".linkAddress").click(function (e) {
+        e.preventDefault();
+        var data = $('#EmergencyMasterId').val();
+        var url = this.href;
+        $.get(url, { id: data }, function (res) {
+
+            $("#load").html(res);
+
+        });
+    });
+</script>

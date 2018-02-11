@@ -1,0 +1,192 @@
+﻿@model HospitalManagementSystem.Models.OperationTheatreMasterModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_OperationTheatreLayout.cshtml";
+}
+
+
+<h2 style="text-align: center;">Operation Theatre Master</h2>
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.savefailed)
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.edit)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.editfailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.delete)
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.deletefailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+<div class="contentWrapper">
+
+
+    <p>
+        @Html.ActionLink("Create New", "Main", null, new { @id = "linkNewBack" })
+    </p>
+
+
+
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+
+                <div class="boxHeadingPanel">
+                    <h1>Operation Theatre</h1>
+                </div>
+
+
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.OperationDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OperationStartTime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OperationEndTime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OperationRoomID)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.SourceID)
+                            </th>
+                            <th>Patient Name</th>
+                            <th>Address</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OperationTheatreMasterList)
+                        {
+                            <tr>
+
+                                <td>
+                                    @*@Html.DisplayFor(modelItem => item.OperationDate)*@
+
+                                    @Convert.ToDateTime(item.OperationDate).ToShortDateString()
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OperationStartTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OperationEndTime)
+                                </td>
+                                <td>
+                                    @HospitalManagementSystem.Utility.GetOperationRoomName(item.OperationRoomID)
+                                </td>
+
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SourceID)
+                                </td>
+                                <td>
+                                    @HospitalManagementSystem.Utility.GetPatientNameWithIdFromEmergency(item.SourceID)
+                                </td>
+                                <td>
+                                    @HospitalManagementSystem.Utility.GetOpdAddress(item.SourceID)
+                                </td>
+                                <td>
+                                     @Html.ActionLink("Edit", "Edit", new { id = item.OperationTheatreMasterID, PatientId = item.SourceID }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.OperationTheatreMasterID }) |
+          
+                                   @* @Html.ActionLink("Delete", "Delete", new { id = item.OperationTheatreMasterID }, new { onclick = "return confirm('Are you sure to delete this record?');" })|*@
+                                    @Html.ActionLink("Record", "OperationRecord", new { id = item.OperationTheatreMasterID, opd = item.SourceID }) |
+                                    @Html.ActionLink("Bill Records", "BillRecords", new { id = item.OperationTheatreMasterID, opdid = item.SourceID })
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+
+
+
+            </div>
+
+            @*for sorting *@
+
+            <div class="boxFooter">
+
+                <div id="pager" style="">
+                    <form>
+                        <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                        <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                        <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                        <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                        <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                        <select class="pagesize valid" style="width: 70px; height: 30px;">
+                            <option selected="selected" value="10">10</option>
+                            <option value="5">5</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                        </select>
+                    </form>
+                </div>
+
+            </div>
+
+            @*---------------*@
+
+
+        </div>
+
+
+    </div>
+</div>
+<div id="dialog-details" style="display: none">
+</div>

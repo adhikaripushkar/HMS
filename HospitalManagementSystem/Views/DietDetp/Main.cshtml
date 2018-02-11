@@ -1,0 +1,254 @@
+﻿@model HospitalManagementSystem.Models.DietIPDModel
+
+@{
+    ViewBag.Title = "Main";
+    Layout = "~/Views/Shared/_DashboardDietLayout.cshtml";
+}
+<style>
+    .info .ui-widget-header {
+        background: #CECECE;
+    }
+
+    .info .ui-dialog-content {
+        /*background: #e3edf3;*/
+    }
+
+    .linkDetail {
+    }
+
+
+    #droplink {
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        $('#linkNewBack').css('border', '2px solid blue');
+        $('#linkNewBack').css('padding', '6px');
+
+        $('#linkNewBack').focus();
+
+    });
+
+    $("#linkNewBack").live("focusout", function (e) {
+        $('#linkNewBack').css('border-width', '0');
+
+    });
+</script>
+<h2 style="text-align: center;">Diet Management Deparment
+    @{
+        if (Session["OpdTypeIdInt"] != null)
+        {
+            if ((int)Session["OpdTypeIdInt"] == 1)
+            {
+        @:<span style="color:#8cb4c8;font-size:12px;">(General)</span>
+            }
+            else
+            {
+        @:<span style="color:#8cb4c8;font-size:12px;">(Payable)</span>
+            }
+        }
+
+        else
+        {
+        @:<span style="color:#8cb4c8;font-size:12px;">(General)</span>
+        }
+    }
+
+</h2>
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.savefailed)
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.edit)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.editfailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.delete)
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.deletefailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+@{
+    var PrintConfirmation = TempData["AlertPrint"] ?? string.Empty;
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var message = '@PrintConfirmation';
+        if (message) {
+            if (confirm("Are you sure?")) {
+                window.location.href = '@Url.Action("BillForm", "Opd", 1)';
+            }
+        }
+    });
+</script>
+
+
+
+<script>
+    var j = $.noConflict();
+    j(document).ready(function (e) {
+
+        $('#FromDate').val("");
+        $('#ToDate').val("");
+
+        $("#FromDate").attr("value", "@DateTime.Now.ToShortDateString()");
+        $("#ToDate").attr("value", "@DateTime.Now.ToShortDateString()");
+
+
+        j("#FromDate").datepicker();
+        j("#ToDate").datepicker();
+
+    });
+
+
+</script>
+
+<div class="general-box clearfix">
+    <div style="font-weight: bold;">
+        @using (Html.BeginForm("SearchIndex", "DietDept", FormMethod.Get))
+        {
+            <p>
+                <span style="font-size: 14px; font-weight: bold;">From:&nbsp;&nbsp;</span>@Html.TextBoxFor(m => m.FromDate)
+                <span style="font-size: 14px; font-weight: bold;">To:&nbsp;&nbsp;</span>@Html.TextBoxFor(m => m.ToDate)
+                @*<span style="font-size: 14px; font-weight: bold;">Patient Name:&nbsp;&nbsp;</span>@Html.TextBoxFor(m => m.NameofPatent)*@
+
+                <input type="submit" value="Search" />
+            </p>
+        }
+    </div>
+
+
+</div>
+
+
+
+
+<div class="contentWrapper">
+    <div id="DetailsId"></div>
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Diet Management Department</h1>
+                </div>
+                @if (Model.PatientDietDetailsViewModelList.Count > 0)
+                {
+                    int Sno = ViewBag.currentPage == 1 ? 0 : (ViewBag.currentPage - 1) * 10;
+                }
+
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.PatientDietDetailsViewModelList)
+                        {
+                            <tr>
+                                <td></td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+                <div class="pagination pagination-centered">
+                    <ul class="pager">
+                        <li><a href="#">Page:</a></li>
+                        @for (int p = 1; p <= ViewBag.TotalPages; p++)
+                        {           
+                            <li><a class="@(p == ViewBag.currentPage ? "btn btn-default" : "")"
+					        href="@Url.Action("Index", "DietDept", new { Page = p })">@p</a></li>          
+                        }
+                    </ul>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    <script>
+
+
+        function viewDetails(id) {
+            var k = $.noConflict();
+            k.get('/Opd/Details/' + id,
+                           function (data) {
+                               k('#DetailsId').html(data);
+                               k(function () {
+                                   k("#DetailsId").dialog({
+                                       position: [490, 190],
+                                       resizable: true,
+                                       minWidth: 550,
+                                       maxWidth: 550,
+                                       height: 400,
+                                       title: "Patient Details",
+                                       dialogClass: 'info'
+
+                                   });
+
+                               });
+
+                           }
+                 );
+
+        };
+    </script>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/jqueryval")
+
+    }
+
+</div>
+
+
+

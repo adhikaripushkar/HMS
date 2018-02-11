@@ -1,0 +1,153 @@
+﻿@model Hospital.Models.SetupEmergencyCaseModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+@if (TempData["success"] == "Record Created Successfully !")
+{ 
+    <div class="alert alert-success">
+@TempData["success"]
+        </div>
+
+}
+
+@if (TempData["success"] == "Record Creation Failed !")
+{ 
+    <div class="alert alert-error">
+@TempData["success"]
+        </div>
+
+}
+
+@if (TempData["success"] == "Record Updated Successfully !")
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}
+
+
+@if (TempData["success"] == "Record Updation Failed !")
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}
+
+ 
+
+@if (TempData["success"] == "Record Deleted Successfully !")
+{ 
+    <div class="alert alert-info">
+@TempData["success"]
+        </div>
+
+}
+
+
+@if (TempData["success"] == "Record Deletion Failed !")
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}
+@if (TempData["success"] == "Case Name Already Exist !")
+{ 
+    <div class="alert">
+@TempData["success"]
+        </div>
+
+}
+<div class="contentWrapper">
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @id="linkNewBack"})
+</p>
+     <div class="general-box clearfix">
+        <div class="general-box clearfix">
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel"><h1>Emergency Case List</h1></div>
+<table class="table table-hover tablesorter">
+      <thead>
+    <tr>
+          @Html.HiddenFor(model => model.CaseId)
+      
+        <th>
+            @Html.DisplayNameFor(model => model.CaseName)
+        </th>
+      
+            @Html.HiddenFor(model => model.Status)
+      
+        <th>Action</th>
+    </tr>
+</thead>
+    <tbody>
+@foreach (var item in Model.SetupBlockModelList) {
+    <tr>
+    
+            @Html.HiddenFor(modelItem => item.CaseId)
+    
+        <td>
+            @Html.DisplayFor(modelItem => item.CaseName)
+        </td>
+ 
+            @Html.HiddenFor(modelItem => item.Status)
+      
+  
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CaseId }) |
+            @* @if (item.Status == 'Y')
+            {
+                @Html.ActionLink("Inactive", "ChageStatusToInactive", new { id = item.BlockId });
+            } |
+             @if (item.Status == 'N')
+            {
+                @Html.ActionLink("Active", "ChageStatusToActive", new { id = item.BlockId });
+            } |*@
+          @*  @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+            
+
+            @Html.ActionLink("Delete", "Delete", new { id=item.CaseId },new {onclick = "return confirm('Do you want to delete?');"})
+        </td>
+    </tr>
+  
+}
+  </tbody>
+</table>
+    </div>
+
+
+
+            </div>
+         </div>
+
+
+     @*for sorting *@
+        
+               <div class="boxFooter">
+                   
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+
+               </div> 
+
+        @*---------------*@
+    </div>

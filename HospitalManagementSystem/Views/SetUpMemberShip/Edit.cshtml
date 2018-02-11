@@ -1,0 +1,334 @@
+﻿@model Hospital.Models.SetUpMemberShipModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+
+<style>
+
+    .ddpsize {
+
+        width:211px;
+        height:27px;
+
+    }
+
+
+</style>
+
+
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+        j("#JoinDate").datepicker();
+        j("#DateofBirth").datepicker();
+    });
+
+  </script>
+
+
+
+
+
+<h2 style="text-align:center;">Setup Member Ship</h2>
+
+<div class="contentWrapper">
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <div class="bs-docs-example form-inline">
+    <fieldset>
+
+
+        <legend>Edit</legend>
+        <div class="row-fluid singleline">
+                          <label>
+                        <div class="size">@Html.ValidationMessageFor(model => model.CountryID)</div>
+                        <div class="editor-label">
+                            Country
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.CountryID,Hospital.Utility.GetCountryNameList())
+
+                        </div>
+
+                    </label>
+
+
+                      </div>
+        <div class="row-fluid singleline">
+
+
+
+        
+            @Html.HiddenFor(model=>model.SetupMemberID)
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.MemberID)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MemberID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.MemberID)
+            
+        </div>
+
+                </label>
+
+
+            <label>
+        <div class="size">@Html.ValidationMessageFor(model => model.MemberTypeID)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MemberTypeID)
+        </div>
+        <div class="editor-field">
+
+            
+            @Html.DropDownListFor(model => model.MemberTypeID, Hospital.Utility.GetAllMemberType(), new { @class="ddpsize"})
+            
+            
+        </div>
+                </label>
+
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.JoinDate)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.JoinDate)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.JoinDate,Model.JoinDate.ToShortDateString())
+            @Html.ValidationMessageFor(model => model.JoinDate)
+        </div>
+        </label>
+
+            </div>
+
+        <div class="row-fluid singleline">
+
+
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.FirstName)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FirstName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FirstName)
+            
+        </div>
+                </label>
+
+              <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.MiddleName)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MiddleName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.MiddleName)
+            
+        </div>
+                </label>
+
+               <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.LastName)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastName)
+            
+        </div>
+                </label>
+
+
+            
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.MaximumDependent)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MaximumDependent)
+        </div>
+        <div class="editor-field">
+            @*@Html.EditorFor(model => model.MaximumDependent)*@
+
+            @Html.DropDownListFor(model => model.MaximumDependent,Hospital.Utility.lstOfMaxDepnd(), new { @class="ddpsize"})
+            
+        </div>
+
+                </label>
+
+
+
+
+            </div>
+
+        <div class="row-fluid singleline">
+
+            <label>
+            <div class="size">@Html.ValidationMessageFor(model => model.DateofBirth)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DateofBirth)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.DateofBirth,Model.DateofBirth.ToShortDateString())
+            
+        </div>
+                </label>
+
+
+            <label>
+        <div class="size">@Html.ValidationMessageFor(model => model.Address)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Address)
+            
+        </div>
+                </label>
+
+
+            <label>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MobileNumber)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.MobileNumber)
+            @Html.ValidationMessageFor(model => model.MobileNumber)
+        </div>
+                
+
+                </label>
+
+
+            <label> 
+                <div class="size">@Html.ValidationMessageFor(model => model.ContactNumber)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ContactNumber)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ContactNumber)
+           
+        </div>
+        </label>
+
+            </div>
+
+
+        <div class="row-fluid singleline">
+
+
+            
+
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.Gender)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Gender)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model=>model.Gender,Hospital.Utility.GetGenderList(), new { @class="ddpsize"})
+            
+        </div>
+                </label>
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.BloodGroupID)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BloodGroupID)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model=>model.BloodGroupID,Hospital.Utility.BloodGroupList(),"Select", new { @class="ddpsize"})
+            
+        </div>
+
+                </label>
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.Email)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Email)
+            
+        </div>
+                </label>
+
+            </div>
+
+
+        <div class="row-fluid singleline">
+
+
+           @* <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.CreatedBy)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreatedBy)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreatedBy)
+            
+        </div>
+                </label>*@
+
+           @* <label>
+               
+                <div class="size">@Html.ValidationMessageFor(model => model.CreatedDate)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreatedDate)
+        </div>
+        <div class="editor-field">
+            
+             @Html.EditorFor(model => model.CreatedDate)
+        </div>
+                </label>*@
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.Remarks)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Remarks)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Remarks)
+            
+        </div>
+
+                </label>
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.Status)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Status)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Status)
+            
+        </div>
+                </label>
+
+            </div>
+            
+
+        <p>
+            <input type="submit" value="Edit" />
+        </p>
+    </fieldset>
+        </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @id="linkNewBack"})
+</div>
+
+
+
+
+    </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

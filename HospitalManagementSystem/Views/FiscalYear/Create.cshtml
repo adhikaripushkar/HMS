@@ -1,0 +1,94 @@
+﻿@model HospitalManagementSystem.Models.FiscalYearModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+        j("#FiscalYearStartDateId").datepicker();
+        j("#FiscalYearEndDateId").datepicker();
+
+    });
+
+</script>
+
+
+<h2 style="text-align: center;">Fiscal Year Setup</h2>
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("Create", "FiscalYear", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.FiscalYearId)
+        <fieldset>
+            <legend>Create</legend>
+
+            @if (TempData["message"] != null)
+            {
+                <div class="alert alert-error">
+                    @TempData["message"]
+                </div>
+
+            }
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.FiscalYearBS)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FiscalYearBS)<br />
+
+                        @Html.TextBoxFor(model => model.FiscalYearBS)
+
+                    </div>
+                </label>
+                <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.FiscalYearAD)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FiscalYearAD)<br />
+
+                        @Html.TextBoxFor(model => model.FiscalYearAD)
+
+                    </div>
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.FiscalYearStartDate)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FiscalYearStartDate)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.FiscalYearStartDate, new { @id = "FiscalYearStartDateId", @Value = DateTime.Now.ToShortDateString() })
+
+                    </div>
+                </label>
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.FiscalYearEndDate)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FiscalYearEndDate)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.FiscalYearEndDate, new { @id = "FiscalYearEndDateId", @Value = DateTime.Now.ToShortDateString() })
+
+                    </div>
+                </label>
+
+            </div>
+
+            <p>
+                <input type="submit" value="Create" />
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+    </div>
+
+</div>

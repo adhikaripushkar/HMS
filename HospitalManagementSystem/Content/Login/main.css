@@ -1,0 +1,292 @@
+
+@media screen and (max-width: 1024px) {
+    img.bg {
+        left: 50%;
+        margin-left: -512px;
+    }
+}
+
+.page-wrap {
+    position: relative;
+    margin-top: 10%;
+}
+
+*, *:after, *:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.form-2:after {
+    content: '';
+    /*background: url(../Images/bot-graphic.png) no-repeat center bottom;*/
+    position: absolute;
+    width: 514px;
+    height: 93px;
+    right: -30%;
+}
+
+.form-2 {
+    width: 480px;
+    margin: 14px auto 30px;
+    padding: 15px;
+    position: relative;
+    background: #ffffff;
+    border-radius: 4px;
+    color: #7e7975;
+    box-shadow: 0 2px 2px rgba(0,0,0,0.2), 0 1px 5px rgba(0,0,0,0.2), 0 0 0 12px rgba(255,255,255,0.4);
+}
+
+    .form-2 h1 {
+        font-size: 15px;
+        font-weight: bold;
+        color: #bdb5aa;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #EBE6E2;
+        text-shadow: 0 2px 0 rgba(255,255,255,0.8);
+        box-shadow: 0 1px 0 rgba(255,255,255,0.8);
+    }
+
+        .form-2 h1 .log-in, .form-2 h1 .sign-up {
+            display: inline-block;
+            text-transform: uppercase;
+        }
+
+        .form-2 h1 .log-in {
+            color: #6c6763;
+            padding-right: 2px;
+        }
+
+        .form-2 h1 .sign-up {
+            color: #2c8dcc;
+            padding-left: 2px;
+            font-family: 'Fjalla One', sans-serif;
+        }
+
+    .form-2 .float {
+        width: 50%;
+        float: left;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255,255,255,1);
+    }
+
+        .form-2 .float:first-of-type {
+            padding-right: 5px;
+        }
+
+        .form-2 .float:last-of-type {
+            padding-left: 5px;
+        }
+
+    .form-2 label {
+        display: block;
+        padding: 0 0 5px 2px;
+        cursor: pointer;
+        text-transform: uppercase;
+        font-weight: 400;
+        text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+        font-size: 11px;
+    }
+
+        .form-2 label i.icon-user {
+            margin-right: 5px;
+            display: inline-block;
+            width: 18px;
+            background: url("../Images/glyphicons-halflings.png") no-repeat -166px 8px;
+            height: 20px;
+        }
+
+        .form-2 label i.icon-lock {
+            margin-right: 5px;
+            display: inline-block;
+            width: 18px;
+            background: url("../Images/glyphicons-halflings.png") no-repeat -288px -16px;
+            height: 20px;
+        }
+
+        .form-2 label i.icon-Module {
+            margin-right: 5px;
+            display: inline-block;
+            width: 18px;
+            background: url("../Images/glyphicons-halflings.png") no-repeat -208px 8px;
+            height: 20px;
+        }
+
+
+
+    .form-2 input[type=text], .form-2 input[type=password] {
+        font-family: 'Fjalla One', sans-serif;
+        font-size: 13px;
+        font-weight: 400;
+        display: block;
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 5px;
+        border: 3px solid #ebe6e2;
+        border-radius: 5px;
+        -webkit-transition: all 0.3s ease-out;
+        -moz-transition: all 0.3s ease-out;
+        -ms-transition: all 0.3s ease-out;
+        -o-transition: all 0.3s ease-out;
+        transition: all 0.3s ease-out;
+    }
+
+        .form-2 input[type=text]:hover, .form-2 input[type=password]:hover {
+            border-color: #CCC;
+        }
+
+    .form-2 label:hover ~ input {
+        border-color: #CCC;
+    }
+
+    .form-2 input[type=text]:focus, .form-2 input[type=password]:focus {
+        border-color: #BBB;
+        outline: none;
+    }
+
+    .form-2 input[type=submit], .form-2 .log-twitter {
+        width: 49%;
+        height: 38px;
+        position: relative;
+        box-shadow: inset 0 1px rgba(255,255,255,0.3);
+        border-radius: 3px;
+        cursor: pointer;
+        font-family: 'Fjalla One', sans-serif;
+        font-size: 14px;
+        line-height: 28px;
+        display: inline-block;
+        font-weight: bold;
+    }
+
+        .form-2 input[type=submit]:hover, .form-2 .log-twitter:hover {
+            box-shadow: inset 0 1px rgba(255,255,255,0.3), inset 0 20px 40px rgba(255,255,255,0.15);
+        }
+
+        .form-2 input[type=submit]:active, .form-2 .log-twitter:active {
+            top: 1px;
+        }
+
+.no-boxshadow .form-2 input[type=submit]:hover {
+    background: #EBE6E2;
+}
+
+.no-boxshadow .form-2 .log-twitter:hover {
+    background: #2a8ac4;
+}
+
+.form-2 p:last-of-type {
+    clear: both;
+}
+
+.form-2 .opt {
+    text-align: right;
+    margin-right: 3px;
+}
+
+.form-2 label[for=showPassword] {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 11px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.form-2 input[type=checkbox] {
+    vertical-align: middle;
+    margin: -1px 5px 0 1px;
+}
+
+.info {
+    width: 340px;
+    height: 124px;
+    margin: 0 auto;
+    text-align: center;
+    color: #fff;
+    padding-top: 72px;
+}
+
+    .info p {
+        font-size: 12px;
+        line-height: 1.8em;
+    }
+
+.btns {
+    text-align: center;
+    padding-top: 14px;
+    display: block;
+}
+
+.opt a {
+    float: left;
+    color: #7e7975;
+    font-size: 12px;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+    .opt a:hover {
+        text-decoration: underline;
+    }
+
+.banner {
+    position: absolute;
+    top: -96px;
+    height: 42px;
+    width: 90%;
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 34px;
+    color: #ffffff;
+    text-shadow: 0 0.5px 2px #535353;
+    text-align: center;
+}
+
+.version {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.btn {
+    -moz-box-shadow: inset 0px 1px 0px 0px #54a3f7;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #54a3f7;
+    box-shadow: inset 0px 1px 0px 0px #54a3f7;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #007dc1), color-stop(1, #0061a7));
+    background: -moz-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+    background: -webkit-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+    background: -o-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+    background: -ms-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+    background: linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#007dc1', endColorstr='#0061a7',GradientType=0);
+    background-color: #007dc1;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #124d77;
+    display: inline-block;
+    color: #ffffff;
+    font-family: arial;
+    font-size: 13px;
+    font-weight: normal;
+    padding: 6px 24px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #154682;
+}
+
+    .btn:hover {
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0061a7), color-stop(1, #007dc1));
+        background: -moz-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+        background: -webkit-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+        background: -o-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+        background: -ms-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+        background: linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0061a7', endColorstr='#007dc1',GradientType=0);
+        background-color: #0061a7;
+    }
+
+    .btn:active {
+        position: relative;
+        top: 1px;
+    }

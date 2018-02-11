@@ -1,0 +1,503 @@
+﻿@model Hospital.Models.PreRegistrationModel
+@using Hospital
+
+@{
+    ViewBag.Title = "Pre-Registration Create New";
+    Layout = "~/Views/Shared/_Pre-RegistrationLayout.cshtml";
+}
+
+
+
+<style>
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+    }
+
+    .disease {
+
+        width:179px;
+    }
+
+    .PreferDateId{
+        width:50px;
+    }
+
+    .PreferTimeId {
+        width:200px;
+    }
+</style>
+
+
+<script>
+
+    $(document).ready(function () {
+
+
+        $('#rbtn').hide();
+
+    });
+
+
+</script>
+@if (TempData["Failed"] == "0")
+{
+    <script type="text/javascript">
+
+        alert('Insertion Failed Check Data Again!! ')
+
+    </script>
+}
+
+<div id="doctorDetails"></div>
+<div id="diseasedoctor"></div>
+
+
+<script src="~/Scripts/OrderManagerScript.js"></script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        AddClickEvents();
+    });
+
+
+</script>
+
+
+<script>
+
+    $(document).ready(function (e) {
+        $('#RegistrationDateId').val("");
+
+    });
+
+
+</script>
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+        j("#RegistrationDateId").datepicker();
+
+    });
+
+</script>
+
+
+<h2 style="text-align: center;">Pre-Registration</h2>
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("Create", "PreRegistration", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Create</legend>
+
+            <div class="row-fluid singleline">
+
+                <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.FirstName)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FirstName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.FirstName)
+                    </div>
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.MiddleName)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MiddleName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.MiddleName)
+
+                    </div>
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.LastName)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.LastName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.LastName)
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.Sex)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Sex)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.Sex, @Hospital.Utility.GetGenderList())
+
+                    </div>
+                </label>
+
+            </div>
+
+            <div class="row-fluid singleline">
+                <div class="size">@Html.ValidationMessageFor(model => model.MobileNumber)</div>
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MobileNumber)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.MobileNumber)
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.ContactNumber)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ContactNumber)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.ContactNumber)
+
+                    </div>
+                </label>
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.Email)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Email)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Email)
+
+                    </div>
+                </label>
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.AgeYear)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.AgeYear)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.AgeYear)
+
+                    </div>
+                </label>
+
+
+                <div class="row-fluid singleline">
+                   @* <label>
+                    <div class="size">@Html.ValidationMessageFor(model=>model.ZoneId)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.ZoneId)
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model=>model.ZoneId, Hospital.Utility.GetZoneList())
+                        </div>
+                    </label>
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model=>model.DistrictID)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.DistrictID)
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model =>model.DistrictID, Hospital.Utility.GetDistrictList())
+                        </div>
+                    </label>
+                    <label>
+                        <div class="size">@Html.ValidationMessageFor(model=>model.vdcID)</div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.vdcID)
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownListFor(model => model.vdcID, Hospital.Utility.GetVdc1())
+                        </div>
+                    </label>*@
+                    @*Address = ward No*@
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.Address)</div>
+                    <div class="editor-label">
+                        @*@Html.LabelFor(model => model.Address)*@
+                        @Html.Label("Ward No")
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Address)
+
+                    </div>
+                </label>
+
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.RegistrationMode)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.RegistrationMode)
+                    </div>
+                    <div class="editor-field">
+                        @*@Html.DropDownListFor(model => model.RegistrationMode, @Hospital.Utility.RegistrationModeLists())*@
+                        @Html.DropDownListFor(model => model.RegistrationMode, @Hospital.Utility.RegistrationModeLists())
+                    </div>
+                </label>
+                    </div>
+
+               @* <div class="row-fluid singleline">
+                <div class="btn" id="DoctorDisease" style="width:410px;">
+
+                    Search Doctor By Disease @Html.DropDownListFor(model => model.PreRegistrationDoctorDisease.DiseaseID, @Utility.GetGeneralDiseaseName(), new { @class = "disease" })
+                    <input type="button" value="Search" class="doc" />
+
+                </div>
+                    </div>*@
+
+
+            </div>
+
+            <div class="well well-small" id="Add-ItemFirst">
+                @Html.Partial("_AddMoreDepartmentDoctorsFirst", Model.PreregistrationPreferDetailsModel)
+            </div>
+
+            <p>
+                <input type="submit" value="Create" />
+            </p>
+        </fieldset>
+    
+ 
+    }
+    @*<div>
+        @Html.Partial("IPN")
+    </div>
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+    </div>*@
+
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script>
+            $("#divProcessing").hide();
+            function check_username() {
+
+                var docid = $("#Add-ItemFirst").find('.DoctorID').val();
+
+                var date = $("#Add-ItemFirst").find('.PreferDateId').val();
+                $("#divProcessing").show();
+
+                $.ajax({
+
+                    async: false,
+                    url: '@Url.Action("CheckAvailibility", "PreRegistration")',
+                    type: 'get',
+
+                    data: { doctorid: docid, datesid: date },
+
+
+
+                    success: function (result) {
+
+
+                        $('#doctorDetails').html(result);
+                        $("#divProcessing").hide();
+                        $(function () {
+                            j("#doctorDetails").dialog({
+                                modal: true,
+                                resizable: true,
+                                visible: false,
+                                width: 250,
+                                height: 200
+
+                            });
+                        });
+                    }
+
+                });
+
+
+            }
+
+        </script>
+
+
+
+    }
+
+    <script type="text/javascript">
+        $("#Add-Item").on('click', '.row-button', function () {
+            $(this).closest("div.row").remove();
+        });
+
+    </script>
+
+
+
+    <script type="text/javascript">
+
+        $("#Add-Item").on('change', '.DepartmentID', function () {
+            var id = this.id;
+
+            id = id.replace("__DepartmentID", "__DoctorID");
+            $('#' + id).val('');
+
+
+            $.get('/AjaxRequest/GetDoctorNameList/' + this.value,
+                  function (data) {
+                      $('#' + id).find('option').remove()
+                      $(data).each(
+                          function (index, item) {
+                              $('#' + id).append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                          });
+                  }
+        );
+        });
+
+    </script>
+    <script type="text/javascript">
+
+        $("#item").on('change', '.DepartmentID', function () {
+            var id = this.id;
+
+            id = id.replace("__DepartmentID", "__DoctorID");
+            $('#' + id).val('');
+
+
+            $.get('/AjaxRequest/GetDoctorNameList/' + this.value,
+                  function (data) {
+                      $('#' + id).find('option').remove()
+                      $(data).each(
+                          function (index, item) {
+                              $('#' + id).append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                          });
+                  }
+        );
+        });
+
+    </script>
+
+
+
+
+    <script type="text/javascript">
+
+        $("#Add-ItemFirst").on('change', '.DepartmentID', function () {
+            var id = this.id;
+
+
+
+            id = id.replace("__DepartmentID", "__DoctorID");
+            $('#' + id).val('');
+
+
+
+            $.get('/AjaxRequest/GetDoctorNameList/' + this.value,
+                  function (data) {
+                      $('#' + id).find('option').remove()
+                      $(data).each(
+                          function (index, item) {
+                              $('#' + id).append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                          });
+
+                  }
+        );
+        });
+
+    </script>
+    <script type="text/javascript">
+
+        $("#item").on('change', '.DepartmentID', function () {
+            var id = this.id;
+
+            id = id.replace("__DepartmentID", "__DoctorID");
+            $('#' + id).val('');
+
+
+            $.get('/AjaxRequest/GetDoctorNameList/' + this.value,
+                  function (data) {
+                      $('#' + id).find('option').remove()
+                      $(data).each(
+                          function (index, item) {
+                              $('#' + id).append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                          });
+                  }
+        );
+        });
+
+    </script>
+    <script>
+        $("#Add-Item").on('click', '.ava', function () {
+
+            var docid = $(this).closest("div.row").find('.DoctorID').val();
+
+            var dateid = $(this).closest("div.row").find('.PreferDateIdn').val();
+
+            $.ajax({
+                async: false,
+                url: '@Url.Action("CheckAvailibility", "PreRegistration")',
+                type: 'get',
+                data: { doctorid: docid, datesid: dateid },
+                success: function (result) {
+
+
+                    $('#doctorDetails').html(result);
+
+                    $(function () {
+                        j("#doctorDetails").dialog({
+
+                            modal: true,
+                            resizable: false,
+                            visible: false,
+                            width: 250,
+                            height: 100
+                        });
+                    });
+
+                }
+
+            });
+
+        });
+    </script>
+    <script>
+
+        $("#DoctorDisease").on('click', '.doc', function () {
+
+            var DiseaseID = $("#DoctorDisease").find('.disease').val();
+
+            $.ajax({
+                async: false,
+                url: '@Url.Action("DoctorDisease", "PreRegistration")',
+                type: 'get',
+
+                data: { DiseaseID: DiseaseID },
+
+                success: function (result) {
+
+
+                    $('#diseasedoctor').html(result);
+
+                    $(function () {
+                        j("#diseasedoctor").dialog({
+
+                            modal: true,
+                            resizable: true,
+                            visible: false,
+                            width: 300,
+                            height: 200
+                        });
+                    });
+                }
+
+            });
+
+
+        });
+
+    </script>
+
+</div>

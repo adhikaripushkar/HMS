@@ -1,0 +1,50 @@
+﻿@model HospitalManagementSystem.Models.MisModel
+
+<div class="general-box clearfix">
+
+    <div class="general-box clearfix">
+
+        <div class="boxWrapper">
+            <div class="boxHeadingPanel">
+                <h1>Search Result</h1>
+            </div>
+
+            <table class="table table-hover tablesorter">
+                <thead>
+                    <tr>
+
+                        <th>
+                            IPNumber
+                        </th>
+                        <th>
+                            OPDID
+                        </th>
+                        <th>
+                            Patient Name
+                        </th>
+                        <th>Address</th>
+                        <th>
+                            Registration Date
+                        </th>
+                        
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Model.ObjIPDetailViewModel.IPId</td>
+                        <td>@Model.ObjIPDetailViewModel.OpdId</td>
+                        <td>@HospitalManagementSystem.Utility.GetPatientNameWithIdFromEmergency(Model.ObjIPDetailViewModel.OpdId)</td>
+                        <td>@HospitalManagementSystem.Utility.GetOpdAddress(Model.ObjIPDetailViewModel.OpdId)</td>
+                        
+                        <td>@Model.ObjIPDetailViewModel.RegisterDate.ToShortDateString()</td>
+                        <td>@Html.ActionLink("Medical Record", "ShowMRDischargeForm", new { IpNumber = Model.ObjIPDetailViewModel.IPId, OpdNumber = Model.ObjIPDetailViewModel.OpdId })</td>
+                        
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

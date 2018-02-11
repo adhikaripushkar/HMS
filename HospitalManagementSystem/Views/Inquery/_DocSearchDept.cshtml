@@ -1,0 +1,105 @@
+﻿@model HospitalManagementSystem.Models.DoctorPartialDetails
+
+
+@{Layout = null;}
+
+<div class="general-box clearfix">
+
+    <div class="general-box clearfix">
+
+        <div class="boxWrapper">
+            <div class="boxHeadingPanel">
+                <h1>Search Result</h1>
+            </div>
+            <table class="table table-hover tablesorter">
+                <thead>
+                    <tr>
+                        <th style="">
+                            <span>Title</span>
+                        </th>
+                        <th style="">
+                            <span>FName</span>
+                        </th>
+                        <th style="">
+                            <span>MName</span>
+                        </th>
+                        <th style="">
+                            <span>LName</span>
+                        </th>
+                        <th style="">
+                            <span>Email</span>
+                        </th>
+                        <th style="">
+                            <span>PhoneNumber</span>
+                        </th>
+                        <th style="">
+                            <span>MobileNumber</span>
+                        </th>
+                        <th style="">
+                            <span>Address</span>
+                        </th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+
+
+
+
+                    @try
+                    {
+                        foreach (var item in Model.DoctorPartialDetailsList)
+                        {
+    
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MiddleName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PhoneNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MobileNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+
+                        </tr>
+                        
+                        }
+
+                    }
+                    catch { }
+
+                </tbody>
+
+            </table>
+
+
+
+
+
+        </div>
+
+
+
+        @*---------------*@
+
+    </div>
+</div>
+
+

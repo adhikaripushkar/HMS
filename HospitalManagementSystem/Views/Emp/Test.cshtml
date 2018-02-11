@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+
+<h2>Test</h2>
+
+
+<input type="text" id="textid1" />
+
+
+
+<select id="testopt1">
+
+    
+    <option value="0">select</option>
+        <option value="5">Platinum</option>
+        <option value="6">Silver</option>
+        <option value="7">Others</option>
+        
+    
+
+</select>
+
+
+
+<script>
+
+    $("#textid1").keyup(function (e) {
+
+      
+        var val = this.value;
+
+       
+        if (val != null && val != "") {
+            $("#testopt1").attr('disabled', 'disabled');
+        }
+        else {
+           
+            $("#testopt1").removeAttr("disabled");
+
+        }
+
+
+    });
+
+    $("#testopt1").change(function (e) {
+
+        // alert(this.val());
+
+        var val = this.value;
+        
+        if (val != 0) {
+            $("#textid1").attr('disabled', 'disabled');
+        }
+        else {
+
+            $("#textid1").removeProp("disabled");
+        }
+
+    });
+
+</script>

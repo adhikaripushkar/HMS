@@ -1,0 +1,57 @@
+﻿@model Hospital.Models.SetupEmergencyCaseModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 style="text-align:center;">Setup Block </h2>
+<div class="contentWrapper">
+@using (Html.BeginForm("Edit", "SetupEmergencyCase", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Edit</legend>
+        <div class="row-fluid singleline">
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.CaseId)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.CaseId)
+            @Html.ValidationMessageFor(model => model.CaseId)
+        </div>
+           
+                 <label>
+                      <span class="size">  @Html.ValidationMessageFor(model => model.CaseName)</span>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CaseName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CaseName)
+          
+        </div>
+                     </label>
+
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.Status)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.Status)
+            @Html.ValidationMessageFor(model => model.Status)
+        </div>
+</div>
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List","Index", null, new { @id="linkNewBack" })
+</div>
+    </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

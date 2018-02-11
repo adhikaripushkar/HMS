@@ -1,0 +1,255 @@
+﻿@model HospitalManagementSystem.Models.JVMasterModel
+
+@{
+    ViewBag.Title = "ShowLedgerDetail";
+    Layout = "~/Views/Shared/_BillingLayout.cshtml";
+    decimal GrandTotalDeposit = Convert.ToDecimal(0);
+    int i = 1;
+}
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.maskedinput.js"></script>
+
+<script>
+    var j = $.noConflict();
+    j(document).ready(function (e) {
+
+        j("#_StartDate").datepicker();
+        j("#_EndDate").datepicker();
+
+    });
+
+
+</script>
+
+
+<h2 style="text-align: center;">Ledger Detail</h2>
+
+<div class="contentWrapper">
+    <div class="bs-docs-example form-inline">
+        @using (Html.BeginForm())
+        {   
+    
+            <div class="row-fluid singleline">
+                <div class="row-fluid singleline">
+                    <label>
+                        <label style="width: 135px;">From Date (Nepali)</label>
+                        @Html.TextBox("FromNepaliDate", null, new { @onblur = "ChangeNepalidateFrom(this.value,'DobId','/AjaxRequest/GetEnglishDate/')" })
+                    </label>
+
+                    <label>
+                        <label style="width: 115px;">To Date (Nepali)</label>
+                        @Html.TextBox("ToNepaliDate", null, new { @onblur = "ChangeNepalidateTo(this.value,'DobId','/AjaxRequest/GetEnglishDate/')" })
+                    </label>
+                </div>
+
+
+                <label>
+                    <label style="width: 135px;">From Date (English)</label>
+                    @Html.TextBoxFor(model => model.ObjLedgerDetailsViewModel.StartDate, new { @id = "_StartDate", @Value = DateTime.Now.ToShortDateString(), @onchange = "ChangeEnglishdateFrom(this.value,'txtNepalidate','/AjaxRequest/getNepaliDate/')" })
+                </label>
+                <label>
+                    <label style="width: 115px;">To Date (English)</label>
+                    @Html.TextBoxFor(model => model.ObjLedgerDetailsViewModel.EndDate, new { @id = "_EndDate", @Value = DateTime.Now.ToShortDateString(), @onchange = "ChangeEnglishdateTo(this.value,'txtNepalidate','/AjaxRequest/getNepaliDate/')" })
+                </label>
+                <label>
+                    <input type="submit" value="show" />
+
+                </label>
+            </div>
+     
+        }
+    </div>
+
+    <br />
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Result</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <tr>
+                        <th>SN</th>
+                        <th>Patient Name</th>
+                        <th>Deposited By</th>
+                        <th>Date</th>
+                        <th>Created By</th>
+                        <th>Deposited Amount</th>
+                        @*<th>Action</th>*@
+
+                    </tr>
+                    @if (Model.LedgerDetailsViewModelList != null)
+                    {
+                        foreach (var item in Model.LedgerDetailsViewModelList)
+                        {
+                        <tr>
+                            <th>
+                                @i
+                            </th>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PatientName)
+                            </td>
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.DepositedBy)
+                            </td>
+
+                            <td>
+                                @item.DepositDate.ToShortDateString()
+
+                            </td>
+
+                            <td>
+                                @HospitalManagementSystem.Utility.GetEmployeeNameFromEmpID(item.CreatedBy)
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DepositedAmount)
+                            </td>
+                            @*<td>Details
+                            </td>*@
+
+
+                        </tr>
+                            GrandTotalDeposit += item.DepositedAmount;
+                            i++;
+                        }
+                    }
+                    <tr style="font-weight:bold;text-align:right;">
+                        <td colspan="5">Total :
+                        </td>
+
+
+
+                        <td>
+                            @GrandTotalDeposit
+                        </td>
+                    </tr>
+
+                </table>
+
+
+            </div>
+
+
+
+
+
+
+            @*<span style="margin-left: 700px; font-size: 15px; margin-top: 30px;"><b>Total Deposit Amount<span>&nbsp;&nbsp;</span>:- <span>@GrandTotalDeposit</span></b></span>*@
+            @if (TempData["Value"] != null)
+            {
+                //<span style="margin-left: 700px;"><b>Total Amount<span>&nbsp;&nbsp;</span>:- <span>@TempData["Value"]</span></b></span> 
+            }
+        </div>
+    </div>
+
+
+
+
+
+</div>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("#FromNepaliDate").mask("9999/99/99");
+        $("#ToNepaliDate").mask("9999/99/99");
+
+    });
+</script>
+
+<script type="text/javascript">
+    function ChangeNepalidateFrom(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { NepaliDate: selvalue },
+            contentType: "text/json",
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#_StartDate").val(jsonResult);
+            }
+        });
+    };
+
+    function ChangeNepalidateTo(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { NepaliDate: selvalue },
+            contentType: "text/json",
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#_EndDate").val(jsonResult);
+            }
+        });
+    };
+
+
+
+    function ChangeEnglishdateFrom(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { EnglishDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#FromNepaliDate").val(jsonResult);
+            }
+        });
+    };
+
+    function ChangeEnglishdateTo(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { EnglishDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#ToNepaliDate").val(jsonResult);
+            }
+        });
+    }
+
+</script>
+
+
+
+
+

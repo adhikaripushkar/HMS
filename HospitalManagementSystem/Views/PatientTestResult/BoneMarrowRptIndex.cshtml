@@ -1,0 +1,83 @@
+﻿@model Hospital.Models.BoneMarrowReportsModel
+
+@{
+    ViewBag.Title = "BoneMarrowRptIndex";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+}
+
+<div class="contentWrapper">
+    <div id="DetailsId"></div>
+
+    @*<p>
+        <i class="fa  fa-plus fa-2x" style="color: blue;"></i>&nbsp;@Html.ActionLink("Create New", "Create", null, new { @id = "linkNewBack" })
+    </p>*@
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Pathology Department</h1>
+                </div>
+            </div>
+        </div>
+        <table class="table table-hover tablesorter">
+            <thead>
+                <tr>
+                    <th style="width: 40px;">SN
+                    </th>
+                    <th>Full Name
+                    </th>
+                    <th>Address
+                    </th>
+                    <th>Sex
+                    </th>
+                    <th>CytoPathNo
+                    </th>
+                    <th>RegisterId
+                    </th>
+                    <th>Date Of Dispatch
+                    </th>
+                    <th>Action
+                    </th>
+            </thead>
+            @if (Model.BoneMarrowReportsModelList.Count() > 0)
+            {
+                foreach (var item in Model.BoneMarrowReportsModelList)
+                {
+                <tr>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        @Hospital.Utility.GetPatientNameWithIdFromEmergency(item.PatientId)
+                    </td>
+                    <td>
+                        @Hospital.Utility.GetOpdAddress(item.PatientId)
+                    </td>
+                    <td>
+                        @Hospital.Utility.GetPatientSexType(item.PatientId)
+                    </td>
+                    <td>
+                        @item.BoneMarrowNumber
+                    </td>
+                    <td>
+                        @item.IPNumber
+                    </td>
+                    <td>
+                        @item.DateOfDispatch
+                    </td>
+                    <td>
+                        @Html.ActionLink("View", "ShowBoneMarrowRpt", new { @id=item.BonmarrowRptId})
+                    </td>
+                </tr>
+                    
+                }
+
+            }
+
+        </table>
+
+    </div>
+</div>

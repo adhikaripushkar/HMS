@@ -1,0 +1,34 @@
+﻿@using Hospital.Helpers
+@model Hospital.Models.EmployeeAllowanceSetupModel
+
+@using (Html.BeginCollectionItem("EmployeeAllowanceSetupModelList"))
+{
+    <div class="row" style="margin-left: 0px;" id="clsdiv">
+        <table>
+            <tr>
+                <td>
+                 @Html.DropDownListFor(model => model.AllowanceID, Hospital.Utility.GetAllAllowance(), new { @id = "AllowanceID", @class="AlloClass"})
+                </td>
+                <td>
+                 @Html.TextBoxFor(model => model.AllowanceAmount, new { @class = "AllowanceClass", @id="AllowanceAmount"})
+                </td>
+                <td>
+                 <input type="button" class="row-button btn btn-warning" value="Remove" />
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+
+<script>
+
+    $(".AlloClass").on("change", function (e) {
+        e.preventDefault();
+        var df = $(this).closest("tr");
+        var AllowaceId = df.find(".AlloClass").val();
+        $.post('@Url.Action("GetAllowanceAmount")', { ID: AllowaceId }, function (result) {               
+            df.find(".AllowanceClass").val(result.Amount);
+        });
+    });
+
+</script>

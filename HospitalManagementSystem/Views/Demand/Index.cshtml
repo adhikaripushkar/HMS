@@ -1,0 +1,102 @@
+﻿@model HospitalManagementSystem.Models.DemandMasterModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+
+<h2 style="text-align:center;">Stock Demand</h2>
+
+<div class="contentWrapper">
+
+    <p>
+        @TempData["message"]
+    </p>
+
+
+<p id="linkNewBack">
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+
+
+     <div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                
+
+    <div class="boxHeadingPanel"><h1>Demand</h1></div>
+<table class="table table-hover tablesorter">
+    <thead>
+    <tr>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.ItemDemandNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartmentID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DemandDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DemandOfficer)
+        </th>
+        
+        <th>Actions</th>
+    </tr>
+        </thead><tbody>
+@foreach (var item in Model.DemandMasterList)
+{
+    <tr>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemDemandNo)
+        </td>
+        <td>
+            @Hospital.Utility.GetDepartmentName(item.DepartmentID)
+        </td>
+        <td>
+            @item.DemandDate.ToShortDateString()
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DemandOfficer)
+        </td>
+       
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ItemDemandID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ItemDemandID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ItemDemandID }, new { onclick="return confirm('Do you want to delete?')"}) |
+           @Html.ActionLink("Purchase Order", "Create", "StockPurchaseOrder", new { id = item.ItemDemandID }, new { @class="abc"}) |
+             
+            @Html.ActionLink("Allotment", "Index", "Allotment", new { id = item.ItemDemandID }, new { @class="abc"}) |
+            @Html.ActionLink("Demand Report", "DemandReport",  new { id = item.ItemDemandID }, new { @class="abc"})
+             </td>
+    </tr>
+}
+</tbody>
+</table></div></div></div>
+    <div class="boxFooter">
+                   
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+
+               </div>
+    </div>

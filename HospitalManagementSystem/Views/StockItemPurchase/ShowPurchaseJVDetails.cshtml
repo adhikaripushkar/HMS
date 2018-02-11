@@ -1,0 +1,211 @@
+﻿@model Hospital.Models.StockItemPurchaseModel
+
+@{
+    ViewBag.Title = "Stock";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+    decimal TotalSumAmt = Convert.ToDecimal(0);
+}
+
+<h2>Purchase Voucher</h2>
+
+
+<h2></h2>
+<style>
+    table#tblnoborder,
+    table#tblnoborder td {
+        border: none !important;
+    }
+
+    .font {
+        font-weight: bold;
+    }
+
+    .small-table td {
+        border: none;
+    }
+
+
+
+    .holder img {
+        max-height: 48px;
+        max-width: 55px;
+        object-fit: cover;
+    }
+
+
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+    }
+</style>
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">Bill <br>');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+</script>
+
+<div class="contentWrapper">
+
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto;">
+
+        @if (@Hospital.Utility.GetPathOfHospitalLogo() != null && @Hospital.Utility.GetPathOfHospitalLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalLogo/@Hospital.Utility.GetPathOfHospitalLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@Hospital.Utility.GetPathOfHospitalLogo() == "")
+        { 
+            
+            <br />
+        
+        }
+        <div style="font: bold; font-size: 18px; text-align: center; height: 135px;">
+            @if (@Hospital.Utility.GetHospitalTitleName() != null && @Hospital.Utility.GetHospitalTitleName() != "")
+            {
+                <span>@Hospital.Utility.GetHospitalTitleName()</span>
+            }
+            <br />
+            @Hospital.Utility.GetHospitalName()<br />
+            <div style="height: 100px;">
+                <p style="font-size: 16px; text-align: center">@Hospital.Utility.HospitalAddress()</p>
+                <p style="font-size: 13px; text-align: center">Website:-@Hospital.Utility.HospitalUrl()</p>
+                <p style="font-size: 13px; text-align: center">Ph:-@Hospital.Utility.HospitalPhone()</p>
+                <p style="font-size: 13px; text-align: center">Purchase Voucher</p>
+            </div>
+
+        </div>
+
+        @*<h4 style="text-align: center;"><u>Account Department</u> </h4>*@
+        <h5 style="text-align: left;">NO : @Hospital.Utility.GetLastStockItemPurchaseMasterId()</h5>
+        <h5 style="text-align: left;">Ref : @Model.ItemBillNo</h5>
+        <h5 style="text-align: left;">Partys' Name : @Hospital.Utility.GetSupplierName(Model.StockSupplierId)</h5>
+        <h5 style="text-align: left;">Date : @DateTime.Today.ToShortDateString()</h5>
+        <div>
+
+
+            <table style="width: 100%; border: 1px solid black;">
+
+                <thead>
+                    <tr style="font-size: 14px;">
+                        <th colspan="4" class="text-left">Particulars</th>
+
+                        <th class="text-right" style="width: 200px;">Amount</th>
+
+                    </tr>
+
+                    @{int CategoryId = Convert.ToInt32(0);
+                      int counter = 0;
+                      int PreViousCategoryId = 0;}
+                    <div class="item">
+                        <table style="width: 100%;">
+                            @foreach (var item in Model.StockItemEntryList)
+                            {
+                                CategoryId = item.StockCategoryId;
+                        
+                                <tr>
+                                    @if (CategoryId == item.StockCategoryId && PreViousCategoryId != CategoryId)
+                                    {
+
+                                        if (counter == 0)
+                                        {
+                                    
+                                        <td colspan="4"><strong style="font-size: 16px; font-weight: 700;">@Hospital.Utility.GetStockCategoryName(item.StockCategoryId)</strong></td>
+@*<td rowspan="10" style="text-align: center; width: 200px; vertical-align: top; font-weight: 700;">@Model.TotalAmount</td>*@
+                                            counter++;
+                                            PreViousCategoryId = item.StockCategoryId;
+
+
+                                        }
+                                        else
+                                        {
+
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        counter = 0;
+                                    }
+                                </tr>
+
+                                <tr>
+                                    <td>@Hospital.Utility.GetDemandItemName(item.StockItemEntryId);</td>
+                                    <td>@item.Quantity&nbsp/@Hospital.Utility.GetUnitNameByItemId(item.StockItemEntryId)</td>
+                                    <td>@item.Rate.ToString("N")&nbsp;/@Hospital.Utility.GetUnitNameByItemId(item.StockItemEntryId)</td>
+                                    @{decimal RateandQtn = Convert.ToDecimal(0);
+                                      RateandQtn = item.Quantity * item.Rate;}
+                                    <td>@RateandQtn&nbsp;Rs</td>
+
+                                </tr>
+                            
+                                
+                            }
+
+                        </table>
+                    </div>
+                    <div style="font-size: 16px; font-weight: bold; margin-left: 945px;">@Model.TotalAmount</div>
+
+                </thead>
+                <tr>
+                    @{TotalSumAmt = Model.TotalAmount;}
+                </tr>
+            </table>
+
+
+
+            <div id="NarraionDtls" style="margin-top: 20px; width: 880px;">
+                <h4>On Account Of :</h4>
+                Being material received from @Hospital.Utility.GetSupplierName(Model.StockSupplierId) . Challan No : 
+            </div>
+            @{
+                Hospital.NumberToEnglish obj = new Hospital.NumberToEnglish();
+                string str = obj.changeNumericToWords(Convert.ToDouble(Model.TotalAmount));
+            }
+
+            <h4>Amount In Word :&nbsp;&nbsp; <span>&nbsp;@str Only.</span></h4>
+
+            <div id="VeriAppro" style="margin-top: 80px;">
+                <table style="width: 880px; text-align: center;">
+                    <tr>
+
+                        <td>Authorised Signatory</td>
+                    </tr>
+
+                </table>
+
+            </div>
+        </div>
+        <br />
+        <br />
+
+
+    </div>
+
+    <span style="float: right;">
+        <input type="button" id="btnPrint" style="width: 50px;" onclick="print()" value="Print" />
+    </span>
+
+
+
+</div>
+
+

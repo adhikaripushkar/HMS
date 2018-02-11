@@ -1,0 +1,444 @@
+﻿@model HospitalManagementSystem.Models.DoctorSetupModel
+@using HospitalManagementSystem;
+
+@{
+    
+    ViewBag.Title = "Doctor Setup";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.maskedinput.js"></script>
+
+
+<style>
+    #mngsize {
+        width: 208px;
+        height: 28px;
+    }
+</style>
+
+
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+        j("#DobId").datepicker();
+        j("#JoiningDateId").datepicker();
+
+    });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("input, select").not($(":button")).keypress(function (evt) {
+            if (evt.keyCode === 13) {
+                var iname = $(this).typeName;
+
+                if (iname !== 'submit') {
+                    var fields = $(this).parents('form:eq(0),body').find('button, input, textarea, select');
+                    var index = fields.index(this);
+                    if (index > -1 && (index + 1) < fields.length) {
+                        fields.eq(index + 1).focus();
+                    }
+                    return false;
+                }
+            }
+        });
+    });
+
+</script>
+
+<h2 style="text-align: center;">Doctor Setup</h2>
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("Create", "DoctorSetup", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+  
+
+        <fieldset>
+
+            <legend>Add New Doctor</legend>
+
+            <div class="row-fluid singleline">
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.Title)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Title)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Title, new { @Value = "Dr" })
+                    </div>
+
+                </label>
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.FirstName)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FirstName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.FirstName)
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.MiddleName)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MiddleName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.MiddleName)
+
+                    </div>
+                </label>
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.LastName)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.LastName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.LastName)
+
+                    </div>
+                </label>
+
+
+            </div>
+
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.Sex)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Sex)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.Sex, Hospital.Utility.GetGenderList(), new { id = "mngsize" })
+
+                    </div>
+                </label>
+
+                @*nepali date for date of birth*@
+
+
+                <label>
+
+                    <div class="editor-label">
+                        @Html.Label("DOB(Nepali)")
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBox("txtNepalidate", null, new { @onblur = "ChangeNepalidate(this.value,'DobId','/AjaxRequest/GetEnglishDate/')" })
+
+                    </div>
+                </label>
+                @*nepali date*@
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.DOB)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.DOB)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.DOB, new { @id = "DobId", @Value = DateTime.Now.ToShortDateString(), @onchange = "ChangeEnglishdate(this.value,'txtNepalidate','/AjaxRequest/getNepaliDate/')" })
+
+                    </div>
+                </label>
+
+                <label>
+
+                    <div class="editor-label">
+                        @Html.Label("Join Date(Nepali)")
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBox("txtNepaliJoiningdate", null, new { @onblur = "ChangeNepaliJoiningdate(this.value,'JoiningDateId','/AjaxRequest/GetEnglishDate/')" })
+
+                    </div>
+                </label>
+
+
+
+
+
+
+            </div>
+
+
+
+            <div class="row-fluid singleline">
+
+                <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.JoiningDate)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.JoiningDate)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.JoiningDate, new { @id = "JoiningDateId", @Value = DateTime.Now.ToShortDateString(), @onchange = "ChangeEnglishJoiningdate(this.value,'txtNepaliJoiningdate','/AjaxRequest/getNepaliDate/')" })
+
+                    </div>
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.DoctorType)</div>
+                    <div>
+
+                        @Html.LabelFor(model => model.DoctorType)
+
+                    </div>
+                    <div>
+
+                        @Html.DropDownListFor(model => model.DoctorType, Hospital.Utility.GetDoctorType(), "Select")
+                    </div>
+
+                </label>
+
+                <label>
+
+                    <span class="size">@Html.ValidationMessageFor(model => model.MobileNumber)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MobileNumber)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.MobileNumber)
+
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PhoneNumber)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.PhoneNumber)
+                        @Html.ValidationMessageFor(model => model.PhoneNumber)
+                    </div>
+                </label>
+
+
+
+
+                @*<label>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Status)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Status)
+                        &nbsp&nbsp; @Html.ValidationMessageFor(model => model.Status)
+                    </div>
+
+
+                </label>*@
+
+                <div class="row-fluid singleline">
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Address)
+                        </div>
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.Address)
+                            @Html.ValidationMessageFor(model => model.Address)
+                        </div>
+
+                    </label>
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.Email)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Email)
+                        </div>
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.Email)
+
+                        </div>
+
+                    </label>
+
+                    <label>
+
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Remarks)
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.Remarks)
+                            @Html.ValidationMessageFor(model => model.Remarks)
+                        </div>
+                    </label>
+                </div>
+
+
+                <br />
+
+
+
+
+            </div>
+
+
+
+        </fieldset>
+   
+
+        <fieldset>
+            <legend style="font-size: large; color: #1C5183;">Select Department</legend>
+            <div style="height: 375px; border: solid 1px #1C5183; position: relative;">
+
+
+
+                @for (int i = 0; i < Model.checkBoxlistModel.Count; i++)
+                {
+                    <div style="float: left; margin-left: 16px; margin-right: 16px; margin-top: 18px;">
+
+
+
+                        <div style="width: 133px; height: 35px; font-size: 14px;">
+                            @Html.CheckBoxFor(m => Model.checkBoxlistModel[i].isSelected)
+
+                            @Html.DisplayFor(m => Model.checkBoxlistModel[i].DeptName)
+                        </div>
+
+
+                    </div>
+            
+             
+                 
+                    @Html.HiddenFor(m => Model.checkBoxlistModel[i].DeptID)
+                    @Html.HiddenFor(m => Model.checkBoxlistModel[i].DeptName)
+   
+                }
+
+
+            </div>
+        </fieldset>
+
+        
+        <br />
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("#txtNepalidate").mask("9999/99/99");
+        $("#txtNepaliJoiningdate").mask("9999/99/99");
+
+    });
+</script>
+
+<script type="text/javascript">
+    function ChangeNepalidate(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { NepaliDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#DobId").val(jsonResult);
+            }
+        });
+    }
+    function ChangeNepaliJoiningdate(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { NepaliDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#JoiningDateId").val(jsonResult);
+            }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    function ChangeEnglishdate(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { EnglishDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#txtNepalidate").val(jsonResult);
+            }
+        });
+    }
+
+    function ChangeEnglishJoiningdate(selvalue, targetElm, url) {
+
+
+        $.ajax({
+            async: false,
+            type: "get",
+            url: url,
+            data: { EnglishDate: selvalue },
+            contentType: "text/json",
+
+
+            beforeSend: function () {
+                // $("#" + targetElm).attr('disabled', 'disabled');
+                // $("#" + targetElm).addClass('ac_loading');
+            },
+            success: function (jsonResult) {
+                $("#txtNepaliJoiningdate").val(jsonResult);
+            }
+        });
+    }
+
+
+</script>
+
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+}

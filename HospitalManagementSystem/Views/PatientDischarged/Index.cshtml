@@ -1,0 +1,169 @@
+﻿@model IEnumerable<HospitalManagementSystem.Models.IpdPatientDeischarged>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+<h2 style="text-align: center;">Patient Discharged</h2>
+
+<div class="contentWrapper">
+
+    <p>
+        @*@Html.ActionLink("Create New", "Create")*@
+    </p>
+
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Patient Discharged</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+
+                        <tr>
+                            @* <th>
+            @Html.DisplayNameFor(model => model.OpdID)
+        </th>*@
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstName)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Sex)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ContactName)
+                            </th>
+                            @*<th>
+            @Html.DisplayNameFor(model => model.IpdRegistrationID)
+        </th>*@
+                            <th>
+                                Registration Date
+                            </th>
+                            @*<th>
+            @Html.DisplayNameFor(model => model.IpdDischargeID)
+        </th>*@
+                            <th>
+                                Discharge Date
+                            </th>
+                            <th>
+                                Total Day(s) Stay
+                            </th>
+                            @*<th>
+            @Html.DisplayNameFor(model => model.DiagnosisID)
+        </th>*@
+                            @*<th>
+            @Html.DisplayNameFor(model => model.IpdPatientRoomDetailId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IpdPatientBedDetailId)
+        </th>*@
+                            <th>
+                                @Html.DisplayNameFor(model => model.BedNumber)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.RoomNo)
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                @* <td>
+            @Html.DisplayFor(modelItem => item.OpdID)
+        </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FirstName)&nbsp<span>@Html.DisplayFor(modelItem => item.MiddleName)</span>&nbsp<span>@Html.DisplayFor(modelItem => item.LastName)</span>
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Sex)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ContactName)
+                                </td>
+                                @*  <td>
+            @Html.DisplayFor(modelItem => item.IpdRegistrationID)
+        </td>*@
+                                <td>
+
+
+                                    @Convert.ToDateTime(item.RegistrationDate).ToShortDateString()
+                                </td>
+
+                                <td>
+
+
+                                    @Convert.ToDateTime(item.LeaveDate).ToShortDateString()
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StayTotalDay)
+                                </td>
+                                @*<td>
+            @Html.DisplayFor(modelItem => item.DiagnosisID)
+        </td>*@
+                                @*<td>
+            @Html.DisplayFor(modelItem => item.IpdPatientRoomDetailId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IpdPatientBedDetailId)
+        </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BedNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RoomNo)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Discharged Details", "EditDischarged", new { id = item.IpdDischargeID, dischargeid = item.IpdDischargeID, opdid = item.OpdID, ipdregid = item.IpdRegistrationID, bedid = item.IpdPatientRoomDetailId })  |
+                                    @Html.ActionLink("Pay Bill", "PatientBillDetails", new { id=item.IpdRegistrationID }) |
+       @*     @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            @*for sorting *@
+
+            <div class="boxFooter">
+
+                <div id="pager" style="">
+                    <form>
+                        <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                        <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                        <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                        <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                        <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                        <select class="pagesize valid" style="width: 70px; height: 30px;">
+                            <option selected="selected" value="10">10</option>
+                            <option value="5">5</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                        </select>
+                    </form>
+                </div>
+
+            </div>
+
+            @*---------------*@
+
+
+        </div>
+    </div>
+
+</div>

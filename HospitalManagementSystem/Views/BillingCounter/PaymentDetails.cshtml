@@ -1,0 +1,164 @@
+﻿@model HospitalManagementSystem.Models.BillingCounterModel
+
+@{
+    ViewBag.Title = "PaymentDetails";
+    Layout = "~/Views/Shared/_BillingCounterLayout.cshtml";
+}
+
+<style>
+    table#tblnoborder,
+    table#tblnoborder td {
+        border: none !important;
+    }
+
+    .font {
+        font-weight: bold;
+    }
+
+    .small-table td {
+        border: none;
+    }
+
+
+
+    .holder img {
+        max-height: 48px;
+        max-width: 55px;
+        object-fit: cover;
+    }
+
+
+    table#mytbl,
+    table#mytbl td {
+        width: 880px;
+        border: none !important;
+    }
+</style>
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+</script>
+
+
+<div class="contentWrapper">
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto;">
+
+
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalLogo() != null && @HospitalManagementSystem.Utility.GetPathOfHospitalLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalLogo/@HospitalManagementSystem.Utility.GetPathOfHospitalLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalLogo() == "")
+        { 
+            
+            <br />
+        
+        }
+        <div style="font: bold; font-size: 18px; text-align: center; height: 115px;">
+            @if (@HospitalManagementSystem.Utility.GetHospitalTitleName() != null && @HospitalManagementSystem.Utility.GetHospitalTitleName() != "")
+            {
+                <span>@HospitalManagementSystem.Utility.GetHospitalTitleName()</span>
+            }
+            <br />
+            @HospitalManagementSystem.Utility.GetHospitalName()<br />
+            <div style="height: 80px;">
+                <span style="font-size: 15px; text-align: center">@HospitalManagementSystem.Utility.HospitalAddress()</span><br />
+                <span style="font-size: 14px; text-align: center">Website:-@HospitalManagementSystem.Utility.HospitalUrl()</span><br />
+                <span style="font-size: 14px; text-align: center">Ph:-@HospitalManagementSystem.Utility.HospitalPhone()</span>
+
+            </div>
+
+        </div>
+
+        <table width="660" cellspacing="0" cellpadding="5" align="center" id="tblnoborder">
+            <tr>
+                @*<td class="font" width="844">OPD No:- @Model.OpdID</td>
+                <td class="font" width="496">Date:- @Hospital.Utility.GetDateOnly(Model.RegistrationDate.ToString())</td>
+                <td class="font" width="326">User:- @Hospital.Utility.GetEmployeeNameFromEmpID(Model.CreatedBy)</td>*@
+
+            </tr>
+        </table>
+
+        <table width="660" border="0" cellspacing="0" cellpadding="5" align="center">
+            <tr>
+                <td width="314"><span class="font">Name:-</span>  @Model.ObjBillingCounterPaymentDetails.PatientFullName</td>
+                <td width="326"><span class="font">Age:-</span> @Model.ObjBillingCounterPaymentDetails.Age<span>&nbsp; Years</span></td>
+            </tr>
+            <tr>
+                <td><span class="font">Address:-</span> @Model.ObjBillingCounterPaymentDetails.Address</td>
+                <td><span class="font">Sex:-</span> @Model.ObjBillingCounterPaymentDetails.Age</td>
+
+            </tr>
+            <tr></tr>
+        </table>
+        <br />
+
+        @using (Html.BeginForm("PaymentDetails", "BillingCounter", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.ObjBillingCounterPaymentDetails.DepartmentName)
+            @Html.HiddenFor(model => model.ObjBillingCounterPaymentDetails.BillNumber)
+            @Html.HiddenFor(model => model.ObjBillingCounterPaymentDetails.PatientId)
+
+            <fieldset>
+                <legend></legend>
+                <div style="background-color: white;">
+                    <table width="660" align="center" style="border: 1px; border-style: solid;">
+                        <tr>
+                            <td>Particulars</td>
+                            <td>Amount</td>
+                        </tr>
+
+                        @foreach (var item in Model.BillingCounterPaymentDetailsList)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Particulars
+                                </td>
+                                <td>
+                                    @item.TotalAmount
+                                </td>
+                            </tr>
+            
+                        }
+
+                    </table>
+
+                    <div style="padding-left: 520px;">
+                        <div>Total:@Model.TotalAmount</div>
+                        <div>Discount :@Model.Discount</div>
+                        @{decimal GrandTotal = Model.TotalAmount - Model.Discount;}
+                        <div>GrandTotal:@GrandTotal</div>
+                    </div>
+                    @*@Html.TextBoxFor(m => m.ObjBillingCounterPaymentDetails.DiscountPercentage)
+                @Html.TextBoxFor(m => m.ObjBillingCounterPaymentDetails.GrandTotal)*@
+
+                </div>
+
+            </fieldset>
+            <div style="margin-top: 20px;">
+                <p>
+                    <input type="submit" value="Pay Bill" />
+                </p>
+            </div>
+        }
+    </div>

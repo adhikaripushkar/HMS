@@ -1,0 +1,188 @@
+﻿@model HospitalManagementSystem.Models.BloodStockManagementModel
+
+@{
+    
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_BloodBankMenuLayout.cshtml";
+}
+
+
+<style>
+
+    #mngsize
+    {
+        width:208px;
+        height: 28px;
+
+    }
+
+
+</style>
+
+<h2 style="text-align:center;">Blood Stock</h2>
+
+<div class="contentWrapper">
+
+@using (Html.BeginForm("Edit","BloodStockManagement", FormMethod.Post, new { @class="bs-docs-example form-inline"}))
+{
+    @Html.ValidationSummary(true)
+  
+
+    <fieldset>
+        <legend>Edit</legend>
+        @Html.HiddenFor(model => model.BloodStockId)
+        <div class="row-fluid singleline">
+
+          
+          <label>
+                <span class="size">@Html.ValidationMessageFor(model => model.BloodType)</span>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.BloodType)
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownListFor(model => model.BloodType, HospitalManagementSystem.Utility.GetBloodGroupList())
+                </div>
+
+            </label>
+            <label>
+        
+                <span class="size">@Html.ValidationMessageFor(model => model.QuantityUnit)</span>
+                <div class="editor-label">
+                @Html.LabelFor(model => model.QuantityUnit)
+                </div>
+                <div class="editor-field">
+                @Html.TextBoxFor(model => model.QuantityUnit)
+                </div>
+
+            </label>
+            <label>
+        
+                <span class="size">@Html.ValidationMessageFor(model => model.QuantityML)</span>
+                <div class="editor-label">
+                @Html.LabelFor(model => model.QuantityML)
+                </div>
+                <div class="editor-field">
+                @Html.TextBoxFor(model => model.QuantityML)
+                </div>
+
+            </label>
+            <label>
+        
+                <span class="size">@Html.ValidationMessageFor(model => model.PouchNumber)</span>
+                <div class="editor-label">
+                @Html.LabelFor(model => model.PouchNumber)
+                </div>
+                <div class="editor-field">
+                @Html.TextBoxFor(model => model.PouchNumber)
+                </div>
+
+            </label>
+
+
+        </div>
+        
+        
+        <div class="row-fluid singleline">
+
+            
+         <label>
+        
+            <span class="size">@Html.ValidationMessageFor(model => model.StockDate)</span>
+            <div class="editor-label">
+            @Html.LabelFor(model => model.StockDate, new{@Value=@DateTime.Now.ToShortDateString()})
+            </div>
+            <div class="editor-field">
+            @Html.TextBoxFor(model => model.StockDate, new{@Value=@DateTime.Now.ToShortDateString()})
+            </div>
+
+        </label>
+        <label>
+        
+            <span class="size">@Html.ValidationMessageFor(model => model.ValidUpTo)</span>
+            <div class="editor-label">
+            @Html.LabelFor(model => model.ValidUpTo, new{@Value=@DateTime.Now.ToShortDateString()})
+            </div>
+            <div class="editor-field">
+            @Html.TextBoxFor(model => model.ValidUpTo, new{@Value=@DateTime.Now.ToShortDateString()})
+            </div>
+
+        </label>
+
+
+        </div>
+
+
+    
+    </fieldset>
+<br />
+<p>
+    <input type="submit" value="Edit" />
+</p>
+    
+}
+    
+<div>
+      @Html.ActionLink("Back to List", "Index", null, new { @id="linkNewBack" })
+
+</div>
+
+
+
+
+<script src="~/Scripts/json.cycle.js"></script>
+<script src="~/Scripts/OrderManagerScript.js"></script>
+
+<script type="text/javascript">
+    function JqueryAjaxLoadSelectOption(selValue, targetElm, url) {
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: url + selValue,
+            contentType: "text/json",
+            data: ({ id: selValue }),
+            beforeSend: function () {
+                $("#" + targetElm).attr('disabled', 'disabled');
+                $("#" + targetElm).addClass('ac_loading');
+            },
+
+            success: function (jsonResult) {
+                //alert(jsonResult);
+                var evlResult = JSON.retrocycle(jsonResult);
+                var selOption = "";
+                selOption = ParseJsonResultForSelectOptions(evlResult);
+                tempTargetElm = targetElm.split(',');
+                for (var i = 0; i < tempTargetElm.length; i++) {
+                    // alert(tempTargetElm.length + " : " + tempTargetElm[i]);
+                    $("#" + tempTargetElm[i]).empty().append(selOption);
+                    $("#" + tempTargetElm[i]).removeClass('ac_loading');
+                    $("#" + tempTargetElm[i]).removeAttr('disabled');
+                }
+
+
+            },
+            error: function (jsonResult) {
+            }
+        });
+
+        function ParseJsonResultForSelectOptions(evlResult) {
+            var selOption = "";
+            $.each(evlResult, function (key, item) {
+                var isSelected = (item['Selected'] == "true") ? "Selected='Selected'" : "";
+                //var otherAttrib = (item['Attribs']!=undefined)? item['Attribs']:"";
+                var otherAttrib = "";
+                $.each(item, function (name, value) {
+                    if (name != 'Selected' && name != 'Value' && name != 'Text') {
+                        otherAttrib += " " + name + '="' + value + '" ';
+                    }
+                });
+                selOption += "<option value='" + item['Value'] + "' " + isSelected + " " + otherAttrib + " >"
+                + evlResult[key].Text + "</option>";
+            });
+            return selOption;
+        }
+
+    }
+
+    
+
+</script>

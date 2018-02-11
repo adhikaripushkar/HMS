@@ -1,0 +1,321 @@
+﻿@model Hospital.Models.BoneMarrowReportsModel
+
+@{
+    ViewBag.Title = "CreateCytologyRpt";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+}
+<script>
+    var j = $.noConflict();
+    j(function () {
+        j("#Registerdate").datepicker();
+        j("#DateOfDispatch").datepicker();
+
+    });
+
+</script>
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("CreateBoneMarrowRpt", "PatientTestResult", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+       
+        @Html.HiddenFor(model => model.PatientId)
+        <fieldset>
+            <legend>Create</legend>
+
+            @if (TempData["message"] != null)
+            {
+                <div class="alert alert-error">
+                    @TempData["message"]
+                </div>
+            }
+
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <div class="editor-label">
+                        Bonemarrow Number
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.BoneMarrowNumber)
+                        @Html.ValidationMessageFor(model => model.BoneMarrowNumber)
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="editor-label">
+                        Refer Doctor
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownListFor(model => model.ReferDocId, Hospital.Utility.GetDoctors())
+                        @Html.ValidationMessageFor(model => model.ReferDocId)
+                    </div>
+
+                </label>
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.IPNumber)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.IPNumber)
+                        @Html.ValidationMessageFor(model => model.IPNumber)
+                    </div>
+
+                </label>
+                <label>
+                    <div class="editor-label">
+                        Ward Or Opd
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.WardOrOpd)
+                        @Html.ValidationMessageFor(model => model.WardOrOpd)
+                    </div>
+
+                </label>
+
+            </div>
+
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Registerdate)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Registerdate, new { @Value = DateTime.Now.ToShortDateString() })
+                        @Html.ValidationMessageFor(model => model.Registerdate)
+                    </div>
+
+                </label>
+
+
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.DateOfDispatch)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.DateOfDispatch, new { @Value = DateTime.Now.ToShortDateString() })
+                        @Html.ValidationMessageFor(model => model.DateOfDispatch)
+                    </div>
+
+                </label>
+                <label>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ClinicalFeature)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.ClinicalFeature)
+                        @Html.ValidationMessageFor(model => model.ClinicalFeature)
+                    </div>
+
+                </label>
+            </div>
+
+
+            <div class="row-fluid singleline">
+
+                
+
+            </div>
+            <hr />
+            <h3>BONE MARROW ASPIRATION REPORT</h3>
+            <div class="row-fluid singleline">
+
+                @*<label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Medicine)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextAreaFor(model => model.Medicine, new { @style = "width: 351px; height: 116px;" })
+                            @Html.ValidationMessageFor(model => model.Medicine)
+                        </div>
+
+                    </label>*@
+                <label>
+                    <div class="editor-label">
+                        Peripheral Blood Smear Findings:
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(model => model.PBSFinding, new { @style = "width: 889px; height: 17px;" })
+                        @Html.ValidationMessageFor(model => model.PBSFinding)
+                    </div>
+
+                </label>
+
+            </div>
+            <div style="border: 1px solid red;">
+                <div class="row-fluid singleline">
+
+                    <label>
+                        <div class="editor-label">
+                            Bone Marrow Aspiration Findings:
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextAreaFor(model => model.BMAFinding, new { @style = "width: 889px; height: 17px;" })
+                            @Html.ValidationMessageFor(model => model.BMAFinding)
+                        </div>
+
+                    </label>
+                </div>
+
+                <div class="row-fluid singleline">
+
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Cellularity)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextAreaFor(model => model.Cellularity, new { @style = "width: 889px; height: 17px;" })
+                            @Html.ValidationMessageFor(model => model.Cellularity)
+                        </div>
+
+                    </label>
+                </div>
+
+                <div class="row-fluid singleline">
+
+                    <label>
+                        <div class="editor-label">
+                            M:E Ratio
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextAreaFor(model => model.MERation, new { @style = "width: 889px; height: 17px;" })
+                            @Html.ValidationMessageFor(model => model.MERation)
+                        </div>
+
+                    </label>
+                </div>
+
+                <div class="row-fluid singleline">
+
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Myelopoiesis)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextAreaFor(model => model.Myelopoiesis, new { @style = "width: 889px; height: 17px;" })
+                            @Html.ValidationMessageFor(model => model.Myelopoiesis)
+                        </div>
+
+                    </label>
+                </div>
+
+                <div class="row-fluid singleline">
+
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Erythropoiesis)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextAreaFor(model => model.Erythropoiesis, new { @style = "width: 889px; height: 17px;" })
+                            @Html.ValidationMessageFor(model => model.Erythropoiesis)
+                        </div>
+
+                    </label>
+                </div>
+
+                <div class="row-fluid singleline">
+
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Megakaryopoiesis)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextAreaFor(model => model.Megakaryopoiesis, new { @style = "width: 889px; height: 17px;" })
+                            @Html.ValidationMessageFor(model => model.Megakaryopoiesis)
+                        </div>
+
+                    </label>
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Myelogram)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextAreaFor(model => model.Myelogram, new { @style = "width: 889px; height: 17px;" })
+                            @Html.ValidationMessageFor(model => model.Myelogram)
+                        </div>
+
+                    </label>
+
+                </div>
+                <div class="row-fluid singleline">
+
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.PlasmaCells)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextAreaFor(model => model.PlasmaCells, new { @style = "width: 889px; height: 17px;" })
+                            @Html.ValidationMessageFor(model => model.PlasmaCells)
+                        </div>
+
+                    </label>
+                </div>
+                <div class="row-fluid singleline">
+
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Hemoparasites)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextAreaFor(model => model.Hemoparasites, new { @style = "width: 889px; height: 17px;" })
+                            @Html.ValidationMessageFor(model => model.Hemoparasites)
+                        </div>
+
+                    </label>
+                </div>
+                <div class="row-fluid singleline">
+
+                    <label>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.IMPRESSION)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextAreaFor(model => model.IMPRESSION, new { @style = "width: 889px; height: 17px;" })
+                            @Html.ValidationMessageFor(model => model.IMPRESSION)
+                        </div>
+
+                    </label>
+                    <label>
+                        <div class="editor-label">
+                            Diagnosis
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextAreaFor(model => model.Remarks1, new { @style = "width: 889px; height: 17px;" })
+                            @Html.ValidationMessageFor(model => model.Remarks1)
+                        </div>
+
+                    </label>
+                    <label>
+                        <div class="editor-label">
+                            Comments
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextAreaFor(model => model.Remarks2, new { @style = "width: 889px; height: 17px;" })
+                            @Html.ValidationMessageFor(model => model.Remarks2)
+                        </div>
+
+                    </label>
+                </div>
+            </div>
+
+            <br />
+            <p>
+                <input type="submit" value="Create" />
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+    </div>
+
+</div>
+
+
+

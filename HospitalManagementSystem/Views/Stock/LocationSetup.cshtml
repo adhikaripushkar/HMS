@@ -1,0 +1,159 @@
+﻿@model Hospital.Models.StockItemModel
+
+@{
+    ViewBag.Title = "GroupDetails";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+    int i = 1;
+}
+
+<h2 style="text-align: center;">Stock Item Group Details</h2>
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+@if (TempData["success"] == Hospital.UtilityMessage.savefailed)
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == Hospital.UtilityMessage.edit)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.editfailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.delete)
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.deletefailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+@{
+    var PrintConfirmation = TempData["AlertPrint"] ?? string.Empty;
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var message = '@PrintConfirmation';
+        if (message) {
+            if (confirm("Are you sure?")) {
+                window.location.href = '@Url.Action("BillForm", "Opd", 1)';
+            }
+        }
+    });
+</script>
+
+
+
+<div class="contentWrapper">
+    <div id="DetailsId"></div>
+
+    <p>
+        <i class="fa  fa-plus fa-2x" style="color: blue;"></i>&nbsp;@Html.ActionLink("Create New", "CreateLocationSetup", null, new { @id = "linkNewBack" })
+    </p>
+
+    <div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Store Department</h1>
+                </div>
+                @*@if (Model.StockItemGroupSetupViewModelList.Count > 0)
+                {
+                    int Sno = ViewBag.currentPage == 1 ? 0 : (ViewBag.currentPage - 1) * 10;
+                }*@
+
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px;">
+                                <span>SN</span>
+                            </th>
+                            <th>Location Name</th>
+                            <th>Department Name</th>
+                            <th>Block ID</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.StockItemLocationViewModelList)
+                        {
+                            <tr>
+                                <td>@i</td>
+
+                                <td>@item.LocatonName</td>
+
+                                <td>
+                                    @Hospital.Utility.GetDepartmentName(item.DepartmentId)
+                                </td>
+                                <td>
+                                    @Hospital.Utility.GetBlockName(item.BlockId)
+                                </td>
+
+                                <td>
+                                    @Html.ActionLink("Edit", "UdpateLocationDetails", new { @id = item.StockItemLocationId }) ||  @Html.ActionLink("Delete", "DeleteLocation", new { @id = item.StockItemLocationId })
+                                </td>
+                            </tr>
+                            i++;
+                        }
+
+                    </tbody>
+
+                </table>
+
+                <div class="pagination pagination-centered">
+                    <ul class="pager">
+                        @*<li><a href="#">Page:</a></li>
+                        @for (int p = 1; p <= ViewBag.TotalPages; p++)
+                        {           
+                            <li><a class="@(p == ViewBag.currentPage ? "btn btn-default" : "")"
+					        href="@Url.Action("Index", "Opd", new { Page = p })">@p</a></li>          
+                        }*@
+                    </ul>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    <p>
+        <i class="fa  fa-plus fa-2x" style="color: blue;"></i>&nbsp;@Html.ActionLink("Go to Group Setting", "ItemGroupSetup", null, new { @id = "linkNewBack" })
+    </p>
+</div>

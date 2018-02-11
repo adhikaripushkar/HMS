@@ -1,0 +1,467 @@
+﻿@{
+    DateTime df = Convert.ToDateTime(ViewBag.fromdate);
+    DateTime dt = Convert.ToDateTime(ViewBag.todate);
+    int i = 1;
+    int tempId = 0;
+    int tempDepartment = 0;
+    List<HospitalManagementSystem.Models.AdmissionDischargeModel> tempList = new List<HospitalManagementSystem.Models.AdmissionDischargeModel>();
+    //tempList = HospitalManagementSystem.Utility.AdmissionDischarge(df.ToShortDateString(), dt.ToShortDateString());
+}
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);"> <br>');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('exportdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+</script>
+<script type="text/javascript">
+
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+          , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+          , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+          , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+        return function (table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })()
+
+</script>
+
+<span>
+    <input type="button" id="
+        
+        " style="width: 50px;" onclick="tableToExcel('exporttable', '')" value="Export" /></span>
+<span>
+    <input type="button" id="print" style="width: 50px;" onclick="print()" value="Print" /></span>
+
+<div id="exportdiv" style="border-style: solid; border-color: #999; min-width: 2000px">
+
+    @*<h1 style="text-align:center;">Manmohan Memorial Medical College & Teaching HospitalManagementSystem</h1>
+<h1 style="text-align:center">Admission/Discharge Report</h1>*@
+
+    <table id="exporttable">
+        <tr>
+            <td colspan="35" style="text-align: center; font-weight: 900; font-size: large; border: 1px solid black">Madhyapur HospitalManagementSystem<br />
+                Admission/Discharge Report
+            @*<h1 style="text-align:center">Admission/Discharge Report</h1>*@
+            </td>
+        </tr>
+        <tr>
+            <th rowspan="3" style="border: 1px solid black">S.N.
+            </th>
+            <th rowspan="3" style="border: 1px solid black">IP-NO.
+            </th>
+            <th rowspan="3" style="border: 1px solid black">NAME OF PATIENT
+            </th>
+            <th rowspan="3" style="border: 1px solid black">ICD-CODE
+            </th>
+            <th rowspan="3" style="border: 1px solid black">DIAGNOSIS
+            </th>
+            <th rowspan="3" style="border: 1px solid black">WARD
+            </th>
+            <th rowspan="3" style="border: 1px solid black">ADDRESS
+            </th>
+            <th rowspan="3" style="border: 1px solid black">D.O.A
+            </th>
+            <th rowspan="3" style="border: 1px solid black">D.O.D
+            </th>
+            <th rowspan="3" style="border: 1px solid black">DAYS OF STAY
+            </th>
+            <th colspan="20" style="border: 1px solid black">AGE/SEX
+            </th>
+            <th rowspan="3" style="border: 1px solid black">DR. NAME
+            </th>
+            <th colspan="4" rowspan="2" style="border: 1px solid black">DISCHARGE CONDITION
+            </th>
+        </tr>
+        <tr>
+
+
+
+
+
+
+
+
+
+
+            <th colspan="2" style="border: 1px solid black"><29DAYS</th>
+            <th colspan="2" style="border: 1px solid black">29<1YR</th>
+            <th colspan="2" style="border: 1px solid black">1-4YR</th>
+            <th colspan="2" style="border: 1px solid black">5-14YR</th>
+            <th colspan="2" style="border: 1px solid black">15-29YR</th>
+            <th colspan="2" style="border: 1px solid black">30-39YR</th>
+            <th colspan="2" style="border: 1px solid black">40-49YR</th>
+            <th colspan="2" style="border: 1px solid black">50-59YR</th>
+            <th colspan="2" style="border: 1px solid black">60-64YR</th>
+            <th colspan="2" style="border: 1px solid black">65YR+</th>
+
+
+        </tr>
+        <tr>
+
+
+
+
+
+
+
+
+
+
+            <th style="border: 1px solid black">M</th>
+            <th style="border: 1px solid black">F</th>
+            <th style="border: 1px solid black">M</th>
+            <th style="border: 1px solid black">F</th>
+            <th style="border: 1px solid black">M</th>
+            <th style="border: 1px solid black">F</th>
+            <th style="border: 1px solid black">M</th>
+            <th style="border: 1px solid black">F</th>
+            <th style="border: 1px solid black">M</th>
+            <th style="border: 1px solid black">F</th>
+            <th style="border: 1px solid black">M</th>
+            <th style="border: 1px solid black">F</th>
+            <th style="border: 1px solid black">M</th>
+            <th style="border: 1px solid black">F</th>
+            <th style="border: 1px solid black">M</th>
+            <th style="border: 1px solid black">F</th>
+            <th style="border: 1px solid black">M</th>
+            <th style="border: 1px solid black">F</th>
+            <th style="border: 1px solid black">M</th>
+            <th style="border: 1px solid black">F</th>
+
+            <th style="border: 1px solid black">RECOVERED</th>
+            <th style="border: 1px solid black">NOT IMPROVED</th>
+            <th style="border: 1px solid black">LAMA</th>
+            <th style="border: 1px solid black">DEATH
+           (-48HRS,+48HRS)
+
+            </th>
+        </tr>
+
+        @foreach (var item in tempList)
+        {
+
+            if ((tempId == item.OpdNoEmergencyNo && tempDepartment == item.DepartmentID) == false)
+            {
+                tempId = item.OpdNoEmergencyNo;
+                tempDepartment = item.DepartmentID;
+            <tr>
+                <td style="border: 1px solid black">
+                    @i
+                </td>
+                <td style="border: 1px solid black">
+                    @item.OpdNoEmergencyNo
+                </td>
+
+                @{
+                if (item.DepartmentID == 4)
+                {
+                    <td style="border: 1px solid black">
+                        @item.oname
+
+                    </td>
+                }
+                else if (item.DepartmentID == 9)
+                { 
+                    <td style="border: 1px solid black">
+                        @item.ename
+                    </td>
+                }
+                else
+                {
+                    <td style="border: 1px solid black">
+                        @item.ename
+                    </td>
+                }
+                
+                }
+
+                <td style="border: 1px solid black"></td>
+                <td style="border: 1px solid black"></td>
+                <td style="border: 1px solid black">
+                    @item.WardName
+                </td>
+                @{
+                if (item.DepartmentID == 4)
+                {
+                    <td style="border: 1px solid black">
+                        @item.oaddress
+
+                    </td>
+                }
+                else if (item.DepartmentID == 9)
+                { 
+                    <td style="border: 1px solid black">
+                        @item.eaddress
+                    </td>
+                }
+                else
+                {
+                    <td style="border: 1px solid black">
+                        @item.eaddress
+                    </td>
+                }
+                }
+                <td style="border: 1px solid black">
+                    @item.RegistrationDate.ToShortDateString()
+                </td>
+                <td style="border: 1px solid black"></td>
+                <td style="border: 1px solid black"></td>
+                <td style="border: 1px solid black">
+
+                    @if (item.osex == "Male" && item.oage < 29 && item.AgeMonth == 3)
+                    {
+                        <span>@item.oage</span>
+                    }
+
+                </td>
+                <td style="border: 1px solid black">
+                    @if (item.osex == "Female" && item.oage < 29 && item.AgeMonth == 3)
+                    {
+                        <span>@item.oage</span>
+                    }
+                </td>
+
+                <td style="border: 1px solid black">
+                    @if (item.osex == "Male" && item.oage == 0)
+                    {
+                        if (item.AgeMonth != 0 || item.AgeDay >= 29)
+                        { 
+                        <span>
+                            @item.AgeMonth Months
+                        @item.AgeDay Days
+                        </span>
+                        }
+                    }
+                </td>
+                <td style="border: 1px solid black">
+                    @if (item.osex == "Female" && item.oage == 0)
+                    {
+                        if (item.AgeMonth != 0 || item.AgeDay >= 29)
+                        { 
+                        <span>
+                            @item.AgeMonth Months
+                        @item.AgeDay Days
+                        </span>
+                        }
+                    }
+                </td>
+                <td style="border: 1px solid black">
+                    @if (item.osex == "Male" && item.oage >= 1 && item.oage <= 4)
+                    { 
+                        <span>@item.oage</span>
+                    }
+                    else if (item.esex == "Male" && item.eage >= 1 && item.eage <= 4)
+                    { 
+                        <span>@item.eage</span>
+                    }
+                </td>
+                <td style="border: 1px solid black">
+                    @if (item.DepartmentID == 4 && item.osex == "Female" && item.oage >= 1 && item.oage <= 4)
+                    { 
+                        <span>@item.oage</span>
+                    }
+                    else if (item.DepartmentID == 9 && item.esex == "Female" && item.eage >= 1 && item.eage <= 4)
+                    { 
+                        <span>@item.eage</span>
+                    }
+                </td>
+                <td style="border: 1px solid black">
+
+                    @if (item.osex == "Male" && item.oage >= 5 && item.oage <= 14)
+                    { 
+                        <span>@item.oage</span>
+                    }
+                    else if (item.esex == "Male" && item.eage >= 5 && item.eage <= 14)
+                    { 
+                        <span>@item.eage</span>
+                    }
+                </td>
+                <td style="border: 1px solid black">
+
+                    @if (item.osex == "Female" && item.oage >= 5 && item.oage <= 14)
+                    { 
+                        <span>@item.oage</span>
+                    }
+                    else if (item.esex == "Female" && item.eage >= 5 && item.eage <= 14)
+                    { 
+                        <span>@item.eage</span>
+                    }
+                </td>
+                <td style="border: 1px solid black">
+                    
+                    @if (item.osex == "Male" && item.oage >= 15 && item.oage <= 29)
+                    { 
+                        <span>@item.oage</span>
+                    }
+                    
+                </td>
+                <td style="border: 1px solid black">
+                    
+                    @if (item.osex == "Female" && item.oage >= 15 && item.oage <= 29)
+                    { 
+                        <span>@item.oage</span>
+                    }
+                    
+                </td>
+                <td style="border: 1px solid black">
+                    @if (item.osex == "Male" && item.oage >= 30 && item.oage <= 39)
+                    { 
+                        <span>@item.oage</span>
+                    }
+                    
+                </td>
+                <td style="border: 1px solid black">
+                    @if (item.osex == "Female" && item.oage >= 30 && item.oage <= 39)
+                    { 
+                        <span>@item.oage</span>
+                    }
+                    else if (item.DepartmentID == 9 && item.esex == "Female" && item.eage >= 30 && item.eage <= 39)
+                    { 
+                        <span>@item.eage</span>
+                    }
+                </td>
+                <td style="border: 1px solid black">
+                    @if (item.osex == "Male" && item.oage >= 40 && item.oage <= 49)
+                    { 
+                        <span>@item.oage</span>
+                    }
+                    else if (item.DepartmentID == 9 && item.esex == "Male" && item.eage >= 40 && item.eage <= 49)
+                    { 
+                        <span>@item.eage</span>
+                    }
+                </td>
+                <td style="border: 1px solid black">
+                    @if (item.osex == "Female" && item.oage >= 40 && item.oage <= 49)
+                    { 
+                        <span>@item.oage</span>
+                    }
+                    else if (item.DepartmentID == 9 && item.esex == "Female" && item.eage >= 40 && item.eage <= 49)
+                    { 
+                        <span>@item.eage</span>
+                    }
+                </td>
+                <td style="border: 1px solid black">
+                    @if (item.osex == "Male" && item.oage >= 50 && item.oage <= 59)
+                    { 
+                        <span>@item.oage</span>
+                    }
+                    else if (item.DepartmentID == 9 && item.esex == "Male" && item.eage >= 50 && item.eage <= 59)
+                    { 
+                        <span>@item.eage</span>
+                    }
+                </td>
+                <td style="border: 1px solid black">
+                    @if (item.osex == "Female" && item.oage >= 50 && item.oage <= 59)
+                    { 
+                        <span>@item.oage</span>
+                    }
+                    else if (item.DepartmentID == 9 && item.esex == "Female" && item.eage >= 50 && item.eage <= 59)
+                    { 
+                        <span>@item.eage</span>
+                    }
+                </td>
+                <td style="border: 1px solid black">
+                    @if (item.osex == "Male" && item.oage >= 60 && item.oage <= 64)
+                    { 
+                        <span>@item.oage</span>
+                    }
+                    else if (item.DepartmentID == 9 && item.esex == "Male" && item.eage >= 60 && item.eage <= 64)
+                    { 
+                        <span>@item.eage</span>
+                    }
+                </td>
+                <td style="border: 1px solid black">
+                    @if (item.osex == "Female" && item.oage >= 60 && item.oage <= 64)
+                    { 
+                        <span>@item.oage</span>
+                    }
+                    else if (item.DepartmentID == 9 && item.esex == "Female" && item.eage >= 60 && item.eage <= 64)
+                    { 
+                        <span>@item.eage</span>
+                    }
+                </td>
+                <td style="border: 1px solid black">
+                    @if ( item.osex == "Male" && item.oage >= 65)
+                    { 
+                        <span>@item.oage</span>
+                    }
+                    else if (item.DepartmentID == 9 && item.esex == "Male" && item.eage >= 65)
+                    { 
+                        <span>@item.eage</span>
+                    }
+                </td>
+                <td style="border: 1px solid black">
+                    @if (item.DepartmentID == 4 && item.osex == "Female" && item.oage >= 65)
+                    { 
+                        <span>@item.oage</span>
+                    }
+                    else if (item.DepartmentID == 9 && item.esex == "Female" && item.eage >= 65)
+                    { 
+                        <span>@item.eage</span>
+                    }
+                </td>
+                <td style="border: 1px solid black">
+                    @if (item.DepartmentID!= 4)
+                    {
+                        var list = tempList.Where(x => x.OpdNoEmergencyNo == item.OpdNoEmergencyNo).ToList();
+                        int count = 1;
+                        foreach (var item1 in list)
+                        {
+                            if (count == list.Count)
+                            {
+                        <span>@item1.odoctor</span>
+                            }
+                            else
+                            {
+                        <span>@item1.odoctor,</span>
+                            }
+                            count++;
+                        }
+                    }
+
+                    @if (item.DepartmentID == 9)
+                    {
+                        var list = tempList.Where(x => x.DepartmentID == 9 && x.OpdNoEmergencyNo == item.OpdNoEmergencyNo).ToList();
+                        int count = 1;
+                        foreach (var item1 in list)
+                        {
+                            if (count == list.Count)
+                            {
+                        <span>@item1.edoctor</span>
+                            }
+                            else
+                            {
+                        <span>@item1.edoctor,</span>
+                            }
+                            count++;
+                        }
+                    }
+                </td>
+                <td style="border: 1px solid black"></td>
+                <td style="border: 1px solid black"></td>
+                <td style="border: 1px solid black"></td>
+                <td style="border: 1px solid black"></td>
+            </tr>
+                    i++;
+            }
+
+        }
+    </table>
+</div>

@@ -1,0 +1,77 @@
+﻿@using HospitalManagementSystem.Helpers
+@model HospitalManagementSystem.Models.DoctorTimeModel
+
+
+
+<script src="~/Scripts/json.cycle.js"></script>
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+
+
+
+
+
+<link href="~/Content/themes/base/jquery.ui.timepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.ui.timepicker.js"></script>
+
+
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+        
+        
+        j(".Time").timepicker();
+    });
+
+</script>
+
+
+
+
+<style>
+
+    .shiftId {
+        width:100px;
+    }
+
+    #ctmSize {
+        width:150px;
+    }
+
+
+
+</style>
+
+
+
+@using (Html.BeginCollectionItem("DoctorTimeList"))
+{
+     
+     <div class="row" style="margin-left:5px;">
+
+        @Html.DropDownListFor(model => model.Shift, HospitalManagementSystem.Utility.GetShift(), new { @class="shiftId"})
+
+
+        @Html.TextBoxFor(model => model.StartTime, new { @id="ctmSize",@class="Time",@Value=DateTime.Now.ToString("HH:mm")})
+
+
+        @Html.TextBoxFor(model => model.EndTime, new { @id="ctmSize",@class="Time",@Value=DateTime.Now.ToString("HH:mm")})
+        
+
+        @Html.TextBoxFor(model => model.CheckPatientPerDay, new { @id="ctmSize"})
+        
+
+        @Html.TextBoxFor(model => model.WebPatientPerDay, new { @id="ctmSize"})
+
+         @Html.TextBoxFor(model => model.Remarks, new { @id="ctmSize"})
+
+         <input type="button" class="row-button btn btn-warning" value="Remove" />
+     </div>
+
+   
+         
+}
+
+

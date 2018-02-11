@@ -1,0 +1,187 @@
+﻿@model Hospital.Models.SetUpMemberShipModel
+
+
+<div class="general-box clearfix">
+
+        <div class="general-box clearfix">
+
+       <div class="boxWrapper">
+    <div class="boxHeadingPanel"><h1>Member Dependents</h1></div>
+
+<table class="table table-hover tablesorter">
+    <thead>
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.SetupMemberID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MemberID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MemberTypeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JoinDate)
+        </th>*@
+        <th>
+            Name
+        </th>
+        <th>
+            Member Type
+        </th>
+        <th>
+            Maximum Dependent
+        </th>
+        <th>
+            Aviable Dependent
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.MobileNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContactNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BloodGroupID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Remarks)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>*@
+        <th>Action</th>
+        <th>Action</th>
+    </tr>
+        </thead>
+    <tbody>
+
+@foreach (var item in Model.lstOfsetSetUpMemberShipModel)
+{
+    <tr>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.SetupMemberID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MemberID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MemberTypeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JoinDate)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Hospital.Utility.MemberTypeName(item.MemberTypeID)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.MaximumDependent)
+
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem=>item.cnt)
+        </td>
+
+       @* <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MobileNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContactNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BloodGroupID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Remarks)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>*@
+        <td>
+
+
+             @if(item.MaximumDependent>0 && item.cnt>0)
+            {
+                 
+             @Html.ActionLink("Add Persion", "Create", new {Id=item.SetupMemberID,Name=item.FirstName,MembertypeId=item.MemberTypeID,MaxDepend=item.MaximumDependent,DueDepend=item.cnt }) 
+            
+            }
+
+            
+           
+           
+        </td>
+
+        <td>
+            @if(item.MaximumDependent>0)
+            {
+             @Html.ActionLink("Show Relations", "Relations", new { @Id=item.SetupMemberID,Name=item.FirstName })
+            }
+        </td>
+
+    </tr>
+}
+
+        </tbody>
+</table>
+           
+
+    </div>
+
+               @*for sorting *@
+        
+               <div class="boxFooter">
+                   
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+
+               </div> 
+
+        @*---------------*@
+            </div></div></div>

@@ -1,0 +1,121 @@
+﻿@model Hospital.Models.StockSupplierModel
+@{
+    ViewBag.Title = "Report";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+<script type="text/javascript">
+    function prints(divName) {
+
+        //Get the HTML of div
+        var divElements = document.getElementById(divName).innerHTML;
+        //Get the HTML of whole page
+        var oldPage = document.body.innerHTML;
+
+        //Reset the page's HTML with div's HTML only
+        document.body.innerHTML = "<html><head><title></title></head><body>" + divElements + "</body>";
+
+        //Print Page
+        window.print();
+
+        //Restore orignal HTML
+        document.body.innerHTML = oldPage;
+
+        //disable postback on print button
+        return false;
+
+    }
+</script>
+
+
+<h2 style="text-align:center;">Report</h2>
+<div class="contentWrapper">
+     <div id="printdiv" style="border-style: solid; border-color: #999; width: 100%; grid-row-align: center;">
+                     @if (@Hospital.Utility.GetPathOfHospitalLogo() != null && @Hospital.Utility.GetPathOfHospitalLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalLogo/@Hospital.Utility.GetPathOfHospitalLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@Hospital.Utility.GetPathOfHospitalLogo() == "")
+        { 
+            
+            <br />
+        
+        }
+        <div style="font: bold; font-size: 18px; text-align: center; height: 100px;">
+            @if (@Hospital.Utility.GetHospitalTitleName() != null && @Hospital.Utility.GetHospitalTitleName() != "")
+            {
+                <span>@Hospital.Utility.GetHospitalTitleName()</span>
+            }
+            <br />
+            @Hospital.Utility.GetHospitalName()<br />
+            <div style="height: 80px;">
+                <span style="font-size: 15px; text-align: center">@Hospital.Utility.HospitalAddress()</span><br />
+                <span style="font-size: 14px; text-align: center">Website:-@Hospital.Utility.HospitalUrl()</span><br />
+                <span style="font-size: 14px; text-align: center">Ph:-@Hospital.Utility.HospitalPhone()</span>
+
+            </div>
+
+        </div>
+                   <br />
+          <span style="float: right;margin-right: 2%; margin-bottom:2px;">Date:@DateTime.Today.ToShortDateString()</span>
+    <table class="table">
+    
+    <tr>
+         <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockSupplierName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockSupplierAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockSupplierConNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockSupplierVatNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockSupplierEmail)
+        </th>
+        
+       
+    </tr>
+       
+@foreach (var item in Model.StockSupplierList) {
+    <tr>
+         <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockSupplierName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockSupplierAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockSupplierConNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockSupplierVatNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockSupplierEmail)
+        </td>
+       
+        
+    </tr>
+}
+</table>
+    </div>
+     <p id="linkNewBack">
+                   
+                        <input type="button" value="Print" onclick="prints('printdiv')" style="float:right;" />
+         <span>@Html.ActionLink("Back","Index")</span>
+     </p>
+    </div>

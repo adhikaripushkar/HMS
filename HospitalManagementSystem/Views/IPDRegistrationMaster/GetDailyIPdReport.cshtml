@@ -1,0 +1,217 @@
+﻿@model HospitalManagementSystem.Models.IpdSearchResults
+
+
+@{
+    int i = 1;
+}
+
+<h3>Admission Details</h3>
+<table class="table table-hover tablesorter" >
+
+    <thead>
+    <tr>
+        <th>S.N:</th>
+        <th>Bed No:</th>
+
+        <th>
+        Patient Name
+        </th>
+        <th>
+            Age
+        </th>
+        <th>
+            Gender
+        </th>
+        <th>DateTime</th>
+        <th>Diagnosis</th>
+       
+
+    </tr>
+        </thead>
+
+    <tbody>
+    @foreach (var item in Model.IpdRegistrationMasterModelList)
+    {
+        <tr>
+            <td>@i</td>
+            <td>@item.BedNo</td>
+            <td>@item.patientName</td>
+            <td>@item.Birth </td>
+            <td>@item.Gender</td>
+            <td>@item.RegistrationDate</td>
+           <td>@HospitalManagementSystem.Utility.GetDiagosisName(item.IpdRegistrationID)</td>
+
+
+        </tr>
+        i++;
+    }
+
+</tbody>
+</table>
+
+
+              @*for sorting *@
+        
+               <div class="boxFooter">
+                   
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+
+               </div> 
+      
+
+
+
+
+<br />
+
+<br />
+
+<br />
+
+ <h3>DIscharge Details</h3>
+
+<table class="table table-hover tablesorter" >
+    <thead>
+
+    <tr>
+        <th>S.N:</th>
+        <th>Bed No:</th>
+
+        <th>
+        Patient Name
+        </th>
+        <th>
+            Age
+        </th>
+        <th>
+            Gender
+        </th>
+        <th>DateTime</th>
+        <th>Diagnosis</th>
+       
+
+    </tr>
+    </thead>
+    <tbody>    @foreach (var item in Model.IpdDischargeModelList)
+               {
+        <tr>
+            <td>@i</td>
+            <td>@item.BedNo</td>
+            <td>@item.patientName</td>
+            <td>@item.Birth </td>
+            <td>@item.Gender</td>
+            <td>@item.LeaveDate</td>
+            <td>@HospitalManagementSystem.Utility.GetDiagosisName(item.ipdResistrationID)</td>
+           
+
+        </tr>
+               }
+</tbody>
+</table>
+
+              @*for sorting *@
+        
+               <div class="boxFooter">
+                   
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+                  </div>
+
+
+   
+
+
+<br />
+
+<br />
+
+<br />
+
+ <h3>Operation Details</h3>
+
+<table class="table table-hover tablesorter" >
+    <thead>
+
+    <tr>
+        <th>S.N:</th>
+        
+        <th>
+        Patient Name
+        </th>
+        
+        <th>Operation Date</th>
+        <th>Diagnosis</th>
+        <th>Operation</th>
+        <th>Remarks</th>
+
+    </tr>
+    </thead>
+    <tbody>    
+        @foreach (var item in Model.OperationTheatreMasterModelList)
+        {
+        <tr>
+            <td>@i</td>
+            <td>@item.PatientName</td>
+            <td>@item.OperationDate</td>
+             <td>@HospitalManagementSystem.Utility.GetDiagosisName(item.SourceID)</td>
+            <td>@item.ChargeName</td>
+           
+            <td></td>
+
+
+        </tr>
+            i++;
+        }
+</tbody>
+</table>
+
+              @*for sorting *@
+        
+               <div class="boxFooter">
+                   
+                   <div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>
+                  </div>

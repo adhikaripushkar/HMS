@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "SearchByBloodGroup";
+    Layout = "~/Views/Shared/_OpdLayOut.cshtml";
+}
+
+
+
+
+
+<h2 style="text-align:center;"> Patient Sealrch By Blood Group</h2>
+<div class="contentWrapper">
+
+<span>Blood Group :</span> @Html.DropDownList("bloodid", HospitalManagementSystem.Utility.BloodGroupList(), "Select")
+        
+
+        <input type="submit" id="submit" value="Search" />
+
+    <br />
+<br />
+    <br />
+<div id="showResult"></div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="text/javascript">
+        $('#submit').bind('click', function (e) {
+            e.preventDefault();
+
+            
+
+            
+
+           
+
+            alert($('#bloodid').val());
+
+
+            $.ajax({
+
+                url: '@Url.Action("_OpdSearchBybloodGroup", "Opd")',
+                type: 'GET',
+                data: { bloodgroupid: $('#bloodid').val() },
+                success: function (result) {
+                    $('#showResult').empty();
+                    $('#showResult').html(result);
+                },
+                error: function () {
+                    alert('error occur');
+                }
+            });
+
+        });
+
+    </script>

@@ -1,0 +1,97 @@
+﻿@model HospitalManagementSystem.Models.CreditPatientDetailsModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 style="text-align:center">Credits Patient Note List</h2>
+
+<script type = "text/javascript">
+    var j = jQuery.noConflict();
+
+    j(document).ready(function () {
+     
+        j('.message').delay(10000).fadeOut();
+    });
+</script>
+
+@if (TempData["Msg"] != null)
+{
+<div  class="alert alert-success message" onload="startTimer()" >
+                            <button type="button" class="close" data-dismiss="alert"> <i class="ace-icon fa fa-times"></i> </button>
+                            <strong> <i class="ace-icon fa fa-envelope"></i>  </strong>@TempData["Msg"]<br>
+    </div>
+
+}
+@if (TempData["MsgError"] != null)
+{
+    <div  class="alert alert-success message" onload="startTimer()" >
+                            <button type="button" class="close" data-dismiss="alert"> <i class="ace-icon fa fa-times"></i> </button>
+                            <strong> <i class=" fa fa-exclamation-triangle"></i>  </strong>Oops error,Something went wrong: @TempData["MsgError"]<br>
+    </div>
+
+}
+@if (TempData["MsgFail"] != null)
+{
+     <div  class="alert alert-success message" onload="startTimer()" >
+                            <button type="button" class="close" data-dismiss="alert"> <i class="ace-icon fa fa-times"></i> </button>
+                            <strong> <i class=" fa fa-exclamation-triangle"></i>  </strong>Oops error,Something went wrong: @TempData["Msg"]<br>
+    </div>
+}
+<div class="well" style="border-radius:0;">
+    <div class="side-by-side clearfix">
+        <div class="side-by-side clearfix">
+            <div style="font-weight: bold;">
+        @using (Html.BeginForm("SearchCreditPatients", "CreditPatients", FormMethod.Get))
+        {
+            <p>
+                <span style="font-size: 20px; font-weight: bold;">Search Credit Patients By Name:&nbsp;&nbsp;</span>@Html.TextBox("CreditPatientName")
+                <input type="submit" value="Search" />
+            </p>
+        }
+    </div>
+            <div class="bottom_btn marginBottom">
+                <a href="@Url.Action("Create", "CreditPatients")" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i>Add New</a>
+            </div>
+        <div class="clearfix"></div>
+        <div id="divTableDataHolders" class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        @*<th class="width30">S.N.</th>*@
+                        <th>@Html.DisplayNameFor(model => model.CreditPatientID)</th>
+                        <th>@Html.DisplayNameFor(model => model.CreditPatientName)</th>
+                        <th>@Html.DisplayNameFor(model => model.CreditPatientCase)</th>
+                        <th>@Html.DisplayNameFor(model => model.CreditPatientRefer)</th>
+                        <th>@Html.DisplayNameFor(model => model.CreditpatientTest)</th>
+                        <th>@Html.DisplayNameFor(model => model.CreditPatientRepresentative)</th>
+                        <th>@Html.DisplayNameFor(model => model.CreditPatientBroughtBy)</th>
+                        <th class="width130">Action</th>
+                    </tr>
+                </thead>
+                @foreach(var item in Model.CreditPatientDetailsModelList)
+                {
+                   
+                     <tr>
+                        @*<td>@i</td>*@
+                         <td>@Html.DisplayFor(modelItem => item.CreditPatientID)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CreditPatientName )</td>
+                         <td>@Html.DisplayFor(modelItem => item.CreditPatientCase)</td>
+                         <td>@Html.DisplayFor(modelItem => item.CreditPatientRefer)</td>
+                         <td>@Html.DisplayFor(modelItem => item.CreditpatientTest)</td>
+                         <td>@Html.DisplayFor(modelItem => item.CreditPatientRepresentative)</td>
+                         <td>@Html.DisplayFor(modelItem => item.CreditPatientBroughtBy)</td>
+
+                         <td class="text-center">
+                          <div class="btn btn-success btn-xs btn-edit">
+                            <i class="fa fa-pencil-square-o"></i> @Html.ActionLink("Edit", "Edit", new { id = item.CreditPatientID})
+                          </div>
+                        </td>
+                    </tr>
+                    //i++;
+                }
+            </table>
+        </div>
+        </div>
+    </div>
+</div>
+

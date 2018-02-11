@@ -1,0 +1,50 @@
+﻿@model IEnumerable<HospitalManagementSystem.PackagePatientAssignment>
+
+@{
+    ViewBag.Title = "PackagePatientList";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+}
+
+<h2>Package Patient List</h2>
+
+<div class="contentWrapper">
+    <table>
+        <tr>
+
+            <th>Package Name
+            </th>
+            <th>Patient Name
+            </th>
+
+            <th>Department Name
+            </th>
+            <th>Date</th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @HospitalManagementSystem.Utility.GetPackageName(item.PackageId)
+                </td>
+                <td>
+                    @HospitalManagementSystem.Utility.GetPatientNameWithIdFromOpd(item.OpdId)
+                </td>
+
+                <td>
+                    @HospitalManagementSystem.Utility.GetDepartmentName((int)item.DepartmentId)
+                </td>
+                <td>
+                   @item.AssignDate
+                </td>
+
+            </tr>
+        }
+
+    </table>
+    <br />
+
+    @Html.ActionLink("Back", "Index")
+</div>

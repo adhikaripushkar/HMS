@@ -1,0 +1,45 @@
+﻿<fieldset>
+    <legend></legend>
+    <div>
+        <div class="editor-label">
+            @Html.Label("Patient Name")
+        </div>
+        <div class="editor-field">
+            @Html.TextBox("SearchPatientName", null, new { @placeholder = "Patient Name" })
+            <input type="submit" value="show" id="subId" />
+        </div>
+        @*<div class="editor-field">
+            <input type="submit" value="show" id="subId" />
+        </div>*@
+    </div>
+</fieldset>
+
+
+
+
+<div id="chngId" style="margin-top:20px;"></div>
+<script>
+
+    $('#subId').click(function (e) {
+        e.preventDefault();
+        var value = $('#SearchPatientName').val();
+        $.get('/BillingCounter/GetPatientDetailsByName/' + value,
+                   function (data) {
+                       $('#chngId').empty();
+                       $('#chngId').html(data);
+                   });
+    });
+
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $('.linkb').addClass("row-button btn btn-warning");
+    });
+</script>
+
+
+
+
+

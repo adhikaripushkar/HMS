@@ -1,0 +1,198 @@
+﻿@model HospitalManagementSystem.Models.OpdModel
+
+<div class="general-box clearfix">
+
+    <div class="general-box clearfix">
+
+        <div class="boxWrapper">
+            <div class="boxHeadingPanel">
+                <h1>Search Result</h1>
+            </div>
+
+            <table class="table table-hover tablesorter">
+                <thead>
+                    <tr>
+                        <th style="width: 40px;">
+                            @*@Html.DisplayNameFor(model => model.OpdID)*@
+                            <span>Opd ID</span>
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FirstName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MiddleName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LastName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Sex)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ContactName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MobileNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.RegistrationDate)
+                        </th>
+                        <th>
+                            Address
+                        </th>
+
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.OpdModelList.Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="10" style="text-align: center;">Data not found ! </td>
+                        </tr>
+                    }
+                    @foreach (var item in Model.OpdModelList)
+                    {
+    
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OpdID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MiddleName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Sex)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ContactName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MobileNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RegistrationDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+                            @*
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AgeYear)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AgeMonth)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AgeDay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaritalStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BloodGroup)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MemberTypeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>*@
+                               <td>
+
+                                    <span id="@item.OpdID" class="detailscls" style="cursor:pointer;" title="Detail"><i class="fa fa-eye" style="color: blue; font-size: 16px;"></i></span>
+
+                                    
+            <a href="/Opd/Edit/@item.OpdID" title="Edit"><i class="fa fa-edit" style="color: blue; font-size: 16px;"></i></a>
+                                    @*@Html.ActionLink("Edit", "Edit", new { id = item.OpdID })*@ |
+                                    <a href="/Opd/BillForm/@item.OpdID?FromSource=2" title="Print"><i class="fa fa-print" style="color: blue; font-size: 16px;"></i></a>
+
+                                   | @Html.ActionLink("Vital", "OpdVital", new{id=item.OpdID })
+
+                                   
+                                </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+            
+        </div>
+
+        @*for sorting *@
+
+        <div class="boxFooter">
+
+            @*<div id="pager" style="">
+            <form>
+            <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+            <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+            <input class="pagedisplay" type="text" style="width:60px;height:24px;">
+            <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+            <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+            <select class="pagesize valid" style="width:70px;height:30px;"">
+                <option selected="selected" value="10">10</option>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </form>
+            </div>*@
+
+        </div>
+
+        @*---------------*@
+
+    </div>
+
+    <div id="DetailsId"></div>
+
+
+
+
+
+    </div>
+
+
+<script>
+   
+
+    
+    var sd = $.noConflict();
+    sd(".detailscls").on("click", function (e) {
+
+        
+        sd.get('/Opd/Details/' + this.id,
+                           function (data) {
+                               sd("#DetailsId").html(data);
+                               sd(function () {
+                                   sd("#DetailsId").dialog({
+                                       position: [490, 190],
+                                       resizable: true,
+                                       minWidth: 550,
+                                       maxWidth: 550,
+                                       height: 400,
+                                       title: "Patient Details",
+                                       dialogClass: 'info'
+
+                                   });
+
+                               });
+
+                           }
+                 );
+    });
+       
+
+    </script>

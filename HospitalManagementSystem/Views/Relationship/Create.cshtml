@@ -1,0 +1,101 @@
+﻿@model Hospital.Models.RelationshipModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //alert();
+
+
+        $("#RelationName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Relationship/AutocompleteRelationship",
+                    type: "GET",
+                    dataType: "json",
+                    data: { s: request.term },
+                    success: function (data) {
+
+                        response($.map(data, function (item) {
+
+                            return { label: item, value: "" };
+
+
+                        }))
+
+                    },
+                    //error:function(data){
+                    //    response($.map(data, function (item) {
+
+                    //        return { label: item.StockUnitName, Value: item.StockUnitName };
+                    //    }))
+                    //}
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    });
+</script>
+
+    }
+<h2 style="text-align:center;">Relationship Setup</h2>
+
+<div class="contentWrapper">
+
+@using (Html.BeginForm("Create", "Relationship", FormMethod.Post, new { @class="bs-docs-example form-inline"}))
+{
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.RelationId)
+    <fieldset>
+        <legend>Create</legend>
+       
+         @if (TempData["message"] != null)
+        {
+             <div class="alert alert-error">
+            @TempData["message"]
+                 </div>
+        }
+        
+
+        <div class="row-fluid singleline">
+
+        <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RelationName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RelationName)
+            @Html.ValidationMessageFor(model => model.RelationName)
+        </div>
+
+        </label>
+
+            </div>
+
+        <br />
+
+        
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+   @Html.ActionLink("Back to List", "Index", null, new { @id="linkNewBack" })
+</div>
+
+    </div>

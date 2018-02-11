@@ -1,0 +1,27 @@
+﻿@using HospitalManagementSystem.Helpers;
+@model HospitalManagementSystem.Models.AddParticularListModel
+
+
+@using (Html.BeginCollectionItem("AddParticularListMOdelList"))
+{
+    <div class="row">
+
+      <label>
+            @Html.DropDownListFor(model => model.DepartmentID, HospitalManagementSystem.Utility.GetDepartmentListForPathology(), new { @class = "DepartmentID" })
+            @Html.ValidationMessageFor(model => model.DepartmentID)
+        
+            @Html.TextBoxFor(model=>model.ItemName)
+            @Html.ValidationMessageFor(model => model.ItemName)
+            
+        
+            @Html.TextBoxFor(model=>model.Price)
+            @Html.ValidationMessageFor(model => model.Price)
+                <input type="button" class="row-button btn btn-warning" value="Remove" />
+      
+        </label>
+         
+     
+    </div>
+   
+     
+}

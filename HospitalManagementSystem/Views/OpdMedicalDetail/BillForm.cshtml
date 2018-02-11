@@ -1,0 +1,131 @@
+﻿@model HospitalManagementSystem.Models.OpdModel
+
+@{
+    ViewBag.Title = "BillForm";
+    Layout = "~/Views/Shared/_OpdLayOut.cshtml";
+}
+
+<h2>BillForm</h2>
+<h2></h2>
+<style>
+    table#tblnoborder,
+    table#tblnoborder td {
+        border: none !important;
+    }
+
+    .font {
+        font-weight: bold;
+    }
+
+    .small-table td {
+        border: none;
+    }
+</style>
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);"> <br>');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+</script>
+
+<div class="contentWrapper">
+
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto;">
+        @*<div id="billNumber" style="font-size: 15px;">Bill No. </div>*@
+        <div style="text-align: center;">
+            @*<img src="~/Images/manmohanlogo.jpg" />*@</div>
+
+        <p style="font: bold; font-size: 22px; text-align: center">
+            @*<span>NEHCO, Nepal</span>*@<br />
+            @HospitalManagementSystem.Utility.GetHospitalManagementSystemName()<br />
+            <p style="font-size: 17px; text-align: center">@HospitalManagementSystem.Utility.HospitalManagementSystemAddress()</p>
+        </p>
+
+        <h3 style="text-align: center;"><u>OPD Department</u> </h3>
+
+        <br />
+
+        <table width="660" cellspacing="0" cellpadding="5" align="center" id="tblnoborder">
+            <tr>
+                <td class="font" width="314">OPD No:- @Model.OpdID</td>
+                <td class="font" width="326">Date:- @HospitalManagementSystem.Utility.GetDateOnly(Model.RegistrationDate.ToString())</td>
+            </tr>
+        </table>
+
+
+        <table width="660" border="0" cellspacing="0" cellpadding="5" align="center">
+            <tr>
+                <td width="314"><span class="font">Name:-</span>  @HospitalManagementSystem.Utility.GetFirstLetterCapitalize(Model.FirstName) @HospitalManagementSystem.Utility.GetFirstLetterCapitalize(Model.MiddleName) @HospitalManagementSystem.Utility.GetFirstLetterCapitalize(Model.LastName)</td>
+                <td width="326"><span class="font">Age:-</span> @Model.AgeYear</td>
+            </tr>
+            <tr>
+                <td><span class="font">Address:-</span> @HospitalManagementSystem.Utility.GetOpdAddress(Model.OpdID)</td>
+                <td><span class="font">Sex:-</span> @Model.Sex</td>
+
+            </tr>
+            <tr></tr>
+        </table>
+
+        <br />
+
+
+        <table width="660" align="center" style="border: 1px; border-style: solid;">
+            <tr>
+                <td width="320"><span class="font"><u>Departments:</u></span>
+                    <table class="small-table">
+
+                        
+                        @foreach (var item in Model.PatientDoctorList.Take(1))
+                        { 
+                            
+                            <tr>
+                                <td>
+
+                                    @HospitalManagementSystem.Utility.GetDepartmentName(item.DepartmentID)
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </td>
+                <td width="331"><span class="font"><u>Doctors:</u></span>
+                    <table class="small-table">
+                        @foreach (var item in Model.PatientDoctorList.Take(1))
+                        { 
+                            <tr>
+                                <td>
+
+                                    @HospitalManagementSystem.Utility.GetDoctorName(item.DoctorID)
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </td>
+            </tr>
+
+        </table>
+        <br />
+        <p style="text-align: center; font: bold; padding-left: 400px;"><b>Fee:- @HospitalManagementSystem.Utility.GetOpdMedicalDetailFee(Model.OpdID, Model.RegistrationDate)</b></p>
+    </div>
+
+    <span style="float: right;">
+        <input type="button" id="btnPrint" style="width: 50px;" onclick="print()" value="Print" /></span><br />
+    <p id="linkNewBack">
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+</div>
+

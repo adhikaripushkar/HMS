@@ -1,0 +1,33 @@
+﻿@model HospitalManagementSystem.Models.PatientTestModel
+@if (Model.PatientInformationModel!=null)
+{
+    <div class="rowr">
+        
+       <div class="editor-label">
+            @Html.Label("Patient Full Name")
+        </div>
+        <div class="editor-field">
+          @Html.TextBox("PatientFullName", Model.PatientInformationModel.FirstName + " " + Model.PatientInformationModel.MiddleName + " " + Model.PatientInformationModel.LastName)         
+        </div>          
+         <div class="editor-label">
+            @Html.LabelFor(model => model.PatientInformationModel.Gender)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.PatientInformationModel.Gender)
+            @Html.ValidationMessageFor(model => model.PatientInformationModel.Gender)
+        </div>  
+
+         <div class="editor-label">
+            @Html.LabelFor(model => model.PatientInformationModel.Age)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.PatientInformationModel.Age)
+            @Html.ValidationMessageFor(model => model.PatientInformationModel.Age)
+        </div>         
+    </div>
+     
+}
+else
+{
+    <div>No Record found</div>
+}

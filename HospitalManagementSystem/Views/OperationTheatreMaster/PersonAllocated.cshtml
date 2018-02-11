@@ -1,0 +1,76 @@
+﻿@using HospitalManagementSystem.Helpers
+@model HospitalManagementSystem.Models.PersonAllocated
+
+@using (Html.BeginCollectionItem("PersonAllocatedList"))
+{
+    <div class="row" style="margin-left: 70px;">
+
+        @Html.DropDownListFor(model => model.PersonAllocatedTypeId, HospitalManagementSystem.Utility.GetDoctorType(), new { @class = "doctype" })
+
+        @Html.ValidationMessageFor(model => model.PersonAllocatedTypeId)
+        @try
+        {
+            int i = Model.PersonAllocateId;
+            @Html.DropDownListFor(model => model.PersonAllocateId, HospitalManagementSystem.Utility.GetDoctors(Model.PersonAllocatedTypeId), new { @class = "personVal" })
+            @Html.ValidationMessageFor(model => model.PersonAllocateId)
+        }
+        catch
+        {
+            @Html.DropDownListFor(model => model.PersonAllocateId, HospitalManagementSystem.Utility.GetDoctorsByDefaultType(), new { @class = "personVal" })
+            @Html.ValidationMessageFor(model => model.PersonAllocateId)
+        }
+
+        <input type="button" class="row-button btn btn-warning" value="Remove" />
+    </div>
+     
+}
+
+<script>
+
+    $(".doctype").on("change", function (e) {
+        e.preventDefault();
+        // var doctypeid = this.value;
+        // alert(doctypeid);
+
+        var nextclass = $(this).closest(".row").find(".personVal");
+
+        //alert(nextclass);
+
+        $.get('/AjaxRequest/GetDoctorByType/' + this.value,
+              function (data) {
+                  // var ff = $(this).closest(".row").find(".personVal");
+
+                  nextclass.find('option').remove()
+
+                  $(data).each(
+                      function (index, item) {
+                          nextclass.append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                          //alert("hi");
+                      });
+              }
+    );
+
+    });
+
+
+
+</script>
+
+
+@*<script type="text/javascript">
+
+    $(".DepartmentID").on('change', function (e) {
+        e.preventDefault();
+
+        $.get('/AjaxRequest/GetDoctorNameList/' + this.value,
+              function (data) {
+                  $('#DoctorID').find('option').remove()
+                  $(data).each(
+                      function (index, item) {
+                          $('#DoctorID').append('<option value="' + item.Value + '">' + item.Text + '</option>')
+
+                      });
+              }
+    );
+    });
+    </script>*@

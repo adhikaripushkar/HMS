@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_DashBoardLayoutWithMenu.cshtml";
+}
+
+<h2 style="text-align: center">Welcome&nbsp;@TempData["UserName"]</h2>
+
+<div class="contentWrapper">
+
+    @*  @if(TempData["wellcome"]!=null)
+    {@TempData["wellcome"}*@
+
+    <p style="text-align: center; font-style: normal; font-size: 20px;">
+        @TempData["welcome"]
+    </p>
+
+    <p style="text-align: center;">
+        @*<img src="~/Images/slider-1.jpg" />*@
+
+    </p>
+
+
+</div>
+
+

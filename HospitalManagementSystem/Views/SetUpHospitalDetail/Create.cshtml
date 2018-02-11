@@ -1,0 +1,239 @@
+﻿@model Hospital.Models.SetUpHospitalDetailModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+
+
+
+
+
+
+<h2 align="center">Hospital Setup</h2>
+
+
+
+
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("Create", "SetUpHospitalDetail", FormMethod.Post, new { enctype = "multipart/form-data", @class = "bs-docs-example form-inline" }))
+    {
+   
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Create</legend>
+
+            <div class="row-fluid singleline">
+
+                <div>
+        
+                </div>
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.TitleName)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.TitleName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.TitleName, new { @placeholder = "eg:NEHCO,Nepal" })
+
+                    </div>
+                </label>
+
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.HospitalName)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.HospitalName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.HospitalName)
+
+                    </div>
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.FilePath)</div>
+                    <div class="editor-label">
+                        Logo Image
+                    </div>
+                    <div class="editor-field">
+                        <input type="file" name="file" style="width: 200px;" />
+
+
+
+                    </div>
+                </label>
+
+                <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.Country)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Country)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Country)
+
+                    </div>
+                </label>
+
+
+
+
+
+
+
+
+
+
+            </div>
+            <div class="row-fluid singleline">
+
+
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.City)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.City)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.City)
+
+                    </div>
+                </label>
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.Address)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Address)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Address)
+
+                    </div>
+                </label>
+
+
+
+
+
+
+                <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.PostBox)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PostBox)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.PostBox)
+
+                    </div>
+                </label>
+
+
+
+                <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.WardNo)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.WardNo)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.WardNo)
+
+                    </div>
+
+                </label>
+            </div>
+            <div class="row-fluid singleline">
+
+                <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.TelPhone)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.TelPhone)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.TelPhone)
+
+                    </div>
+
+                </label>
+
+
+                <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.FaxNumber)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.FaxNumber)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.FaxNumber)
+
+                    </div>
+
+                </label>
+
+                <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.HospitalEmail)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.HospitalEmail)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.HospitalEmail)
+
+                    </div>
+
+                </label>
+
+                <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.WebsiteUrl)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.WebsiteUrl)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.WebsiteUrl)
+
+                    </div>
+
+                </label>
+            </div>
+
+            <div class="row-fluid singleline">
+
+                <label>
+
+                    <div class="size">@Html.ValidationMessageFor(model => model.PanNumber)</div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.PanNumber)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.PanNumber)
+
+                    </div>
+
+                </label>
+            </div>
+
+
+
+
+
+            <p>
+                <input type="submit" value="Create" id="submitButton" class="btn btn-primary" />
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</div>

@@ -1,0 +1,133 @@
+﻿@model HospitalManagementSystem.Models.OpdModel
+@{
+   DateTime df=Convert.ToDateTime(ViewBag.dafr);
+   DateTime dt=Convert.ToDateTime(ViewBag.dato);
+    }
+<div id="printdiv" style="border-style:solid; border-color:#999; width:100%; grid-row-align:center;overflow-x:scroll">
+  @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != null && @HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalManagementSystemLogo/@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalManagementSystemLogo() == "")
+        { 
+            
+            <br />
+        
+        }
+        <div style="font: bold; font-size: 18px; text-align: center; height: 115px;">
+            @if (@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != null && @HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName() != "")
+            {
+                <span>@HospitalManagementSystem.Utility.GetHospitalManagementSystemTitleName()</span>
+            }
+            <br />
+            @HospitalManagementSystem.Utility.GetHospitalManagementSystemName()<br />
+            <div style="height: 80px;">
+                <span style="font-size: 15px; text-align: center">@HospitalManagementSystem.Utility.HospitalManagementSystemAddress()</span><br />
+                <span style="font-size: 14px; text-align: center">Website:-@HospitalManagementSystem.Utility.HospitalManagementSystemUrl()</span><br />
+                <span style="font-size: 14px; text-align: center">Ph:-@HospitalManagementSystem.Utility.HospitalManagementSystemPhone()</span>
+
+            </div>
+
+        </div>
+    <div><hr /></div>
+<h4 style="text-align:center">Daily OPD Patient's Report</h4>
+<table class="table  tablesorter" style="margin-left: 1%;
+    width: 98%;">
+
+    <tr>
+        <th rowspan="2">
+            Date
+        </th>
+        @foreach (var item in ViewBag.deps)
+        {
+           
+                       <th colspan="2"  style="text-align:center">
+                           
+                               @item.DeptName
+                           
+                          
+                       </th>
+                       
+            
+        }
+    </tr>
+    <tr>
+        
+        @foreach (var item in ViewBag.deps)
+        {
+           
+                       <th style="text-align:center">M</th>
+                       <th style="text-align:center">F</th>
+            
+        }
+    </tr>
+   
+    @for (DateTime dts = df; dts <= dt.AddDays(2);dts=dts.AddDays(1))
+   {
+    <tr>
+        <td>
+            @if(dts<=dt){
+          @dts.ToShortDateString()
+            }
+            else if(dts==dt.AddDays(1)){
+                <span>Total</span>
+            }
+            else {
+                <span>Grand Total</span>
+            }
+        </td>
+         @foreach (var item in ViewBag.deps)
+         {
+             
+             
+               
+                if(dts<=dt){
+                 
+               
+                         int i = HospitalManagementSystem.Utility.GetSexCount("Male",item.DeptID, dts);
+                         
+
+                     <td style="text-align:center">
+                 @if (i != 0) { 
+                   
+                     @i
+                       
+                 }
+                          </td>
+                  int i2 = HospitalManagementSystem.Utility.GetSexCount("Female",item.DeptID, dts);
+                   <td style="text-align:center">
+                 @if (i2 != 0) { 
+                    
+                     @i2
+                        
+                 }
+                    </td>     
+                }
+                else if (dts == dt.AddDays(1))
+                {
+                   <td style="text-align:center">
+                        @HospitalManagementSystem.Utility.GetTotalSexCount("Male",item.DeptID,df,dt)
+                        </td>
+                   <td style="text-align:center">
+                            @HospitalManagementSystem.Utility.GetTotalSexCount("Female",item.DeptID,df,dt)
+                   </td>
+                }
+                 else{
+                   <td colspan="2" style="text-align:center">
+                        @HospitalManagementSystem.Utility.GetTotalCount(item.DeptID,df,dt)
+                        </td>
+                   
+                }
+            
+         }
+    </tr>
+       
+   }
+     
+</table>
+    <br />
+</div>

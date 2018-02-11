@@ -1,0 +1,89 @@
+﻿@model Hospital.Models.SetupEmployeeMasterModel
+
+@{
+    ViewBag.Title = "GenerateBankPay";
+    Layout = "~/Views/Shared/_PayRollLayout.cshtml";
+}
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.maskedinput.js"></script>
+
+
+<h2 style="text-align: center;">Generate Bank-Cash Voucher</h2>
+
+<div class="contentWrapper">
+
+    <div class="bs-docs-example form-inline">
+        @using (Html.BeginForm("GenerateBankPay", "SetupEmployeeMaster", new AjaxOptions { UpdateTargetId = "DivLedgerDetails" }))
+        {
+        
+             <div class="row-fluid singleline">     
+                 <label>                    
+                     <div class="editor-label">
+                    Pay All @Html.CheckBoxFor(model => model.CheckAll, new { @id="CheckAll", @onchange="Check();"})
+                         </div>
+                </label>
+                </div>
+
+            <div class="row-fluid singleline">     
+                 <label>
+                    <div class="editor-label">
+                        @Html.Label("Year", new { @id="YearName"})</div>
+                     <div class="editor-label">
+                    @Html.DropDownListFor(model => model.YearId, Hospital.Utility.GetNepaliYearList(), new { @id="YearID"})
+                         </div>
+                </label>
+
+                <label>
+                    <div class="editor-label">
+                        @Html.Label("Month", new { @id="MonthName"})
+                        </div>
+                    <div class="editor-label">
+                    @Html.DropDownListFor(model => model.MonthId, Hospital.Utility.GetNepaliMonthList(), new { @id="MonthID"})
+                        </div>
+                </label>             
+                 <label>
+                    <div class="editor-label">
+                        Employee
+                        </div>
+                     <div class="editor-label">
+                     @Html.DropDownListFor(model => model.EmployeeMasterId, Hospital.Utility.GetAllEmployeeList())
+                         </div>
+                </label> 
+            </div>        
+            
+             <div class="row-fluid singleline">
+                <label>
+                    <div class="editor-label">
+                    <input type="submit" value="Generate Voucher" />                        
+                   </div>
+                </label>
+            </div>
+        }
+    </div>
+    
+    @section Scripts 
+    {
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/jqueryui")
+    }
+
+</div>
+
+<script type="text/javascript">
+    function Check() {
+        if ($("#CheckAll").attr("checked")) {            
+            $("#YearID").hide();
+            $("#MonthID").hide();
+            $("#YearName").hide();
+            $("#MonthName").hide();
+        }
+        else {
+            $("#YearID").show();
+            $("#MonthID").show();
+            $("#YearName").show();
+            $("#MonthName").show();
+        }
+    };
+</script>

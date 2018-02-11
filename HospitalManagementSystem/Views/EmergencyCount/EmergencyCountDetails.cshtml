@@ -1,0 +1,137 @@
+﻿@model HospitalManagementSystem.Models.EmergencyCountModel
+
+@{
+    ViewBag.Title = "EmergencyCountDetails";
+    Layout = "~/Views/Shared/_EmergencyLayout.cshtml";
+}
+
+
+<script src="~/Scripts/jquery.ui.core.js"></script>
+<script src="~/Scripts/jquery.ui.widget.js"></script>
+<script src="~/Scripts/jquery.ui.datepicker.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.ui.timepicker.js"></script>
+
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery.ui.timepicker.css" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+
+<script src="~/Scripts/json.cycle.js"></script>
+
+<script>
+
+
+
+    var j = $.noConflict();
+
+    j(document).ready(function (e) {
+
+        j("#StartDate").datepicker();
+        j("#EndDate").datepicker();
+
+    });
+
+  </script>
+<div class="contentWrapper">
+
+ <div class="bs-docs-example form-inline">
+ @using (Html.BeginForm())
+    {   
+    
+      <div class="row-fluid singleline">
+          <label>
+           @Html.LabelFor(model => model.StartDate)
+            @Html.TextBoxFor(model => model.StartDate, new { @Value=DateTime.Now.ToShortDateString()})
+            @Html.ValidationMessageFor(model => model.StartDate)
+              </label>
+          <label>
+           @Html.LabelFor(model => model.EndDate)
+           @Html.TextBoxFor(model => model.EndDate, new {@Value=DateTime.Now.ToShortDateString() })
+          @Html.ValidationMessageFor(model => model.EndDate)
+              </label>
+          <label> <input type="submit" value="show" /></label></div>
+     <div class="contentWrapper">
+
+
+  <div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+       <div class="boxWrapper">
+    <div class="boxHeadingPanel"><h1>Emergency Ward Count</h1></div>
+
+<table class="table table-hover tablesorter">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MaleNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FemaleNo)
+        </th>  
+          <th>
+            @Html.DisplayNameFor(model => model.OtherNo)
+        </th>  
+         <th>
+            @Html.DisplayNameFor(model => model.DischargeNo)
+        </th>  
+         <th>
+            @Html.DisplayNameFor(model => model.OnTreatrmentNo)
+        </th>  
+         <th>
+            @Html.DisplayNameFor(model => model.LAMANo)
+        </th>  
+        <th>
+            @Html.DisplayNameFor(model => model.NormalCase)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PoliceCase)
+        </th>    
+    </tr>
+</thead>
+    <tbody>
+
+    <tr>
+          <td>
+           @Model.MaleNo
+        </td>
+        <td>
+            @Model.FemaleNo
+        </td>
+        <td>
+            @Model.OtherNo
+        </td>
+        <td>
+           @Model.DischargeNo
+        </td>
+        <td>
+            @Model.OnTreatrmentNo
+        </td>
+        <td>
+            @Model.LAMANo
+        </td>
+          <td>
+            @Model.NormalCase
+        </td>
+          <td>
+            @Model.PoliceCase
+        </td>
+    </tr>
+
+
+        </tbody>
+</table>
+
+  </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+     
+ }
+         </div>
+
+</div>

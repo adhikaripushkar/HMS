@@ -1,0 +1,27 @@
+﻿@model HospitalManagementSystem.Models.ErrorModel
+@{
+    ViewBag.Title = "ERROR OCCURED";
+    Layout = "~/Views/Shared/_DashBoardLayoutWithMenu.cshtml";
+}
+
+
+<h2>Error</h2>
+<div>
+ ERROR OCCURED
+</div>
+<div id="errorMessage">
+    @{
+        string holdval = null;
+        switch (Model.HttpStatusCode)
+        {
+            case 404:
+                holdval = "The Page is not available";
+                break;
+            case 500:
+                holdval = string.Concat("The Error is:<br /> ", Model.Exception.Message);
+                break;
+        }
+    }
+    
+  
+</div>

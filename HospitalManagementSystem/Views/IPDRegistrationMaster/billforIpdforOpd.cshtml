@@ -1,0 +1,139 @@
+﻿@model HospitalManagementSystem.Models.IpdRegistrationMasterModel
+
+@{
+    ViewBag.Title = "BillForm";
+    Layout = "~/Views/Shared/_IPDLayout.cshtml";
+}
+
+<style>
+    table#tblnoborder,
+    table#tblnoborder td {
+        border: none !important;
+    }
+
+    .font {
+        font-weight: bold;
+    }
+
+    .small-table td {
+        border: none;
+    }
+</style>
+
+<script type="text/javascript">
+    function print() {
+
+        //	    var values = document.getElementById('printDiv').innerHTML.toString();
+        var printing = window.open('', '', 'left=0,top=0,width=720,height=400,toolbar=0,scrollbars=0,sta­tus=0');
+
+
+
+        printing.document.write('<div style="width: 100%; color: rgb(255, 255, 255); font-size: x-large; font-weight: 700; background-color: rgb(102, 102, 102);">');
+        printing.document.write('<div style="font-size:small;">');
+        printing.document.write(document.getElementById('printdiv').innerHTML.toString());
+        printing.document.close();
+        printing.focus();
+        printing.print();
+        printing.close();
+
+    }
+    window.onload = print;
+</script>
+
+<div class="contentWrapper">
+
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; width: auto;">
+
+        @MyHelpers.DesingForLogo()
+        <hr />
+
+        <h3 style="text-align: center;"><u>IPD Department</u> </h3>
+
+        <h4 style="text-align: center;">Receipt Bill(Deposit)</h4>
+
+        <table width="900" border="0" cellspacing="0" cellpadding="5" align="center">
+            <tr>
+                <td>
+                    <b>Fisical Year:</b>@HospitalManagementSystem.Utility.CurrentFisicalYear()
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td width="314"><span class="font">Ipd Id:-@Model.IpdRegistrationID/Patient Id(opd):-@Model.refOpdModel.OpdID</span> </td>
+                <td width="326"><span class="font">Date:-@Model.RegistrationDate.ToShortDateString() (AD)</span> <span class="font">/@HospitalManagementSystem.Utility.getNepaliDate(Model.RegistrationDate.ToShortDateString()) (BS)</span></td>
+
+            </tr>
+            <tr>
+                <td width="314"><span class="font">Name:-@Model.refOpdModel.FirstName  @Model.refOpdModel.MiddleName  @Model.refOpdModel.LastName </span></td>
+                <td width="326"><span class="font">Age:-@Model.refOpdModel.AgeYear / @HospitalManagementSystem.Utility.GetAgeTypeByItsId(Convert.ToInt32( Model.refOpdModel.AgeMonth))</span> </td>
+            </tr>
+            <tr>
+                <td><span class="font">Address:-@Model.refOpdModel.Address</span> </td>
+                <td><span class="font">Sex:-@Model.refOpdModel.Sex</span> </td>
+
+            </tr>
+            <tr>
+                @*<td><span class="font">Bed No:-@Model.IpdPatientBedDetailsModel</span></td>*@
+                <td>
+                    <span class="font" style="">Ward Name:-
+
+                        @HospitalManagementSystem.Utility.GetIpdWardName().Where(x => x.Value == Model.IpdPatientroomDetailsModel.WardNo.ToString()).Select(x => x.Text).SingleOrDefault()
+
+
+                    </span>
+                    
+                </td>
+                <td>
+                    <span class="font">Room No:-@Model.IpdPatientroomDetailsModel.RoomNo</span>
+                    <span class="font" style="margin-left:40px;">Bed No:-@Model.IpdPatientBedDetailsModel.BedNumber</span>
+                </td>
+
+
+
+            </tr>
+            <tr>
+                <td><span class="font">Phone No:-@Model.refOpdModel.ContactName</span></td>
+                <td><span class="font">Mobile No:-@Model.refOpdModel.MobileNumber</span></td>
+
+            </tr>
+        </table>
+        <br />
+
+        <div style="margin-left: 550px; font-weight: bold;">
+            @*<p>Bed Fee:-@Model.IpdPatientBedDetailsModel.Amount </p>*@
+            <p>Deposit Amount:-@Model.DepositeAmount</p>
+
+
+
+
+            @{
+                HospitalManagementSystem.NumberToEnglish obj = new HospitalManagementSystem.NumberToEnglish();
+
+                string str = obj.changeNumericToWords(@Convert.ToDouble(Model.DepositeAmount));
+
+                // string jj = obj.changeNumericToWords(@Convert.ToDouble(555));
+            }
+
+            <br />
+            <span>Amount in Word<span>&nbsp;</span>:-</span><span>&nbsp;&nbsp;</span>(NRS)&nbsp;@str<span> Only.</span>
+            <br />
+
+            @{decimal TotalAmount = @Model.IpdPatientBedDetailsModel.Amount + @Model.DepositeAmount;}
+
+
+
+        </div>
+        <div style="font-weight: bold;">User : @HospitalManagementSystem.Utility.GetEmployeeNameFromEmpID(Model.CreatedtBy)</div>
+    </div>
+
+    <span>
+        <input type="button" id="btnPrint" style="width: 50px; float: right;" onclick="print()" value="Print" />
+
+    </span>
+    <p id="linkNewBack">
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+</div>
+

@@ -1,0 +1,96 @@
+﻿@model HospitalManagementSystem.Models.JournalVFormatModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 style="text-align:center;">Journal Vaucher Setup</h2>
+
+<div class="contentWrapper">
+
+@using (Html.BeginForm("Create", "JournalVFromat", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Create</legend>
+         @Html.ValidationMessageFor(model => model.JVId)
+
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.JVId)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.JVId)
+         
+        </div>
+        <div class="row-fluid singleline">
+
+    <label>
+        <div class="size">   @Html.ValidationMessageFor(model => model.Prefix)</div>
+           
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Prefix)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Prefix)
+          
+        </div>
+        </label>
+             <label>
+        <div class="size">   @Html.ValidationMessageFor(model => model.FiscalYear)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FiscalYear)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FiscalYear)
+         
+        </div>
+</label>
+            
+         <label>
+        <div class="size">  @Html.ValidationMessageFor(model => model.Postfix)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Postfix)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Postfix)
+          
+        </div>
+        </label>
+            </div>
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.JVFormat)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.JVFormat)
+            @Html.ValidationMessageFor(model => model.JVFormat)
+        </div>
+             <div class="row-fluid singleline">
+
+    <label>
+        <div class="size">   @Html.ValidationMessageFor(model => model.IsCurrent)</div>
+        <div class="editor-label">
+            @Html.HiddenFor(model => model.IsCurrent)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.IsCurrent)
+         
+        </div>
+        </label>
+                 </div>
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div id="linkNewBack">
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+    </div>

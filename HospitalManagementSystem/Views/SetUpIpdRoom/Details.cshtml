@@ -1,0 +1,51 @@
+﻿@model Hospital.Models.SetUpIpdRoomModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>SetUpIpdRoomModel</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RoomType)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RoomType)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RoomNo)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RoomNo)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.StartBed)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.StartBed)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.EndBed)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EndBed)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Status)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Status)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.IpdRoomId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,100 @@
+﻿@model Hospital.Models.SetUpHospitalFeeDiscountModel
+
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+
+<h2 style="text-align: center;">Registration Fee Discount Setup</h2>
+
+
+<div class="contentWrapper">
+    @using (Html.BeginForm("Create", "SetUpHospitalFeeDiscount", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Create</legend>
+
+            <div class="row-fluid singleline">
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.MaxDay)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.MaxDay)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.MaxDay)
+
+                    </div>
+                </label>
+
+
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.Percentage)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Percentage)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Percentage)
+
+                    </div>
+
+                </label>
+
+                @*            <label>
+<span class="size">@Html.ValidationMessageFor(model => model.CreatedBy)</span>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreatedBy)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreatedBy)
+            
+        </div>
+</label>*@
+
+                @*        <label>
+                <span class="size">@Html.ValidationMessageFor(model => model.CreatedDate)</span>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreatedDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreatedDate)
+            
+        </div>
+                </label>*@
+
+                <label>
+                    <span class="size">@Html.ValidationMessageFor(model => model.Status)</span>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Status)
+                    </div>
+                    <div class="editor-field">
+                        &nbsp&nbsp; @Html.EditorFor(model => model.Status)
+
+                    </div>
+
+                </label>
+
+            </div>
+
+
+            <p>
+                <input type="submit" value="Create" />
+            </p>
+
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+    </div>
+
+
+
+
+</div>

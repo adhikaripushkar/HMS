@@ -1,0 +1,304 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - EHMS</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+
+
+    @Styles.Render("~/Content/css")
+
+
+    @*for designs*@
+
+    <link href="~/css/layout.css" rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
+    <link href="~/css/menu_assets/styles.css" rel="stylesheet" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/fontaw/css/font-awesome.min.css">
+
+
+
+    <style>
+        select {
+            width: 210px;
+            height: 27px;
+        }
+
+        .info .ui-widget-header {
+            background: #d7c3ed;
+        }
+
+        .info .ui-dialog-content {
+            background: #e3edf3;
+        }
+    </style>
+
+    @*for validation or many more*@
+
+    <script src="~/Scripts/jquery-1.7.1.js"></script>
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.8.20.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.ui.datepicker.js"></script>
+
+
+
+    @*<link href="~/css/slickscroll.css" rel="stylesheet" type="text/css" />*@
+
+
+
+
+    <style>
+        /* CSS for demo containers. Remove/ edit if desired */
+
+
+
+        #divMain1 {
+            /*width: 500px;*/
+            background-color: #245C81;
+            height: 400px;
+            overflow: hidden;
+        }
+
+
+        #divShort {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 2em;
+            background-color: black;
+            color: white;
+            overflow: hidden;
+        }
+    </style>
+
+
+    @*for talble sorter*@
+
+    <link href="~/Content/TableSort.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.4.4.min.js"></script>
+    <script src="~/Scripts/jquery.tablesorter.js"></script>
+    <script src="~/Scripts/jquery.tablesorter.pager.js"></script>
+
+
+
+    <script type="text/javascript">
+        var j = $.noConflict();
+        j(function () {
+            j("table.tablesorter").tablesorter({ widthFixed: true, sortList: [[0, 0]] })
+            .tablesorterPager({ container: j("#pager"), size: j(".pagesize option:selected").val() });
+
+
+        });
+    </script>
+
+
+</head>
+
+
+<body>
+
+    <div>
+        <div class="mainWrapper">
+            <header class="header1 clearfix">
+
+
+                @*  <header class="header1 clearfix">*@
+
+                <div class="logoPanel">
+
+                    <img src="~/Images/HospitalManagementSystem-logo.png" />
+                </div>
+
+                <div class="userInfo">
+                    <div class="userloggedinfo clearfix">
+
+                        <div class="userinfo">
+
+                            <div class="userloggedinfo clearfix">
+                                <img src="~/Images/emplogo3.jpg" alt="">
+                                <div class="userinfo">
+                                    @Html.Partial("_LoginPartial")
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                @*                @if (Request.IsAuthenticated) { 
+                           @User.Identity.Name
+                }
+                *@
+
+
+                <nav class="mainaccesPanel clearfix" role="navigation">
+
+                    <div class="userNav">
+
+                        <div id='cssmenu'>
+                            <ul>
+
+                                <li class='active'><a href='~/Welcome/Index' class="mainNav dashboard"><span>Welcome</span></a></li>
+                                <li class='active'><a href='~/Home/ShowDashBoard' class="mainNav dashboard"><span>Dashboard</span></a></li>
+                                <li><a href='~/DepartmentSetup/Main' class="mainNav package"><span>Master Setup</span></a></li>
+                                @*   <li ><a href='#' class="mainNav booking"><span>bookings</span></a>
+                                   <ul>
+            
+        
+                                      </ul>
+                                   </li>*@
+
+
+                                <li><a href='~/Employee/Index' class="mainNav employee"><span>Employees</span></a>
+                                    <ul>
+                                        @if (Request.IsAuthenticated)
+                                        {
+
+                                            //var UserContext = new UsersContext();
+
+                                            if (HospitalManagementSystem.Utility.GetCurrentLoginUserName() == "superadmin")
+                                            {
+                                        
+                                            <li class='has-sub'><a href='~/Account/Register'><span>Register</span></a></li>
+                                        
+                                            }
+
+                                        }
+                                        <li class='has-sub'><a href='~/Employee/DocSetup'><span>Doctor Setup</span></a></li>
+                                    </ul>
+                                </li>
+
+
+
+
+                                <li><a href='~/Setting/Index' class="mainNav setting"><span>settings</span></a>
+
+                                </li>
+
+
+
+                                <li><a href='~/Mis/Main' class="mainNav reports"><span>reports</span></a>
+                                    <ul>
+                                        <li class='has-sub'><a href='#'><span>Medical Report</span></a></li>
+                                        @*  <li class='has-sub'><a href='#'><span>reservation reporting</span></a></li>
+         <li class='has-sub'><a href='#'><span>customer reporting</span></a></li>*@
+                                    </ul>
+                                </li>
+                                <li class='last'><a href="~/BillingCounter/Create" class="mainNav about"><span>Centralized Billing</span></a> </li>
+                                <li class='last'><a href="~/AboutUs/Index" class="mainNav about"><span>About us</span></a> </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <br />
+                    <br />
+
+                    <div class="leftMenu" style="margin-left: -9px;">
+                        <div class="left-s-heading">
+                            <h2><a href='~/DepartmentSetup/Main' title=""><span style="color: white;">Master Setup</span></a></h2>
+                        </div>
+
+
+                        <div style="height: 420px; width: 245px; border: solid 3px #EFEFEF; overflow: scroll; overflow-x: hidden; overflow-y: scroll;">
+                            <ul id="menu" class="nav">
+                                <li class="widgets"><a href='~/FiscalYear/Index' title=""><span>FiscalYear Setup</span></a> </li>
+                                <li class="tables"><a href='~/SetUpHospitalManagementSystemDetail/Index' title=""><span>HospitalManagementSystem Setup</span></a> </li>
+                                <li class="test"><a href='~/SetUpHospitalManagementSystemFee/Index' title="" id="yy"><span>Registration Fee Setup</span></a></li>
+                                <li class="charts"><a href='~/SetUpHospitalManagementSystemFeeDiscount/Index' title=""><span>Registration Fee Discount Setup</span></a></li>
+                                <li class="widgets"><a href='~/SetupOtherDiscount/Index' title=""><span>Other Discount Setup</span></a> </li>
+
+
+                                <li class="widgets"><a href='~/SetupBlock/Index' title=""><span>Block Setup</span></a> </li>
+                                <li class="widgets"><a href='~/SetupFloor/Index' title=""><span>Floor Setup</span></a> </li>
+                                <li class="ui"><a href='~/SetUpIpdWard/Index' title=""><span>Ward Setup</span></a></li>
+                                <li class="ui"><a href='~/SetupRoomType/Index' title=""><span>Room Type Setup</span></a></li>
+                                <li class="forms"><a href='~/SetUpIpdRoom/Index' title=""><span>Room Setup</span></a> </li>
+
+
+
+                                <li class="test"><a href='~/DepartmentSetup/DeptMain' title="" class="" id=""><span>Department Setup</span></a></li>
+                                <li class="widgets"><a href='#' title=""><span>Doctor Type Setup</span></a> </li>
+                                <li class="widgets"><a href='~/DoctorSetup/Index' title=""><span>Doctor Setup</span></a> </li>
+                                <li class="widgets"><a href='~/DoctorFeeSetup/Index' title=""><span>Doctor Fee Setup</span></a> </li>
+                                <li class="widgets"><a href='~/DoctorTime/Index' title=""><span>Doctor Time Setup</span></a> </li>
+
+
+
+                                <li class="widgets"><a href='~/MemberTypeSetup/Index' title=""><span>Member Type Setup</span></a> </li>
+                                <li class="widgets"><a href='~/MemberTypeDiscount/Index' title=""><span>Member Type Discount Setup</span></a> </li>
+                                <li class="widgets"><a href='~/SetupMemberShip/Index' title=""><span>Member Ship Setup</span></a> </li>
+                                <li class="widgets"><a href='~/SetupMemberDependent/Index' title=""><span>Member Dependent Setup</span></a> </li>
+                                <li class="widgets"><a href='~/SetupMemberDependent/Index' title=""><span>Member Dependent Setup</span></a> </li>
+
+
+
+                                <li class="tables"><a href='~/SetUpSection/Index' title=""><span>Section Setup</span></a> </li>
+                                <li class="widgets"><a href='~/SetupUnit/Index' title=""><span>Unit Setup</span></a> </li>
+                                <li class="widgets"><a href='~/SetupPathoTest/Index' title=""><span>Pathology Test Setup</span></a> </li>
+                                <li class="widgets"><a href='~/Relationship/Index' title=""><span>Relationship Setup</span></a> </li>
+                                <li class="widgets"><a href='~/SetupBillingType/Index' title=""><span>Billing Type Setup</span></a> </li>
+
+
+                                <li class="ui"><a href='~/SetupEmployeeType/Index' title=""><span>Employee Tyepe Setup</span></a></li>
+                                <li class="ui"><a href='~/SetupEmployeeShiftMaster/Index' title=""><span>Employee Master Setup</span></a></li>
+                                <li class="ui"><a href='~/SetupEmployeeShiftMaster/Index' title=""><span>Employee Shift Setup</span></a></li>
+
+
+                                <li class="ui"><a href='~/SetupManpower/Index' title=""><span>Manpower Setup</span></a></li>
+                                <li class="ui"><a href='~/SetupMedicalCharge/Index' title=""><span>Medical Charge Setup</span></a></li>
+                                <li class="ui"><a href='~/SetupAgent/Index' title=""><span>Agent Setup</span></a></li>
+                                <li class="ui"><a href='~/SetupEmergencyInvestigationMaster/Index' title=""><span>Emergency Investigation Setup</span></a></li>
+
+
+                            </ul>
+                        </div>
+                    </div>
+
+                </nav>
+
+            </header>
+
+
+            <div id="body">
+                @RenderSection("featured", required: false)
+                <section class="">
+                    @RenderBody()
+                </section>
+
+            </div>
+
+            <footer>
+                <div class="footer">
+
+                    <div class="footer-left"><span>© 2017. HospitalManagementSystem Management System. All Rights Reserved.</span> </div>
+                    <div class="footer-right"><span>Designed and Developed by: Pushkar Adhikari</span> </div>
+                </div>
+            </footer>
+
+
+            @Scripts.Render("~/bundles/jquery")
+            @RenderSection("scripts", required: false)
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+<script>
+    $(document).ready(function () {
+        $('#menu a').on('click', function () {
+            $('#menu a').removeClass('active');
+            $(this).addClass('active');
+
+        });
+    });
+
+
+</script>

@@ -1,0 +1,81 @@
+﻿@model HospitalManagementSystem.Models.CreditPatientDetailsModel
+@{
+    ViewBag.Title = "Edit";
+}
+<h2>Edit</h2>
+<div class="block-header">
+    <div class="well" style="border-radius: 0;">
+        <div class="side-by-side clearfix">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                 @Html.ValidationSummary(true)
+                <div class="clearfix">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-sx-12">
+                        <div class="contGroup">
+                            @Html.LabelFor(model => model.CreditPatientName)
+                            @Html.TextBoxFor(model => model.CreditPatientName, new { @class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.CreditPatientName)
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-sx-12">
+                        <div class="contGroup">
+                            @Html.LabelFor(model => model.CreditPatientCase)
+                            @Html.TextBoxFor(model => model.CreditPatientCase, new {@class = "Form-control" })
+                            @Html.ValidationMessageFor(model => model.CreditPatientCase)
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-sx-12">
+                        <div class="contGroup">
+                            @Html.LabelFor(model => model.CreditPatientRefer)
+                            @Html.TextBoxFor(model => model.CreditPatientRefer, new {@class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CreditPatientRefer)
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="clearfix">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-sx-12">
+                        <div class="contGroup">
+                            @Html.LabelFor(model => model.CreditpatientTest)
+                            @Html.TextBoxFor(model => model.CreditpatientTest, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CreditpatientTest)
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-sx-12">
+                        <div class="contGroup">
+                            @Html.LabelFor(model => model.CreditPatientRepresentative)
+                            @Html.TextBoxFor(model => model.CreditPatientRepresentative, new { @class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.CreditPatientRepresentative)
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-sx-12">
+                        <div class="contGroup">
+                            @Html.LabelFor(model => model.CreditPatientBroughtBy)
+                            @Html.TextBoxFor(model => model.CreditPatientBroughtBy, new {@class="form-control" })
+                            @Html.ValidationMessageFor(model => model.CreditPatientBroughtBy)
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="bottom_btn">
+                    <a href="@Url.Action("Index", "CreditPatients")" class="btn btn-sm btn-warning"><i class="fa fa-undo"></i>Go Back</a>
+
+                    <button type="submit" id="" name="" class="btn btn-success"><i class="fa fa-save"></i>Save</button>
+                </div>
+                    
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

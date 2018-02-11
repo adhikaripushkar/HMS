@@ -1,0 +1,234 @@
+﻿@model HospitalManagementSystem.Models.DoctorTimeModel
+@{
+    ViewBag.Title = "Doctor Time Setup";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+
+
+<h2 style="text-align: center;"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;Doctor Time Setup</h2>
+
+<script>
+    var dlg = $.noConflict();
+    function CallAjaxReq(docId) {
+
+         
+        dlg.ajax({
+            url: '@Url.Action("IndividualDoctorTimeDetails", "DoctorTime")',
+            data: { id: docId },
+            type: 'POST',
+            success: function (data) {
+
+                dlg('#divDocDetails').html(data);
+
+            }
+        });
+    };
+
+       
+           
+          
+
+</script>
+
+
+
+@if (TempData["success"] == Hospital.UtilityMessage.save)
+{ 
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+@if (TempData["success"] == Hospital.UtilityMessage.savefailed)
+{ 
+    <div class="alert alert-error">
+        @TempData["success"]
+    </div>
+
+}
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.edit)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.editfailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.delete)
+{ 
+    <div class="alert alert-info">
+        @TempData["success"]
+    </div>
+
+}
+
+
+@if (TempData["success"] == HospitalManagementSystem.UtilityMessage.deletefailed)
+{ 
+    <div class="alert">
+        @TempData["success"]
+    </div>
+
+}
+
+
+<div class="contentWrapper">
+
+    <p>
+        @Html.ActionLink("Create New", "Create", null, new { @id = "linkNewBack" })
+        <span style="float: right;">@Html.ActionLink("Search", "DoctorTimeSearh", null, new { @id = "linkNewBack" })</span>
+    </p>
+
+    <p style="float: right;">
+    </p>
+
+
+
+    <div class="general-box clearfix">
+        <div class="general-box clearfix">
+
+            <div class="boxWrapper">
+                <div class="boxHeadingPanel">
+                    <h1>Doctor Time Setup</h1>
+                </div>
+
+                <table class="table table-hover tablesorter">
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.DoctorID)
+                            </th>
+                            @*<th>
+            @Html.DisplayNameFor(model => model.DoctorDays)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Shift)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckPatientPerDay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WebPatientPerDay)
+        </th>*@
+
+                            <th>Action 
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.DoctorTimeList)
+                        {
+                            <tr>
+
+
+                                <td>
+                                    @HospitalManagementSystem.Utility.GetDoctorName(item.DoctorID)
+
+                                </td>
+                                @*<td>
+            @Html.DisplayFor(modelItem => item.DoctorDays)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Shift)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckPatientPerDay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WebPatientPerDay)
+        </td>*@
+
+                                <td>
+                                    @Html.ActionLink("Update Doctor Time", "ShowAllData", new { id = item.DoctorID })
+                                     @*|*@
+      @*      @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                                    @*<a href id="#" id="Details" onclick="CallAjaxReq(@item.DoctorID)" />*@
+
+                                    @*<a href="#" id="Details" onclick="CallAjaxReq(@item.DoctorID)">Details</a>*@
+
+                                    
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+
+
+            </div>
+
+
+
+            @*for sorting *@
+
+            <div class="boxFooter">
+
+                <div id="pager" style="">
+                    <form>
+                        <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+                        <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+                        <input class="pagedisplay" type="text" style="width: 60px; height: 24px;">
+                        <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+                        <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+                        <select class="pagesize valid" style="width: 70px; height: 30px;">
+                            <option selected="selected" value="10">10</option>
+                            <option value="5">5</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                        </select>
+                    </form>
+                </div>
+
+            </div>
+
+            @*---------------*@
+
+
+
+        </div>
+
+    </div>
+
+    <div style="clear: both;"></div>
+    <div style="margin-top:30px;">
+        <span id="divDocDetails"></span>
+    </div>
+</div>
+
+
+
+
+
+
+

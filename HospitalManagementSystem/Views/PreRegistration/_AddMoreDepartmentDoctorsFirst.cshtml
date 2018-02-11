@@ -1,0 +1,153 @@
+﻿@using Hospital.Helpers
+@model Hospital.Models.PreRegistrationPreferDetailsModel
+
+
+
+
+
+
+
+
+<link href="~/Content/themes/base/jquery.ui.timepicker.css" rel="stylesheet" />
+
+
+
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.ui.timepicker.js"></script>
+
+
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+        j(".PreferDateId").datepicker();
+        
+        j(".PreferTimeId").timepicker();
+    });
+
+</script>
+
+
+<style>
+
+    .DepartmentID
+    {
+        width:207px;
+    }
+    .DoctorID
+    {
+        width:207px;
+    }
+    .PreferDateId .PreferTimeId{
+
+    }
+
+</style>
+
+
+
+@using (Html.BeginCollectionItem("PreRegistrationPreferModelList"))
+{
+
+    <div class= "" style="width:875px;margin-left:3px;">
+
+        <div class="row-fluid singleline">
+
+            
+        <div >
+            @Html.HiddenFor(model => model.PreferDetailsID)
+        </div>
+
+            <label>
+<div class="size">@Html.ValidationMessageFor(model => model.DepartmentID)</div>
+        <div >
+            @Html.LabelFor(model => model.DepartmentID)
+        </div>
+        <div>
+            @Html.DropDownListFor(model => model.DepartmentID, Model.GetDepartmentList(), new { @class = "DepartmentID" })
+            
+        </div>
+                </label>
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.DoctorID, "*Select Doctor Name",new { @class="redclass"})</div>
+      <div>
+            @Html.LabelFor(model => model.DoctorID)
+        </div>
+        <div >
+            @Html.DropDownListFor(model => model.DoctorID, Model.GetDoctorsList(), new { @class = "DoctorID"})
+            @Html.HiddenFor(model => model.DoctorID, new { @id="docsid"})
+            
+        </div>
+                </label>
+
+            <label>
+
+                <div class="size">@Html.ValidationMessageFor(model => model.PreferDate)</div>
+
+                <div>
+
+            @Html.LabelFor(model => model.PreferDate)
+                    </div>
+       <div class="editor-field">
+        <div>
+            @Html.TextBoxFor(model => model.PreferDate, new {  @class="PreferDateId",@Value=DateTime.Now.ToShortDateString()})
+            
+        </div>
+          </div>
+                </label>
+            
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.PreferTime)</div>
+         <div >
+            @Html.LabelFor(model => model.PreferTime)
+        </div>
+        <div>
+            @Html.TextBoxFor(model => model.PreferTime, new { @id = "", @class = "PreferTimeId",@Value=DateTime.Now.ToString("HH:mm") })
+            
+        </div>
+         </label>
+
+            
+            </div>
+      <span style="margin-left:850px;">  <input type="button" value="Check Availability" onclick="check_username()" /></span>
+           
+        </div>
+    
+}
+<div id ="doctorDetails"></div>
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    
+    $("#docsid").on('change', '.DepartmentID', function () {
+        var id = this.id;
+
+        id = id.replace("__DepartmentID", "__DoctorID");
+        $('#' + id).val('');
+
+
+        $.get('/AjaxRequest/GetDoctorNameList/' + this.value,
+              function (data) {
+                  $('#' + id).find('option').remove()
+                  $(data).each(
+                      function (index, item) {
+                          $('#' + id).append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                      });
+              }
+    );
+    });
+
+</script>
+
+    

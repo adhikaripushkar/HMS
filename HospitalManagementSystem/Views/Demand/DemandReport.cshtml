@@ -1,0 +1,126 @@
+﻿@model HospitalManagementSystem.Models.DemandDetailModel
+@{
+    ViewBag.Title = "DemandReport";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+    int i = 1;
+}
+<script type="text/javascript">
+    function prints(divName) {
+
+        //Get the HTML of div
+        var divElements = document.getElementById(divName).innerHTML;
+        //Get the HTML of whole page
+        var oldPage = document.body.innerHTML;
+
+        //Reset the page's HTML with div's HTML only
+        document.body.innerHTML = "<html><head><title></title></head><body>" + divElements + "</body>";
+
+        //Print Page
+        window.print();
+
+        //Restore orignal HTML
+        document.body.innerHTML = oldPage;
+
+        //disable postback on print button
+        return false;
+
+    }
+</script>
+<h2 style="text-align: center;">Demand Report</h2>
+<div class="contentWrapper">
+
+    <div id="printdiv" style="border-style: solid; border-color: #999; grid-row-align: center; padding: 5px;">
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalLogo() != null && @HospitalManagementSystem.Utility.GetPathOfHospitalLogo() != "")
+        {
+            <div style="text-align: center;">
+                <div class="holder">
+                    <img src="~/Content/HospitalLogo/@HospitalManagementSystem.Utility.GetPathOfHospitalLogo()" style="width:48px; height:55px;"/>
+                </div>
+            </div>
+        }
+        @if (@HospitalManagementSystem.Utility.GetPathOfHospitalLogo() == "")
+        { 
+            
+            <br />
+        
+        }
+        <div style="font: bold; font-size: 16px; text-align: center; height: 100px;">
+            @if (@HospitalManagementSystem.Utility.GetHospitalTitleName() != null && @HospitalManagementSystem.Utility.GetHospitalTitleName() != "")
+            {
+                <span>@HospitalManagementSystem.Utility.GetHospitalTitleName()</span>
+            }
+            <br />
+            @HospitalManagementSystem.Utility.GetHospitalName()<br />
+            <div style="height: 80px;">
+                <span style="font-size: 13px; text-align: center">@HospitalManagementSystem.Utility.HospitalAddress()</span><br />
+                <span style="font-size: 12px; text-align: center">Website:-@HospitalManagementSystem.Utility.HospitalUrl()</span><br />
+                <span style="font-size: 12px; text-align: center">Ph:-@HospitalManagementSystem.Utility.HospitalPhone()</span>
+
+            </div>
+
+        </div>
+        <br />
+        <div class="left">
+            <p>Demand No : @Model.Remarks</p>
+            <p>Department : @HospitalManagementSystem.Utility.GetDepartmentName(Model.ItemID)</p>
+
+        </div>
+        <div class="right">
+            <p>Date : @DateTime.Today.ToShortDateString()</p>
+
+        </div>
+        <table class="table">
+            <tr>
+                <th>S.No.
+                </th>
+                <th>Item
+                </th>
+                <th>Quantity
+                </th>
+                <th>Unit
+                </th>
+
+            </tr>
+            @foreach (var item in Model.DemandDetailList)
+            {
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @HospitalManagementSystem.Utility.GetItemNameFromStockItemEntry(item.ItemID)
+                    </td>
+                    <td>
+                        @((int)item.QuantityDemand)
+                    </td>
+                    <td>
+                        @HospitalManagementSystem.Utility.GetUnitNameByItemId(item.ItemID)
+                    </td>
+                </tr>
+                i++;
+            }
+        </table>
+        <br />
+        <div>
+            <p>
+                Signature of Demanding Officer:
+            </p>
+            <p>
+                Name:
+            </p>
+            <p>
+                Post:
+            </p>
+            <p>
+                Date:
+            </p>
+
+        </div>
+    </div>
+    <p id="linkNewBack">
+        <span>
+            <input type="button" value="Print" onclick="prints('printdiv')" style="float: right;" /></span>
+        @Html.ActionLink("Back", "Index")
+    </p>
+</div>
+

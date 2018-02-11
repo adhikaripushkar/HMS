@@ -1,0 +1,178 @@
+﻿@model HospitalManagementSystem.Models.PackageModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_PatientTestLayout.cshtml";
+}
+<script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        AddClickEvents();
+
+    });
+</script>
+<div class="contentWrapper">
+    <h2>Edit Package</h2>
+    <div class="bs-docs-example form-inline">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.PackageId)
+    
+            <fieldset>
+                <legend></legend>
+                <div class="row-fluid singleline">
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.PackageName)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.PackageName)
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.PackageName)
+
+                        </div>
+
+                    </label>
+
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.Price)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Price)
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.Price, new { @id = "TstPriceId", @onkeyup = "onchangeevent();" })
+
+                        </div>
+
+                    </label>
+
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.Tax)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Tax)
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.Tax, new { @id = "TaxId", @onkeyup = "onchangeevent();" })
+
+                        </div>
+
+                    </label>
+
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.TaxAmount)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.TaxAmount)
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.TaxAmount, new { @id = "TaxAmtid", @readonly = "readonly" })
+
+                        </div>
+
+                    </label>
+                </div>
+
+                <div class="row-fluid singleline">
+                    <label>
+                        <span class="size">@Html.ValidationMessageFor(model => model.TotalAmount)</span>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.TotalAmount)
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.TotalAmount, new { @id = "txtTotalAmount", @readonly = "readonly" })
+
+                        </div>
+
+                    </label>
+                </div>
+                <div class="well well-small" id="Add-Item" style="width: 900px;">
+
+                    @Html.ActionLink("Add Test", "PackageDetail", null, new { @id = "btns", @class = "addProductItem btn btn-primary" })
+                    <br />
+                    <br />
+                    <table id="tblotm" style="width: 782px;">
+                        <tr>
+                            <td style="border: none;">Test Name:</td>
+
+                        </tr>
+                    </table>
+                    <table>
+                        @try
+                        {
+                            foreach (var item in Model.PackageDetailList)
+                            {
+                        
+                            <tr>
+                                @Html.Partial("PackageDetail", item)
+                            </tr>
+                            }
+                        }
+                        catch { }
+
+                    </table>
+                </div>
+
+
+                <p>
+                    <input id="Edit" style="display: block" type="submit" value="Save" />
+                </p>
+            </fieldset>
+        }
+    </div>
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function onchangeevent() {
+        var testPriceFee = $("#TstPriceId").val();
+        var vartxtTax = $("#TaxId").val();
+        if (testPriceFee == '') {
+            testPriceFee = 0;
+        }
+        if (vartxtTax == '') {
+            vartxtTax = 0;
+        }
+
+        var vat = parseFloat(vartxtTax);
+
+        var Totalpercentage = parseFloat(testPriceFee) * parseFloat(vat / 100);
+
+        $("#TaxAmtid").val(Totalpercentage.toFixed(2));
+        //var varTotalAmount = parseInt(vartxtHospitalManagementSystemFee) + parseInt(vartxtTax) + parseInt(vartxtVat);
+        var varTotalAmount = parseFloat(testPriceFee) + parseFloat(Totalpercentage);
+        var varTotalAmount = varTotalAmount.toFixed(2);
+        $("#txtTotalAmount").val(varTotalAmount);
+    };
+</script>
+<script type="text/javascript">
+    $("#Add-Item").on('click', '.row-button', function () {
+        $(this).closest("div.row").remove();
+        $("#save").show();
+    })
+
+    $("#Add-Item").on('change', '.testid', function () {
+
+        $("#save").show();
+    })
+    $("#PackageName").change(function () {
+        $("#save").show();
+    })
+    $("#Price").change(function () {
+        $("#save").show();
+    })
+    $("#btns").click(function () {
+        $("#save").show();
+    })
+</script>@*
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

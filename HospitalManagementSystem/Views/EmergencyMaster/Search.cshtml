@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_EmergencyLayout.cshtml";
+}
+
+<h2>Search</h2>
+<h2 style="text-align:center;">Emergency Search</h2>
+
+
+<div class="contentWrapper">
+
+<div>
+
+   Emergency ID : @Html.TextBox("EmergencyMasterid","", new { @id = "EmergencyMasterid"})
+
+    <span style ="width:200px;"> </span>
+
+    Name : @Html.TextBox("name","", new { @id = "name"})
+
+    <span style ="width:200px;"> </span>
+
+    <input type ="submit" id ="submit" value="Search" />
+
+</div>
+<br />
+<div id ="showResult">
+
+</div>
+
+<script type="text/javascript">
+    $('#submit').bind('click', function (e) {
+        e.preventDefault();
+
+        var EmergencyMasterid = $('#EmergencyMasterid').val();
+        if (EmergencyMasterid == "") {
+            EmergencyMasterid = 0;
+        }
+
+        $.ajax({
+
+            url: '@Url.Action("_EmergencySearch", "EmergencyMaster")',
+        type: 'GET',
+        data: { EmergencyMasterid: EmergencyMasterid, name: $('#name').val() },
+        success: function (result) {
+            $('#showResult').empty();
+            $('#showResult').html(result);
+        },
+        error: function () {
+            alert('error occur');
+        }
+    });
+
+    });
+
+</script>
+
+
+
+    </div>

@@ -1,0 +1,142 @@
+﻿@using HospitalManagementSystem.Helpers
+@model HospitalManagementSystem.Models.PackageDetailModel
+<script src="~/Scripts/OrderManagerScript.js"></script>
+<script src="~/Scripts/json.cycle.js"></script>
+
+@using (Html.BeginCollectionItem("PackageDetailList"))
+{ 
+
+    <div class="row" style="margin-left: 7px;">
+         @Html.DropDownListFor(model => model.DeptId, HospitalManagementSystem.Utility.GetDepartmentListForPathology(), new { @class = "deptid" })
+
+        @Html.ValidationMessageFor(model => model.TestId)
+        @try
+        {
+            int i = Model.TestId;
+            @Html.DropDownListFor(model => model.TestId, HospitalManagementSystem.Utility.gettestListforpatho(Model.DeptId), new { @class = "personVal" })
+            @Html.ValidationMessageFor(model => model.TestId)
+        }
+        catch
+        {
+            @Html.DropDownListFor(model => model.TestId, HospitalManagementSystem.Utility.gettestListforpatho(1), new { @class = "textIdVal" })
+            @Html.ValidationMessageFor(model => model.TestId)
+        }
+   @*     <table style="width: 100%;" id="MyTbleCls">
+            <tr>
+                <td style="width:10px;">
+
+                 @Html.DropDownListFor(model => model.DepartmentID, HospitalManagementSystem.Utility.GetDepartmentListForPathology(),  new { @required = "@required", @class = "deptid", @onchange = "JqueryAjaxLoadSelectOption(this.value,'textId','/AjaxRequest/GetTestnamebydepartmentforpatho/')" })
+  
+                    </td>
+                <td>
+                      @Html.DropDownListFor(model => model.TestId, HospitalManagementSystem.Utility.gettestListforpatho(1), "select", new { @required = "@required", @id = "textId",@class = "textIdVal" ,@disabled = "disabled" })
+                </td>
+
+                </tr>
+            </table>*@
+      
+        <input type="button" class="row-button btn btn-warning" value="Remove" />
+
+    </div>
+}
+@*@Scripts.Render("~/bundles/jqueryui")*@
+<script type="text/javascript">
+
+    $(".deptid").on("change", function (e) {
+        e.preventDefault();
+        var nextclass = $(this).closest(".row").find(".textIdVal");
+        $.get('/AjaxRequest/GetTestnamebydepartmentforpatho/' + this.value,
+              function (data) {
+                  nextclass.find('option').remove()
+                  $(data).each(
+                      function (index, item) {
+                          nextclass.append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                          //alert("hi");
+                      });
+              }
+    );
+
+    });
+
+
+
+</script>
+
+@*<script type="text/javascript">
+  
+    $('#deptid').on("change", function (e) {
+
+           // alert("ji");
+
+           var val = this.value;
+
+           // alert(this.value);
+           if (this.value == "Select Department") {
+               //$('#BedId').val("");
+               //$('#bedAmountDiv').val("");
+
+
+           }
+
+
+       });
+
+
+
+
+        function JqueryAjaxLoadSelectOption(selValue, targetElm, url) {
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: url + selValue,
+                contentType: "text/json",
+                data: ({ id: selValue }),
+                beforeSend: function () {
+                    $("#" + targetElm).attr('disabled', 'disabled');
+                    $("#" + targetElm).addClass('ac_loading');
+                },
+
+                success: function (jsonResult) {
+                    //alert(jsonResult);
+
+                    var evlResult = JSON.retrocycle(jsonResult);
+                    var selOption = "";
+                    selOption = ParseJsonResultForSelectOptions(evlResult);
+                    tempTargetElm = targetElm.split(',');
+                    for (var i = 0; i < tempTargetElm.length; i++) {
+
+                        $("#" + tempTargetElm[i]).empty().append(selOption);
+                        $("#" + tempTargetElm[i]).removeClass('ac_loading');
+                        $("#" + tempTargetElm[i]).removeAttr('disabled');
+                    }
+                
+
+
+                },
+                error: function (jsonResult) {
+                }
+            });
+
+            function ParseJsonResultForSelectOptions(evlResult) {
+                var selOption = "";
+                $.each(evlResult, function (key, item) {
+                    var isSelected = (item['Selected'] == "true") ? "Selected='Selected'" : "";
+                    //var otherAttrib = (item['Attribs']!=undefined)? item['Attribs']:"";
+                    var otherAttrib = "";
+                    $.each(item, function (name, value) {
+                        if (name != 'Selected' && name != 'Value' && name != 'Text') {
+                            otherAttrib += " " + name + '="' + value + '" ';
+                        }
+                    });
+                    selOption += "<option value='" + item['Value'] + "' " + isSelected + " " + otherAttrib + " >"
+                    + evlResult[key].Text + "</option>";
+                });
+
+                return selOption;
+            }
+
+        }
+
+
+
+    </script>*@

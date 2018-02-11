@@ -1,0 +1,146 @@
+﻿@model HospitalManagementSystem.Models.MemberTypeDiscountModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 style="text-align:center;">Member Type Discount Setup</h2>
+
+<div class="contentWrapper">
+
+@using (Html.BeginForm("Edit", "MemberTypeDiscount",FormMethod.Post,  new { @class="bs-docs-example form-inline"}))
+{
+    @Html.ValidationSummary(true)
+     @Html.HiddenFor(model => model.MemberDiscountID)
+    <fieldset>
+        <legend> Edit</legend>
+
+
+
+          <div class="row-fluid singleline">
+
+            <label>
+
+               <div class="editor-label">
+            @Html.LabelFor(model => model.MemberShipType)
+        </div>
+
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.MemberShipType, HospitalManagementSystem.Utility.GetAllMemberType())
+            @Html.ValidationMessageFor(model => model.MemberShipType)
+        </div>
+
+
+            </label>
+            
+           @* <label>
+                @Html.ValidationMessageFor(model => model.DiscountPercent)<br />
+
+                 @Html.LabelFor(model => model.DiscountPercent)<br />
+   
+            @Html.EditorFor(model => model.DiscountPercent)
+
+            
+
+            </label>*@
+
+                
+
+        
+       
+        
+             <label>
+                
+               <div class="size">@Html.ValidationMessageFor(model => model.DiscountPercent)</div>
+                 @Html.LabelFor(model => model.DiscountPercent)<br />
+   
+            @Html.EditorFor(model => model.DiscountPercent)
+
+            @*@Html.ValidationMessageFor(model => model.DiscountPercent)*@
+
+            </label>
+
+
+
+        <label>
+
+            @Html.LabelFor(model => model.Others) <br />
+
+            @Html.EditorFor(model => model.Others)
+            @Html.ValidationMessageFor(model => model.Others)
+        </label>
+
+        
+
+        
+
+        
+
+        <label>
+            @Html.LabelFor(model => model.Remarks)<br />
+     
+            @Html.EditorFor(model => model.Remarks)
+            @Html.ValidationMessageFor(model => model.Remarks)
+        
+</label>        
+
+             </div>
+        
+
+       @* <div class="editor-label">
+            @Html.LabelFor(model => model.MemberShipType)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.MemberShipType, HospitalManagementSystem.Utility.GetAllMemberType())
+            @Html.ValidationMessageFor(model => model.MemberShipType)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DiscountPercent)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DiscountPercent)
+            @Html.ValidationMessageFor(model => model.DiscountPercent)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Others)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Others)
+            @Html.ValidationMessageFor(model => model.Others)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreatedBy)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.CreatedBy)
+            @Html.ValidationMessageFor(model => model.CreatedBy)
+        </div>
+
+        
+
+        
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Remarks)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Remarks)
+            @Html.ValidationMessageFor(model => model.Remarks)
+        </div>*@
+
+        <br />
+        <p>
+            <input type="submit" value="Edit" />
+        </p>
+    </fieldset>
+}
+
+<div>
+     @Html.ActionLink("Back to List", "Index", null, new { @id="linkNewBack" })
+</div>
+
+    </div>

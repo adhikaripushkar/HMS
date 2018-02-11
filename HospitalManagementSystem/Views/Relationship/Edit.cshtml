@@ -1,0 +1,52 @@
+﻿@model Hospital.Models.RelationshipModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_MasterSetupLayout.cshtml";
+}
+
+<h2 style="text-align:center;">Relationship Setup</h2>
+
+<div class="contentWrapper">
+@using(Html.BeginForm("Edit", "Relationship", FormMethod.Post, new { @class="bs-docs-example form-inline"})) {
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.RelationId)
+    <fieldset>
+        <legend>Edit</legend>
+
+        
+        
+<div class="row-fluid singleline">
+
+        <label>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RelationName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RelationName)
+            @Html.ValidationMessageFor(model => model.RelationName)
+        </div>
+
+        </label>
+
+            </div>
+
+        
+
+        <br />
+
+        
+
+        <p>
+            <input type="submit" value="Edit" />
+        </p>
+    </fieldset>
+}
+
+
+<div>
+   @Html.ActionLink("Back to List", "Index", null, new { @id="linkNewBack" })
+</div>
+
+    </div>

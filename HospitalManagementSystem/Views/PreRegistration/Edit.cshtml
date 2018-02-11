@@ -1,0 +1,338 @@
+﻿@model Hospital.Models.PreRegistrationModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Pre-RegistrationLayout.cshtml";
+}
+
+
+
+
+<style>
+ 
+
+
+table#mytbl,
+table#mytbl td
+{
+    width:880px;
+    border: none !important;
+}
+
+</style>
+
+
+<script>
+    var j = $.noConflict();
+    j(function () {
+        j("#RegistrationDate").datepicker();
+
+    });
+
+  </script>
+
+
+@if(TempData["Failed"] == "0")
+{
+    <script type="text/javascript">
+
+        alert('Insertion Failed Check Data Again!! ')
+
+    </script>
+
+}
+<h2 style="text-align:center;">Pre-Registration</h2>
+
+<div class="contentWrapper">
+
+@using (Html.BeginForm("Edit", "PreRegistration", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Edit</legend>
+
+        <div class="row-fluid singleline">
+
+        @Html.HiddenFor(model => model.PreRegistrationID)
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.FirstName)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FirstName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FirstName)
+            
+        </div>
+                </label>
+
+
+            <label>
+
+                <div class="size">@Html.ValidationMessageFor(model => model.MiddleName)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MiddleName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.MiddleName)
+            
+        </div>
+</label>
+
+<label>
+
+    <div class="size">@Html.ValidationMessageFor(model => model.LastName)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastName)
+            
+        </div>
+
+    </label>
+
+
+
+
+
+            <label>
+
+
+                
+                <div class="size">@Html.ValidationMessageFor(model => model.Sex)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Sex)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Sex,@Hospital.Utility.GetGenderList())
+            
+        </div>
+</label>
+
+
+
+
+
+            </div>
+
+
+        <div class="row-fluid singleline">
+
+        <label>
+
+            <div class="size">@Html.ValidationMessageFor(model => model.MobileNumber)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MobileNumber)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.MobileNumber)
+            
+        </div>
+            </label>
+
+
+        <label>
+            <div class="size">@Html.ValidationMessageFor(model => model.ContactNumber)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ContactNumber)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ContactNumber)
+            
+        </div>
+            </label>
+
+      
+            <label>
+            <div class="size">@Html.ValidationMessageFor(model => model.Address)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Address)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Address)
+            
+        </div>
+            </label>
+
+            <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.Email)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Email)
+            
+        </div>
+                </label>
+             <label>
+                <div class="size">@Html.ValidationMessageFor(model => model.AgeYear)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AgeYear)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AgeYear)
+            
+        </div>
+                </label>
+
+
+
+
+       
+
+        <label>
+            <div class="size">@Html.ValidationMessageFor(model => model.RegistrationMode)</div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RegistrationMode)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.RegistrationMode,@Hospital.Utility.RegistrationModeList())
+            
+        </div>
+
+            </label>
+
+            </div>
+
+        @if (Model.PreRegistrationPreferModelList == null)
+        {
+            @ViewBag.Message
+        }
+         <div class="well well-small" id="Add-Item">
+
+          
+
+            <table id="mytbl">
+                
+                  <tr>
+                      <td>Department</td>
+                      <td>Doctor</td>
+                      <td>Prefer Time</td>
+                      <td>Prefer Date</td>
+                </tr>
+                </table>
+             <table>
+                  
+                      @foreach (var item in Model.PreRegistrationPreferModelList)
+                      {
+                   
+                        <tr>
+                        @Html.Partial("AddMoreDepartmentDoctors", item)
+                        </tr>  
+                          
+                      }        
+            
+            </table>
+        </div>
+
+
+
+        <p>
+
+            <input type="submit" value="Edit" />
+           
+        </p>
+    </fieldset>
+    
+    
+    
+    
+    
+    
+    
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/json.cycle.js"></script>
+    <script src="@Url.Content("~/Scripts/OrderManagerScript.js")" type="text/javascript"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            AddClickEvents();
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        $("#Add-Item").on('click', '.row-button', function () {
+
+            $(this).closest("div.row").remove();
+        });
+
+    </script>
+     
+    <script type="text/javascript">
+
+        $("#Add-Item").on('change', '.DepartmentID', function () {
+            var id = this.id;
+
+            id = id.replace("__DepartmentID", "__DoctorID");
+
+            $('#' + id).val('');
+
+           
+            $.get('/AjaxRequest/GetDoctorNameList/' + this.value,
+                  function (data) {
+                      $('#' + id).find('option').remove()
+                      $(data).each(
+                          function (index, item) {
+                              $('#' + id).append('<option value="' + item.Value + '">' + item.Text + '</option>')
+                          });
+                  }
+        );
+        });
+
+    </script>
+    
+    <script>
+        $("#Add-Item").on('click', '.ava', function () {
+
+            var docid = $(this).closest("div.row").find('.DoctorID').val();
+
+            var dateid = $(this).closest("div.row").find('.PreferDateIdn').val();
+
+            $.ajax({
+                async: false,
+                url: '@Url.Action("CheckAvailibility", "PreRegistration")',
+                 type: 'get',
+                 data: { doctorid: docid, datesid: dateid },
+                 success: function (result) {
+
+
+                     $('#doctorDetails').html(result);
+
+                     $(function () {
+                         j("#doctorDetails").dialog({
+
+                             modal: true,
+                             resizable: false,
+                             visible: false,
+                             width: 250,
+                             height: 100
+
+                         });
+                     });
+
+                 }
+
+             });
+
+         });
+    </script>
+    
+    
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @id = "linkNewBack" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+    </div>

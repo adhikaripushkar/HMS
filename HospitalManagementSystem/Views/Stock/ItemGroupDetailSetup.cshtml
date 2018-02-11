@@ -1,0 +1,121 @@
+﻿@model Hospital.Models.StockItemModel
+
+@{
+    ViewBag.Title = "ItemGroupDetailSetup";
+    Layout = "~/Views/Shared/_StockLayout.cshtml";
+}
+
+<div class="contentWrapper">
+
+    @using (Html.BeginForm("ItemGroupDetailSetup", "Stock", FormMethod.Post, new { @class = "bs-docs-example form-inline" }))
+    {
+        @Html.ValidationSummary(true)
+       
+        <fieldset>
+            <legend>Create</legend>
+
+            @if (TempData["message"] != null)
+            {
+                <div class="alert alert-error">
+                    @TempData["message"]
+                </div>
+
+            }
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.ObjStockItemGroupingMasterViewModel.GroupingId)</div>
+                    <div class="editor-label">
+                        Group Name<br />
+
+                        @Html.DropDownListFor(model => model.ObjStockItemGroupingMasterViewModel.GroupingId, Hospital.Utility.GetStockItemGroupLists())
+
+                    </div>
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.ObjStockItemGroupingMasterViewModel.ItemId)</div>
+                    <div class="editor-label">
+                        Item Name<br />
+
+                        @Html.DropDownListFor(model => model.ObjStockItemGroupingMasterViewModel.ItemId, Hospital.Utility.GetItemName())
+
+                    </div>
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.ObjStockItemGroupingMasterViewModel.TotalItem)</div>
+                    <div class="editor-label">
+                        Total Item<br />
+
+                        @Html.TextBoxFor(model => model.ObjStockItemGroupingMasterViewModel.TotalItem)
+                    </div>
+                </label>
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.ObjStockItemGroupingDetailsViewModel.Description)</div>
+                    <div class="editor-label">
+                        Description<br />
+
+                        @Html.TextBoxFor(model => model.ObjStockItemGroupingDetailsViewModel.Description)
+
+                    </div>
+                </label>
+
+
+
+            </div>
+
+            <div class="row-fluid singleline">
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.ObjStockItemGroupingDetailsViewModel.Condition)</div>
+                    <div class="editor-label">
+                        Condition<br />
+
+                        @Html.TextBoxFor(model => model.ObjStockItemGroupingDetailsViewModel.Condition)
+
+                    </div>
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.ObjStockItemGroupingDetailsViewModel.PartyName)</div>
+                    <div class="editor-label">
+                        Party Name<br />
+
+                        @Html.TextBoxFor(model => model.ObjStockItemGroupingDetailsViewModel.PartyName)
+
+                    </div>
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.ObjStockItemGroupingDetailsViewModel.Remarks)</div>
+                    <div class="editor-label">
+                        Remarks<br />
+
+                        @Html.TextBoxFor(model => model.ObjStockItemGroupingDetailsViewModel.Remarks)
+
+                    </div>
+                </label>
+
+                <label>
+                    <div class="size">@Html.ValidationMessageFor(model => model.ObjStockItemGroupingDetailsViewModel.LocationId)</div>
+                    <div class="editor-label">
+                        Location<br />
+
+                        @Html.DropDownListFor(model => model.ObjStockItemGroupingDetailsViewModel.LocationId, Hospital.Utility.GetStockItemGroupLocationLists())
+
+                    </div>
+                </label>
+            </div>
+            <div style="margin-top: 30px;">
+                <p>
+                    <input type="submit" value="Create" />
+                </p>
+            </div>
+        </fieldset>
+    }
+    <p>
+        <i class="fa  fa-plus fa-2x" style="color: blue;"></i>&nbsp;@Html.ActionLink("Go to Group Setting", "ItemGroupSetup", null, new { @id = "linkNewBack" })
+    </p>
+</div>

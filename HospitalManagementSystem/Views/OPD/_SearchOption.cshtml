@@ -1,0 +1,41 @@
+﻿
+
+
+
+
+<div class="bs-docs-example form-inline">
+
+    <span>Search by Name &nbsp;&nbsp;</span><input type="text"  id="getNameId"/>&nbsp;&nbsp;<input type="submit" value="show" id="subId"/>
+    
+    
+    
+
+    </div>
+
+<br />
+
+<div id="chngId"></div>
+    <script>
+
+        $('#subId').click(function (e) {
+            e.preventDefault();
+
+
+            var value = $('#getNameId').val();
+            //alert(value);
+
+
+            $.get('/SetUpMemberShip/GetMemberShipListWithValue/' + value,
+                       function (data) {
+
+                           $('#chngId').empty();
+                           $('#chngId').html(data);
+
+
+                       });
+
+
+
+        });
+
+    </script>

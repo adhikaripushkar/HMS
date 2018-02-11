@@ -1,0 +1,11 @@
+﻿@using HospitalManagementSystem.Helpers
+@model HospitalManagementSystem.Models.OpdModel
+@using (Html.BeginCollectionItem("OpdModelList"))
+{
+   
+    <div class="row" style="margin-left: 0px;">
+
+        @Html.DropDownListFor(model => model.OpdID, HospitalManagementSystem.Utility.GetOpdPatientName())
+         <input type="button" class="row-button btn btn-warning" value="Remove" />
+        </div>
+}
